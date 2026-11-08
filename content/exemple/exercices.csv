@@ -1,0 +1,16 @@
+matiere,chapitre,titre,enonce,correction,duree_min
+Biochimie,Enzymologie,Calcul de Km et Vmax (Lineweaver-Burk),"On mesure la vitesse initiale d'une enzyme pour plusieurs concentrations de substrat. En représentation de Lineweaver-Burk, la droite obtenue coupe l'axe des ordonnées à 0,02 min/µmol et l'axe des abscisses à -0,5 mM⁻¹.
+1. Calculez Vmax.
+2. Calculez Km.
+3. Quelle est la vitesse pour [S] = 2 mM ?","1. Ordonnée à l'origine = 1/Vmax = 0,02 donc Vmax = 50 µmol/min.
+2. Abscisse à l'origine = -1/Km = -0,5 donc Km = 2 mM.
+3. [S] = Km, donc v = Vmax/2 = 25 µmol/min.",20
+Biochimie,Enzymologie,Identifier un type d'inhibition,"En présence d'un inhibiteur I, Vmax passe de 100 à 100 µmol/min et Km de 1 à 3 mM. De quel type d'inhibition s'agit-il ? Justifiez et dessinez l'allure des droites de Lineweaver-Burk.","Vmax inchangée, Km apparent augmenté : inhibition compétitive. Les droites avec et sans inhibiteur se coupent sur l'axe des ordonnées (même 1/Vmax), la pente augmente avec I.",10
+Biochimie,Glucides,Cyclisation du glucose,"Écrivez la forme linéaire du D-glucose en projection de Fischer, puis la forme cyclique α-D-glucopyranose en représentation de Haworth. Précisez le carbone anomérique et la position de son hydroxyle.","Forme linéaire : CHO en C1, hydroxyles à droite en C2, C4, C5 et à gauche en C3. Cyclisation par attaque de l'OH du C5 sur le C1 (hémiacétal, cycle à 6). Carbone anomérique : C1. Anomère α : OH du C1 en bas, en trans du CH2OH (C6).",10
+Physiologie,Physiologie cardiaque,Calcul du débit cardiaque,"Un patient a une fréquence cardiaque de 75 battements/min, un volume télédiastolique de 120 mL et un volume télésystolique de 50 mL.
+1. Calculez le volume d'éjection systolique.
+2. Calculez le débit cardiaque.
+3. Calculez la fraction d'éjection et interprétez.","1. VES = 120 − 50 = 70 mL.
+2. Qc = 75 × 70 = 5 250 mL/min, soit 5,25 L/min.
+3. FE = 70 / 120 ≈ 58 % : valeur normale (supérieure à 50 %).",10
+Physiologie,Physiologie cardiaque,Cycle cardiaque sur le diagramme pression-volume,"Tracez la boucle pression-volume du ventricule gauche. Placez les quatre phases du cycle et les événements valvulaires (ouverture et fermeture des valves mitrale et aortique). Expliquez ce que devient la boucle si la précharge augmente.","Phases : remplissage (mitrale ouverte), contraction isovolumétrique (tout fermé), éjection (aortique ouverte), relaxation isovolumétrique (tout fermé). Fermeture mitrale en bas à droite, ouverture aortique en haut à droite, fermeture aortique en haut à gauche, ouverture mitrale en bas à gauche. Si la précharge augmente, le bord droit se déplace vers la droite : VTD et VES augmentent (Frank-Starling).",30

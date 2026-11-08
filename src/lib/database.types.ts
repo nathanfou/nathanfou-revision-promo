@@ -728,6 +728,19 @@ export type Database = {
         }
         Returns: Json
       }
+      revision_overview: {
+        Args: never
+        Returns: {
+          cartes_dues: number
+          cartes_nouvelles: number
+          chapter_id: string
+          exo_duree_max: number
+          exo_duree_min: number
+          nb_cartes: number
+          nb_exercices: number
+          nb_qcm: number
+        }[]
+      }
       start_session: {
         Args: {
           p_chapter_id: string
