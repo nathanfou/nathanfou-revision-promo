@@ -1,0 +1,684 @@
+Plateforme de révision de la promo : spécification v1
+
+Nov 7, 2026 · @Nathan
+
+Contexte et objectif
+
+Une plateforme web de révision pour une promo de 30 à 60 personnes, avec
+classement et fil de progression, pour tenir la motivation pendant la
+vague de partiels. Il n'y a pas de date ferme : la construction se
+compte en semaines.
+
+La v1 doit permettre à chaque étudiant de s'entraîner (QCM, flashcards,
+exercices), de voir sa progression et de se comparer aux autres, sur
+téléphone, sans rien installer. Le projet est fait pour le fun, entre
+gens qui se connaissent, par une seule personne qui s'appuie sur Claude
+pour le code.
+
+Décisions prises
+
+Dix-neuf décisions cadrent la v1. "Décidé" = formulé par toi ;
+"Recommandé" = proposé par Claude, à contester si besoin.
+
+  ------------------------------------------------------------------------
+  Décision         Choix                    Raison            Statut
+  ---------------- ------------------------ ----------------- ------------
+  Support          Application web pour     Rien à installer, Décidé
+                   ordinateur ; sur         un lien dans le   
+                   téléphone, seules les    groupe suffit ;   
+                   flashcards sont          les flashcards se 
+                   accessibles              révisent bien en  
+                                            mobilité          
+
+  Stack            Supabase (comptes, base, Gratuit à 30-60   Recommandé
+                   temps réel, logique      personnes, bien   
+                   serveur) + React avec    documenté, bien   
+                   Vite, publié comme site  géré par Claude   
+                   statique sur Vercel                        
+
+  Connexion        Pseudo + mot de passe,   Pas besoin de     Décidé
+                   e-mail factice en        sécurité avancée  
+                   coulisses                                  
+
+  Inscription      Code partagé dans le     Évite les         Décidé
+                   groupe de la promo       inconnus si le    
+                                            lien circule      
+
+  Contenu          Fourni par toi seul,     Tu fournis tous   Décidé
+                   import par CSV et script les exos          
+                   d'import                                   
+
+  Activités        QCM, flashcards,         Ce que tu as      Décidé
+                   exercices avec           listé             
+                   correction et                              
+                   auto-évaluation                            
+
+  Matières         Tout le monde révise     Simplifie la      Décidé
+                   tout, filtre par         structure des     
+                   matière, pas d'options   données           
+                   par profil                                 
+
+  Points           Proportionnels au temps  Barème cohérent ; Décidé
+                   estimé de chaque         les points sont   
+                   activité, sans plafond   une motivation    
+                   sur les déclarations                       
+
+  Calcul des       Côté serveur             Évite de          Recommandé
+  points                                    s'envoyer des     
+                                            points depuis la  
+                                            console du        
+                                            navigateur        
+
+  Classement       Hebdomadaire et cumulé ; Celui qui part en Décidé
+                   top 5, puis ta position  retard peut       
+                   et tes voisins           remonter chaque   
+                                            lundi             
+
+  Feed             Posts texte, événements  Texte seul, promo Décidé
+                   automatiques, réactions  fermée, usage     
+                   emoji, réponses courtes, pour le fun       
+                   sans modération                            
+                   préalable                                  
+
+  Garde-fous du    280 caractères par post, Protège à faible  Recommandé
+  feed             suppression par l'admin  coût en cas de    
+                                            dérapage          
+
+  Flashcards       Révision espacée à la    Demandé par toi   Décidé
+                   Anki, paliers de 1, 3, 7                   
+                   et 14 jours                                
+
+  Exercices        Correction affichée,     Seule façon de    Décidé
+                   puis auto-évaluation ;   corriger sans     
+                   durée estimée par Claude l'appli           
+
+  Identité         Photo de profil choisie  Plus simple ;     Décidé
+  visuelle         dans un pool d'environ   images générées   
+                   50 images, pas de        par IA une fois   
+                   création de personnage   le style fixé     
+
+  Palette          Cinq couleurs chaudes,   Choisie par toi   Décidé
+                   détaillées dans la                         
+                   section Palette                            
+
+  Thème            Sombre                   Adapté à la       Décidé
+                                            palette et aux    
+                                            révisions le soir 
+
+  Notifications    Pastilles dans l'appli   Les adresses sont Décidé
+                                            factices, donc    
+                                            pas d'e-mail      
+
+  Administration   Script d'import et       Rien à construire Décidé
+                   tableau de bord          dans l'appli      
+                   Supabase, sans page                        
+                   admin                                      
+  ------------------------------------------------------------------------
+
+Stack et hébergement
+
+Deux services gratuits hébergent tout, et il n'y a aucun serveur à
+maintenir. Le frontend est une application React (Vite) publiée comme
+site statique sur Vercel. Supabase fournit les comptes, la base
+PostgreSQL, le temps réel et les fonctions serveur qui corrigent les QCM
+et calculent les points.
+
+[architecture · navigateur, Vercel, Supabase]
+
+architecture · navigateur, Vercel, Supabase
+
+Le navigateur charge la page depuis Vercel, puis lit et écrit
+directement dans Supabase, qui porte toute la logique sensible.
+
+Next.js a été écarté : le référencement et le rendu serveur ne servent à
+rien derrière une connexion, et la logique serveur vit déjà dans
+Supabase.
+
+Deux limites du palier gratuit, à vérifier en créant les comptes :
+Supabase met en pause un projet inactif au bout d'environ une semaine
+(un clic le relance), et Vercel gratuit est réservé aux usages non
+commerciaux.
+
+Périmètre
+
+La v1 est un socle utilisable seul, sans le feed ; le feed et les images
+finales viennent juste après, quand des gens utilisent déjà la
+plateforme.
+
+Dans la v1
+
+-   Connexion par pseudo et mot de passe
+
+-   Page Révision : matière, chapitre, puis choix du mode
+
+-   QCM corrigés côté serveur
+
+-   Flashcards
+
+-   Exercices déclarés validés
+
+-   Sessions : chaque série d'activité est enregistrée
+
+-   Page Profil : photo (images provisoires), points, niveau, historique
+    des sessions, progression par chapitre
+
+-   Points proportionnels au temps estimé
+
+-   Classement de la semaine et cumulé, affiché sur la page Feed
+
+-   Import du contenu par CSV, droits admin minimaux
+
+Juste après (v2)
+
+-   Feed : événements automatiques, posts texte, réactions emoji
+
+-   Remplacement des images provisoires par les 50 images finales
+
+-   Gamification : niveaux, badges, défis hebdomadaires, duels et défis
+    à un ami, puis ajustements d'après les retours de la promo
+
+Exclu volontairement
+
+-   Création de personnage
+
+-   Contenu écrit par les autres étudiants
+
+-   Images dans le feed
+
+-   Réinitialisation automatique du mot de passe
+
+-   Toute protection contre la triche sur les déclarations (exercices,
+    flashcards)
+
+-   Application native et version téléphone complète (seules les
+    flashcards sont accessibles sur téléphone)
+
+Parcours et fonctionnalités
+
+Un étudiant arrive par un lien, révise en quelques minutes et voit tout
+de suite l'effet sur son rang.
+
+1.  Il ouvre le lien partagé dans le groupe, crée un pseudo et un mot de
+    passe, puis choisit sa photo de profil.
+
+2.  Il choisit une matière puis un chapitre.
+
+3.  Il fait un QCM, passe des flashcards ou déclare un exercice terminé.
+
+4.  Il gagne des points et voit son rang de la semaine.
+
+5.  Le fil de la promo affiche ses résultats ; il peut poster un message
+    ou réagir à ceux des autres (v2).
+
+  -----------------------------------------------------------------------
+  Fonction         Comportement
+  ---------------- ------------------------------------------------------
+  QCM              La réponse est envoyée au serveur, qui corrige,
+                   attribue les points et renvoie la correction. Deux
+                   modes au choix : entraînement (correction et
+                   explication après chaque question) et examen
+                   (corrections à la fin de la série)
+
+  Flashcards       L'étudiant retourne la carte et choisit À revoir, Bien
+                   ou Facile ; le calendrier de révision espacée décide
+                   quand elle revient ; les points suivent sa durée
+                   estimée
+
+  Exercices        L'étudiant fait l'exercice sur papier, affiche la
+                   correction, la compare à ses réponses, puis s'évalue :
+                   réussi, partiel ou à refaire. Les points suivent la
+                   durée estimée de l'exercice. Les exercices à refaire
+                   vont dans une liste libre, sans date, séparée des
+                   flashcards
+
+  Profil           Pseudo, photo de profil, points, niveau, rang de la
+                   semaine, historique des sessions, progression par
+                   matière et chapitre, calendrier d'activité, temps de
+                   révision, badges et défis
+
+  Classement       Semaine en cours par défaut, onglet cumulé
+
+  Admin            Importer le contenu, supprimer un post, réinitialiser
+                   un mot de passe, depuis un script d'import et le
+                   tableau de bord Supabase (pas de page admin)
+  -----------------------------------------------------------------------
+
+Pages
+
+L'appli a trois pages, reliées par une barre de navigation.
+
+-   Révision (page d'accueil) : en haut, un bouton Reprendre où j'en
+    étais, le compte à rebours jusqu'au prochain contrôle, le défi de la
+    semaine (avec la gamification), le nombre de flashcards à revoir
+    aujourd'hui et la liste des exercices à refaire ; en dessous, les
+    matières avec leur progression, puis les chapitres, puis les trois
+    modes (QCM, flashcards, exercices).
+
+-   Feed : le classement de la semaine en haut, avec l'onglet cumulé,
+    puis le fil qui mélange les posts des étudiants et les messages de
+    progression. En v1, la page ne contient que le classement ; le fil
+    arrive en v2.
+
+-   Profil : photo, pseudo, points, niveau et rang, puis l'historique
+    des sessions, la progression par matière et par chapitre, un
+    calendrier d'activité (une case par jour révisé), le temps de
+    révision estimé par semaine et par matière, et les badges et défis.
+
+Profil des autres étudiants : en cliquant sur un pseudo, on voit un
+profil public réduit, avec la photo, le niveau, les badges et le rang de
+la semaine. L'historique, la progression détaillée, le calendrier
+d'activité et le temps de révision restent privés.
+
+Sur téléphone : il n'y a pas de version mobile complète. Quand le site
+est ouvert sur un téléphone, seule la partie flashcards est accessible :
+la file des cartes à revoir du jour, puis les nouvelles cartes par
+chapitre, avec leurs points. Le QCM, les exercices, le classement, le
+feed et le profil sont réservés à l'ordinateur. La détection se fait à
+la largeur de l'écran (proposition), donc une fenêtre d'ordinateur très
+étroite verrait aussi la version limitée ; les tablettes suivent la même
+règle de largeur. L'inscription et le choix de la photo de profil
+restent possibles sur téléphone, puisque le lien est partagé dans le
+groupe de la promo.
+
+Une session est une série de questions ou de cartes sur un chapitre.
+Elle commence quand l'étudiant lance un mode et se termine quand il a
+fini ou quitté. Elle est enregistrée avec sa date, sa durée, son score
+et les points gagnés. La progression d'un chapitre est la part de ses
+questions réussies au moins une fois.
+
+Notifications, premier lancement et administration
+
+Notifications : des pastilles dans l'appli, sans notification sur le
+téléphone ni e-mail, puisque les adresses sont factices. Un compteur sur
+la barre de navigation et une liste signalent les réponses à ses posts,
+les invitations de duel et les défis reçus. Les notifications push via
+l'appli installée (PWA) restent possibles plus tard.
+
+Premier lancement : après l'inscription (pseudo, mot de passe et code
+partagé), l'étudiant choisit sa photo de profil, puis arrive directement
+sur la page Révision. Pas de tour guidé.
+
+Administration : aucune page admin dans l'appli. Le contenu s'importe
+par un petit script, écrit par Claude et lancé depuis ton ordinateur,
+qui transforme les noms de matière et de chapitre des CSV en
+identifiants. La suppression de posts, la réinitialisation des mots de
+passe et le code d'inscription se gèrent depuis le tableau de bord de
+Supabase.
+
+Points et classement
+
+Les points sont proportionnels au temps estimé de chaque activité, à
+raison de 10 points par minute : un exercice de 20 minutes vaut autant
+que 20 QCM. Les durées du QCM (1 minute) et de la carte (20 secondes)
+sont fixes. Celles des exercices sont estimées par Claude à l'import,
+arrondies à 5, 10, 20 ou 30 minutes, et relues par toi. Les points sont
+une motivation, pas une note : il n'y a aucun plafond ni garde-fou sur
+les déclarations, et celui qui triche ne triche que contre lui-même. Le
+barème est un point de départ à ajuster après les premiers jours
+d'usage.
+
+  -------------------------------------------------------------------------
+  Activité             Durée estimée     Vérifiée par      Points
+                                         l'appli           (proposition)
+  -------------------- ----------------- ----------------- ----------------
+  QCM, bonne réponse   1 min (fixe)      Oui               10
+
+  QCM, mauvaise        1 min (fixe)      Oui               0
+  réponse                                                  
+
+  Flashcard, quelle    20 s (fixe)       Non               3
+  que soit la note                                         
+
+  Exercice réussi      5, 10, 20 ou 30   Non               50, 100, 200 ou
+                       min                                 300
+
+  Exercice partiel     5, 10, 20 ou 30   Non               50 % des points
+                       min                                 de l'exercice
+
+  Exercice à refaire   5, 10, 20 ou 30   Non               25 % des points
+                       min                                 de l'exercice
+  -------------------------------------------------------------------------
+
+Trois règles s'appliquent à tout le barème :
+
+-   Les points sont calculés par le serveur ; le navigateur ne peut pas
+    les écrire.
+
+-   Une même question ne rapporte des points qu'une fois par jour, pour
+    empêcher de la rejouer en boucle.
+
+-   Le classement de la semaine est calculé à partir de l'historique des
+    points, du lundi 00h00 au dimanche 23h59 (heure de Paris). Rien
+    n'est remis à zéro à la main, et l'historique des semaines reste
+    consultable.
+
+Le classement cumulé reste disponible dans un second onglet. Le niveau
+d'un étudiant se déduit de ses points cumulés ; les seuils restent à
+définir.
+
+Flashcards et révision espacée
+
+Les flashcards suivent une logique inspirée d'Anki : une carte vue un
+jour revient les jours suivants, à des intervalles de plus en plus longs
+tant que l'étudiant la connaît.
+
+-   Après avoir retourné une carte, l'étudiant choisit À revoir, Bien ou
+    Facile.
+
+-   Chaque carte a un palier : 1, 3, 7 puis 14 jours. Une carte vue pour
+    la première fois revient le lendemain, ce qui reproduit "refaire le
+    lendemain ce qu'on a vu la veille". Une première réponse Facile
+    l'envoie directement au palier de 3 jours.
+
+-   Ensuite, À revoir ramène la carte au palier de 1 jour, Bien monte
+    d'un palier et Facile en saute un. Le palier maximum est de 14
+    jours.
+
+-   Chaque jour, l'étudiant trouve la file des cartes à revoir,
+    c'est-à-dire celles dont l'échéance est arrivée, en plus des
+    nouvelles cartes qu'il choisit de travailler. Le nombre de cartes à
+    revoir s'affiche sur la page Révision.
+
+-   Le serveur garde pour chaque étudiant et chaque carte son palier et
+    sa prochaine date, dans la table card_states. Les points d'une
+    révision suivent le barème de la section Points.
+
+Gamification et social
+
+Cinq mécanismes sont retenus : badges, niveaux avec XP, défis
+hebdomadaires, duels de QCM et défis à un ami. Les séries de jours sont
+écartées pour l'instant. Tout cela s'ajoute après le socle de la v1, et
+les détails restent à fixer.
+
+  ------------------------------------------------------------------------
+  Mécanisme          Principe retenu                       Détails à fixer
+  ------------------ ------------------------------------- ---------------
+  Niveaux et XP      Les points cumulés font monter un     Noms des
+                     niveau affiché sur le profil ; les    niveaux, XP
+                     premiers niveaux tombent vite, les    distinct des
+                     suivants demandent de plus en plus de points ou non
+                     points                                
+
+  Badges             Deux familles : volume (par exemple   Liste exacte et
+                     100, 500, 1000 QCM réussis) et social seuils
+                     (duels gagnés, défis relevés,         
+                     premières réactions). Affichés sur le 
+                     profil et annoncés dans le feed       
+
+  Défis              Générés automatiquement chaque        Types de défis,
+  hebdomadaires      semaine par le serveur                nature de la
+                                                           récompense
+
+  Duels de QCM       En différé : chacun joue de son côté  Montant du
+                     dans un délai (24 à 48 h proposé),    bonus, plafond
+                     mêmes questions, le meilleur score    hebdomadaire du
+                     gagne et reçoit un petit bonus de     bonus, délai
+                     points, plafonné par semaine          exact
+
+  Défis à un ami     Envoyer un chapitre ou un score à     Mécanique
+                     battre à un camarade précis           d'envoi et de
+                                                           réponse
+  ------------------------------------------------------------------------
+
+Ces mécanismes ajouteront des tables au modèle de données (badges
+décernés, défis, duels). Elles seront détaillées après la v1, pas avant.
+
+Effets visuels : sobres. Une animation courte sur la réponse et un
+compteur de points qui monte ; les confettis sont réservés aux grands
+moments (niveau gagné, badge, première place). Le réglage "réduire les
+animations" du système est respecté, et les sons sont coupables.
+
+Affichage du classement : le top 5, puis la position de l'étudiant et
+ses voisins immédiats, au lieu de la liste complète. Le nombre de
+voisins affichés reste à fixer.
+
+Feed social
+
+Le feed est un seul fil chronologique, le plus récent en haut, qui
+mélange événements automatiques et posts d'étudiants. Il est livré en
+v2.
+
+-   Événements automatiques : créés par le serveur (série terminée,
+    badge obtenu, entrée dans le top 5 ou première place de la semaine).
+    L'étudiant ne peut pas en fabriquer.
+
+-   Posts : texte seul, 280 caractères maximum, sans image.
+
+-   Réactions : des réactions emoji ; une réaction par emoji et par
+    personne, qu'on peut retirer. Le jeu d'emojis est fixe : quelques
+    emojis choisis à l'avance, par exemple 🔥 👏 💪 😂 (à valider). Les
+    étudiants peuvent aussi répondre à un post ou à un événement par un
+    message court (140 caractères proposés), affiché à plat dessous.
+
+-   Suppression : l'auteur supprime ses posts et ses réponses, l'admin
+    supprime n'importe lequel.
+
+-   Modération : aucune a priori, comme décidé ; la suppression admin
+    sert de filet de sécurité.
+
+Profil et photo de profil
+
+La création de personnage est abandonnée : chaque étudiant choisit une
+photo de profil parmi environ 50 images, générées par IA une fois le
+style arrêté.
+
+-   Stockage : la base ne garde que l'identifiant de l'image (par
+    exemple pp_07). Les fichiers sont des images statiques de l'appli,
+    nommées pp_01 à pp_50.
+
+-   Changement : l'étudiant peut changer de photo à tout moment depuis
+    son profil.
+
+-   Avant que le style soit fixé : 50 images provisoires (par exemple
+    des initiales sur fond coloré) permettent de développer et lancer la
+    v1. Les remplacer plus tard revient à remplacer les fichiers en
+    gardant les mêmes noms, sans toucher au code.
+
+-   Format conseillé pour la génération : images carrées, 512 × 512 px,
+    même style et même cadrage pour tout le pool, WebP ou PNG.
+
+Palette de couleurs
+
+Cinq couleurs chaudes, choisies par toi, forment la base de l'interface.
+Le thème est sombre, avec molten-lava en fond, et il n'y a pas de thème
+clair. Les usages ci-dessous sont des propositions.
+
+  -----------------------------------------------------------------------
+  Nom             Hex       Usage proposé
+  --------------- --------- ---------------------------------------------
+  light-caramel   #fbba72   Accents clairs, texte et icônes sur fond
+                            sombre
+
+  bronze-spice    #ca5310   Accent principal, éléments mis en avant
+
+  autumn-ember    #bb4d00   Boutons et liens, avec texte blanc
+
+  brandy          #8f250c   Bordures, éléments secondaires, états actifs
+
+  molten-lava     #691e06   Fonds sombres, texte foncé sur fond clair
+  -----------------------------------------------------------------------
+
+Sur le fond molten-lava, le texte light-caramel atteint environ 7:1 de
+contraste. Le texte blanc sur autumn-ember atteint environ 5:1 de
+contraste, contre environ 4,4:1 sur bronze-spice, juste sous le seuil de
+lisibilité de 4,5:1. Bronze-spice convient donc aux grands textes et aux
+décors, moins aux petits textes. La palette n'a ni vert ni rouge franc :
+les couleurs de bonne et de mauvaise réponse restent à définir.
+
+Contenu et format d'import
+
+Le contenu est ton vrai goulot d'étranglement : tu fournis tout, donc
+l'import doit être plus rapide que la saisie dans une interface. Le
+contenu s'organise en matière, puis chapitre, puis éléments (QCM,
+flashcards, exercices).
+
+Chaque type a son fichier CSV. Exemple pour les QCM :
+
+matiere,chapitre,question,choix_a,choix_b,choix_c,choix_d,bonne_reponse,explication
+Matière 1,Chapitre 1,Texte de la question ?,Choix A,Choix B,Choix
+C,Choix D,B,Courte explication affichée après la réponse
+
+Les flashcards utilisent matiere, chapitre, recto, verso et les
+exercices matiere, chapitre, titre, enonce, plus correction et duree_min
+(5, 10, 20 ou 30 minutes, estimée par Claude puis relue par toi).
+
+Les QCM générés avec Claude sont relus avant publication : une question
+fausse fait plus de mal qu'une absence de question. Je recommande
+d'importer d'abord en "brouillon" et de publier après relecture.
+
+Modèle de données
+
+Douze tables suffisent. Le journal d'activité est la source unique des
+points : les classements en sont des vues.
+
+  -------------------------------------------------------------------------
+  Table          Rôle                 Champs principaux
+  -------------- -------------------- -------------------------------------
+  profiles       Un étudiant          id, pseudo (unique), pp_id, is_admin,
+                                      created_at
+
+  subjects       Matières             id, nom, ordre
+
+  chapters       Chapitres            id, subject_id, nom, ordre
+
+  questions      QCM                  id, chapter_id, énoncé, choix,
+                                      bonne_réponse, explication, statut
+                                      (brouillon ou publié)
+
+  flashcards     Cartes               id, chapter_id, recto, verso, statut
+
+  card_states    Calendrier de        user_id, flashcard_id (un couple
+                 révision espacée     unique), palier, due_date,
+                                      last_reviewed
+
+  exercises      Exercices avec       id, chapter_id, titre, énoncé,
+                 correction           correction, durée_min (5, 10, 20 ou
+                                      30), statut
+
+  exams          Contrôles à venir    id, subject_id, nom, date
+
+  sessions       Une série d'activité id, user_id, chapter_id, mode (qcm,
+                                      flashcard, exo), variante
+                                      (entraînement ou examen), started_at,
+                                      ended_at, score, points
+
+  activity_log   Journal des points   id, user_id, session_id, type (qcm,
+                                      flashcard, exo), item_id, résultat
+                                      (pour un exercice : réussi, partiel
+                                      ou à refaire), points, created_at
+
+  feed_items     Posts, événements et id, user_id, kind (post, event ou
+                 réponses             réponse), parent_id (pour une
+                                      réponse), texte, created_at
+
+  reactions      Réactions emoji      feed_item_id, user_id, emoji (un
+                                      triplet unique)
+
+  Vues           Classements et       classement de la semaine, classement
+                 progression          cumulé et progression par chapitre,
+                                      calculés depuis activity_log
+  -------------------------------------------------------------------------
+
+La bonne réponse d'un QCM n'est jamais envoyée au navigateur avant que
+l'étudiant ait répondu.
+
+Sécurité et garde-fous
+
+Le niveau visé est "entre amis" : pas de sécurité avancée, mais la seule
+protection qui garde le classement crédible est tenue dès le départ.
+
+-   Connexion : Supabase fabrique en coulisses un e-mail factice à
+    partir du pseudo (par exemple lea@promo.invalid). Les étudiants ne
+    voient que pseudo et mot de passe, plus un code d'inscription
+    partagé à la création du compte, que tu donnes dans le groupe de la
+    promo et que le serveur vérifie. Le hachage du mot de passe est géré
+    par Supabase.
+
+-   Mot de passe oublié : pas de réinitialisation automatique, puisqu'il
+    n'y a pas de vraie adresse. L'admin réinitialise à la main à la
+    demande.
+
+-   Points : aucune écriture directe dans activity_log depuis le
+    navigateur. Une fonction serveur vérifie la réponse, applique la
+    règle "une fois par jour par question", puis écrit les points.
+
+-   Bonnes réponses : lisibles uniquement côté serveur, pour qu'on ne
+    puisse pas les lire dans la console avant de répondre.
+
+-   Droits : chacun lit le contenu publié, les classements, le feed et
+    les profils publics des autres (jamais leur historique), écrit ses
+    propres posts, réponses et réactions, et modifie sa photo de profil.
+    Seul l'admin écrit le contenu et supprime les posts des autres.
+
+-   Limite assumée : les exercices et les flashcards sont déclaratifs.
+    Aucun plafond n'est appliqué : les points sont une motivation, et la
+    triche sur ses propres déclarations est assumée.
+
+Plan de construction
+
+La v1 est jouable après l'étape 6, ce qui représente environ une semaine
+de travail selon ta disponibilité (estimation indicative). Chaque étape
+se teste avant de passer à la suivante.
+
+1.  Créer le projet Supabase, le schéma de base et les droits d'accès.
+
+2.  Connexion par pseudo et mot de passe, barre de navigation, page
+    Profil avec images provisoires.
+
+3.  Script d'import du contenu par CSV et page Révision : matière puis
+    chapitre.
+
+4.  QCM corrigés côté serveur, avec points et sessions.
+
+5.  Flashcards à répétition espacée, avec la vue téléphone limitée aux
+    flashcards, et exercices avec correction et auto-évaluation.
+
+6.  Classement de la semaine et cumulé sur la page Feed, historique et
+    progression sur la page Profil. Mise en ligne dans le groupe de la
+    promo.
+
+7.  Feed : événements automatiques, posts, réactions emoji, réponses
+    courtes.
+
+8.  Remplacement des images provisoires par les 50 images finales.
+
+9.  Gamification, dans cet ordre proposé : niveaux, badges, défis
+    hebdomadaires, duels différés, défis à un ami.
+
+10. Ajustements d'après les retours : barème, niveaux, idées de la
+    promo.
+
+Points ouverts
+
+Ces points ne bloquent pas le démarrage.
+
+-   ☐ Barème : valider ou ajuster les valeurs de la section Points (10
+    points par minute estimée, 1 minute par QCM, 20 secondes par carte)
+
+-   ☐ QCM : une seule bonne réponse ou plusieurs ?
+
+-   ☐ Mode examen : mêmes points que le mode entraînement ?
+
+-   ☐ Réactions : quels emojis fixes (🔥 👏 💪 😂 proposés) ? Longueur
+    des réponses (140 caractères proposés) ?
+
+-   ☐ Dates des contrôles : saisies par l'admin par matière, par fichier
+    CSV ou directement dans Supabase ? Elles alimentent le compte à
+    rebours de la page Révision
+
+-   ☐ Photos de profil : plusieurs étudiants peuvent-ils prendre la même
+    ?
+
+-   ☐ Style des 50 images à fixer avant la génération
+
+-   ☐ Gamification et social : fixer les détails des badges, niveaux,
+    défis hebdomadaires, duels et défis à un ami (voir la section
+    dédiée)
+
+-   ☐ Couleurs de bonne et de mauvaise réponse, la palette n'ayant ni
+    vert ni rouge franc
+
+-   ☐ Niveaux : seuils de points pour passer chaque niveau, ou pas de
+    niveaux du tout
+
+-   ☐ Nom de la plateforme

@@ -1,0 +1,27 @@
+/* Palette de la spec : thème sombre uniquement, fond molten-lava. */
+:root {
+  --light-caramel: #fbba72; /* accents clairs, texte et icônes sur fond sombre */
+  --bronze-spice: #ca5310;  /* accent principal (grands textes, décors) */
+  --autumn-ember: #bb4d00;  /* boutons et liens, texte blanc */
+  --brandy: #8f250c;        /* bordures, éléments secondaires, états actifs */
+  --molten-lava: #691e06;   /* fond */
+
+  --bg: var(--molten-lava);
+  --text: var(--light-caramel);
+  --accent: var(--bronze-spice);
+  --button: var(--autumn-ember);
+  --border: var(--brandy);
+  /* À définir (point ouvert de la spec) : couleurs bonne / mauvaise réponse */
+
+  color-scheme: dark;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
