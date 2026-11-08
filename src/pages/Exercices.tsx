@@ -1,11 +1,8 @@
 // Exercices du chapitre. Maquette : docs/maquettes/Exercice.dc.html. Chantier "Exercices".
-import { Placeholder } from '../components/Placeholder'
-import { SessionLayout } from '../layouts/SessionLayout'
+import { useParams } from 'react-router'
+import { ExercicesList } from '../features/exercices/ExercicesList'
 
 export default function Exercices() {
-  return (
-    <SessionLayout title="Exercices du chapitre">
-      <Placeholder title="Exercices du chapitre" />
-    </SessionLayout>
-  )
+  const { chapterId = '' } = useParams()
+  return <ExercicesList key={chapterId} chapterId={chapterId} />
 }

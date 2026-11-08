@@ -736,6 +736,14 @@ export type Database = {
         }
         Returns: string
       }
+      submit_exercise: {
+        Args: {
+          p_exercise_id: string
+          p_resultat: Database["public"]["Enums"]["activity_result"]
+          p_session_id: string
+        }
+        Returns: Json
+      }
       submit_qcm_answer: {
         Args: { p_choix: string[]; p_question_id: string; p_session_id: string }
         Returns: Json
