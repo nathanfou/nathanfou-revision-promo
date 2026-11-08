@@ -362,6 +362,58 @@ export type Database = {
         }
         Relationships: []
       }
+      qcm_answers: {
+        Row: {
+          answered_at: string
+          choix: string[]
+          correct: boolean
+          points: number
+          question_id: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          choix: string[]
+          correct: boolean
+          points?: number
+          question_id: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          choix?: string[]
+          correct?: boolean
+          points?: number
+          question_id?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qcm_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qcm_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qcm_answers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       question_answers: {
         Row: {
           bonnes_reponses: string[]
@@ -654,6 +706,20 @@ export type Database = {
         }[]
       }
       paris_week_start: { Args: { p_at?: string }; Returns: string }
+      qcm_questions: {
+        Args: {
+          p_chapter_id: string
+          p_limit?: number
+          p_question_ids?: string[]
+        }
+        Returns: {
+          choix: Json
+          enonce: string
+          id: string
+          multiple: boolean
+        }[]
+      }
+      qcm_session_review: { Args: { p_session_id: string }; Returns: Json }
       review_flashcard: {
         Args: {
           p_flashcard_id: string
@@ -669,6 +735,10 @@ export type Database = {
           p_variante?: Database["public"]["Enums"]["session_variant"]
         }
         Returns: string
+      }
+      submit_qcm_answer: {
+        Args: { p_choix: string[]; p_question_id: string; p_session_id: string }
+        Returns: Json
       }
     }
     Enums: {
