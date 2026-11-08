@@ -1,11 +1,9 @@
 // Exercice. Maquette : docs/maquettes/Exercice.dc.html. Chantier "Exercices".
-import { Placeholder } from '../components/Placeholder'
-import { SessionLayout } from '../layouts/SessionLayout'
+import { useParams } from 'react-router'
+import { ExerciceScreen } from '../features/exercices/ExerciceScreen'
 
 export default function Exercice() {
-  return (
-    <SessionLayout title="Exercice">
-      <Placeholder title="Exercice" />
-    </SessionLayout>
-  )
+  const { exerciseId = '' } = useParams()
+  // key : état remis à zéro (et session close) en passant à l'exercice suivant
+  return <ExerciceScreen key={exerciseId} exerciseId={exerciseId} />
 }
