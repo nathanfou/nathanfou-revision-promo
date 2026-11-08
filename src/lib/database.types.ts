@@ -417,6 +417,58 @@ export type Database = {
         }
         Relationships: []
       }
+      qcm_answers: {
+        Row: {
+          answered_at: string
+          choix: string[]
+          correct: boolean
+          points: number
+          question_id: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          answered_at?: string
+          choix: string[]
+          correct: boolean
+          points?: number
+          question_id: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          answered_at?: string
+          choix?: string[]
+          correct?: boolean
+          points?: number
+          question_id?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qcm_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qcm_answers_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qcm_answers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       question_answers: {
         Row: {
           bonnes_reponses: string[]
@@ -657,6 +709,35 @@ export type Database = {
           user_id: string
         }[]
       }
+      flashcard_overview: {
+        Args: never
+        Returns: {
+          chapter_id: string
+          chapter_nom: string
+          due_count: number
+          new_count: number
+          subject_id: string
+          subject_nom: string
+          total_count: number
+        }[]
+      }
+      flashcard_queue: {
+        Args: { p_chapter_id?: string; p_new_limit?: number }
+        Returns: {
+          chapter_id: string
+          chapter_nom: string
+          due_date: string
+          flashcard_id: string
+          is_new: boolean
+          next_a_revoir: number
+          next_bien: number
+          next_facile: number
+          palier: number
+          recto: string
+          subject_nom: string
+          verso: string
+        }[]
+      }
       leaderboard: {
         Args: { p_scope?: string; p_week_of?: string }
         Returns: {
@@ -692,7 +773,56 @@ export type Database = {
           read_at: string
         }[]
       }
+      my_revision_time: {
+        Args: never
+        Returns: {
+          jour: string
+          minutes_exo: number
+          nb_cartes: number
+          nb_qcm: number
+          subject_id: string
+        }[]
+      }
+      my_session_history: {
+        Args: { p_before?: string; p_limit?: number }
+        Returns: {
+          chapter_nom: string
+          ended_at: string
+          id: string
+          minutes_exo: number
+          mode: Database["public"]["Enums"]["activity_mode"]
+          nb_items: number
+          nb_reussis: number
+          points: number
+          resultat_exo: Database["public"]["Enums"]["activity_result"]
+          started_at: string
+          subject_nom: string
+          variante: Database["public"]["Enums"]["session_variant"]
+        }[]
+      }
       paris_week_start: { Args: { p_at?: string }; Returns: string }
+      qcm_questions: {
+        Args: {
+          p_chapter_id: string
+          p_limit?: number
+          p_question_ids?: string[]
+        }
+        Returns: {
+          choix: Json
+          enonce: string
+          id: string
+          multiple: boolean
+        }[]
+      }
+      qcm_session_review: { Args: { p_session_id: string }; Returns: Json }
+      review_flashcard: {
+        Args: {
+          p_flashcard_id: string
+          p_note: Database["public"]["Enums"]["activity_result"]
+          p_session_id: string
+        }
+        Returns: Json
+      }
       start_session: {
         Args: {
           p_chapter_id: string
@@ -700,6 +830,18 @@ export type Database = {
           p_variante?: Database["public"]["Enums"]["session_variant"]
         }
         Returns: string
+      }
+      submit_exercise: {
+        Args: {
+          p_exercise_id: string
+          p_resultat: Database["public"]["Enums"]["activity_result"]
+          p_session_id: string
+        }
+        Returns: Json
+      }
+      submit_qcm_answer: {
+        Args: { p_choix: string[]; p_question_id: string; p_session_id: string }
+        Returns: Json
       }
     }
     Enums: {
