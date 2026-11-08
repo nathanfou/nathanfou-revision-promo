@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Exercice</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fde9d6}</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="6">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="5">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;">
+    <a href="Main.dc.html" class="btn btn-ghost" style="display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3; color: #2a1a10; font-size: 14px; font-weight: 500; text-decoration: none;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+      Quitter
+    </a>
+    <div style="min-width: 0;">
+      <p style="margin: 0; font-size: 15px; font-weight: 600;">Enzymologie</p>
+      <p style="margin: 0; font-size: 13px; color: #6b4a35;">Biochimie, exercice</p>
+    </div>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 40px 32px 72px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start;">
+
+  <section class="rise" aria-labelledby="t-ex" style="flex: 1 1 500px; min-width: 0; padding: 30px; display: flex; flex-direction: column; gap: 18px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 22px 44px -28px rgba(120,60,20,0.4);">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <span style="padding: 4px 11px; border-radius: 999px; background-color: #fbe9d7; font-size: 13px; color: #4d3324;">20 min</span>
+      <span style="padding: 4px 11px; border-radius: 999px; background-color: #fde3c8; font-size: 13px; color: #9a3f00; font-weight: 500;">200 pts si réussi</span>
+      <span style="padding: 4px 11px; border-radius: 999px; background-color: #fbe9d7; font-size: 13px; color: #4d3324;">À refaire</span>
+    </div>
+    <h1 id="t-ex" style="margin: 0; font-size: 30px; line-height: 1.2; font-weight: 600; letter-spacing: -0.02em;">Calcul de Km et Vmax (Lineweaver-Burk)</h1>
+    <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4d3324;">On mesure la vitesse initiale d’une réaction enzymatique pour différentes concentrations de substrat, à concentration d’enzyme constante.</p>
+    <div style="overflow-x: auto; border: 1px solid #efd5bc; border-radius: 14px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+        <tbody>
+          <tr style="background-color: #fbe9d7;">
+            <th scope="row" style="padding: 10px 14px; text-align: left; font-weight: 600; white-space: nowrap;">[S] (mM)</th>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">0,5</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">1</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">2</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">4</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">8</td>
+          </tr>
+          <tr>
+            <th scope="row" style="padding: 10px 14px; text-align: left; font-weight: 600; white-space: nowrap;">v (µmol/min)</th>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">25</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">40</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">57</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">73</td>
+            <td style="padding: 10px 12px; text-align: center; font-family: 'Geist Mono', monospace;">84</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ol style="margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.55;">
+      <li>Trace la représentation de Lineweaver-Burk.</li>
+      <li>Déduis-en la Vmax et le Km de l’enzyme.</li>
+      <li>En présence d’un inhibiteur, la Vmax reste à 100 µmol/min et le Km apparent passe à 4,5 mM. De quel type d’inhibition s’agit-il ?</li>
+    </ol>
+    <div style="display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-radius: 14px; background-color: #fff3e6; border: 1px dashed #e3c3a5;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a3f00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px;"><path d="M15 4l5 5L9 20H4v-5z"></path><path d="M13 6l5 5"></path></svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4d3324;">Fais l’exercice sur papier, puis affiche la correction et compare avec tes réponses.</p>
+    </div>
+  </section>
+
+  <div style="flex: 1 1 500px; min-width: 0; display: flex; flex-direction: column; gap: 22px;">
+
+    <sc-if value="{{hidden}}" hint-placeholder-val="{{ false }}">
+      <section class="rise" aria-label="Correction masquée" style="animation-delay: 80ms; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; background-color: #2a1a10; color: #fbe9d7; border-radius: 22px;">
+        <div style="padding: 10px 18px 8px; border-radius: 12px; background-color: #fbba72; color: #691e06; box-shadow: inset 0 0 0 1px rgba(105,30,6,0.18), inset 0 3px 0 rgba(105,30,6,0.1);">
+          <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">DURÉE ESTIMÉE</div>
+          <div style="font-family: 'Doto', monospace; font-weight: 900; font-size: 56px; line-height: 1;">20 MIN</div>
+        </div>
+        <p style="margin: 0; font-size: 15px; color: #e8cdb4;">Prends ton temps. La correction reste masquée tant que tu ne la demandes pas.</p>
+        <button type="button" class="btn btn-primary" onClick="{{show}}" style="padding: 14px 26px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600;">Afficher la correction</button>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{shown}}" hint-placeholder-val="{{ true }}">
+      <section class="reveal" aria-labelledby="t-cor" style="padding: 28px; display: flex; flex-direction: column; gap: 16px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 22px 44px -28px rgba(120,60,20,0.4);">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <h2 id="t-cor" style="margin: 0; font-size: 20px; font-weight: 600;">Correction</h2>
+          <button type="button" class="btn btn-ghost" onClick="{{hide}}" style="padding: 7px 14px; border-radius: 999px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 13px; font-weight: 500;">Masquer</button>
+        </div>
+        <ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px;">
+          <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+            <li style="display: flex; gap: 12px;">
+              <span aria-hidden="true" style="flex: 0 0 26px; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 8px; background-color: #2a1a10; color: #fbba72; font-family: 'Doto', monospace; font-weight: 900; font-size: 14px;">{{s.no}}</span>
+              <p style="margin: 2px 0 0; font-size: 15px; line-height: 1.55;">{{s.text}}</p>
+            </li>
+          </sc-for>
+        </ol>
+        <figure style="margin: 0; padding: 14px; border-radius: 14px; background-color: #fff3e6; border: 1px solid #f3e0cc;">
+          <svg viewBox="0 0 360 210" width="100%" role="img" aria-label="Droite de Lineweaver-Burk : 1/v en fonction de 1/[S], ordonnée à l’origine 0,010 et abscisse à l’origine -0,67" style="display: block; max-width: 460px; margin: 0 auto;">
+            <line x1="8" y1="190" x2="352" y2="190" stroke="#c9a88e" stroke-width="1.5"></line>
+            <line x1="100.7" y1="12" x2="100.7" y2="200" stroke="#c9a88e" stroke-width="1.5"></line>
+            <line x1="25.1" y1="190" x2="338.7" y2="33.2" stroke="#bb4d00" stroke-width="2.5" stroke-linecap="round"></line>
+            <rect x="323.3" y="34.9" width="8" height="8" fill="#2a1a10"></rect>
+            <rect x="210" y="91.6" width="8" height="8" fill="#2a1a10"></rect>
+            <rect x="153.3" y="119.9" width="8" height="8" fill="#2a1a10"></rect>
+            <rect x="125" y="134.2" width="8" height="8" fill="#2a1a10"></rect>
+            <rect x="110.8" y="141" width="8" height="8" fill="#2a1a10"></rect>
+            <circle cx="25.1" cy="190" r="4" fill="#fffaf3" stroke="#bb4d00" stroke-width="2"></circle>
+            <circle cx="100.7" cy="152.2" r="4" fill="#fffaf3" stroke="#bb4d00" stroke-width="2"></circle>
+            <text x="12" y="206" font-family="Geist Mono, monospace" font-size="11" fill="#6b4a35">-1/Km</text>
+            <text x="106" y="164" font-family="Geist Mono, monospace" font-size="11" fill="#6b4a35">1/Vmax</text>
+            <text x="300" y="206" font-family="Geist Mono, monospace" font-size="11" fill="#6b4a35">1/[S]</text>
+            <text x="106" y="20" font-family="Geist Mono, monospace" font-size="11" fill="#6b4a35">1/v</text>
+          </svg>
+        </figure>
+      </section>
+
+      <section class="reveal" aria-labelledby="t-eval" style="animation-delay: 120ms; padding: 28px; display: flex; flex-direction: column; gap: 14px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 22px 44px -28px rgba(120,60,20,0.4);">
+        <h2 id="t-eval" style="margin: 0; font-size: 20px; font-weight: 600;">Comment ça s’est passé ?</h2>
+        <sc-if value="{{notValidated}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div role="radiogroup" aria-labelledby="t-eval" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;">
+              <sc-for list="{{options}}" as="o" hint-placeholder-count="3">
+                <button type="button" class="opt" role="radio" aria-checked="{{o.sel}}" onClick="{{o.pick}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 14px; border-radius: 16px; text-align: left; color: #2a1a10; {{o.style}}">
+                  <span style="font-size: 16px; font-weight: 600;">{{o.label}}</span>
+                  <span style="font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; color: #9a3f00;">+{{o.pts}} pts</span>
+                  <span style="font-size: 13px; line-height: 1.4; color: #6b4a35;">{{o.hint}}</span>
+                </button>
+              </sc-for>
+            </div>
+            <button type="button" class="btn btn-primary" onClick="{{validate}}" disabled="{{noChoice}}" style="align-self: flex-start; padding: 13px 26px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600;">Valider</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{validated}}" hint-placeholder-val="{{ false }}">
+          <div class="popin" aria-live="polite" style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 16px; background-color: #fde3c8;">
+              <span class="floatup" style="padding: 4px 12px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-family: 'Geist Mono', monospace; font-size: 15px; font-weight: 500;">+{{result.pts}} pts</span>
+              <p style="margin: 0; font-size: 15px; line-height: 1.5;">{{result.text}}</p>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+              <a href="Main.dc.html" class="btn btn-primary" style="padding: 13px 24px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; text-decoration: none;">Retour à Révision</a>
+              <button type="button" class="btn btn-ghost" onClick="{{reset}}" style="padding: 13px 22px; border-radius: 999px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 16px; font-weight: 500;">Changer d’avis</button>
+            </div>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state || {};
+    const feuilles = this.props.feuilles ?? true;
+    const revealed = st.revealed ?? true;
+    const choice = st.choice === undefined ? "ok" : st.choice;
+    const validated = st.validated ?? false;
+
+    const LEAF = { orange: ["#e8742a", "#bb4d00"], caramel: ["#fbba72", "#e08a3c"], gold: ["#f2a541", "#c46f12"], bronze: ["#ca5310", "#8f250c"] };
+    const decorRaw = [
+      ["B", 70, "orange", 18, "top: 90px; right: 2%;", true],
+      ["A", 44, "gold", -40, "top: 240px; left: 1.5%;", true],
+      ["A", 40, "caramel", 70, "top: 620px; right: 1.5%;", false],
+      ["B", 56, "gold", -12, "top: 860px; left: 1%;", true],
+      ["A", 46, "orange", 120, "bottom: 40px; right: 4%;", true],
+      ["B", 64, "caramel", 24, "bottom: 20px; left: 3%;", true]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({ isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : "" })) : [];
+    const fallRaw = [["A", 24, "orange", 30, 5, "fallA"], ["B", 28, "gold", 66, 13, "fallB"], ["A", 22, "caramel", 88, 20, "fallA"], ["B", 26, "orange", 10, 26, "fallB"], ["A", 20, "bronze", 50, 33, "fallA"]];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({ isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5] })) : [];
+
+    const steps = [
+      { no: 1, text: "Calcule 1/[S] (2 ; 1 ; 0,5 ; 0,25 ; 0,125 mM⁻¹) et 1/v (0,040 ; 0,025 ; 0,0175 ; 0,0137 ; 0,0119 min/µmol)." },
+      { no: 2, text: "Trace 1/v en fonction de 1/[S] : les points sont alignés sur une droite." },
+      { no: 3, text: "Ordonnée à l’origine : 1/Vmax = 0,010, donc Vmax = 100 µmol/min." },
+      { no: 4, text: "Pente : Km/Vmax = 0,015, donc Km = 1,5 mM." },
+      { no: 5, text: "Avec l’inhibiteur, la Vmax ne change pas et le Km apparent est multiplié par 3 : c’est une inhibition compétitive." }
+    ];
+
+    const ON = "border: 1.5px solid #bb4d00; background-color: #fde3c8;";
+    const OFF = "border: 1.5px solid #efd5bc; background-color: #fffaf3;";
+    const OPTS = [
+      { id: "ok", label: "Réussi", pts: 200, hint: "Tout est juste, ou presque.", text: "Bravo, 200 pts ajoutés. L’exercice sort de ta liste à refaire." },
+      { id: "half", label: "Partiel", pts: 100, hint: "Une partie juste, des oublis.", text: "100 pts ajoutés, la moitié des points de l’exercice." },
+      { id: "redo", label: "À refaire", pts: 50, hint: "Il faut le retravailler.", text: "50 pts ajoutés. L’exercice reste dans ta liste à refaire." }
+    ];
+    const options = OPTS.map((o) => ({ ...o, sel: o.id === choice, style: o.id === choice ? ON : OFF, pick: () => this.setState({ choice: o.id }) }));
+    const res = OPTS.find((o) => o.id === choice) || OPTS[0];
+
+    return {
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      hidden: !revealed,
+      shown: revealed,
+      show: () => this.setState({ revealed: true }),
+      hide: () => this.setState({ revealed: false, validated: false }),
+      steps,
+      options,
+      noChoice: !choice,
+      validated,
+      notValidated: !validated,
+      validate: () => this.setState({ validated: true }),
+      reset: () => this.setState({ validated: false }),
+      result: { pts: res.pts, text: res.text }
+    };
+  }
+}
+</script>
+</body>
+</html>

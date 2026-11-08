@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Notifications</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fcdcbd}</style>
+</helmet>
+<div style="width: 420px; height: 660px; box-sizing: border-box; padding: 14px; background: linear-gradient(180deg, #fde9d6 0%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+  <section aria-labelledby="t-notifs" class="popin" style="height: 100%; display: flex; flex-direction: column; overflow: hidden; background-color: #fffaf3; border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 26px 50px -30px rgba(120,60,20,0.5);">
+    <div style="padding: 18px 18px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #f3e0cc;">
+      <svg width="22" height="22" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="#e8742a" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="#bb4d00" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+      <h1 id="t-notifs" style="margin: 0; font-size: 18px; font-weight: 600;">Notifications</h1>
+      <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ true }}"><span style="padding: 1px 8px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 12px; font-weight: 600;">{{unread}}</span></sc-if>
+      <button type="button" onClick="{{readAll}}" style="margin-left: auto; min-height: 36px; padding: 0 6px; border: 0; background-color: transparent; color: #9a3f00; font-size: 13px; font-weight: 500; text-decoration: underline; text-underline-offset: 3px;">Tout marquer comme lu</button>
+    </div>
+    <div style="flex: 1; overflow-y: auto; padding: 8px 8px 12px;">
+      <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+        <div style="margin-top: 6px;">
+          <h2 style="margin: 6px 10px 4px; font-size: 12px; font-weight: 500; color: #6b4a35;">{{g.title}}</h2>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px;">
+            <sc-for list="{{g.items}}" as="n" hint-placeholder-count="3">
+              <li style="display: flex; gap: 12px; padding: 12px 10px; border-radius: 14px; {{n.bg}}">
+                <sc-if value="{{n.isPerson}}" hint-placeholder-val="{{ true }}"><span aria-hidden="true" style="flex: 0 0 38px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 999px; font-size: 13px; font-weight: 600; background-color: {{n.avBg}}; color: {{n.avFg}};">{{n.ini}}</span></sc-if>
+                <sc-if value="{{n.isSystem}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex: 0 0 38px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background-color: #fde3c8; color: #9a3f00;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"></path><path d="M5 4h12l-2.5 4.5L17 13H5"></path></svg></span></sc-if>
+                <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px;">
+                  <p style="margin: 0; font-size: 14px; line-height: 1.4; {{n.textStyle}}">{{n.text}}</p>
+                  <sc-if value="{{n.hasDetail}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; font-size: 13px; line-height: 1.4; color: #6b4a35;">{{n.detail}}</p></sc-if>
+                  <p style="margin: 0; font-size: 12px; color: #6b4a35;">{{n.time}}</p>
+                  <sc-if value="{{n.hasActions}}" hint-placeholder-val="{{ false }}">
+                    <div style="display: flex; gap: 8px; margin-top: 4px;">
+                      <a href="Qcm.dc.html" class="btn btn-primary" style="padding: 7px 14px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 13px; font-weight: 600; text-decoration: none;">{{n.action}}</a>
+                      <button type="button" class="btn btn-ghost" onClick="{{n.read}}" style="padding: 7px 12px; border-radius: 999px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 13px; font-weight: 500;">Plus tard</button>
+                    </div>
+                  </sc-if>
+                </div>
+                <sc-if value="{{n.isUnread}}" hint-placeholder-val="{{ false }}"><span aria-label="non lue" style="flex: 0 0 8px; width: 8px; height: 8px; margin-top: 6px; border-radius: 999px; background-color: #bb4d00;"></span></sc-if>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin: 0; padding: 12px 18px 14px; border-top: 1px solid #f3e0cc; font-size: 12px; line-height: 1.45; color: #6b4a35;">Pas d’e-mail ni de notification sur le téléphone : tout se passe ici.</p>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":420,"height":660}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const st = this.state || {};
+    const read = st.read || {};
+    const AV = { LM: ["#bb4d00", "#fffaf5"], MA: ["#2a1a10", "#fbba72"], CA: ["#fde3c8", "#8f250c"] };
+    const RAW = [
+      { id: "n1", group: 0, kind: "person", ini: "LM", text: "lea.m a répondu à ton post", detail: "Dimanche 20h en salle B, ça te va ?", time: "il y a 20 min", unread: true },
+      { id: "n2", group: 0, kind: "person", ini: "MA", text: "malo te propose un duel", detail: "Enzymologie, 20 QCM. Il te reste 31 h pour jouer.", time: "il y a 1 h", unread: true, action: "Jouer" },
+      { id: "n3", group: 0, kind: "system", text: "Nouveau défi de la semaine", detail: "Réussir 60 QCM d’ici dimanche.", time: "lundi", unread: true },
+      { id: "n4", group: 1, kind: "person", ini: "CA", text: "capu te défie de battre 17/20 en Glucides", detail: "", time: "dimanche", unread: false, action: "Relever" },
+      { id: "n5", group: 1, kind: "system", text: "Tu remontes à la 13e place", detail: "Semaine 45, classement final.", time: "dimanche", unread: false }
+    ];
+    let unread = 0;
+    const items = RAW.map((n) => {
+      const isUnread = n.unread && !read[n.id] && !st.allRead;
+      if (isUnread) unread++;
+      const av = AV[n.ini] || ["#fbba72", "#691e06"];
+      return {
+        ...n,
+        isPerson: n.kind === "person",
+        isSystem: n.kind === "system",
+        avBg: av[0],
+        avFg: av[1],
+        hasDetail: !!n.detail,
+        hasActions: !!n.action && isUnread,
+        isUnread,
+        bg: isUnread ? "background-color: #fdebd8;" : "",
+        textStyle: isUnread ? "font-weight: 600; color: #2a1a10;" : "color: #4d3324;",
+        read: () => this.setState({ read: Object.assign({}, read, { [n.id]: true }) })
+      };
+    });
+    const groups = [
+      { title: "Aujourd’hui", items: items.filter((n) => n.group === 0) },
+      { title: "Plus tôt", items: items.filter((n) => n.group === 1) }
+    ];
+    return {
+      groups,
+      unread,
+      hasUnread: unread > 0,
+      readAll: () => this.setState({ allRead: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

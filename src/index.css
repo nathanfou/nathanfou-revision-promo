@@ -1,27 +1,150 @@
-/* Palette de la spec : thème sombre uniquement, fond molten-lava. */
+/*
+ * Design system "Bachotage" (maquettes : docs/maquettes/, styles d'origine : docs/maquettes/theme.css).
+ * Thème clair pêche/automne de la maquette, qui remplace le thème sombre de la spec v1.
+ * Utiliser les variables ci-dessous plutôt que des couleurs en dur.
+ */
 :root {
-  --light-caramel: #fbba72; /* accents clairs, texte et icônes sur fond sombre */
-  --bronze-spice: #ca5310;  /* accent principal (grands textes, décors) */
-  --autumn-ember: #bb4d00;  /* boutons et liens, texte blanc */
-  --brandy: #8f250c;        /* bordures, éléments secondaires, états actifs */
-  --molten-lava: #691e06;   /* fond */
+  /* Fonds */
+  --bg-top: #fde9d6;
+  --bg-mid: #fcdcbd;
+  --bg-bottom: #f9cda4;
+  --bg-gradient: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 55%, var(--bg-bottom) 100%);
+  --card: #fffaf3;             /* cartes, champs */
+  --card-alpha: rgba(255, 250, 243, 0.92);
+  --card-tint: #fff3e6;        /* colonne "Mode", zones teintées */
+  --chip: #fbe9d7;             /* pastilles neutres */
+  --chip-strong: #fde3c8;      /* sélection, icônes de carte */
+  --track: #fbe3cc;            /* fond des onglets segmentés */
+  --row-hover: #fbeedf;
+  --border: #efd5bc;
+  --border-soft: #f3e0cc;      /* séparateurs internes */
+  --border-strong: #e3c3a5;    /* boutons fantômes, champs */
+  --border-hover: #c9a88e;
 
-  --bg: var(--molten-lava);
-  --text: var(--light-caramel);
-  --accent: var(--bronze-spice);
-  --button: var(--autumn-ember);
-  --border: var(--brandy);
-  /* À définir (point ouvert de la spec) : couleurs bonne / mauvaise réponse */
+  /* Texte */
+  --text: #2a1a10;
+  --text-2: #4d3324;
+  --muted: #6b4a35;
+  --faint: #8a6a55;
+  --link: #9a3f00;
+  --link-hover: #691e06;
 
-  color-scheme: dark;
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  background: var(--bg);
+  /* Accents (palette de la spec) */
+  --accent: #bb4d00;           /* autumn-ember : boutons, barres allumées */
+  --accent-hover: #a34300;
+  --accent-text: #fffaf5;      /* texte sur accent */
+  --caramel: #fbba72;          /* light-caramel : LCD */
+  --bronze: #ca5310;
+  --brandy: #8f250c;
+  --lava: #691e06;
+
+  /* Encre (cartes sombres, pastille de points, LCD) */
+  --ink: #2a1a10;
+  --ink-2: #3d2819;
+  --ink-text: #fbe9d7;
+  --ink-muted: #e8cdb4;
+  --ink-faint: #c9a88e;
+
+  /* États */
+  --ok: #276a3f;
+  --ok-bg: #e6f2e6;
+  --ko: #8f250c;
+  --ko-bg: #fbe3da;
+  --ko-border: #f0c1b0;
+
+  /* Barres pixel */
+  --seg-on: #bb4d00;
+  --seg-off: rgba(187, 77, 0, 0.08);
+  --frame-on: #bb4d00;
+  --frame-off: #e3c3a5;
+
+  /* Ombres et rayons */
+  --shadow-card: 0 1px 2px rgba(120, 60, 20, 0.06), 0 18px 36px -24px rgba(120, 60, 20, 0.35);
+  --shadow-pop: 0 1px 2px rgba(120, 60, 20, 0.06), 0 26px 50px -30px rgba(120, 60, 20, 0.45);
+  --shadow-ink: 0 18px 36px -24px rgba(60, 25, 5, 0.7);
+  --shadow-cta: 0 8px 18px -10px rgba(187, 77, 0, 0.7);
+  --radius-card: 20px;
+  --radius-field: 12px;
+
+  /* Polices */
+  --font: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Geist Mono', ui-monospace, monospace;
+  --lcd: 'Doto', monospace;          /* chiffres LCD */
+  --kata: 'DotGothic16', sans-serif; /* katakana décoratifs */
+
+  --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+  color-scheme: light;
+  font-family: var(--font);
   color: var(--text);
+  background: var(--bg-top);
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); }
+html, body { margin: 0; }
+body { min-height: 100vh; background: var(--bg-gradient); background-attachment: fixed; color: var(--text); -webkit-font-smoothing: antialiased; }
+#root { min-height: 100vh; }
 
+a { color: var(--link); }
+a:hover { color: var(--link-hover); }
+button { font: inherit; color: inherit; cursor: pointer; }
+input, textarea, select { font: inherit; }
+input::placeholder, textarea::placeholder { color: var(--faint); opacity: 1; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.mono { font-family: var(--mono); }
+.lcd { font-family: var(--lcd); font-weight: 900; }
+.tabnum { font-variant-numeric: tabular-nums; }
+
+/* ---- Interactions (theme.css de la maquette) ---- */
+.btn { transition: transform .15s var(--ease-out), background-color .15s, border-color .15s; }
+.btn:active { transform: scale(.97); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; transform: none; }
+.btn-primary:hover:not(:disabled) { background-color: var(--accent-hover) !important; color: var(--accent-text); }
+.btn-ghost:hover:not(:disabled) { background-color: #fbe9d7 !important; border-color: var(--border-hover) !important; color: var(--text); }
+.row { transition: background-color .15s; }
+.row:hover { background-color: var(--row-hover); }
+.tab:hover { color: var(--text) !important; }
+.opt { transition: border-color .15s, background-color .15s, transform .15s var(--ease-out); }
+.opt:hover:not(:disabled) { border-color: var(--border-hover) !important; }
+.opt:active:not(:disabled) { transform: scale(.99); }
+.lift { transition: transform .25s var(--ease-out); }
+.lift:hover { transform: translateY(-2px); }
+.field { transition: border-color .15s, box-shadow .15s; }
+.field:focus { outline: none; border-color: var(--accent) !important; box-shadow: 0 0 0 3px rgba(187, 77, 0, .2); }
+.tile { transition: transform .15s var(--ease-out), box-shadow .15s; }
+.tile:hover { transform: translateY(-2px); }
+
+/* Cadres pixel (barres de progression) */
+.px { clip-path: polygon(6px 0,calc(100% - 6px) 0,calc(100% - 6px) 3px,calc(100% - 3px) 3px,calc(100% - 3px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 3px) calc(100% - 6px),calc(100% - 3px) calc(100% - 3px),calc(100% - 6px) calc(100% - 3px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 3px),3px calc(100% - 3px),3px calc(100% - 6px),0 calc(100% - 6px),0 6px,3px 6px,3px 3px,6px 3px); }
+.pxs { clip-path: polygon(4px 0,calc(100% - 4px) 0,calc(100% - 4px) 2px,calc(100% - 2px) 2px,calc(100% - 2px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 2px) calc(100% - 4px),calc(100% - 2px) calc(100% - 2px),calc(100% - 4px) calc(100% - 2px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 2px),2px calc(100% - 2px),2px calc(100% - 4px),0 calc(100% - 4px),0 4px,2px 4px,2px 2px,4px 2px); }
+
+/* ---- Animations ---- */
+@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(6deg); } }
+@keyframes fallA { 0% { opacity: 0; transform: translate(0,-60px) rotate(0); } 2% { opacity: 1; } 12% { transform: translate(70px,22vh) rotate(90deg); } 24% { transform: translate(-20px,48vh) rotate(170deg); } 36% { transform: translate(90px,78vh) rotate(260deg); } 46% { opacity: 1; transform: translate(30px,108vh) rotate(340deg); } 47%, 100% { opacity: 0; transform: translate(30px,108vh) rotate(340deg); } }
+@keyframes fallB { 0% { opacity: 0; transform: translate(0,-60px) rotate(0); } 2% { opacity: 1; } 14% { transform: translate(-80px,25vh) rotate(-100deg); } 28% { transform: translate(10px,55vh) rotate(-200deg); } 40% { transform: translate(-60px,84vh) rotate(-290deg); } 50% { opacity: 1; transform: translate(-20px,108vh) rotate(-360deg); } 51%, 100% { opacity: 0; transform: translate(-20px,108vh) rotate(-360deg); } }
+@keyframes burst { 0% { opacity: 0; transform: translateY(0) scale(.3) rotate(0); } 10% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; transform: translateY(-300px) scale(1.1) rotate(320deg); } }
+@keyframes popin { from { opacity: 0; transform: scale(.9) translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes blink { 50% { opacity: .15; } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.4) rotate(-10deg); } 100% { transform: scale(1); } }
+@keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
+@keyframes floatup { 0% { opacity: 0; transform: translateY(6px); } 20% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-18px); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise { animation: rise .8s var(--ease-out) both; }
+  .sway { animation: sway 7s ease-in-out infinite; transform-origin: 30% 90%; }
+  .fallA { animation: fallA 28s ease-in-out infinite; }
+  .fallB { animation: fallB 34s ease-in-out infinite; }
+  .burst { animation: burst 1.9s cubic-bezier(.2,.7,.3,1) both; }
+  .popin { animation: popin .5s var(--ease-out) both; }
+  .blink { animation: blink 1.6s steps(1) infinite; }
+  .chip[aria-pressed="true"] .emo { display: inline-block; animation: pop .45s var(--ease-out); }
+  .reveal { animation: reveal .45s var(--ease-out) both; }
+  .shake { animation: shake .45s cubic-bezier(.36,.07,.19,.97) both; }
+  .floatup { animation: floatup 1.8s var(--ease-out) both; }
+}
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .btn, .row, .opt, .lift, .field, .tile { transition: none; }
 }

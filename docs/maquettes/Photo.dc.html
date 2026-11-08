@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Choix de la photo de profil</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fde9d6}</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="6">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="5">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;">
+    <span style="display: flex; align-items: center; gap: 10px;">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#bb4d00"></circle><circle cx="14" cy="14" r="8" fill="none" stroke="#fbba72" stroke-width="1.5"></circle><circle cx="14" cy="14" r="3" fill="#fffaf3"></circle></svg>
+      <span style="font-size: 18px; font-weight: 600;">Bachotage</span>
+    </span>
+    <span style="padding: 5px 12px; border-radius: 999px; background-color: #fbe3cc; font-family: 'Geist Mono', monospace; font-size: 13px; color: #4d3324;">Étape 2 sur 2</span>
+    <div style="margin-left: auto;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 44px 32px 72px; display: flex; flex-direction: column; gap: 24px;">
+  <div class="rise">
+    <h1 style="margin: 0; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em;">Choisis ta photo de profil</h1>
+    <p style="margin: 10px 0 0; font-size: 17px; color: #6b4a35;">Tu pourras en changer à tout moment depuis ton profil.</p>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start;">
+    <section class="rise" aria-labelledby="t-preview" style="animation-delay: 80ms; flex: 1 1 300px; max-width: 360px; min-width: 0; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 22px 44px -28px rgba(120,60,20,0.4);">
+      <h2 id="t-preview" style="margin: 0; font-size: 14px; font-weight: 500; color: #6b4a35;">Aperçu</h2>
+      <div aria-hidden="true" class="popin" style="width: 148px; height: 148px; display: grid; place-items: center; border-radius: 999px; font-family: 'Doto', monospace; font-weight: 900; font-size: 52px; box-shadow: 0 0 0 5px #fffaf3, 0 0 0 6px #efd5bc; {{sel.style}}">{{sel.no}}</div>
+      <p style="margin: 4px 0 0; font-size: 26px; font-weight: 600; letter-spacing: -0.02em;">nathan</p>
+      <span style="padding: 4px 11px; border-radius: 999px; background-color: #fde3c8; color: #9a3f00; font-size: 13px; font-weight: 600;">Niveau 1</span>
+      <p style="margin: 0; font-family: 'Geist Mono', monospace; font-size: 13px; color: #6b4a35;">Image pp_{{sel.no}}</p>
+      <a href="Main.dc.html" class="btn btn-primary" style="margin-top: 6px; width: 100%; display: flex; justify-content: center; padding: 14px 20px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 8px 18px -10px rgba(187,77,0,0.7);">Valider et commencer</a>
+    </section>
+
+    <section class="rise" aria-labelledby="t-pool" style="animation-delay: 140ms; flex: 3 1 560px; min-width: 0; padding: 24px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 16px;">
+        <h2 id="t-pool" style="margin: 0; font-size: 18px; font-weight: 600;">50 images</h2>
+        <span style="font-size: 13px; color: #6b4a35;">Images provisoires, remplacées plus tard par les illustrations finales.</span>
+      </div>
+      <div role="radiogroup" aria-labelledby="t-pool" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 12px;">
+        <sc-for list="{{tiles}}" as="t" hint-placeholder-count="50">
+          <button type="button" class="tile" role="radio" aria-checked="{{t.sel}}" aria-label="{{t.aria}}" onClick="{{t.pick}}" style="position: relative; aspect-ratio: 1; display: grid; place-items: center; border: 0; border-radius: 18px; font-family: 'Doto', monospace; font-weight: 900; font-size: 22px; {{t.style}} {{t.ring}}">
+            {{t.no}}
+            <sc-if value="{{t.sel}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; right: -6px; top: -6px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 999px; background-color: #2a1a10; color: #fbba72; border: 2px solid #fffaf3;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span></sc-if>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state || {};
+    const feuilles = this.props.feuilles ?? true;
+    const picked = st.picked ?? 7;
+
+    const LEAF = { orange: ["#e8742a", "#bb4d00"], caramel: ["#fbba72", "#e08a3c"], gold: ["#f2a541", "#c46f12"], bronze: ["#ca5310", "#8f250c"] };
+    const decorRaw = [
+      ["B", 90, "orange", 16, "top: 100px; right: 4%;", true],
+      ["A", 50, "gold", -40, "top: 250px; right: 1.5%;", true],
+      ["A", 46, "caramel", 60, "top: 520px; left: 1.5%;", false],
+      ["B", 62, "gold", -18, "top: 760px; left: 2%;", true],
+      ["A", 52, "orange", 130, "bottom: 30px; right: 6%;", true],
+      ["B", 58, "caramel", 20, "bottom: 20px; left: 30%;", false]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({ isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : "" })) : [];
+    const fallRaw = [["A", 24, "orange", 14, 3, "fallA"], ["B", 28, "gold", 46, 10, "fallB"], ["A", 22, "caramel", 72, 16, "fallA"], ["B", 26, "orange", 90, 22, "fallB"], ["A", 20, "bronze", 32, 29, "fallA"]];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({ isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5] })) : [];
+
+    const COMBOS = [
+      ["#fbba72", "#691e06"], ["#2a1a10", "#fbba72"], ["#fde3c8", "#8f250c"], ["#bb4d00", "#fffaf5"], ["#f2a541", "#4d2a08"],
+      ["#efd5bc", "#4d3324"], ["#e8742a", "#2a1a10"], ["#8f250c", "#fbe9d7"], ["#276a3f", "#e6f2e6"], ["#c9a88e", "#2a1a10"]
+    ];
+    const pad = (n) => String(n).padStart(2, "0");
+    const styleOf = (i) => {
+      const c = COMBOS[(i * 3 + Math.floor(i / 10)) % COMBOS.length];
+      return "background-color: " + c[0] + "; color: " + c[1] + ";";
+    };
+    const tiles = Array.from({ length: 50 }, (_, k) => {
+      const n = k + 1;
+      const sel = n === picked;
+      return {
+        no: pad(n),
+        sel,
+        aria: "Image " + pad(n),
+        style: styleOf(k),
+        ring: sel ? "box-shadow: 0 0 0 3px #fffaf3, 0 0 0 5px #2a1a10;" : "",
+        pick: () => this.setState({ picked: n })
+      };
+    });
+
+    return {
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      tiles,
+      sel: { no: pad(picked), style: styleOf(picked - 1) }
+    };
+  }
+}
+</script>
+</body>
+</html>

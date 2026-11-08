@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Bilan de la série</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fde9d6}</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="7">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="5">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;">
+    <a href="Main.dc.html" class="btn btn-ghost" style="display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3; color: #2a1a10; font-size: 14px; font-weight: 500; text-decoration: none;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+      Fermer
+    </a>
+    <div style="min-width: 0;">
+      <p style="margin: 0; font-size: 15px; font-weight: 600;">Enzymologie</p>
+      <p style="margin: 0; font-size: 13px; color: #6b4a35;">Biochimie, QCM examen</p>
+    </div>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 40px 32px 72px; display: flex; flex-direction: column; gap: 22px;">
+
+  <div class="rise">
+    <h1 style="margin: 0; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em;">Série terminée</h1>
+    <p style="margin: 10px 0 0; font-size: 17px; color: #6b4a35;">Mode examen : toutes les corrections sont ci-dessous.</p>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
+    <section class="rise" aria-label="Score" style="animation-delay: 80ms; flex: 6 1 460px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; background-color: #2a1a10; color: #fbe9d7; border-radius: 22px; box-shadow: 0 18px 36px -24px rgba(60,25,5,0.7);">
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: stretch;">
+        <div style="flex: 1 1 220px; padding: 14px 18px 12px; border-radius: 12px; background-color: #fbba72; color: #691e06; box-shadow: inset 0 0 0 1px rgba(105,30,6,0.18), inset 0 3px 0 rgba(105,30,6,0.1);">
+          <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">SCORE</div>
+          <div style="position: relative; margin-top: 4px; font-family: 'Doto', monospace; font-weight: 900; font-size: 92px; line-height: 0.9;">
+            <span aria-hidden="true" style="position: absolute; left: 0; top: 0; opacity: 0.12;">88/88</span>
+            <span style="position: relative;">{{score}}/20</span>
+          </div>
+        </div>
+        <div style="flex: 1 1 160px; display: flex; flex-direction: column; justify-content: center; gap: 4px;">
+          <span style="font-size: 14px; color: #e8cdb4;">Points gagnés</span>
+          <span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 48px; line-height: 1; color: #fbba72;">+{{pts}}</span>
+          <span class="floatup" style="align-self: flex-start; margin-top: 6px; padding: 3px 10px; border-radius: 999px; background-color: #3d2819; font-size: 13px; color: #f1dcc6;">10 pts par bonne réponse</span>
+        </div>
+      </div>
+      <div aria-hidden="true" class="px" style="padding: 3px; background-color: #fbba72;">
+        <div class="px" style="display: flex; align-items: center; gap: 4px; padding: 5px 8px 5px 6px; background-color: #2a1a10;">
+          <svg width="8" height="14" viewBox="0 0 4 7" shape-rendering="crispEdges" style="flex: 0 0 auto; display: block; margin-right: 2px;"><path fill="#fbba72" d="M3 0h1v7h-1zM2 1h1v5h-1zM1 2h1v3h-1zM0 3h1v1h-1z"></path></svg>
+          <sc-for list="{{bar}}" as="g" hint-placeholder-count="20"><span style="flex: 1; min-width: 4px; height: 16px; transition: background-color .3s; background-color: {{g}};"></span></sc-for>
+        </div>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <span style="padding: 5px 12px; border-radius: 999px; background-color: #3d2819; font-size: 13px; color: #f1dcc6;">22 min</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background-color: #3d2819; font-size: 13px; color: #f1dcc6;">3 erreurs</span>
+        <span style="padding: 5px 12px; border-radius: 999px; background-color: #3d2819; font-size: 13px; color: #f1dcc6;">Enzymologie : 71 % → 77 %</span>
+      </div>
+    </section>
+
+    <section class="rise" aria-labelledby="t-rank" style="animation-delay: 160ms; flex: 4 1 300px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 14px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.35);">
+      <h2 id="t-rank" style="margin: 0; font-size: 16px; font-weight: 600;">Classement de la semaine</h2>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="font-size: 32px; font-weight: 600; color: #8a6a55; text-decoration: line-through; text-decoration-thickness: 2px;">9e</span>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#bb4d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+        <span style="font-size: 44px; line-height: 1; font-weight: 600; letter-spacing: -0.03em; color: #9a3f00;">8e</span>
+        <span style="display: flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; background-color: #fde3c8; color: #9a3f00; font-size: 13px; font-weight: 500;"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2l4.5 7.5h-9z" fill="currentColor"></path></svg>1</span>
+      </div>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #4d3324;">Tu passes devant nour avec 1 410 pts cette semaine.</p>
+      <a href="Feed.dc.html" style="margin-top: auto; font-size: 14px; font-weight: 500;">Voir le classement</a>
+    </section>
+  </div>
+
+  <section class="rise" aria-labelledby="t-grid" style="animation-delay: 220ms; padding: 22px 24px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px;">
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px;">
+      <h2 id="t-grid" style="margin: 0; font-size: 18px; font-weight: 600;">Tes 20 réponses</h2>
+      <span style="display: flex; gap: 16px; font-size: 13px; color: #6b4a35;">
+        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 12px; height: 12px; border-radius: 3px; background-color: #276a3f;"></span>juste</span>
+        <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 12px; height: 12px; border-radius: 3px; background-color: #8f250c;"></span>fausse</span>
+      </span>
+    </div>
+    <ol style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 6px;">
+      <sc-for list="{{grid}}" as="c" hint-placeholder-count="20">
+        <li aria-label="{{c.aria}}" style="height: 44px; display: grid; place-items: center; border-radius: 10px; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; {{c.style}}">{{c.no}}</li>
+      </sc-for>
+    </ol>
+  </section>
+
+  <section class="rise" aria-labelledby="t-err" style="animation-delay: 280ms; display: flex; flex-direction: column; gap: 12px;">
+    <h2 id="t-err" style="margin: 8px 0 0; font-size: 22px; font-weight: 600; letter-spacing: -0.015em;">Corrections de tes erreurs</h2>
+    <sc-for list="{{errors}}" as="e" hint-placeholder-count="3">
+      <article class="lift" style="padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 18px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <span style="flex: 0 0 auto; padding: 2px 8px; border-radius: 8px; background-color: #fbe3da; color: #8f250c; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500;">Q{{e.no}}</span>
+          <h3 style="margin: 0; font-size: 17px; line-height: 1.4; font-weight: 600;">{{e.q}}</h3>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px;">
+          <span style="display: flex; align-items: center; gap: 6px; color: #8f250c;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>Ta réponse : {{e.mine}}</span>
+          <span style="display: flex; align-items: center; gap: 6px; color: #276a3f;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Bonne réponse : {{e.good}}</span>
+        </div>
+        <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #4d3324;">{{e.expl}}</p>
+      </article>
+    </sc-for>
+  </section>
+
+  <div class="rise" style="animation-delay: 340ms; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+    <a href="Qcm.dc.html" class="btn btn-primary" style="display: flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 8px 18px -10px rgba(187,77,0,0.7);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2"></path><path d="M4 4v4h4"></path></svg>
+      Refaire les 3 erreurs
+    </a>
+    <a href="Main.dc.html" class="btn btn-ghost" style="padding: 14px 22px; border-radius: 999px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 16px; font-weight: 500; text-decoration: none;">Retour aux matières</a>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+    const reduce = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const start = Date.now();
+    this.setState({ k: 0 });
+    this._t = setInterval(() => {
+      const k = Math.min(1, (Date.now() - start) / 1400);
+      this.setState({ k });
+      if (k >= 1) clearInterval(this._t);
+    }, 40);
+  }
+  componentWillUnmount() {
+    clearInterval(this._t);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const feuilles = this.props.feuilles ?? true;
+    const k = st.k ?? 1;
+    const ease = 1 - Math.pow(1 - k, 3);
+
+    const LEAF = { orange: ["#e8742a", "#bb4d00"], caramel: ["#fbba72", "#e08a3c"], gold: ["#f2a541", "#c46f12"], bronze: ["#ca5310", "#8f250c"] };
+    const decorRaw = [
+      ["B", 90, "orange", 20, "top: 110px; right: 6%;", true],
+      ["A", 50, "gold", -40, "top: 260px; right: 2.5%;", true],
+      ["A", 46, "caramel", 60, "top: 180px; left: 4%;", false],
+      ["B", 64, "gold", -20, "top: 640px; left: 2%;", true],
+      ["A", 52, "orange", 140, "top: 900px; right: 3%;", true],
+      ["A", 40, "bronze", 30, "top: 1150px; left: 5%;", false],
+      ["B", 72, "caramel", 10, "bottom: 30px; right: 8%;", true]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({ isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : "" })) : [];
+    const fallRaw = [["B", 26, "orange", 16, 2, "fallB"], ["A", 24, "gold", 52, 9, "fallA"], ["A", 22, "caramel", 81, 15, "fallA"], ["B", 28, "orange", 35, 22, "fallB"], ["A", 20, "bronze", 94, 28, "fallA"]];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({ isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5] })) : [];
+
+    const WRONG = [4, 11, 17];
+    const lit = Math.round(17 * ease);
+    const bar = Array.from({ length: 20 }, (_, i) => (i < lit ? "#fbba72" : "rgba(251,186,114,0.1)"));
+    const grid = Array.from({ length: 20 }, (_, i) => {
+      const no = i + 1;
+      const bad = WRONG.indexOf(no) !== -1;
+      return {
+        no,
+        aria: "Question " + no + (bad ? ", fausse" : ", juste"),
+        style: bad ? "background-color: #8f250c; color: #fffaf5;" : "background-color: #e6f2e6; color: #276a3f; box-shadow: inset 0 0 0 1.5px #b9dcc0;"
+      };
+    });
+    const errors = [
+      { no: 4, q: "Le site actif d’une enzyme est formé…", mine: "par la structure primaire seule", good: "par des acides aminés rapprochés par le repliement", expl: "Les résidus du site actif peuvent être éloignés dans la séquence : c’est la structure tertiaire qui les rapproche." },
+      { no: 11, q: "L’unité internationale (UI) d’activité enzymatique correspond à…", mine: "1 mol de substrat transformée par seconde", good: "1 µmol de substrat transformée par minute", expl: "1 UI = 1 µmol/min. Le katal, unité du système international, vaut 1 mol/s." },
+      { no: 17, q: "Un inhibiteur non compétitif pur…", mine: "augmente le Km", good: "diminue la Vmax sans modifier le Km", expl: "Il se fixe ailleurs que sur le site actif, sur l’enzyme libre comme sur le complexe ES : la Vmax baisse, l’affinité ne change pas." }
+    ];
+
+    return {
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      score: Math.round(17 * ease),
+      pts: Math.round(170 * ease),
+      bar,
+      grid,
+      errors
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Inscription</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fde9d6}</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; display: flex; flex-wrap: wrap; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="5">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<aside style="position: relative; flex: 1 1 520px; min-width: 0; min-height: 560px; overflow: hidden; padding: 48px 56px; display: flex; flex-direction: column; gap: 28px; background-color: #2a1a10; color: #fbe9d7;">
+  <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none;">
+    <sc-for list="{{pile}}" as="l" hint-placeholder-count="10">
+      <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+        <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+        <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+      </span>
+    </sc-for>
+  </div>
+  <div style="position: relative; display: flex; align-items: center; gap: 10px;">
+    <svg width="32" height="32" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#bb4d00"></circle><circle cx="14" cy="14" r="8" fill="none" stroke="#fbba72" stroke-width="1.5"></circle><circle cx="14" cy="14" r="3" fill="#2a1a10"></circle></svg>
+    <span style="font-size: 20px; font-weight: 600;">Bachotage</span>
+  </div>
+  <div class="rise" style="position: relative; margin-top: 40px; max-width: 460px;">
+    <h2 style="margin: 0; font-size: 48px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em;">Rejoins ta promo.</h2>
+    <p style="margin: 16px 0 0; font-size: 18px; line-height: 1.5; color: #e8cdb4;">Un pseudo, un mot de passe et le code partagé dans le groupe. Aucune adresse e-mail demandée.</p>
+  </div>
+  <ol class="rise" style="animation-delay: 120ms; position: relative; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; max-width: 420px;">
+    <li style="display: flex; align-items: center; gap: 12px; font-size: 16px;"><span aria-hidden="true" style="width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; background-color: #fbba72; color: #691e06; font-family: 'Doto', monospace; font-weight: 900; font-size: 15px;">1</span>Ton compte</li>
+    <li style="display: flex; align-items: center; gap: 12px; font-size: 16px; color: #c9a88e;"><span aria-hidden="true" style="width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; border: 1.5px solid #6b4a35; font-family: 'Doto', monospace; font-weight: 900; font-size: 15px;">2</span>Ta photo de profil</li>
+  </ol>
+</aside>
+
+<main style="position: relative; z-index: 1; flex: 1 1 480px; min-width: 0; padding: 32px; display: flex; flex-direction: column;">
+  <div style="display: flex; justify-content: flex-end;">
+    <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+      <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+      <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+    </button>
+  </div>
+  <section class="rise" aria-labelledby="t-signup" style="animation-delay: 80ms; width: 100%; max-width: 440px; margin: auto; padding: 32px; display: flex; flex-direction: column; gap: 18px; background-color: rgba(255,250,243,0.95); border: 1px solid #efd5bc; border-radius: 24px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 26px 50px -30px rgba(120,60,20,0.45);">
+    <div>
+      <p style="margin: 0 0 6px; font-family: 'Geist Mono', monospace; font-size: 13px; color: #6b4a35;">Étape 1 sur 2</p>
+      <h1 id="t-signup" style="margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -0.02em;">Crée ton compte</h1>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="pseudo" style="font-size: 14px; font-weight: 500;">Pseudo</label>
+      <input id="pseudo" class="field" type="text" autocomplete="username" value="{{pseudo}}" onChange="{{onPseudo}}" aria-describedby="pseudo-help" style="width: 100%; height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 16px; {{pseudoBorder}}">
+      <sc-if value="{{free}}" hint-placeholder-val="{{ true }}"><span style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #276a3f;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Pseudo disponible</span></sc-if>
+      <sc-if value="{{taken}}" hint-placeholder-val="{{ false }}"><span role="alert" style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #8f250c;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>Ce pseudo est déjà pris.</span></sc-if>
+      <span id="pseudo-help" style="font-size: 13px; color: #6b4a35;">Visible par toute la promo. Lettres, chiffres, point et tiret bas.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="mdp" style="font-size: 14px; font-weight: 500;">Mot de passe</label>
+      <input id="mdp" class="field" type="password" autocomplete="new-password" aria-describedby="mdp-help" style="width: 100%; height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-size: 16px;">
+      <span id="mdp-help" style="font-size: 13px; color: #6b4a35;">8 caractères minimum. Pas de réinitialisation automatique : garde-le bien.</span>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <label for="code" style="font-size: 14px; font-weight: 500;">Code d’inscription</label>
+      <input id="code" class="field" type="text" autocomplete="off" placeholder="Code du groupe" aria-describedby="code-help" style="width: 100%; height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-family: 'Geist Mono', monospace; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase;">
+      <span id="code-help" style="font-size: 13px; color: #6b4a35;">Le code partagé dans le groupe de la promo.</span>
+    </div>
+    <a href="Photo.dc.html" class="btn btn-primary" style="margin-top: 4px; display: flex; justify-content: center; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 8px 18px -10px rgba(187,77,0,0.7);">
+      Continuer
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+    </a>
+    <div style="padding-top: 16px; border-top: 1px solid #f3e0cc; font-size: 15px;">
+      Tu as déjà un compte ? <a href="Connexion.dc.html" style="font-weight: 600;">Se connecter</a>
+    </div>
+  </section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state || {};
+    const feuilles = this.props.feuilles ?? true;
+    const pseudo = st.pseudo ?? "nathan";
+    const TAKEN = ["capu", "malo", "lea.m", "inès_b", "yanis.k", "theo_r", "nour"];
+    const isTaken = TAKEN.indexOf(pseudo.trim().toLowerCase()) !== -1;
+
+    const LEAF = { orange: ["#e8742a", "#bb4d00"], caramel: ["#fbba72", "#e08a3c"], gold: ["#f2a541", "#c46f12"], bronze: ["#ca5310", "#8f250c"] };
+    const pileRaw = [
+      ["B", 120, "gold", 14, "bottom: -26px; left: -10px;", false],
+      ["A", 80, "orange", -30, "bottom: 40px; left: 100px;", true],
+      ["B", 100, "caramel", -10, "bottom: -34px; left: 190px;", false],
+      ["A", 66, "gold", 60, "bottom: 56px; left: 280px;", true],
+      ["B", 106, "orange", 22, "bottom: -30px; left: 350px;", false],
+      ["A", 60, "bronze", 110, "bottom: 66px; left: 440px;", true],
+      ["B", 84, "gold", -24, "bottom: -18px; left: 500px;", false],
+      ["A", 52, "caramel", 40, "bottom: 24px; left: 590px;", false],
+      ["A", 46, "orange", -40, "top: 130px; right: 70px;", true],
+      ["B", 38, "gold", 16, "top: 270px; right: 150px;", true]
+    ];
+    const pile = feuilles ? pileRaw.map((l) => ({ isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : "" })) : [];
+    const fallRaw = [["B", 26, "orange", 20, 3, "fallB"], ["A", 24, "gold", 45, 11, "fallA"], ["A", 22, "caramel", 70, 17, "fallA"], ["B", 28, "orange", 90, 24, "fallB"], ["A", 20, "bronze", 58, 30, "fallA"]];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({ isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5] })) : [];
+
+    return {
+      pile,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      pseudo,
+      onPseudo: (e) => this.setState({ pseudo: e.target.value }),
+      free: pseudo.trim().length > 0 && !isTaken,
+      taken: isTaken,
+      pseudoBorder: isTaken ? "border-color: #8f250c;" : pseudo.trim().length > 0 ? "border-color: #276a3f;" : ""
+    };
+  }
+}
+</script>
+</body>
+</html>

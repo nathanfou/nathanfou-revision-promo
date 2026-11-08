@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Profil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background-color:#fde9d6}
+*{box-sizing:border-box}
+a{color:#9a3f00}a:hover{color:#691e06}
+a.btn-primary:hover{color:#fffaf5}a.btn-ghost:hover{color:#2a1a10}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .15s,border-color .15s}
+.btn:active{transform:scale(.97)}
+.btn-primary:hover{background-color:#a34300!important}
+.btn-ghost:hover{background-color:#fbe9d7!important;border-color:#c9a88e!important}
+.row{transition:background-color .15s}
+.row:hover{background-color:#fbeedf}
+.tab:hover{color:#2a1a10!important}
+.lift{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.lift:hover{transform:translateY(-2px)}
+.px{clip-path:polygon(6px 0,calc(100% - 6px) 0,calc(100% - 6px) 3px,calc(100% - 3px) 3px,calc(100% - 3px) 6px,100% 6px,100% calc(100% - 6px),calc(100% - 3px) calc(100% - 6px),calc(100% - 3px) calc(100% - 3px),calc(100% - 6px) calc(100% - 3px),calc(100% - 6px) 100%,6px 100%,6px calc(100% - 3px),3px calc(100% - 3px),3px calc(100% - 6px),0 calc(100% - 6px),0 6px,3px 6px,3px 3px,6px 3px)}
+.pxs{clip-path:polygon(4px 0,calc(100% - 4px) 0,calc(100% - 4px) 2px,calc(100% - 2px) 2px,calc(100% - 2px) 4px,100% 4px,100% calc(100% - 4px),calc(100% - 2px) calc(100% - 4px),calc(100% - 2px) calc(100% - 2px),calc(100% - 4px) calc(100% - 2px),calc(100% - 4px) 100%,4px 100%,4px calc(100% - 2px),2px calc(100% - 2px),2px calc(100% - 4px),0 calc(100% - 4px),0 4px,2px 4px,2px 2px,4px 2px)}
+:focus-visible{outline:2px solid #bb4d00;outline-offset:2px}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+@keyframes fallA{0%{opacity:0;transform:translate(0,-60px) rotate(0)}2%{opacity:1}12%{transform:translate(70px,22vh) rotate(90deg)}24%{transform:translate(-20px,48vh) rotate(170deg)}36%{transform:translate(90px,78vh) rotate(260deg)}46%{opacity:1;transform:translate(30px,108vh) rotate(340deg)}47%,100%{opacity:0;transform:translate(30px,108vh) rotate(340deg)}}
+@keyframes fallB{0%{opacity:0;transform:translate(0,-60px) rotate(0)}2%{opacity:1}14%{transform:translate(-80px,25vh) rotate(-100deg)}28%{transform:translate(10px,55vh) rotate(-200deg)}40%{transform:translate(-60px,84vh) rotate(-290deg)}50%{opacity:1;transform:translate(-20px,108vh) rotate(-360deg)}51%,100%{opacity:0;transform:translate(-20px,108vh) rotate(-360deg)}}
+@keyframes burst{0%{opacity:0;transform:translateY(0) scale(.3) rotate(0)}10%{opacity:1}75%{opacity:1}100%{opacity:0;transform:translateY(-300px) scale(1.1) rotate(320deg)}}
+@keyframes popin{from{opacity:0;transform:scale(.9) translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+.rise{animation:rise .8s cubic-bezier(.16,1,.3,1) both}
+.sway{animation:sway 7s ease-in-out infinite;transform-origin:30% 90%}
+.fallA{animation:fallA 28s ease-in-out infinite}
+.fallB{animation:fallB 34s ease-in-out infinite}
+.burst{animation:burst 1.9s cubic-bezier(.2,.7,.3,1) both}
+.popin{animation:popin .5s cubic-bezier(.16,1,.3,1) both}
+}
+@media (prefers-reduced-motion:reduce){.btn,.row,.lift{transition:none}}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="9">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="6">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px;">
+    <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #2a1a10;">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#bb4d00"></circle><circle cx="14" cy="14" r="8" fill="none" stroke="#fbba72" stroke-width="1.5"></circle><circle cx="14" cy="14" r="3" fill="#fffaf3"></circle></svg>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em;">Bachotage</span>
+    </a>
+    <nav aria-label="Navigation principale" style="display: flex; gap: 2px; padding: 4px; background-color: #fbe3cc; border-radius: 999px;">
+      <a class="tab" href="Main.dc.html" style="padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; color: #6b4a35; text-decoration: none;">Révision</a>
+      <a class="tab" href="Feed.dc.html" style="padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; color: #6b4a35; text-decoration: none;">Feed</a>
+      <a href="Profil.dc.html" aria-current="page" style="padding: 8px 18px; border-radius: 999px; background-color: #fffaf3; box-shadow: 0 1px 3px rgba(120,60,20,0.15); font-size: 14px; font-weight: 500; color: #2a1a10; text-decoration: none;">Profil</a>
+    </nav>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+      <a href="Notifications.dc.html" class="btn btn-ghost" aria-label="Notifications, 3 nouvelles" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3; color: #2a1a10;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"></path><path d="M10 21h4"></path></svg>
+        <span style="position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 11px; font-weight: 600; border: 2px solid #fffaf3;">3</span>
+      </a>
+      <a href="Profil.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 4px 6px 4px 4px; border-radius: 999px; border: 1px solid #efd5bc; text-decoration: none; color: #2a1a10; background-color: #fffaf3;">
+        <span aria-hidden="true" style="width: 34px; height: 34px; display: grid; place-items: center; border-radius: 999px; background-color: #fbba72; color: #691e06; font-size: 13px; font-weight: 600;">NA</span>
+        <span style="font-size: 15px; font-weight: 500;">nathan</span>
+        <span style="display: flex; align-items: baseline; gap: 5px; padding: 4px 10px; border-radius: 999px; background-color: #2a1a10; color: #fbba72;">
+          <span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 15px;">{{navPts}}</span>
+          <span style="font-size: 11px; color: #e8cdb4;">pts</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 44px 32px 72px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div class="rise" style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; margin-bottom: 8px;">
+    <div>
+      <h1 style="margin: 0; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em;">Profil</h1>
+      <p style="margin: 10px 0 0; font-size: 17px; color: #6b4a35;">{{subtitle}}</p>
+    </div>
+    <div style="display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background-color: #fbe3cc;">
+      <button type="button" aria-pressed="{{isPrivate}}" onClick="{{showPrivate}}" style="padding: 8px 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background-color .2s; {{privStyle}}">Vue privée</button>
+      <button type="button" aria-pressed="{{isPublic}}" onClick="{{showPublic}}" style="padding: 8px 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background-color .2s; {{pubStyle}}">Vue publique</button>
+    </div>
+  </div>
+
+  <section class="rise" aria-label="Fiche de nathan" style="animation-delay: 80ms; padding: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 28px 36px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.35);">
+    <div aria-hidden="true" style="flex: 0 0 auto; width: 120px; height: 120px; display: grid; place-items: center; border-radius: 999px; background-color: #fbba72; color: #691e06; font-size: 42px; font-weight: 600; letter-spacing: -0.02em; box-shadow: 0 0 0 4px #fffaf3, 0 0 0 5px #efd5bc;">NA</div>
+
+    <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 12px;">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;">
+        <h2 style="margin: 0; font-size: 34px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em;">nathan</h2>
+        <span style="padding: 4px 11px; border-radius: 999px; background-color: #fde3c8; color: #9a3f00; font-size: 13px; font-weight: 600;">Niveau 7</span>
+      </div>
+      <p style="margin: 0; font-size: 15px; color: #6b4a35;">Dans la promo depuis le 2 septembre</p>
+      <sc-if value="{{isPrivate}}" hint-placeholder-val="{{ true }}">
+        <div style="max-width: 440px; margin-top: 4px;">
+          <div aria-hidden="true" class="px" style="padding: 3px; background-color: #bb4d00;">
+            <div class="px" style="display: flex; align-items: center; gap: 4px; padding: 5px 8px 5px 6px; background-color: #fffaf3;">
+              <svg width="8" height="14" viewBox="0 0 4 7" shape-rendering="crispEdges" style="flex: 0 0 auto; display: block; margin-right: 2px;"><path fill="#bb4d00" d="M3 0h1v7h-1zM2 1h1v5h-1zM1 2h1v3h-1zM0 3h1v1h-1z"></path></svg>
+              <sc-for list="{{xpSegs}}" as="g" hint-placeholder-count="20"><span style="flex: 1; min-width: 4px; height: 14px; transition: background-color .3s; background-color: {{g}};"></span></sc-for>
+            </div>
+          </div>
+          <div style="margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 14px; color: #6b4a35;">
+            <span>Encore 890 pts avant le niveau 8</span>
+            <span style="font-family: 'Geist Mono', monospace;">8 610 / 9 500</span>
+          </div>
+        </div>
+        <button type="button" class="btn btn-ghost" style="align-self: flex-start; margin-top: 4px; padding: 8px 16px; border-radius: 999px; border: 1px solid #e3c3a5; background-color: #fffaf3; font-size: 14px; font-weight: 500;">Changer de photo</button>
+      </sc-if>
+    </div>
+
+    <div style="flex: 1 1 400px; min-width: 0; padding: 16px; border-radius: 18px; background-color: #2a1a10;">
+      <div style="display: grid; grid-template-columns: repeat({{lcdCols}}, minmax(0, 1fr)); border-radius: 10px; background-color: #fbba72; color: #691e06; box-shadow: inset 0 0 0 1px rgba(105,30,6,0.18), inset 0 3px 0 rgba(105,30,6,0.1);">
+        <sc-for list="{{lcd}}" as="l" hint-placeholder-count="3">
+          <div style="padding: 12px 16px 14px; {{l.sep}}">
+            <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">{{l.label}}</div>
+            <div style="position: relative; margin-top: 6px; font-family: 'Doto', monospace; font-weight: 900; font-size: 38px; line-height: 1;">
+              <span aria-hidden="true" style="position: absolute; left: 0; top: 0; opacity: 0.12;">{{l.ghost}}</span>
+              <span style="position: relative;">{{l.value}}</span>
+            </div>
+            <div style="margin-top: 6px; font-size: 12px;">{{l.unit}}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="margin-top: 12px; display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: #c9a88e;">
+        <span>{{lcdNote}}</span>
+        <span lang="ja" style="font-family: 'DotGothic16', sans-serif; font-size: 11px; letter-spacing: 0.18em;">プロフィール</span>
+      </div>
+    </div>
+  </section>
+
+  <sc-if value="{{isPublic}}" hint-placeholder-val="{{ false }}">
+    <div class="rise" style="display: flex; align-items: flex-start; gap: 12px; padding: 16px 18px; border-radius: 16px; background-color: rgba(253,227,200,0.9); border: 1px solid #f1cfa9; color: #4d3324;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9a3f00" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: 0 0 auto; margin-top: 1px;"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5;">Les autres voient ta photo, ton niveau, tes badges et ton rang de la semaine. Ton historique, ta progression, ton calendrier et ton temps de révision restent privés.</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{isPrivate}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-direction: column; gap: 20px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
+
+      <section class="rise" aria-labelledby="t-cal" style="animation-delay: 160ms; flex: 7 1 600px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 18px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px;">
+          <h2 id="t-cal" style="margin: 0; font-size: 18px; font-weight: 600;">Calendrier d’activité</h2>
+          <span style="font-size: 14px; color: #6b4a35;"><span style="font-weight: 600; color: #2a1a10;">{{activeDays}} jours</span> révisés sur {{pastDays}}</span>
+        </div>
+        <div style="overflow-x: auto;">
+          <div style="display: inline-grid; grid-template-columns: 30px auto; gap: 6px 8px;">
+            <span></span>
+            <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(16, 26px); gap: 5px; font-size: 12px; color: #6b4a35;">
+              <sc-for list="{{months}}" as="m" hint-placeholder-count="4"><span style="grid-column: {{m.col}} / span 3;">{{m.name}}</span></sc-for>
+            </div>
+            <div aria-hidden="true" style="display: grid; grid-template-rows: repeat(7, 26px); gap: 5px; font-size: 12px; color: #6b4a35;">
+              <span style="align-self: center;">lun</span><span></span><span style="align-self: center;">mer</span><span></span><span style="align-self: center;">ven</span><span></span><span style="align-self: center;">dim</span>
+            </div>
+            <div aria-hidden="true" style="display: grid; grid-template-rows: repeat(7, 26px); grid-auto-flow: column; grid-auto-columns: 26px; gap: 5px;">
+              <sc-for list="{{days}}" as="d" hint-placeholder-count="112"><span title="{{d.title}}" style="width: 26px; height: 26px; border-radius: 6px; {{d.style}}"></span></sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; font-size: 13px; color: #6b4a35;">
+          <span style="display: flex; align-items: center; gap: 5px;">moins
+            <span style="width: 13px; height: 13px; border-radius: 4px; background-color: #f3e3d3;"></span>
+            <span style="width: 13px; height: 13px; border-radius: 4px; background-color: #fcd5ab;"></span>
+            <span style="width: 13px; height: 13px; border-radius: 4px; background-color: #f29a4a;"></span>
+            <span style="width: 13px; height: 13px; border-radius: 4px; background-color: #bb4d00;"></span>
+          plus</span>
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 13px; height: 13px; border-radius: 4px; background-color: #f29a4a; box-shadow: 0 0 0 2px #fffaf3, 0 0 0 3.5px #2a1a10;"></span>aujourd’hui</span>
+          <span style="display: flex; align-items: center; gap: 6px;"><span style="width: 13px; height: 13px; border-radius: 4px; border: 2px solid #bb4d00;"></span>partiel</span>
+        </div>
+      </section>
+
+      <section class="rise" aria-labelledby="t-time" style="animation-delay: 220ms; flex: 5 1 400px; min-width: 0; padding: 24px; display: flex; flex-direction: column; gap: 22px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px;">
+          <h2 id="t-time" style="margin: 0; font-size: 18px; font-weight: 600;">Temps de révision</h2>
+          <span style="font-size: 14px; color: #6b4a35;"><span style="font-weight: 600; color: #2a1a10;">19h10</span> estimées depuis la rentrée</span>
+        </div>
+        <div>
+          <h3 style="margin: 0 0 10px; font-size: 13px; font-weight: 500; color: #6b4a35;">Par semaine</h3>
+          <div style="height: 172px; display: flex; align-items: flex-end; gap: 10px;">
+            <sc-for list="{{weeks}}" as="w" hint-placeholder-count="8">
+              <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+                <span style="font-family: 'Geist Mono', monospace; font-size: 11px; white-space: nowrap; color: #4d3324;">{{w.label}}</span>
+                <span aria-hidden="true" style="width: 100%; height: {{w.h}}px; border-radius: 6px 6px 3px 3px; transition: height .3s; background-color: {{w.color}};"></span>
+                <span style="font-size: 12px; color: #6b4a35;">{{w.no}}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin: 0 0 10px; font-size: 13px; font-weight: 500; color: #6b4a35;">Par matière</h3>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px;">
+            <sc-for list="{{bySubject}}" as="b" hint-placeholder-count="5">
+              <li style="display: grid; grid-template-columns: minmax(0, 140px) minmax(0, 1fr) 50px; align-items: center; gap: 12px;">
+                <span style="font-size: 14px;">{{b.name}}</span>
+                <span aria-hidden="true" style="display: block; height: 8px; width: {{b.w}}%; border-radius: 999px; transition: width .3s; background-color: #f29a4a;"></span>
+                <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px;">{{b.time}}</span>
+              </li>
+            </sc-for>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;">
+
+      <section class="rise" aria-labelledby="t-prog" style="animation-delay: 280ms; flex: 1 1 520px; min-width: 0; padding: 22px 12px 14px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin: 0 12px 10px;">
+          <h2 id="t-prog" style="margin: 0; font-size: 18px; font-weight: 600;">Progression</h2>
+          <span style="font-size: 13px; color: #6b4a35;">Questions réussies au moins une fois</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <sc-for list="{{subjects}}" as="s" hint-placeholder-count="5">
+            <div>
+              <button type="button" class="row" onClick="{{s.toggle}}" aria-expanded="{{s.open}}" style="width: 100%; display: grid; grid-template-columns: 18px minmax(0, 1fr) 160px 44px; align-items: center; gap: 12px; padding: 12px; border: 0; border-radius: 12px; background-color: transparent; text-align: left; color: #2a1a10; {{s.sel}}">
+                <span aria-hidden="true" style="display: grid; place-items: center; color: #6b4a35;">
+                  <sc-if value="{{s.open}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg></sc-if>
+                  <sc-if value="{{s.closed}}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></sc-if>
+                </span>
+                <span style="font-size: 16px; font-weight: 500;">{{s.name}}</span>
+                <span aria-hidden="true" class="pxs" style="display: block; padding: 2px; background-color: {{s.frame}};">
+                  <span class="pxs" style="display: flex; gap: 2px; padding: 2px 3px; background-color: #fffaf3;">
+                    <sc-for list="{{s.segs}}" as="g" hint-placeholder-count="10"><span style="flex: 1; height: 8px; background-color: {{g}};"></span></sc-for>
+                  </span>
+                </span>
+                <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 14px;">{{s.pct}}%</span>
+              </button>
+              <sc-if value="{{s.open}}" hint-placeholder-val="{{ false }}">
+                <ul style="list-style: none; margin: 0; padding: 6px 12px 14px 42px; display: flex; flex-direction: column; gap: 10px;">
+                  <sc-for list="{{s.chapters}}" as="c" hint-placeholder-count="6">
+                    <li style="display: grid; grid-template-columns: minmax(0, 1fr) 160px 44px; align-items: center; gap: 12px;">
+                      <span style="font-size: 14px; color: #4d3324;">{{c.name}}</span>
+                      <span aria-hidden="true" class="pxs" style="display: block; padding: 2px; background-color: #e3c3a5;">
+                        <span class="pxs" style="display: flex; gap: 2px; padding: 2px 3px; background-color: #fffaf3;">
+                          <sc-for list="{{c.segs}}" as="g" hint-placeholder-count="10"><span style="flex: 1; height: 5px; background-color: {{g}};"></span></sc-for>
+                        </span>
+                      </span>
+                      <span style="text-align: right; font-family: 'Geist Mono', monospace; font-size: 13px; color: #4d3324;">{{c.pct}}%</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="rise" aria-labelledby="t-hist" style="animation-delay: 340ms; flex: 1 1 520px; min-width: 0; padding: 22px 24px 16px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+        <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 4px;">
+          <h2 id="t-hist" style="margin: 0; font-size: 18px; font-weight: 600;">Historique des sessions</h2>
+          <a href="#t-hist" style="font-size: 14px; font-weight: 500;">Tout voir</a>
+        </div>
+        <ol style="list-style: none; margin: 0; padding: 0;">
+          <sc-for list="{{sessions}}" as="x" hint-placeholder-count="6">
+            <li style="display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 0; {{x.sep}}">
+              <span style="display: flex; flex-direction: column; gap: 2px; font-family: 'Geist Mono', monospace;">
+                <span style="font-size: 14px; font-weight: 500;">{{x.day}}</span>
+                <span style="font-size: 12px; color: #6b4a35;">{{x.hour}}</span>
+              </span>
+              <span style="min-width: 0;">
+                <span style="display: block; font-size: 15px; font-weight: 600;">{{x.chap}}</span>
+                <span style="display: block; margin-top: 2px; font-size: 13px; color: #6b4a35;">{{x.meta}}</span>
+              </span>
+              <span style="display: flex; align-items: center; gap: 10px;">
+                <span style="padding: 3px 9px; border-radius: 999px; background-color: #fbe9d7; font-size: 12px; color: #4d3324;">{{x.result}}</span>
+                <span style="min-width: 44px; text-align: right; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; color: #9a3f00;">{{x.pts}}</span>
+              </span>
+            </li>
+          </sc-for>
+        </ol>
+      </section>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{v2}}" hint-placeholder-val="{{ true }}">
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
+    <section class="rise" aria-labelledby="t-badges" style="animation-delay: 400ms; flex: 7 1 560px; min-width: 0; padding: 24px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+        <h2 id="t-badges" style="margin: 0; font-size: 18px; font-weight: 600;">Badges</h2>
+        <span style="font-size: 14px; color: #6b4a35;">3 sur 6</span>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 999px; border: 1px solid #e3c3a5; font-family: 'Geist Mono', monospace; font-size: 11px; color: #6b4a35;">v2</span>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px 16px;">
+        <sc-for list="{{badges}}" as="b" hint-placeholder-count="6">
+          <li class="lift" style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+            <span aria-hidden="true" style="width: 56px; height: 56px; display: grid; place-items: center; border-radius: 999px; {{b.tile}}">
+              <sc-if value="{{b.icoQcm}}" hint-placeholder-val="{{ true }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M8 12l3 3 5-6"></path></svg></sc-if>
+              <sc-if value="{{b.icoDuel}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11 11"></path><path d="M20 4L9 15"></path><path d="M6 16l2 2"></path><path d="M18 16l-2 2"></path><path d="M4 20l3-3"></path><path d="M20 20l-3-3"></path></svg></sc-if>
+              <sc-if value="{{b.icoFlag}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"></path><path d="M5 4h12l-2.5 4.5L17 13H5"></path></svg></sc-if>
+              <sc-if value="{{b.icoChat}}" hint-placeholder-val="{{ false }}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"></path></svg></sc-if>
+            </span>
+            <span style="font-size: 15px; font-weight: 500; line-height: 1.3;">{{b.name}}</span>
+            <span style="font-size: 13px; {{b.stateStyle}}">{{b.state}}</span>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+
+    <sc-if value="{{isPrivate}}" hint-placeholder-val="{{ true }}">
+    <section class="rise" aria-labelledby="t-defis" style="animation-delay: 460ms; flex: 5 1 400px; min-width: 0; padding: 24px 24px 12px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.3);">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <h2 id="t-defis" style="margin: 0; font-size: 18px; font-weight: 600;">Défis et duels</h2>
+        <span style="margin-left: auto; padding: 2px 8px; border-radius: 999px; border: 1px solid #e3c3a5; font-family: 'Geist Mono', monospace; font-size: 11px; color: #6b4a35;">v2</span>
+      </div>
+      <ul style="list-style: none; margin: 0; padding: 0;">
+        <sc-for list="{{challenges}}" as="ch" hint-placeholder-count="3">
+          <li style="display: flex; align-items: center; gap: 16px; padding: 14px 0; {{ch.sep}}">
+            <div style="flex: 1; min-width: 0;">
+              <p style="margin: 0; font-size: 13px; color: #6b4a35;">{{ch.kind}}</p>
+              <p style="margin: 3px 0 0; font-size: 15px; font-weight: 600; line-height: 1.35;">{{ch.title}}</p>
+              <p style="margin: 3px 0 0; font-size: 13px; color: #6b4a35;">{{ch.meta}}</p>
+            </div>
+            <sc-if value="{{ch.hasAction}}" hint-placeholder-val="{{ true }}">
+              <a href="Qcm.dc.html" class="btn btn-primary" style="padding: 9px 18px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 14px; font-weight: 600; text-decoration: none;">{{ch.action}}</a>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ul>
+    </section>
+    </sc-if>
+  </div>
+  </sc-if>
+</main>
+
+<sc-if value="{{celebrate}}" hint-placeholder-val="{{ false }}">
+  <div style="position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 24px; background-color: rgba(42,26,16,0.45);">
+    <div aria-hidden="true" style="position: absolute; left: 50%; top: 50%; width: 0; height: 0;">
+      <sc-for list="{{burst}}" as="b" hint-placeholder-count="14">
+        <span style="position: absolute; left: -14px; top: -14px; display: block; transform: rotate({{b.angle}}deg);">
+          <span class="burst" style="display: block; animation-delay: {{b.delay}}ms;">
+            <sc-if value="{{b.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{b.size}}" height="{{b.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{b.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{b.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+            <sc-if value="{{b.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{b.size}}" height="{{b.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{b.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{b.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+          </span>
+        </span>
+      </sc-for>
+    </div>
+    <div role="dialog" aria-modal="true" aria-labelledby="t-lvl" class="popin" style="position: relative; width: 100%; max-width: 400px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; background-color: #fffaf3; border-radius: 24px; box-shadow: 0 30px 60px -20px rgba(60,25,5,0.6);">
+      <div style="padding: 10px; border-radius: 16px; background-color: #2a1a10;">
+        <div style="padding: 8px 18px 6px; border-radius: 10px; background-color: #fbba72; color: #691e06; box-shadow: inset 0 0 0 1px rgba(105,30,6,0.18), inset 0 3px 0 rgba(105,30,6,0.1);">
+          <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">NIVEAU</div>
+          <div style="position: relative; font-family: 'Doto', monospace; font-weight: 900; font-size: 64px; line-height: 1;">
+            <span aria-hidden="true" style="position: absolute; left: 0; top: 0; opacity: 0.12;">88</span>
+            <span style="position: relative;">08</span>
+          </div>
+        </div>
+      </div>
+      <h2 id="t-lvl" style="margin: 4px 0 0; font-size: 26px; font-weight: 600; letter-spacing: -0.02em;">Niveau 8 atteint</h2>
+      <p style="margin: 0; font-size: 15px; line-height: 1.5; color: #6b4a35;">Tu viens de passer 9 500 pts cumulés. Continue comme ça jusqu’aux partiels.</p>
+      <button type="button" class="btn btn-primary" onClick="{{dismiss}}" style="margin-top: 6px; padding: 12px 28px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600;">Continuer</button>
+    </div>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"v2":{"editor":"boolean","default":true,"section":"Périmètre"},"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"victoire":{"editor":"boolean","default":false,"section":"Ambiance"},"$preview":{"width":1440,"height":2000}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+    const reduce = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const start = Date.now();
+    this.setState({ k: 0 });
+    this._t = setInterval(() => {
+      const k = Math.min(1, (Date.now() - start) / 1400);
+      this.setState({ k });
+      if (k >= 1) clearInterval(this._t);
+    }, 40);
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps && prevProps.victoire !== this.props.victoire && this.props.victoire) {
+      this.setState({ dismissed: false });
+    }
+  }
+  componentWillUnmount() {
+    clearInterval(this._t);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const view = st.view ?? "private";
+    const openIdx = st.open ?? 0;
+    const v2 = this.props.v2 ?? true;
+    const feuilles = this.props.feuilles ?? true;
+    const victoire = this.props.victoire ?? false;
+    const isPrivate = view === "private";
+
+    const k = st.k ?? 1;
+    const ease = 1 - Math.pow(1 - k, 3);
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const count = (n) => fmt(Math.round(n * ease));
+
+    const LIT = "#bb4d00";
+    const DIM = "rgba(187,77,0,0.08)";
+    const segsOf = (pct, n) => {
+      const on = Math.round((pct / 100) * n);
+      return Array.from({ length: n }, (_, i) => (i < on ? LIT : DIM));
+    };
+    const ON = "background-color: #fffaf3; color: #2a1a10; box-shadow: 0 1px 3px rgba(120,60,20,0.18);";
+    const OFF = "background-color: transparent; color: #6b4a35;";
+
+    const LEAF = {
+      orange: ["#e8742a", "#bb4d00"],
+      caramel: ["#fbba72", "#e08a3c"],
+      gold: ["#f2a541", "#c46f12"],
+      bronze: ["#ca5310", "#8f250c"]
+    };
+    const decorRaw = [
+      ["B", 86, "orange", 22, "top: 150px; right: 3%;", true],
+      ["A", 48, "caramel", -40, "top: 84px; right: 22%;", true],
+      ["A", 40, "gold", 70, "top: 250px; right: 1.5%;", false],
+      ["B", 56, "gold", -10, "top: 700px; left: 1%;", true],
+      ["A", 50, "orange", 140, "top: 1050px; right: 1%;", true],
+      ["A", 44, "bronze", 30, "top: 1380px; left: 2%;", false],
+      ["B", 72, "orange", -20, "bottom: 22px; right: 6%;", true],
+      ["A", 48, "gold", 60, "bottom: 40px; right: 15%;", false],
+      ["B", 58, "caramel", 15, "bottom: 30px; left: 4%;", true]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({
+      isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : ""
+    })) : [];
+    const fallRaw = [
+      ["A", 24, "orange", 18, 3, "fallA"],
+      ["B", 28, "caramel", 47, 10, "fallB"],
+      ["A", 22, "gold", 74, 16, "fallA"],
+      ["B", 26, "orange", 90, 7, "fallB"],
+      ["A", 20, "bronze", 33, 21, "fallB"],
+      ["A", 24, "gold", 6, 26, "fallA"]
+    ];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({
+      isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5]
+    })) : [];
+
+    const COLORS = ["orange", "caramel", "gold", "orange", "bronze", "gold", "caramel"];
+    const burst = Array.from({ length: 14 }, (_, i) => {
+      const col = LEAF[COLORS[i % COLORS.length]];
+      return {
+        angle: Math.round((360 / 14) * i + (i % 2 ? 9 : -6)),
+        delay: i % 2 ? 260 : 0,
+        size: 22 + (i % 3) * 6,
+        isA: i % 3 !== 1,
+        isB: i % 3 === 1,
+        body: col[0],
+        vein: col[1]
+      };
+    });
+
+    const LCD_SEP = "border-left: 1px solid rgba(105,30,6,0.2);";
+    const lcdRaw = isPrivate
+      ? [
+          { label: "POINTS", value: count(8610), ghost: "8 888", unit: "cumulés" },
+          { label: "SEMAINE", value: count(1240), ghost: "8 888", unit: "pts" },
+          { label: "RANG", value: "09", ghost: "88", unit: "sur 47 cette semaine" }
+        ]
+      : [
+          { label: "NIVEAU", value: "07", ghost: "88", unit: "niveau" },
+          { label: "RANG", value: "09", ghost: "88", unit: "sur 47 cette semaine" }
+        ];
+    const lcd = lcdRaw.map((l, i) => ({ ...l, sep: i === 0 ? "" : LCD_SEP }));
+
+    const xpSegs = segsOf(Math.round((8610 / 9500) * 100 * ease), 20);
+
+    // Calendrier : du lundi 31 août au dimanche 20 décembre 2026, aujourd'hui = mardi 10 novembre (index 71)
+    const TODAY = 71;
+    const EXAMS = { 77: "Partiel de biochimie", 80: "Partiel de physiologie", 85: "Partiel de biostatistiques" };
+    const LV = ["background-color: #f3e3d3;", "background-color: #fcd5ab;", "background-color: #f29a4a;", "background-color: #bb4d00;"];
+    const MIN = ["", "20 min", "45 min", "1 h et plus"];
+    const DOW = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."];
+    const MON = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+    let seed = 20261;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    const days = [];
+    let activeDays = 0;
+    for (let i = 0; i < 112; i++) {
+      const d = new Date(2026, 7, 31 + i);
+      const label = DOW[i % 7] + " " + d.getDate() + " " + MON[d.getMonth()];
+      if (i === 0) { days.push({ title: "", style: "background-color: transparent;" }); continue; }
+      if (i > TODAY) {
+        const exam = EXAMS[i];
+        days.push({
+          title: exam ? label + " : " + exam : label,
+          style: exam ? "border: 2px solid #bb4d00;" : "border: 1px solid #efd5bc;"
+        });
+        continue;
+      }
+      const t = i / TODAY;
+      let lvl = 0;
+      if (rnd() < 0.3 + 0.5 * t) {
+        const r = rnd() * (1 + 2 * t);
+        lvl = r < 0.8 ? 1 : r < 1.9 ? 2 : 3;
+      }
+      if (i === TODAY) lvl = 2;
+      if (lvl > 0) activeDays++;
+      const ring = i === TODAY ? " box-shadow: 0 0 0 2px #fffaf3, 0 0 0 3.5px #2a1a10;" : "";
+      days.push({ title: label + (lvl ? " : " + MIN[lvl] : " : rien"), style: LV[lvl] + ring });
+    }
+    const months = [
+      { name: "sept.", col: 1 },
+      { name: "oct.", col: 5 },
+      { name: "nov.", col: 9 },
+      { name: "déc.", col: 14 }
+    ];
+
+    const WEEK_MIN = [["S39", 80], ["S40", 110], ["S41", 70], ["S42", 150], ["S43", 135], ["S44", 170], ["S45", 185], ["S46", 125]];
+    const hm = (m) => Math.floor(m / 60) + "h" + String(m % 60).padStart(2, "0");
+    const weeks = WEEK_MIN.map(([no, m], i) => ({
+      no,
+      label: hm(m),
+      h: Math.max(4, Math.round((m / 185) * 120 * ease)),
+      color: i === WEEK_MIN.length - 1 ? "#bb4d00" : "#fbba72"
+    }));
+
+    const SUBJ_MIN = [["Biochimie", 370], ["Physiologie", 310], ["Biostatistiques", 190], ["Biologie cellulaire", 175], ["Génétique", 105]];
+    const bySubject = SUBJ_MIN.map(([name, m]) => ({ name, time: hm(m), w: Math.max(2, Math.round((m / 370) * 100 * ease)) }));
+
+    const DATA = [
+      ["Biochimie", 58, [["Acides aminés et protéines", 92], ["Enzymologie", 71], ["Glucides", 80], ["Lipides", 55], ["Métabolisme énergétique", 38], ["Cycle de Krebs", 12]]],
+      ["Biologie cellulaire", 37, [["Membrane plasmique", 74], ["Cytosquelette", 50], ["Trafic vésiculaire", 33], ["Cycle cellulaire", 28], ["Mort cellulaire", 0]]],
+      ["Physiologie", 79, [["Physiologie cardiaque", 95], ["Respiration", 88], ["Rein et équilibre hydrique", 70], ["Système nerveux", 61]]],
+      ["Génétique", 21, [["Mendel et ségrégation", 60], ["Liaison et recombinaison", 18], ["Génétique des populations", 5], ["Mutations", 0]]],
+      ["Biostatistiques", 52, [["Statistique descriptive", 90], ["Probabilités", 66], ["Tests d’hypothèse", 31], ["Régression linéaire", 20]]]
+    ];
+    const subjects = DATA.map(([name, pct, chs], i) => ({
+      name,
+      pct,
+      open: i === openIdx,
+      closed: i !== openIdx,
+      sel: i === openIdx ? "background-color: #fdebd8;" : "",
+      frame: i === openIdx ? "#bb4d00" : "#e3c3a5",
+      segs: segsOf(pct, 10),
+      chapters: chs.map(([n, p]) => ({ name: n, pct: p, segs: segsOf(p, 10) })),
+      toggle: () => this.setState({ open: i === openIdx ? -1 : i })
+    }));
+
+    const SESS = [
+      ["10/11", "18h42", "Enzymologie", "Biochimie, QCM entraînement, 14 min", "17/20", "+170"],
+      ["09/11", "21h10", "Respiration", "Physiologie, flashcards, 14 min", "42 cartes", "+126"],
+      ["09/11", "17h05", "Mendel et ségrégation", "Génétique, exercice, 20 min", "réussi", "+200"],
+      ["08/11", "20h30", "Tests d’hypothèse", "Biostatistiques, QCM examen, 22 min", "11/20", "+110"],
+      ["08/11", "16h15", "Lipides", "Biochimie, flashcards, 10 min", "30 cartes", "+90"],
+      ["07/11", "14h00", "Rein et équilibre hydrique", "Physiologie, exercice, 30 min", "partiel", "+150"]
+    ];
+    const SEP = "border-top: 1px solid #f3e0cc;";
+    const sessions = SESS.map((s, i) => ({ day: s[0], hour: s[1], chap: s[2], meta: s[3], result: s[4], pts: s[5], sep: i === 0 ? "" : SEP }));
+
+    const T_ON = "background-color: #fbba72; color: #691e06;";
+    const T_PROG = "background-color: #fffaf3; color: #bb4d00; box-shadow: inset 0 0 0 2px #bb4d00;";
+    const T_OFF = "background-color: #fbe9d7; color: #c9a88e;";
+    const badgesRaw = [
+      ["100 QCM réussis", "qcm", "on", "obtenu le 21 oct."],
+      ["Premier duel gagné", "duel", "on", "obtenu le 3 nov."],
+      ["Première réaction", "chat", "on", "obtenu le 14 sept."],
+      ["500 QCM réussis", "qcm", "prog", "312 sur 500"],
+      ["3 défis relevés", "flag", "prog", "2 sur 3"],
+      ["1000 QCM réussis", "qcm", "off", "verrouillé"]
+    ];
+    const badges = badgesRaw.map(([name, ico, s, state]) => ({
+      name,
+      state,
+      tile: s === "on" ? T_ON : s === "prog" ? T_PROG : T_OFF,
+      stateStyle: s === "prog" ? "color: #9a3f00; font-weight: 500;" : "color: #6b4a35;",
+      icoQcm: ico === "qcm",
+      icoDuel: ico === "duel",
+      icoFlag: ico === "flag",
+      icoChat: ico === "chat"
+    }));
+
+    const challenges = [
+      { kind: "Défi de la semaine", title: "Réussir 60 QCM d’ici dimanche", meta: "23 sur 60, récompense +100 pts", action: "", hasAction: false },
+      { kind: "Défi de capu", title: "Battre 17/20 en Glucides", meta: "Reçu dimanche", action: "Relever", hasAction: true },
+      { kind: "Duel avec malo", title: "Enzymologie, 20 QCM", meta: "malo a joué. Il te reste 31 h.", action: "Jouer", hasAction: true }
+    ].map((c, i) => ({ ...c, sep: i === 0 ? "" : SEP }));
+
+    return {
+      v2,
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      burst,
+      celebrate: victoire && !st.dismissed,
+      dismiss: () => this.setState({ dismissed: true }),
+      navPts: count(1240),
+      isPrivate,
+      isPublic: !isPrivate,
+      privStyle: isPrivate ? ON : OFF,
+      pubStyle: isPrivate ? OFF : ON,
+      showPrivate: () => this.setState({ view: "private" }),
+      showPublic: () => this.setState({ view: "public" }),
+      subtitle: isPrivate ? "Ta progression, ton historique et tes badges." : "Ton profil tel que la promo le voit.",
+      lcd,
+      lcdCols: lcd.length,
+      lcdNote: isPrivate ? "Semaine 46, du 9 au 15 novembre" : "Rang recalculé chaque lundi à 00h00",
+      xpSegs,
+      days,
+      activeDays,
+      pastDays: TODAY,
+      months,
+      weeks,
+      bySubject,
+      subjects,
+      sessions,
+      badges,
+      challenges
+    };
+  }
+}
+</script>
+</body>
+</html>
