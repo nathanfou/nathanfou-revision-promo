@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>QCM, entraînement</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>body{margin:0;background-color:#fde9d6}</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="7">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="5">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px;">
+    <a href="Main.dc.html" class="btn btn-ghost" style="display: flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3; color: #2a1a10; font-size: 14px; font-weight: 500; text-decoration: none;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg>
+      Quitter
+    </a>
+    <div style="min-width: 0;">
+      <p style="margin: 0; font-size: 15px; font-weight: 600;">Enzymologie</p>
+      <p style="margin: 0; font-size: 13px; color: #6b4a35;">Biochimie, QCM entraînement</p>
+    </div>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+      <span style="display: flex; align-items: baseline; gap: 6px; padding: 8px 14px; border-radius: 999px; background-color: #2a1a10; color: #fbba72;">
+        <span style="font-size: 12px; color: #e8cdb4;">Série</span>
+        <span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 17px;">+{{sessionPts}}</span>
+        <span style="font-size: 12px; color: #e8cdb4;">pts</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 40px 32px 72px; display: flex; flex-direction: column; gap: 22px;">
+
+  <div class="rise" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px;">
+    <div aria-hidden="true" class="px" style="flex: 1 1 360px; padding: 3px; background-color: #bb4d00;">
+      <div class="px" style="display: flex; align-items: center; gap: 4px; padding: 5px 8px 5px 6px; background-color: #fffaf3;">
+        <svg width="8" height="14" viewBox="0 0 4 7" shape-rendering="crispEdges" style="flex: 0 0 auto; display: block; margin-right: 2px;"><path fill="#bb4d00" d="M3 0h1v7h-1zM2 1h1v5h-1zM1 2h1v3h-1zM0 3h1v1h-1z"></path></svg>
+        <sc-for list="{{progress}}" as="g" hint-placeholder-count="20"><span style="flex: 1; min-width: 4px; height: 16px; transition: background-color .3s; background-color: {{g}};"></span></sc-for>
+      </div>
+    </div>
+    <span style="font-family: 'Geist Mono', monospace; font-size: 15px; font-weight: 500;">Question {{q.no}} sur 20</span>
+  </div>
+
+  <section class="rise" aria-labelledby="t-q" style="animation-delay: 80ms; padding: 32px; display: flex; flex-direction: column; gap: 22px; background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; border-radius: 22px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 22px 44px -28px rgba(120,60,20,0.4);">
+    <h1 id="t-q" style="margin: 0; font-size: 26px; line-height: 1.3; font-weight: 600; letter-spacing: -0.015em;">{{q.text}}</h1>
+    <div role="group" aria-labelledby="t-q" style="display: flex; flex-direction: column; gap: 10px;">
+      <sc-for list="{{choices}}" as="c" hint-placeholder-count="4">
+        <button type="button" class="{{c.cls}}" onClick="{{c.pick}}" disabled="{{answered}}" aria-label="{{c.aria}}" style="width: 100%; display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; text-align: left; color: #2a1a10; cursor: pointer; {{c.style}}">
+          <span aria-hidden="true" style="flex: 0 0 34px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 500; {{c.badge}}">{{c.letter}}</span>
+          <span style="flex: 1; min-width: 0; font-size: 17px; line-height: 1.4;">{{c.text}}</span>
+          <sc-if value="{{c.showOk}}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#276a3f" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></sc-if>
+          <sc-if value="{{c.showKo}}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8f250c" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg></sc-if>
+        </button>
+      </sc-for>
+    </div>
+    <sc-if value="{{notAnswered}}" hint-placeholder-val="{{ false }}">
+      <p style="margin: 0; font-size: 14px; color: #6b4a35;">Choisis une réponse : la correction s’affiche juste après.</p>
+    </sc-if>
+  </section>
+
+  <sc-if value="{{answered}}" hint-placeholder-val="{{ true }}">
+    <section class="reveal" aria-live="polite" style="position: relative; padding: 24px 28px; display: flex; flex-direction: column; gap: 12px; border-radius: 20px; {{fb.box}}">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 600; {{fb.titleColor}}">{{fb.title}}</h2>
+        <span class="floatup" style="padding: 3px 10px; border-radius: 999px; font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; {{fb.ptsStyle}}">{{fb.pts}}</span>
+      </div>
+      <p style="margin: 0; font-size: 16px; font-weight: 500;">Bonne réponse : {{q.answer}}</p>
+      <p style="margin: 0; font-size: 16px; line-height: 1.55; color: #4d3324;">{{q.expl}}</p>
+      <div style="margin-top: 6px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+        <span style="font-size: 13px; color: #6b4a35;">Une même question rapporte des points une fois par jour.</span>
+        <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
+          <button type="button" class="btn btn-primary" onClick="{{next}}" style="display: flex; align-items: center; gap: 10px; padding: 13px 24px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; box-shadow: 0 8px 18px -10px rgba(187,77,0,0.7);">
+            Question suivante
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>
+          </button>
+        </sc-if>
+        <sc-if value="{{isLast}}" hint-placeholder-val="{{ false }}">
+          <a href="QcmResultat.dc.html" class="btn btn-primary" style="display: flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 16px; font-weight: 600; text-decoration: none; box-shadow: 0 8px 18px -10px rgba(187,77,0,0.7);">Voir le bilan</a>
+        </sc-if>
+      </div>
+    </section>
+  </sc-if>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":1100}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state || {};
+    const feuilles = this.props.feuilles ?? true;
+    const qi = st.qi ?? 0;
+    const picked = st.picked === undefined ? 0 : st.picked;
+    const gained = st.gained ?? 0;
+
+    const LEAF = { orange: ["#e8742a", "#bb4d00"], caramel: ["#fbba72", "#e08a3c"], gold: ["#f2a541", "#c46f12"], bronze: ["#ca5310", "#8f250c"] };
+    const decorRaw = [
+      ["B", 96, "orange", -18, "top: 150px; left: 6%;", true],
+      ["A", 56, "caramel", 40, "top: 300px; left: 12%;", true],
+      ["A", 44, "gold", -60, "top: 520px; left: 4%;", false],
+      ["B", 70, "gold", 24, "top: 210px; right: 7%;", true],
+      ["A", 50, "orange", 130, "top: 450px; right: 12%;", true],
+      ["A", 40, "bronze", 70, "top: 700px; right: 5%;", false],
+      ["B", 64, "caramel", -30, "bottom: 30px; left: 9%;", true]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({ isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : "" })) : [];
+    const fallRaw = [["A", 24, "orange", 12, 3, "fallA"], ["B", 28, "gold", 84, 11, "fallB"], ["A", 22, "caramel", 28, 18, "fallA"], ["B", 26, "orange", 70, 24, "fallB"], ["A", 20, "bronze", 92, 30, "fallA"]];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({ isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5] })) : [];
+
+    const QS = [
+      { no: 12, text: "Un inhibiteur compétitif d’une enzyme michaélienne…", choices: ["diminue la Vmax sans modifier le Km", "augmente le Km apparent sans modifier la Vmax", "diminue à la fois le Km et la Vmax", "se fixe uniquement sur le complexe enzyme-substrat"], good: 1, expl: "Il entre en compétition avec le substrat pour le site actif. Il faut donc plus de substrat pour atteindre Vmax/2 : le Km apparent augmente. À très forte concentration de substrat, la Vmax est quand même atteinte." },
+      { no: 13, text: "Dans la représentation de Lineweaver-Burk, la droite coupe l’axe des abscisses en…", choices: ["1/Vmax", "-1/Km", "Km/Vmax", "-Km"], good: 1, expl: "Pour 1/v = 0, on obtient 1/[S] = -1/Km. L’ordonnée à l’origine vaut 1/Vmax et la pente vaut Km/Vmax." },
+      { no: 14, text: "Une enzyme allostérique présente typiquement une courbe v = f([S])…", choices: ["hyperbolique", "sigmoïde", "linéaire", "en cloche"], good: 1, expl: "La coopérativité entre sous-unités donne une courbe sigmoïde, alors qu’une enzyme michaélienne donne une hyperbole." }
+    ];
+    const q = QS[qi];
+    const L = ["A", "B", "C", "D"];
+    const answered = picked !== null;
+    const correct = answered && picked === q.good;
+
+    const IDLE = "border: 1.5px solid #efd5bc; background-color: #fffaf3;";
+    const OK = "border: 1.5px solid #276a3f; background-color: #e6f2e6;";
+    const KO = "border: 1.5px solid #8f250c; background-color: #fbe3da;";
+    const DONE = "border: 1.5px solid #efd5bc; background-color: #fffaf3; opacity: 0.65; cursor: default;";
+    const B_IDLE = "background-color: #fbe9d7; color: #4d3324;";
+    const B_OK = "background-color: #276a3f; color: #fffaf5;";
+    const B_KO = "background-color: #8f250c; color: #fffaf5;";
+
+    const choices = q.choices.map((text, i) => {
+      const isGood = i === q.good;
+      const isPick = i === picked;
+      let style = IDLE, badge = B_IDLE, cls = "opt";
+      if (answered) {
+        if (isGood) { style = OK + " cursor: default;"; badge = B_OK; }
+        else if (isPick) { style = KO + " cursor: default;"; badge = B_KO; cls = "opt shake"; }
+        else { style = DONE; }
+      }
+      return {
+        letter: L[i],
+        text,
+        style,
+        badge,
+        cls,
+        showOk: answered && isGood,
+        showKo: answered && isPick && !isGood,
+        aria: L[i] + ". " + text + (answered && isGood ? ", bonne réponse" : answered && isPick ? ", ta réponse, fausse" : ""),
+        pick: () => {
+          if (answered) return;
+          this.setState({ picked: i, gained: gained + (i === q.good ? 10 : 0) });
+        }
+      };
+    });
+
+    const fb = correct
+      ? { title: "Bonne réponse", pts: "+10 pts", box: "background-color: #e6f2e6; border: 1px solid #b9dcc0;", titleColor: "color: #276a3f;", ptsStyle: "background-color: #276a3f; color: #fffaf5;" }
+      : { title: "Pas tout à fait", pts: "0 pt", box: "background-color: #fbe3da; border: 1px solid #f0c1b0;", titleColor: "color: #8f250c;", ptsStyle: "background-color: #fffaf3; color: #8f250c;" };
+
+    const done = 11 + qi + (answered ? 1 : 0);
+    const progress = Array.from({ length: 20 }, (_, i) => (i < done ? "#bb4d00" : "rgba(187,77,0,0.08)"));
+
+    return {
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      sessionPts: 90 + gained,
+      progress,
+      q: { no: q.no, text: q.text, answer: L[q.good] + ", " + q.choices[q.good], expl: q.expl },
+      choices,
+      answered,
+      notAnswered: !answered,
+      fb,
+      hasNext: answered && qi < QS.length - 1,
+      isLast: answered && qi === QS.length - 1,
+      next: () => this.setState({ qi: qi + 1, picked: null })
+    };
+  }
+}
+</script>
+</body>
+</html>

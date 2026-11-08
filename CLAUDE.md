@@ -15,7 +15,10 @@ toute fonctionnalité. Réponds à Nathan en français.
 - Pas de Storage : les 50 photos de profil sont des fichiers statiques
   `public/avatars/pp_01.webp` à `pp_50.webp` (provisoires pour l'instant ; on les
   remplacera en gardant les mêmes noms).
-- Thème sombre uniquement, palette dans `src/index.css`.
+- Design : maquettes "Bachotage" dans `docs/maquettes/` (14 écrans `.dc.html`, à lire comme
+  référence : styles en ligne + classe `Component` en bas de chaque fichier). Le thème est
+  **clair pêche/automne** de la maquette ; il remplace le thème sombre de la spec v1.
+  Tokens (couleurs, ombres, polices) et classes d'animation dans `src/index.css`.
 
 ## Supabase
 
@@ -58,6 +61,31 @@ toute fonctionnalité. Réponds à Nathan en français.
 - Confirmation d'e-mail désactivée (adresses factices `@promo.invalid`).
 - Admin : `update public.profiles set is_admin = true where pseudo = '...'`
   depuis le SQL Editor.
+
+## Front : conventions du socle
+
+- Routes : `src/App.tsx` (toutes déclarées) ; liens via `routes` de `src/lib/routes.ts`.
+  Sous 768 px (`useIsMobile`), seules les flashcards sont accessibles (`/` et `/flashcards`
+  basculent sur `MobileCartes` / `MobileCarte`, les autres pages affichent "Disponible sur ordinateur").
+- Gabarits (`src/layouts/`) : `AppLayout` (barre de navigation, pages Révision/Feed/Profil),
+  `SessionLayout` (Quitter + titre + pastille de points : QCM, flashcards, exercices),
+  `AuthLayout`, `MobileLayout`.
+- Composants (`src/components/`) : `ui.tsx` (Button, ButtonLink, Card, CardIcon, Chip,
+  PointsPill, Segmented, PageTitle, EmptyState), `Meter.tsx` (PixelMeter, MiniMeter, RowMarker),
+  `Lcd.tsx` (écran LCD, chiffres Doto), `Leaves.tsx` (feuilles pixel), `Avatar.tsx`,
+  `PhotoPicker.tsx`, `Form.tsx` (Field, ErrorBanner), `Icons.tsx`, `Loader.tsx`.
+- Styles en ligne + variables CSS (`var(--accent)`, `var(--card)`…), pas de couleur en dur
+  hors palette. Respecter `prefers-reduced-motion` (classes `.rise`, `.popin`… déjà conditionnées).
+- Auth : `useAuth()` / `useMe()` (`src/auth/AuthProvider.tsx`). Points de l'utilisateur :
+  `useMyPoints()` et `refreshMyPoints()` après toute RPC qui rapporte des points (`src/lib/points.ts`).
+- Utilitaires : `src/lib/format.ts` (dates Paris, J-xx, nombres), `levels.ts` (niveaux),
+  `scoring.ts` (barème affiché), `useCountUp.ts`.
+- Sessions côté base (migration `sessions_core`) : `start_session(chapitre, mode, variante)`,
+  `end_session(session)`, et `private.log_activity(...)` que chaque RPC de réponse appelle pour
+  écrire `activity_log` (règle "une fois par jour" incluse, met à jour score/points de la session).
+- Migrations appliquées via le MCP Supabase : après `apply_migration`, renommer le fichier local
+  avec la version renvoyée par `list_migrations` pour que l'historique reste aligné.
+- Découpage en chantiers parallèles : `docs/chantiers.md`.
 
 ## Plan de construction (spec, section "Plan de construction")
 

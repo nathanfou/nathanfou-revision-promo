@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Feed et classement</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&amp;family=Doto:wght@700;900&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap">
+<style>
+body{margin:0;background-color:#fde9d6}
+*{box-sizing:border-box}
+a{color:#9a3f00}a:hover{color:#691e06}
+a.btn-primary:hover{color:#fffaf5}a.btn-ghost:hover{color:#2a1a10}
+button{font:inherit;color:inherit;cursor:pointer}
+textarea::placeholder{color:#8a6a55;opacity:1}
+.btn{transition:transform .15s cubic-bezier(.16,1,.3,1),background-color .15s,border-color .15s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.btn-primary:hover:not(:disabled){background-color:#a34300!important}
+.btn-ghost:hover{background-color:#fbe9d7!important;border-color:#c9a88e!important}
+.row{transition:background-color .15s}
+.row:hover{background-color:#fbeedf}
+.tab:hover{color:#2a1a10!important}
+.chip{transition:transform .15s cubic-bezier(.16,1,.3,1),border-color .15s,background-color .15s}
+.chip:hover{border-color:#c9a88e!important}
+.chip:active{transform:scale(.92)}
+.name:hover{text-decoration:underline}
+.lift{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+.lift:hover{transform:translateY(-2px)}
+:focus-visible{outline:2px solid #bb4d00;outline-offset:2px}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(6deg)}}
+@keyframes fallA{0%{opacity:0;transform:translate(0,-60px) rotate(0)}2%{opacity:1}12%{transform:translate(70px,22vh) rotate(90deg)}24%{transform:translate(-20px,48vh) rotate(170deg)}36%{transform:translate(90px,78vh) rotate(260deg)}46%{opacity:1;transform:translate(30px,108vh) rotate(340deg)}47%,100%{opacity:0;transform:translate(30px,108vh) rotate(340deg)}}
+@keyframes fallB{0%{opacity:0;transform:translate(0,-60px) rotate(0)}2%{opacity:1}14%{transform:translate(-80px,25vh) rotate(-100deg)}28%{transform:translate(10px,55vh) rotate(-200deg)}40%{transform:translate(-60px,84vh) rotate(-290deg)}50%{opacity:1;transform:translate(-20px,108vh) rotate(-360deg)}51%,100%{opacity:0;transform:translate(-20px,108vh) rotate(-360deg)}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.4) rotate(-10deg)}100%{transform:scale(1)}}
+@keyframes blink{50%{opacity:.15}}
+@media (prefers-reduced-motion:no-preference){
+.rise{animation:rise .8s cubic-bezier(.16,1,.3,1) both}
+.sway{animation:sway 7s ease-in-out infinite;transform-origin:30% 90%}
+.fallA{animation:fallA 28s ease-in-out infinite}
+.fallB{animation:fallB 34s ease-in-out infinite}
+.chip[aria-pressed="true"] .emo{display:inline-block;animation:pop .45s cubic-bezier(.16,1,.3,1)}
+.blink{animation:blink 1.6s steps(1) infinite}
+}
+@media (prefers-reduced-motion:reduce){.btn,.row,.chip,.lift{transition:none}}
+</style>
+</helmet>
+<div style="position: relative; min-height: 100vh; overflow: hidden; background: linear-gradient(180deg, #fde9d6 0%, #fcdcbd 55%, #f9cda4 100%); color: #2a1a10; font-family: 'Geist', system-ui, sans-serif;">
+
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; z-index: 0;">
+  <sc-for list="{{decor}}" as="l" hint-placeholder-count="9">
+    <span class="{{l.cls}}" style="position: absolute; display: block; {{l.pos}}">
+      <sc-if value="{{l.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{l.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{l.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{l.size}}" height="{{l.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block; transform: rotate({{l.rot}}deg);"><path fill="{{l.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{l.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<div aria-hidden="true" style="position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 3;">
+  <sc-for list="{{falling}}" as="f" hint-placeholder-count="6">
+    <span class="{{f.cls}}" style="position: absolute; top: 0; display: block; opacity: 0; left: {{f.left}}%; animation-delay: {{f.delay}}s;">
+      <sc-if value="{{f.isA}}" hint-placeholder-val="{{ true }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 10 10" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{f.vein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg></sc-if>
+      <sc-if value="{{f.isB}}" hint-placeholder-val="{{ false }}"><svg width="{{f.size}}" height="{{f.size}}" viewBox="0 0 11 11" shape-rendering="crispEdges" style="display: block;"><path fill="{{f.body}}" d="M5 0h1v1h-1zM4 1h3v1h-3zM1 2h1v1h-1zM4 2h3v1h-3zM9 2h1v1h-1zM1 3h2v1h-2zM4 3h3v1h-3zM8 3h2v1h-2zM1 4h9v1h-9zM0 5h11v1h-11zM1 6h9v1h-9zM2 7h7v1h-7zM3 8h5v1h-5z"></path><path fill="{{f.vein}}" d="M5 1h1v8h-1zM3 5h2v1h-2zM6 5h2v1h-2z"></path><path fill="#7a3d14" d="M5 9h1v2h-1z"></path></svg></sc-if>
+    </span>
+  </sc-for>
+</div>
+
+<header style="position: relative; z-index: 2; background-color: rgba(255,250,243,0.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid #efd5bc;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 10px 32px; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 32px;">
+    <a href="Main.dc.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #2a1a10;">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="13" fill="#bb4d00"></circle><circle cx="14" cy="14" r="8" fill="none" stroke="#fbba72" stroke-width="1.5"></circle><circle cx="14" cy="14" r="3" fill="#fffaf3"></circle></svg>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: -0.01em;">Bachotage</span>
+    </a>
+    <nav aria-label="Navigation principale" style="display: flex; gap: 2px; padding: 4px; background-color: #fbe3cc; border-radius: 999px;">
+      <a class="tab" href="Main.dc.html" style="padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; color: #6b4a35; text-decoration: none;">Révision</a>
+      <a href="Feed.dc.html" aria-current="page" style="padding: 8px 18px; border-radius: 999px; background-color: #fffaf3; box-shadow: 0 1px 3px rgba(120,60,20,0.15); font-size: 14px; font-weight: 500; color: #2a1a10; text-decoration: none;">Feed</a>
+      <a class="tab" href="Profil.dc.html" style="padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500; color: #6b4a35; text-decoration: none;">Profil</a>
+    </nav>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+      <button type="button" class="btn btn-ghost" onClick="{{toggleFall}}" aria-pressed="{{fallOn}}" aria-label="Feuilles qui tombent" title="{{fallTitle}}" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3;">
+        <svg width="20" height="20" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><path fill="{{fallLeaf}}" d="M7 0h2v1h-2zM5 1h4v1h-4zM4 2h5v1h-5zM3 3h6v1h-6zM2 4h6v1h-6zM2 5h5v1h-5zM1 6h5v1h-5zM1 7h3v1h-3z"></path><path fill="{{fallVein}}" d="M2 6h1v1h-1zM3 5h1v1h-1zM4 4h1v1h-1zM5 3h1v1h-1zM6 2h1v1h-1zM7 1h1v1h-1z"></path><path fill="#7a3d14" d="M1 8h1v1h-1zM0 9h1v1h-1z"></path></svg>
+        <sc-if value="{{fallOff}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position: absolute; left: 9px; top: 20px; width: 24px; height: 2px; border-radius: 2px; background-color: #6b4a35; transform: rotate(-45deg);"></span></sc-if>
+      </button>
+      <a href="Notifications.dc.html" class="btn btn-ghost" aria-label="Notifications, 3 nouvelles" style="position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; border: 1px solid #efd5bc; background-color: #fffaf3; color: #2a1a10;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"></path><path d="M10 21h4"></path></svg>
+        <span style="position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; display: grid; place-items: center; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 11px; font-weight: 600; border: 2px solid #fffaf3;">3</span>
+      </a>
+      <a href="Profil.dc.html" style="display: flex; align-items: center; gap: 10px; padding: 4px 6px 4px 4px; border-radius: 999px; border: 1px solid #efd5bc; text-decoration: none; color: #2a1a10; background-color: #fffaf3;">
+        <span aria-hidden="true" style="width: 34px; height: 34px; display: grid; place-items: center; border-radius: 999px; background-color: #fbba72; color: #691e06; font-size: 13px; font-weight: 600;">NA</span>
+        <span style="font-size: 15px; font-weight: 500;">nathan</span>
+        <span style="display: flex; align-items: baseline; gap: 5px; padding: 4px 10px; border-radius: 999px; background-color: #2a1a10; color: #fbba72;">
+          <span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 15px;">{{navPts}}</span>
+          <span style="font-size: 11px; color: #e8cdb4;">pts</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 44px 32px 72px; display: flex; flex-direction: column; gap: 24px;">
+
+  <div class="rise" style="margin-bottom: 8px;">
+    <h1 style="margin: 0; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.025em;">Feed</h1>
+    <p style="margin: 10px 0 0; font-size: 17px; color: #6b4a35;">Semaine 46, du lundi 9 au dimanche 15 novembre.</p>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch;">
+
+    <section class="rise" aria-labelledby="t-rank" style="animation-delay: 80ms; flex: 7 1 560px; min-width: 0; padding: 24px 16px 16px; display: flex; flex-direction: column; gap: 14px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 18px 36px -24px rgba(120,60,20,0.35);">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 0 8px;">
+        <div style="display: flex; align-items: baseline; gap: 12px;">
+          <h2 id="t-rank" style="margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em;">Classement</h2>
+          <span style="font-size: 14px; color: #6b4a35;">Top 5 sur 47</span>
+        </div>
+        <div style="display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background-color: #fbe3cc;">
+          <button type="button" aria-pressed="{{weekOn}}" onClick="{{showWeek}}" style="padding: 7px 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background-color .2s; {{weekStyle}}">Semaine</button>
+          <button type="button" aria-pressed="{{allOn}}" onClick="{{showAll}}" style="padding: 7px 16px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 500; transition: background-color .2s; {{allStyle}}">Cumulé</button>
+        </div>
+      </div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px;">
+        <sc-for list="{{top}}" as="r" hint-placeholder-count="5">
+          <li class="row" style="display: grid; grid-template-columns: 40px 44px minmax(0, 1fr) auto 110px; align-items: center; gap: 14px; padding: 12px 12px; border-radius: 14px; {{r.rowStyle}}">
+            <span style="font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: center; {{r.rankStyle}}">{{r.rank}}</span>
+            <span aria-hidden="true" style="width: 44px; height: 44px; display: grid; place-items: center; border-radius: 999px; font-size: 15px; font-weight: 600; background-color: {{r.bg}}; color: {{r.fg}};">{{r.ini}}</span>
+            <span style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-width: 0;">
+              <a class="name" href="ProfilPublic.dc.html" style="font-size: 17px; font-weight: 600; text-decoration: none; color: #2a1a10;">{{r.who}}</a>
+              <span style="padding: 2px 8px; border-radius: 999px; background-color: #fbe9d7; font-size: 12px; color: #4d3324;">Niv. {{r.lvl}}</span>
+            </span>
+            <span style="display: flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 999px; font-size: 13px; font-weight: 500; {{r.moveStyle}}">
+              <sc-if value="{{r.up}}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2l4.5 7.5h-9z" fill="currentColor"></path></svg></sc-if>
+              <sc-if value="{{r.down}}" hint-placeholder-val="{{ false }}"><svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10L1.5 2.5h9z" fill="currentColor"></path></svg></sc-if>
+              <span aria-label="{{r.moveLabel}}">{{r.move}}</span>
+            </span>
+            <span style="text-align: right;"><span style="font-family: 'Geist Mono', monospace; font-size: 17px; font-weight: 500;">{{r.pts}}</span> <span style="font-size: 13px; color: #6b4a35;">pts</span></span>
+          </li>
+        </sc-for>
+      </ol>
+    </section>
+
+    <section class="rise" aria-labelledby="t-me" style="animation-delay: 160ms; flex: 4 1 340px; min-width: 0; padding: 22px; display: flex; flex-direction: column; gap: 16px; background-color: #2a1a10; color: #fbe9d7; border-radius: 20px; box-shadow: 0 18px 36px -24px rgba(60,25,5,0.7);">
+      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px;">
+        <h2 id="t-me" style="margin: 0; font-size: 14px; font-weight: 500; color: #e8cdb4;">Ta position, {{me.label}}</h2>
+        <span lang="ja" style="font-family: 'DotGothic16', sans-serif; font-size: 11px; letter-spacing: 0.18em; color: #c9a88e;">ランキング</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 12px 18px; border-radius: 12px; background-color: #fbba72; color: #691e06; box-shadow: inset 0 0 0 1px rgba(105,30,6,0.18), inset 0 3px 0 rgba(105,30,6,0.1);">
+        <div>
+          <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">RANG</div>
+          <div style="display: flex; align-items: baseline; gap: 6px;">
+            <div style="position: relative; font-family: 'Doto', monospace; font-weight: 900; font-size: 84px; line-height: 0.9;">
+              <span aria-hidden="true" style="position: absolute; left: 0; top: 0; opacity: 0.12;">88</span>
+              <span style="position: relative;">{{me.rank}}</span>
+            </div>
+            <span style="font-family: 'Doto', monospace; font-weight: 900; font-size: 24px;">/47</span>
+          </div>
+        </div>
+        <div style="text-align: right;">
+          <div style="font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.08em;">PTS</div>
+          <div style="font-family: 'Doto', monospace; font-weight: 900; font-size: 32px; line-height: 1.1;">{{mePts}}</div>
+        </div>
+      </div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px;">
+        <sc-for list="{{near}}" as="n" hint-placeholder-count="3">
+          <li style="display: grid; grid-template-columns: 30px 32px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 12px; {{n.rowStyle}}">
+            <span style="font-family: 'Geist Mono', monospace; font-size: 14px; color: #e8cdb4;">{{n.rank}}</span>
+            <span aria-hidden="true" style="width: 32px; height: 32px; display: grid; place-items: center; border-radius: 999px; font-size: 12px; font-weight: 600; background-color: {{n.bg}}; color: {{n.fg}};">{{n.ini}}</span>
+            <span style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+              <span style="font-size: 15px; font-weight: 500;">{{n.who}}</span>
+              <sc-if value="{{n.isMe}}" hint-placeholder-val="{{ false }}"><span style="padding: 1px 7px; border-radius: 999px; background-color: #fbba72; color: #691e06; font-size: 11px; font-weight: 600;">toi</span></sc-if>
+            </span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 14px; color: #f1dcc6;">{{n.pts}}</span>
+          </li>
+        </sc-for>
+      </ol>
+      <p style="margin: auto 0 0; padding-top: 12px; border-top: 1px solid #4d3324; font-size: 14px; line-height: 1.5; color: #e8cdb4;">{{me.nudge}}<br>Nouveau classement dans <span style="font-family: 'Doto', monospace; font-weight: 900; color: #fbba72;">5J<span class="blink">:</span>05H</span></p>
+    </section>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; margin-top: 8px;">
+
+    <sc-if value="{{v2}}" hint-placeholder-val="{{ true }}">
+    <section class="rise" aria-labelledby="t-fil" style="animation-delay: 240ms; flex: 7 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 14px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <h2 id="t-fil" style="margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -0.02em;">Fil de la promo</h2>
+        <span style="padding: 2px 8px; border-radius: 999px; border: 1px solid #e3c3a5; font-family: 'Geist Mono', monospace; font-size: 11px; color: #6b4a35;">v2</span>
+      </div>
+
+      <div style="padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 18px;">
+        <label for="post" style="font-size: 14px; font-weight: 500; color: #4d3324;">Écrire à la promo</label>
+        <textarea id="post" maxLength="280" value="{{draft}}" onChange="{{onDraft}}" placeholder="Une question, un rappel, un encouragement" style="width: 100%; min-height: 84px; resize: vertical; padding: 12px 14px; border-radius: 12px; border: 1px solid #e3c3a5; background-color: #fffaf3; color: #2a1a10; font-family: 'Geist', system-ui, sans-serif; font-size: 16px; line-height: 1.45;"></textarea>
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+          <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #6b4a35;">{{count}}/280</span>
+          <button type="button" class="btn btn-primary" disabled="{{empty}}" style="padding: 10px 22px; border: 0; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 15px; font-weight: 600;">Publier</button>
+        </div>
+      </div>
+
+      <sc-for list="{{feed}}" as="it" hint-placeholder-count="6">
+        <article class="lift" style="display: flex; gap: 14px; padding: 18px 20px; border-radius: 18px; {{it.boxStyle}}">
+          <sc-if value="{{it.isEvent}}" hint-placeholder-val="{{ true }}">
+            <span aria-hidden="true" style="flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 12px; background-color: #fde3c8; color: #9a3f00;">
+              <sc-if value="{{it.icoQcm}}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="3"></rect><path d="M8 12l3 3 5-6"></path></svg></sc-if>
+              <sc-if value="{{it.icoTop}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"></path><path d="M5 20v-7h4v7"></path><path d="M10 20V6h4v14"></path><path d="M15 20v-10h4v10"></path></svg></sc-if>
+              <sc-if value="{{it.icoBadge}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14" r="6"></circle><path d="M8 3l4 5 4-5"></path></svg></sc-if>
+              <sc-if value="{{it.icoCards}}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="13" height="15" rx="2"></rect><path d="M4 7v12a2 2 0 0 0 2 2h10"></path></svg></sc-if>
+            </span>
+          </sc-if>
+          <sc-if value="{{it.isPost}}" hint-placeholder-val="{{ false }}">
+            <span aria-hidden="true" style="flex: 0 0 40px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 999px; font-size: 14px; font-weight: 600; background-color: {{it.bg}}; color: {{it.fg}};">{{it.ini}}</span>
+          </sc-if>
+
+          <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px;">
+              <a class="name" href="ProfilPublic.dc.html" style="font-size: 16px; font-weight: 600; text-decoration: none; color: #2a1a10;">{{it.who}}</a>
+              <sc-if value="{{it.isEvent}}" hint-placeholder-val="{{ true }}"><span style="font-size: 16px;">{{it.text}}</span></sc-if>
+              <span style="font-size: 13px; color: #6b4a35;">{{it.time}}</span>
+            </div>
+            <sc-if value="{{it.hasDetail}}" hint-placeholder-val="{{ true }}"><p style="margin: -4px 0 0; font-size: 14px; color: #6b4a35;">{{it.detail}}</p></sc-if>
+            <sc-if value="{{it.isPost}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; max-width: 62ch; font-size: 16px; line-height: 1.55;">{{it.text}}</p></sc-if>
+
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px;">
+              <sc-for list="{{it.reacts}}" as="re" hint-placeholder-count="4">
+                <button type="button" class="chip" onClick="{{re.toggle}}" aria-pressed="{{re.mine}}" aria-label="{{re.aria}}" style="min-width: 44px; height: 32px; display: flex; align-items: center; justify-content: center; gap: 5px; padding: 0 10px; border-radius: 999px; font-size: 14px; {{re.style}}"><span class="emo" aria-hidden="true">{{re.e}}</span><span style="font-family: 'Geist Mono', monospace; font-size: 13px;">{{re.n}}</span></button>
+              </sc-for>
+              <button type="button" class="btn btn-ghost" style="height: 32px; margin-left: 4px; padding: 0 12px; border: 1px solid transparent; border-radius: 999px; background-color: transparent; font-size: 14px; font-weight: 500; color: #4d3324;">Répondre</button>
+            </div>
+
+            <sc-if value="{{it.hasReplies}}" hint-placeholder-val="{{ false }}">
+              <ul style="list-style: none; margin: 2px 0 0; padding: 12px 14px; display: flex; flex-direction: column; gap: 12px; border-radius: 14px; background-color: #fbeedf;">
+                <sc-for list="{{it.replies}}" as="rp" hint-placeholder-count="2">
+                  <li style="display: flex; gap: 10px;">
+                    <span aria-hidden="true" style="flex: 0 0 28px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 999px; font-size: 11px; font-weight: 600; background-color: {{rp.bg}}; color: {{rp.fg}};">{{rp.ini}}</span>
+                    <p style="margin: 0; font-size: 15px; line-height: 1.5;"><a class="name" href="ProfilPublic.dc.html" style="font-weight: 600; text-decoration: none; color: #2a1a10;">{{rp.who}}</a> <span>{{rp.text}}</span> <span style="font-size: 13px; color: #6b4a35;">{{rp.time}}</span></p>
+                  </li>
+                </sc-for>
+              </ul>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+    </section>
+    </sc-if>
+
+    <aside class="rise" style="animation-delay: 320ms; flex: 4 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 20px;">
+      <section aria-labelledby="t-weeks" style="padding: 20px 12px 12px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px;">
+        <h2 id="t-weeks" style="margin: 0 10px 8px; font-size: 16px; font-weight: 600;">Semaines précédentes</h2>
+        <div style="display: flex; flex-direction: column; gap: 2px;">
+          <sc-for list="{{weeks}}" as="w" hint-placeholder-count="4">
+            <button type="button" class="row" style="width: 100%; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px; border: 0; border-radius: 12px; background-color: transparent; text-align: left; color: #2a1a10;">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 13px; font-weight: 500; color: #4d3324;">{{w.no}}</span>
+              <span style="min-width: 0;">
+                <span style="display: block; font-size: 15px; font-weight: 500;">{{w.dates}}</span>
+                <span style="display: block; margin-top: 1px; font-size: 13px; color: #6b4a35;">{{w.first}}</span>
+              </span>
+              <span style="padding: 3px 9px; border-radius: 999px; background-color: #fbe9d7; font-size: 13px; color: #4d3324;">toi {{w.me}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <section aria-labelledby="t-notif" style="padding: 20px 12px 12px; background-color: rgba(255,250,243,0.92); border: 1px solid #efd5bc; border-radius: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin: 0 10px 8px;">
+          <h2 id="t-notif" style="margin: 0; font-size: 16px; font-weight: 600;">Notifications</h2>
+          <span style="padding: 1px 8px; border-radius: 999px; background-color: #bb4d00; color: #fffaf5; font-size: 12px; font-weight: 600;">3</span>
+        </div>
+        <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px;">
+          <sc-for list="{{notifs}}" as="nt" hint-placeholder-count="4">
+            <li style="display: flex; gap: 12px; padding: 10px; border-radius: 12px;">
+              <span aria-hidden="true" style="flex: 0 0 8px; width: 8px; height: 8px; margin-top: 7px; border-radius: 999px; {{nt.mark}}"></span>
+              <div style="min-width: 0;">
+                <p style="margin: 0; font-size: 15px; line-height: 1.4; {{nt.textStyle}}">{{nt.text}}</p>
+                <p style="margin: 2px 0 0; font-size: 13px; color: #6b4a35;">{{nt.time}}{{nt.srUnread}}</p>
+              </div>
+            </li>
+          </sc-for>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"v2":{"editor":"boolean","default":true,"section":"Périmètre"},"feuilles":{"editor":"boolean","default":true,"section":"Ambiance"},"$preview":{"width":1440,"height":2100}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+    try { if (window.localStorage.getItem("bachotage-feuilles") === "off") this.setState({ noFall: true }); } catch (e) {}
+    const reduce = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    const start = Date.now();
+    this.setState({ k: 0 });
+    this._t = setInterval(() => {
+      const k = Math.min(1, (Date.now() - start) / 1400);
+      this.setState({ k });
+      if (k >= 1) clearInterval(this._t);
+    }, 40);
+  }
+  componentWillUnmount() {
+    clearInterval(this._t);
+  }
+  renderVals() {
+    const st = this.state || {};
+    const tab = st.tab ?? "week";
+    const draft = st.draft ?? "";
+    const v2 = this.props.v2 ?? true;
+    const feuilles = this.props.feuilles ?? true;
+
+    const k = st.k ?? 1;
+    const ease = 1 - Math.pow(1 - k, 3);
+    const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const count = (n) => fmt(Math.round(n * ease));
+
+    const LEAF = {
+      orange: ["#e8742a", "#bb4d00"],
+      caramel: ["#fbba72", "#e08a3c"],
+      gold: ["#f2a541", "#c46f12"],
+      bronze: ["#ca5310", "#8f250c"]
+    };
+    const decorRaw = [
+      ["B", 84, "orange", -16, "top: 96px; right: 6%;", true],
+      ["A", 46, "gold", 40, "top: 72px; right: 16%;", false],
+      ["A", 56, "caramel", -60, "top: 196px; right: 2%;", true],
+      ["B", 54, "gold", 10, "top: 640px; left: 1%;", true],
+      ["A", 44, "bronze", 120, "top: 900px; right: 1.5%;", false],
+      ["A", 58, "orange", 30, "top: 1240px; left: 2%;", true],
+      ["B", 62, "caramel", -30, "top: 1560px; right: 1%;", true],
+      ["B", 80, "orange", 20, "bottom: 24px; left: 5%;", true],
+      ["A", 46, "gold", -70, "bottom: 50px; left: 13%;", false]
+    ];
+    const decor = feuilles ? decorRaw.map((l) => ({
+      isA: l[0] === "A", isB: l[0] === "B", size: l[1], body: LEAF[l[2]][0], vein: LEAF[l[2]][1], rot: l[3], pos: l[4], cls: l[5] ? "sway" : ""
+    })) : [];
+    const fallRaw = [
+      ["B", 28, "orange", 14, 4, "fallB"],
+      ["A", 24, "gold", 41, 12, "fallA"],
+      ["A", 22, "caramel", 70, 1, "fallA"],
+      ["B", 30, "orange", 88, 17, "fallB"],
+      ["A", 26, "bronze", 27, 22, "fallA"],
+      ["A", 20, "gold", 56, 27, "fallB"]
+    ];
+    const falling = feuilles && !st.noFall ? fallRaw.map((f) => ({
+      isA: f[0] === "A", isB: f[0] === "B", size: f[1], body: LEAF[f[2]][0], vein: LEAF[f[2]][1], left: f[3], delay: f[4], cls: f[5]
+    })) : [];
+
+    const AV = {
+      A: { bg: "#fbba72", fg: "#691e06" },
+      B: { bg: "#2a1a10", fg: "#fbba72" },
+      C: { bg: "#fde3c8", fg: "#8f250c" },
+      D: { bg: "#efd5bc", fg: "#4d3324" },
+      E: { bg: "#bb4d00", fg: "#fffaf5" }
+    };
+    const PEOPLE = {
+      "inès_b": ["IB", "A", 9], "malo": ["MA", "B", 9], "capu": ["CA", "C", 10],
+      "yanis.k": ["YK", "D", 8], "theo_r": ["TR", "E", 8], "nour": ["NO", "C", 7],
+      "nathan": ["NA", "A", 7], "baptiste": ["BA", "D", 6], "lea.m": ["LM", "E", 9],
+      "sacha": ["SA", "B", 7], "romane": ["RO", "D", 7]
+    };
+    const person = (who) => {
+      const p = PEOPLE[who];
+      return { who, ini: p[0], bg: AV[p[1]].bg, fg: AV[p[1]].fg, lvl: p[2] };
+    };
+
+    const RANKS = {
+      week: {
+        top: [["inès_b", 2180, 2], ["malo", 1940, -1], ["capu", 1875, 1], ["yanis.k", 1610, -2], ["theo_r", 1530, 0]],
+        near: [[8, "nour", 1290], [9, "nathan", 1240], [10, "baptiste", 1180]],
+        me: { rank: "09", pts: 1240, label: "cette semaine", nudge: "Encore 51 pts pour passer devant nour." }
+      },
+      all: {
+        top: [["capu", 14320, 0], ["inès_b", 13980, 1], ["malo", 12450, -1], ["lea.m", 11870, 0], ["yanis.k", 11200, 0]],
+        near: [[12, "sacha", 8940], [13, "nathan", 8610], [14, "romane", 8400]],
+        me: { rank: "13", pts: 8610, label: "au cumulé", nudge: "Encore 331 pts pour passer devant sacha." }
+      }
+    };
+    const R = RANKS[tab];
+    const MV_UP = "background-color: #fde3c8; color: #9a3f00;";
+    const MV_FLAT = "background-color: #fbe9d7; color: #6b4a35;";
+    const top = R.top.map((t, i) => {
+      const mv = t[2];
+      return {
+        ...person(t[0]),
+        rank: i + 1,
+        pts: fmt(t[1]),
+        up: mv > 0,
+        down: mv < 0,
+        move: mv === 0 ? "=" : String(Math.abs(mv)),
+        moveLabel: mv === 0 ? "stable" : (mv > 0 ? "monte de " : "descend de ") + Math.abs(mv),
+        moveStyle: mv > 0 ? MV_UP : MV_FLAT,
+        rowStyle: i === 0 ? "background-color: #fde3c8;" : "",
+        rankStyle: i === 0 ? "color: #9a3f00;" : "color: #4d3324;"
+      };
+    });
+    const near = R.near.map((n) => {
+      const isMe = n[1] === "nathan";
+      return {
+        ...person(n[1]),
+        rank: n[0],
+        pts: fmt(n[2]),
+        isMe,
+        rowStyle: isMe ? "background-color: #3d2819;" : ""
+      };
+    });
+
+    const ON = "background-color: #fffaf3; color: #2a1a10; box-shadow: 0 1px 3px rgba(120,60,20,0.18);";
+    const OFF = "background-color: transparent; color: #6b4a35;";
+
+    const EMO = [["🔥", "Feu"], ["👏", "Bravo"], ["💪", "Courage"], ["😂", "Rire"]];
+    const BASE = { "p2:💪": true };
+    const reacted = Object.assign({}, BASE, st.reacted || {});
+
+    const FEED = [
+      { id: "e1", kind: "event", who: "inès_b", text: "a terminé une série de 20 QCM", detail: "Biochimie, Enzymologie. 19/20, +190 pts", time: "il y a 4 min", ico: "qcm", r: { "🔥": 6, "👏": 3 } },
+      { id: "p1", kind: "post", who: "malo", text: "Quelqu’un a compris la différence entre inhibiteur compétitif et non compétitif ? Je tourne en rond depuis une heure.", time: "il y a 18 min", r: { "😂": 2, "💪": 1 },
+        replies: [
+          ["capu", "Compétitif : Km augmente, Vmax ne bouge pas. Non compétitif : c’est l’inverse. Les flashcards du chapitre 2 aident bien.", "il y a 12 min"],
+          ["nathan", "Merci, enfin clair.", "il y a 9 min"]
+        ] },
+      { id: "e2", kind: "event", who: "capu", text: "entre dans le top 5 de la semaine", detail: "3e avec 1 875 pts", time: "il y a 1 h", ico: "top", r: { "👏": 4 } },
+      { id: "p2", kind: "post", who: "lea.m", text: "Rappel : partiel de biochimie lundi 16. On fait une session QCM commune dimanche soir ?", time: "il y a 2 h", r: { "🔥": 4, "👏": 2, "💪": 5 } },
+      { id: "e3", kind: "event", who: "yanis.k", text: "a obtenu le badge 100 QCM réussis", detail: "", time: "il y a 3 h", ico: "badge", r: { "🔥": 2 } },
+      { id: "e4", kind: "event", who: "theo_r", text: "a révisé 60 flashcards", detail: "Physiologie, Respiration. +180 pts", time: "hier, 23h12", ico: "cards", r: {} }
+    ];
+
+    const POST_BOX = "background-color: rgba(255,250,243,0.94); border: 1px solid #efd5bc; box-shadow: 0 1px 2px rgba(120,60,20,0.06), 0 14px 28px -22px rgba(120,60,20,0.35);";
+    const EVENT_BOX = "background-color: rgba(255,243,230,0.8); border: 1px solid #f3e0cc;";
+    const feed = FEED.map((it) => {
+      const reacts = EMO.map(([e, nm]) => {
+        const key = it.id + ":" + e;
+        const baseMine = !!BASE[key];
+        const mine = !!reacted[key];
+        const n = (it.r[e] || 0) - (baseMine ? 1 : 0) + (mine ? 1 : 0);
+        return {
+          e,
+          n: n > 0 ? n : "",
+          mine,
+          aria: nm + ", " + n + (n > 1 ? " réactions" : " réaction"),
+          style: mine
+            ? "border: 1px solid #bb4d00; background-color: #fde3c8; color: #9a3f00;"
+            : "border: 1px solid #efd5bc; background-color: #fffaf3; color: #4d3324;",
+          toggle: () => this.setState({ reacted: Object.assign({}, reacted, { [key]: !mine }) })
+        };
+      });
+      const replies = (it.replies || []).map((r) => ({ ...person(r[0]), text: r[1], time: r[2] }));
+      return {
+        ...person(it.who),
+        text: it.text,
+        time: it.time,
+        detail: it.detail || "",
+        hasDetail: !!it.detail,
+        isPost: it.kind === "post",
+        isEvent: it.kind === "event",
+        icoQcm: it.ico === "qcm",
+        icoTop: it.ico === "top",
+        icoBadge: it.ico === "badge",
+        icoCards: it.ico === "cards",
+        boxStyle: it.kind === "post" ? POST_BOX : EVENT_BOX,
+        reacts,
+        replies,
+        hasReplies: replies.length > 0
+      };
+    });
+
+    const weeks = [
+      { no: "S45", dates: "2 au 8 nov.", first: "1er : capu, 2 410 pts", me: "13e" },
+      { no: "S44", dates: "26 oct. au 1er nov.", first: "1er : malo, 2 050 pts", me: "17e" },
+      { no: "S43", dates: "19 au 25 oct.", first: "1er : inès_b, 1 980 pts", me: "11e" },
+      { no: "S42", dates: "12 au 18 oct.", first: "1er : capu, 1 760 pts", me: "21e" }
+    ];
+
+    const notifs = [
+      { text: "lea.m a répondu à ton post", time: "il y a 20 min", unread: true },
+      { text: "malo te propose un duel : Enzymologie, 20 QCM", time: "il y a 1 h", unread: true },
+      { text: "Nouveau défi de la semaine : réussir 60 QCM", time: "lundi", unread: true },
+      { text: "capu te défie de battre 17/20 en Glucides", time: "dimanche", unread: false }
+    ].map((n) => ({
+      ...n,
+      mark: n.unread ? "background-color: #bb4d00;" : "background-color: transparent;",
+      textStyle: n.unread ? "font-weight: 500; color: #2a1a10;" : "color: #6b4a35;",
+      srUnread: n.unread ? ", non lue" : ""
+    }));
+
+    return {
+      v2,
+      decor,
+      falling,
+      fallOn: !st.noFall,
+      fallOff: !!st.noFall,
+      fallTitle: st.noFall ? "Activer les feuilles qui tombent" : "Couper les feuilles qui tombent",
+      fallLeaf: st.noFall ? "#d9bfa6" : "#e8742a",
+      fallVein: st.noFall ? "#b39580" : "#bb4d00",
+      toggleFall: () => { const next = !st.noFall; try { window.localStorage.setItem("bachotage-feuilles", next ? "off" : "on"); } catch (e) {} this.setState({ noFall: next }); },
+      navPts: count(1240),
+      mePts: count(R.me.pts),
+      weekOn: tab === "week",
+      allOn: tab === "all",
+      weekStyle: tab === "week" ? ON : OFF,
+      allStyle: tab === "all" ? ON : OFF,
+      showWeek: () => this.setState({ tab: "week" }),
+      showAll: () => this.setState({ tab: "all" }),
+      top,
+      near,
+      me: R.me,
+      draft,
+      count: draft.length,
+      empty: draft.trim().length === 0,
+      onDraft: (e) => this.setState({ draft: e.target.value.slice(0, 280) }),
+      feed,
+      weeks,
+      notifs
+    };
+  }
+}
+</script>
+</body>
+</html>
