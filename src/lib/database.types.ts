@@ -597,6 +597,33 @@ export type Database = {
           user_id: string
         }[]
       }
+      my_revision_time: {
+        Args: never
+        Returns: {
+          jour: string
+          minutes_exo: number
+          nb_cartes: number
+          nb_qcm: number
+          subject_id: string
+        }[]
+      }
+      my_session_history: {
+        Args: { p_before?: string; p_limit?: number }
+        Returns: {
+          chapter_nom: string
+          ended_at: string
+          id: string
+          minutes_exo: number
+          mode: Database["public"]["Enums"]["activity_mode"]
+          nb_items: number
+          nb_reussis: number
+          points: number
+          resultat_exo: Database["public"]["Enums"]["activity_result"]
+          started_at: string
+          subject_nom: string
+          variante: Database["public"]["Enums"]["session_variant"]
+        }[]
+      }
       paris_week_start: { Args: { p_at?: string }; Returns: string }
       start_session: {
         Args: {
