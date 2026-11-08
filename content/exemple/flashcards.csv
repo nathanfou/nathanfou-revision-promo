@@ -1,0 +1,12 @@
+matiere,chapitre,recto,verso
+Biochimie,Enzymologie,Équation de Michaelis-Menten,v = Vmax·[S] / (Km + [S])
+Biochimie,Enzymologie,Définition de kcat,"Nombre de molécules de substrat transformées par site actif et par seconde (constante catalytique, kcat = Vmax / [E]totale)"
+Biochimie,Enzymologie,Efficacité catalytique,"kcat / Km, limitée par la diffusion vers 10⁸ à 10⁹ M⁻¹·s⁻¹"
+Biochimie,Enzymologie,Inhibiteur incompétitif : effet sur Km et Vmax,"Km et Vmax diminuent dans le même rapport (droites parallèles en Lineweaver-Burk)"
+Biochimie,Glucides,Carbone anomérique,"Carbone portant la fonction carbonyle dans la forme linéaire (C1 des aldoses, C2 des cétoses), qui devient asymétrique à la cyclisation"
+Biochimie,Glucides,Composition du lactose,Galactose β1-4 glucose
+Biochimie,Glucides,Liaisons de l'amidon,"Amylose : α1-4 linéaire ; amylopectine : α1-4 avec ramifications α1-6"
+Physiologie,Physiologie cardiaque,Valeur normale de la fréquence cardiaque au repos,60 à 100 battements par minute
+Physiologie,Physiologie cardiaque,Définition de la précharge,"Degré d'étirement des fibres en fin de diastole, approché par le volume télédiastolique"
+Physiologie,Physiologie cardiaque,Définition de la postcharge,"Force que le ventricule doit vaincre pour éjecter le sang, approchée par la pression artérielle"
+Physiologie,Physiologie cardiaque,Fraction d'éjection,"VES / VTD, normale autour de 60 % (supérieure à 50 %)"
