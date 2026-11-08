@@ -338,6 +338,61 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          emoji: string | null
+          feed_item_id: string | null
+          id: string
+          kind: string
+          read_at: string | null
+          user_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          emoji?: string | null
+          feed_item_id?: string | null
+          id?: string
+          kind: string
+          read_at?: string | null
+          user_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          emoji?: string | null
+          feed_item_id?: string | null
+          id?: string
+          kind?: string
+          read_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_feed_item_id_fkey"
+            columns: ["feed_item_id"]
+            isOneToOne: false
+            referencedRelation: "feed_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -639,6 +694,21 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      feed_page: {
+        Args: { p_before?: string; p_limit?: number }
+        Returns: {
+          created_at: string
+          event_data: Json
+          id: string
+          kind: Database["public"]["Enums"]["feed_kind"]
+          pp_id: string
+          pseudo: string
+          reactions: Json
+          replies: Json
+          texte: string
+          user_id: string
+        }[]
+      }
       flashcard_overview: {
         Args: never
         Returns: {
@@ -676,6 +746,31 @@ export type Database = {
           pseudo: string
           rang: number
           user_id: string
+        }[]
+      }
+      leaderboard_moves: {
+        Args: { p_scope?: string }
+        Returns: {
+          rang_veille: number
+          user_id: string
+        }[]
+      }
+      mark_notifications_read: { Args: { p_ids?: string[] }; Returns: number }
+      my_notifications: {
+        Args: { p_limit?: number }
+        Returns: {
+          actor_pp_id: string
+          actor_pseudo: string
+          created_at: string
+          emoji: string
+          id: string
+          item_id: string
+          item_texte: string
+          kind: string
+          post_id: string
+          post_kind: Database["public"]["Enums"]["feed_kind"]
+          post_texte: string
+          read_at: string
         }[]
       }
       my_revision_time: {
