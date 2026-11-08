@@ -639,6 +639,35 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      flashcard_overview: {
+        Args: never
+        Returns: {
+          chapter_id: string
+          chapter_nom: string
+          due_count: number
+          new_count: number
+          subject_id: string
+          subject_nom: string
+          total_count: number
+        }[]
+      }
+      flashcard_queue: {
+        Args: { p_chapter_id?: string; p_new_limit?: number }
+        Returns: {
+          chapter_id: string
+          chapter_nom: string
+          due_date: string
+          flashcard_id: string
+          is_new: boolean
+          next_a_revoir: number
+          next_bien: number
+          next_facile: number
+          palier: number
+          recto: string
+          subject_nom: string
+          verso: string
+        }[]
+      }
       leaderboard: {
         Args: { p_scope?: string; p_week_of?: string }
         Returns: {
@@ -664,6 +693,14 @@ export type Database = {
         }[]
       }
       qcm_session_review: { Args: { p_session_id: string }; Returns: Json }
+      review_flashcard: {
+        Args: {
+          p_flashcard_id: string
+          p_note: Database["public"]["Enums"]["activity_result"]
+          p_session_id: string
+        }
+        Returns: Json
+      }
       start_session: {
         Args: {
           p_chapter_id: string
