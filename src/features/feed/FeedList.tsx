@@ -25,6 +25,21 @@ function describeEvent(d: EventData | null): { icon: IconName; detail: string } 
     const detail = `${where ? `${where}. ` : ''}${score}+${fmtInt(d.points)} pts`
     return { icon: d.mode === 'qcm' ? 'qcm' : d.mode === 'flashcard' ? 'cards' : 'pencil', detail }
   }
+  if (d.type === 'seance') {
+    const modes = (['qcm', 'flashcard', 'exo'] as const).filter((m) => (d.modes?.[m]?.items ?? 0) > 0)
+    const only = modes.length === 1 ? modes[0] : null
+    const matieres = d.matieres ?? []
+    const chapitres = d.chapitres ?? []
+    const where = matieres.length === 1 && chapitres.length === 1 ? `${matieres[0]}, ${chapitres[0]}` : matieres.join(', ')
+    const scores = (['qcm', 'exo'] as const)
+      .filter((m) => modes.includes(m))
+      .map((m) => {
+        const part = d.modes[m]!
+        return `${modes.length > 1 ? `${m === 'qcm' ? 'QCM' : 'exercices'} ` : ''}${part.reussis}/${part.items}`
+      })
+    const detail = [where && `${where}.`, [...scores, `+${fmtInt(d.points)} pts`].join(', ')].filter(Boolean).join(' ')
+    return { icon: only === 'qcm' ? 'qcm' : only === 'flashcard' ? 'cards' : only === 'exo' ? 'pencil' : 'flag', detail }
+  }
   const rank = d.rang === 1 ? '1er' : `${d.rang}e`
   return { icon: d.type === 'premier' ? 'medal' : 'chart', detail: `${rank} avec ${fmtInt(d.points)} pts` }
 }
