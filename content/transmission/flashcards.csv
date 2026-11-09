@@ -1,0 +1,93 @@
+matiere,chapitre,recto,verso
+Techniques de transmission,"Signaux, puissance et décibels",Valeur moyenne d'un signal périodique u(t) de période T₀,U_moy = (1/T₀) · ∫₀^T₀ u(t) dt   [V]
+Techniques de transmission,"Signaux, puissance et décibels",Valeur efficace (RMS) d'un signal périodique u(t),U_eff = √( (1/T₀) · ∫₀^T₀ u²(t) dt )   [V] : la racine de la moyenne du carré.
+Techniques de transmission,"Signaux, puissance et décibels",Puissance moyenne dissipée dans une résistance R,"P = U_eff² / R = R · I_eff²   [W], avec U_eff en V et R en Ω."
+Techniques de transmission,"Signaux, puissance et décibels",Loi d'Ohm (avec unités),u(t) [V] = R [Ω] × i(t) [A]
+Techniques de transmission,"Signaux, puissance et décibels",Définition générale du décibel,"P_dB = 10 · log(P / P_ref). Le dB exprime un RAPPORT de puissances : sans P_ref, ce n'est pas une puissance."
+Techniques de transmission,"Signaux, puissance et décibels",Puissance en dBW,P_dBW = 10 · log( P / 1 W ) = 10 · log P[W]
+Techniques de transmission,"Signaux, puissance et décibels",Puissance en dBm,P_dBm = 10 · log( P / 1 mW ) = 10 · log P[mW]
+Techniques de transmission,"Signaux, puissance et décibels",Passer des dBW aux dBm,"P_dBm = P_dBW + 30, car 1 W = 1000 mW et 10 · log 1000 = 30."
+Techniques de transmission,"Signaux, puissance et décibels",0 dBm vaut…,1 mW (et 0 dBW vaut 1 W = 30 dBm).
+Techniques de transmission,"Signaux, puissance et décibels","−30 dBm, −60 dBm, −90 dBm valent…","1 µW, 1 nW, 1 pW : chaque −30 dB divise la puissance par 1000."
+Techniques de transmission,"Signaux, puissance et décibels",Repasser des dBm aux watts,"P[mW] = 10^(P_dBm / 10), puis P[W] = P[mW] × 10⁻³."
+Techniques de transmission,"Signaux, puissance et décibels","+3 dB, +6 dB, +10 dB, +20 dB correspondent à…","×2, ×4, ×10, ×100 sur la puissance (10·log 2 ≈ 3,01 ; −3 dB = ÷2)."
+Techniques de transmission,"Signaux, puissance et décibels",+7 dB et −7 dB correspondent à…,"×5 et ÷5 (10 · log 5 ≈ 6,99 dB). Ex. : +13 dB = +10 +3 = ×20."
+Techniques de transmission,"Signaux, puissance et décibels",Gain d'un système en dBm : Ps en fonction de Pe,"Ps[dBm] = Pe[dBm] + 10 · log(G_p), avec G_p = Ps/Pe sans unité. En chaîne, les gains en dB s'additionnent (une perte compte en négatif)."
+Techniques de transmission,"Signaux, puissance et décibels",Règle des unités en décibels,dBm + dB = dBm ; dBm − dBm = dB ; dB + dB = dB. On n'additionne JAMAIS deux dBm (ça multiplierait des milliwatts).
+Techniques de transmission,"Signaux, puissance et décibels",Additionner deux puissances données en dBm,"Repasser en mW, additionner, revenir en dBm. Deux puissances égales : +3 dB (10 dBm + 10 dBm = 13 dBm)."
+Techniques de transmission,"Signaux, puissance et décibels",Rapport de tensions en dB (même résistance),"20 · log(U₂/U₁), car P ∝ U². Un rapport de tension ×2 fait +6 dB, ×10 fait +20 dB."
+Techniques de transmission,"Signaux, puissance et décibels","Préfixes SI vers le petit : m, µ, n, p, f","milli 10⁻³, micro 10⁻⁶, nano 10⁻⁹, pico 10⁻¹², femto 10⁻¹⁵"
+Techniques de transmission,"Signaux, puissance et décibels","Préfixes SI vers le grand : k, M, G, T, P","kilo 10³, méga 10⁶, giga 10⁹, téra 10¹², péta 10¹⁵"
+Techniques de transmission,"Signaux, puissance et décibels",Signal sinusoïdal u(t) = A cos(2πf₀t + φ₀) : nom et unité de chaque paramètre,A amplitude crête [V] ; f₀ fréquence [Hz] ; T₀ = 1/f₀ période [s] ; ω₀ = 2πf₀ pulsation [rad/s] ; φ₀ phase à l'origine [rad].
+Techniques de transmission,"Signaux, puissance et décibels",Valeur crête à crête d'une sinusoïde d'amplitude A,A_cc = 2A
+Techniques de transmission,"Signaux, puissance et décibels",Valeur moyenne et valeur efficace de A cos(ω₀t + φ₀),"Moyenne : 0. Efficace : A/√2 ≈ 0,707 · A."
+Techniques de transmission,"Signaux, puissance et décibels",Puissance moyenne d'une sinusoïde d'amplitude A dans R,P = (A/√2)² / R = A² / (2R)
+Techniques de transmission,"Signaux, puissance et décibels",Valeur efficace de U₀ + A cos(ω₀t),U_eff = √( U₀² + A²/2 ) : les puissances du continu et de la sinusoïde s'ajoutent. La moyenne vaut U₀.
+Techniques de transmission,"Signaux, puissance et décibels",Déphasage à partir d'un décalage temporel Δt,"Δφ = 2π · Δt / T₀ [rad] (ou 360° · Δt / T₀). Ex. : T₀ = 1 µs, Δt = 0,2 µs → Δφ = 0,4π rad = 72°."
+Techniques de transmission,"Signaux, puissance et décibels",Signe du déphasage,"Si u₂ passe par son maximum AVANT u₁ (référence), u₂ est en avance : φ > 0, u₂ = A cos(ω₀t + φ). En retard : φ < 0."
+Techniques de transmission,"Signaux, puissance et décibels",Décomposition en série de Fourier,"Tout signal périodique de période T₀ est une somme de sinusoïdes d'amplitudes Aᵢ, de phases φᵢ et de fréquences multiples de f₀ (plus A₀, la valeur moyenne)."
+Techniques de transmission,"Signaux, puissance et décibels",Fondamental et harmonique de rang n,Fondamental : la composante à f₀. Harmonique de rang n : la composante à n·f₀.
+Techniques de transmission,"Signaux, puissance et décibels",Spectre d'un signal carré ±E de période T₀,"Uniquement les harmoniques impairs (f₀, 3f₀, 5f₀…), d'amplitudes 4E/(nπ). Pas de valeur moyenne."
+Techniques de transmission,"Signaux, puissance et décibels",Part de la puissance d'un carré ±E portée par le fondamental,"≈ 81 % (8/π²). Rang 3 : ≈ 9 %, rang 5 : ≈ 3,2 %, rang 7 : ≈ 1,7 %."
+Techniques de transmission,"Signaux, puissance et décibels",Valeur efficace d'un signal carré ±E,E (u² vaut E² en permanence). Sa puissance dans R est E²/R.
+Techniques de transmission,"Signaux, puissance et décibels",Que mesure un analyseur de spectre ?,Le spectre d'amplitude en valeur efficace [V] ou le spectre de puissance [dBm] sur une résistance supposée (souvent 50 Ω).
+Techniques de transmission,"Signaux, puissance et décibels",Pourquoi le spectre d'amplitude est-il essentiel ?,"Il donne l'occupation fréquentielle du signal, à comparer à la bande passante du canal de transmission."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Synoptique d'une chaîne de transmission numérique,Source → codeur de source → codeur de canal → émission (codage en ligne ou modulation) → canal → réception → décodeur de canal → décodeur de source → cible.
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Codage de source,"Supprime les bits peu significatifs (compression : JPEG, MPEG…), taux de compression ρ_source."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Codage de canal,Ajoute des bits de redondance (taux ρ_voie) pour détecter et corriger les erreurs de transmission.
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Les 4 supports de transmission du cours,"Câble bifilaire (B faible, < 2 Mbit/s), coaxial (centaines de Mbit/s), fibre optique (B très élevée, faible atténuation, Gbit/s), espace libre (antennes)."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Transmission en bande de base,"Bande occupée de 0 (ou presque) à F. Sur câble, qui se comporte comme un passe-bas. On parle de codage en ligne."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Transmission sur onde porteuse,"Bande centrée sur une fréquence porteuse f_p (transposition de fréquence), surtout en espace libre. On parle de modulation."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Nombre de symboles M avec des mots de n bits,"M = 2ⁿ (dibits : 4, tribits : 8). M est aussi appelé la valence V."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Nombre de bits par symbole à partir de M,n = log₂ M = log M / log 2
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Changer de base de logarithme,"log_b x = ln x / ln b = log x / log b. En particulier log₂ x ≈ 3,32 · log x."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Débit binaire Rb,"Rb = 1/Tb [bit/s] : nombre de bits transmis par seconde, Tb étant la durée d'un bit."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Durée d'un symbole Ts,Ts = n · Tb (un symbole porte n bits).
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Débit symbole Rs,"Rs = 1/Ts = Rb/n [baud, Bd]"
+Techniques de transmission,"Symboles, débits et rapidité de modulation","Relation entre Rb, Rs et M",Rb = n · Rs = log₂(M) · Rs
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Rapidité de modulation RM,"Nombre de signaux physiques élémentaires émis par seconde [baud]. RM = 1/TM, TM étant la durée du plus petit motif électrique."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",bit/s ou baud ?,Rb en bit/s ; Rs et RM en baud (Bd). Ne pas les confondre : Rb = RM seulement en NRZ binaire.
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Codage M-aire,À chaque symbole logique de n bits on associe un symbole physique parmi M = 2ⁿ (par ex. 4 niveaux de tension pour M = 4).
+Techniques de transmission,"Symboles, débits et rapidité de modulation",NRZ 4-aire du cours : table de correspondance,"00 ↔ −3 V, 01 ↔ −1 V, 10 ↔ +1 V, 11 ↔ +3 V. n = 2, TM = Ts = 2Tb, RM = Rs = Rb/2."
+Techniques de transmission,"Symboles, débits et rapidité de modulation",RM pour un NRZ M-aire,RM = Rs = Rb/n (TM = n · Tb).
+Techniques de transmission,"Symboles, débits et rapidité de modulation",RM pour un code RZ ou Manchester,RM = 2 · Rb : le motif dure Tb/2 (transition à mi-bit).
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Niveaux équidistants dans une plage [−Vmax ; +Vmax] avec M niveaux,"Pas q = 2Vmax / (M − 1). Ex. : 8 niveaux dans [−3,5 ; 3,5] V → q = 1 V."
+Techniques de transmission,Codage en ligne et code de Gray,NRZ unipolaire : règle de codage,"« 1 » → +V₀, « 0 » → 0 V pendant tout Tb. RM = Rs = Rb."
+Techniques de transmission,Codage en ligne et code de Gray,NRZ unipolaire : spectre,Occupation 0 ≤ f ≤ Rb (1er lobe). Composante à 0 Hz (pas de téléalimentation). Pas de raie à Rb (horloge difficile à récupérer).
+Techniques de transmission,Codage en ligne et code de Gray,NRZ bipolaire : règle et propriétés,"« 1 » → +V₀, « 0 » → −V₀. Occupation 0 < f ≤ Rb, pas de composante continue (téléalimentation possible), pas de raie à Rb."
+Techniques de transmission,Codage en ligne et code de Gray,NRZ bipolaire M-aire : intérêt et prix à payer,"Occupation 0 < f ≤ Rb/n : à bande égale, débit ×n. Mais à Eb/N0 fixé, le TEB augmente quand M augmente."
+Techniques de transmission,Codage en ligne et code de Gray,RZ unipolaire : règle et propriétés,"« 1 » → niveau haut puis retour à 0 à Tb/2 ; « 0 » → 0. RM = 2Rb, occupation 0 ≤ f ≤ 2Rb, composante continue, raie à Rb (récupération d'horloge)."
+Techniques de transmission,Codage en ligne et code de Gray,RZ bipolaire : règle et propriétés,"Comme le RZ, avec inversion de polarité d'un « 1 » au suivant. RM = 2Rb, pas de composante continue, pas de raie à Rb."
+Techniques de transmission,Codage en ligne et code de Gray,Manchester : règle de codage,« 1 » → transition descendante à Tb/2 ; « 0 » → transition montante à Tb/2.
+Techniques de transmission,Codage en ligne et code de Gray,Manchester : propriétés,"RM = 2Rb, occupation 0 < f ≤ 2Rb, pas de composante continue, spectre centré vers 0,74·Rb, horloge récupérable (filtrage passe-bande autour de Rb)."
+Techniques de transmission,Codage en ligne et code de Gray,Manchester différentiel (TD4),"Le bit dépend du précédent : pas de changement de polarité en début de temps bit → « 1 », changement → « 0 ». Il y a toujours une transition à mi-bit."
+Techniques de transmission,Codage en ligne et code de Gray,Pourquoi éviter une composante à 0 Hz ?,Pour faire passer sur le même câble l'alimentation continue des répéteurs/régénérateurs (téléalimentation).
+Techniques de transmission,Codage en ligne et code de Gray,Pourquoi vouloir une raie à la fréquence rythme Rb ?,Pour récupérer l'horloge (instants de décision) en transmission synchrone.
+Techniques de transmission,Codage en ligne et code de Gray,Quelle bande faut-il garder pour reconstruire un code en ligne ?,"Le 1er lobe du spectre, de 0 à RM : il contient l'essentiel de l'information."
+Techniques de transmission,Codage en ligne et code de Gray,Les 4 critères de choix d'un code en ligne,1) Rb compatible avec la bande B du câble ; 2) pas de composante à 0 Hz si répéteurs téléalimentés ; 3) raie à Rb pour l'horloge ; 4) garantir un TEB donné.
+Techniques de transmission,Codage en ligne et code de Gray,"Bande occupée : NRZ, RZ, Manchester",NRZ : la plus étroite (Rb = RM). RZ et Manchester : 2× plus large (Rb = RM/2).
+Techniques de transmission,Codage en ligne et code de Gray,Code de Gray,Codage binaire où deux valeurs consécutives ne diffèrent que d'un seul bit.
+Techniques de transmission,Codage en ligne et code de Gray,Code de Gray sur 3 bits (0 à 7),"000, 001, 011, 010, 110, 111, 101, 100"
+Techniques de transmission,Codage en ligne et code de Gray,Conversion binaire → Gray,"Le bit de poids fort est recopié, puis chaque bit est le XOR de deux bits binaires consécutifs : G = B ⊕ (B >> 1). Ex. : 110 → 101."
+Techniques de transmission,Codage en ligne et code de Gray,Conversion Gray → binaire,"Le premier bit est recopié, puis Bᵢ = Bᵢ₋₁ ⊕ Gᵢ (XOR avec le bit binaire déjà obtenu). Ex. : 101 → 110."
+Techniques de transmission,Codage en ligne et code de Gray,"Pourquoi le code de Gray en modulation (QPSK, QAM) ?",Une erreur vers un symbole voisin ne fausse qu'un seul bit : on réduit le nombre moyen d'erreurs binaires.
+Techniques de transmission,Codage en ligne et code de Gray,Lien entre taux d'erreur symbole et binaire avec Gray,P_b ≈ P_s / log₂ M (erreurs surtout vers les symboles voisins).
+Techniques de transmission,Codage en ligne et code de Gray,Étiquetage Gray de la QPSK du cours,−135° : 00 ; −45° : 10 ; 45° : 11 ; 135° : 01. Deux voisins diffèrent d'un bit.
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Comportement d'un câble en bande de base,Un filtre passe-bas de bande passante B (0 ≤ f ≤ B) : il lisse le signal et étale les impulsions.
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Interférence entre symboles (IES),Chaque impulsion s'étale sur les suivantes : un symbole reçu dépend aussi des précédents. Erreurs possibles même sans bruit.
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Quand l'IES apparaît-elle ?,Quand la rapidité de modulation RM est trop grande devant la bande B du canal (RM > 2B).
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Critère de Nyquist,"Sans IES, (RM)max = 2 · B [baud]. On ne peut pas transmettre RM baud dans une bande inférieure à RM/2."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Débit maximal sans bruit (Nyquist),(Rb)max = 2 · B · log₂ V. Il tend vers l'infini avec la valence : c'est le bruit qui limite.
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Largeur d'un canal [f₁ ; f₂],B = f₂ − f₁ (en Hz). Ex. : canal [10 kHz ; 25 kHz] → B = 15 kHz.
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Valence maximale utilisable en présence de bruit,V² = 1 + S/N
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Formule de Shannon-Hartley,"(Rb)max = B · log₂(1 + S/N) [bit/s], avec S/N en valeur NATURELLE (pas en dB), B en Hz."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Puissance de bruit N dans la bande B,N [W] = N₀ [W/Hz] × B [Hz]. En dB : N[dBm] = N₀[dBm/Hz] + 10 · log B[Hz].
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Énergie par bit Eb,Eb [J/bit] = P_S [W] / Rb [bit/s]
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Rapport Eb/N₀,"Eb/N₀ = P_S / (N₀ · Rb), sans unité (J / (W/Hz) = J/J). En dB : 10 · log(Eb/N₀)."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Lien entre S/N et Eb/N₀,S/N = (Eb/N₀) · (Rb / B). En dB : (S/N)dB = (Eb/N₀)dB + 10 · log(Rb/B).
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Taux d'erreur binaire (TEB),"Proportion de bits faux, il quantifie la qualité d'une liaison. Voix : ~10⁻⁶ ; données sensibles : ~10⁻¹²."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",4 façons de réduire le TEB,"1) Augmenter la puissance P_S ; 2) diminuer le débit Rb ; 3) réduire le bruit N₀ (blindage, composants faible bruit) ; 4) ajouter de la redondance (codes correcteurs)."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Effet de M sur le TEB à Eb/N₀ fixé,"Le TEB se dégrade quand M augmente : les niveaux sont plus rapprochés, il faut un Eb/N₀ plus grand."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Méthode : débit max à TEB imposé,"Lire (Eb/N₀)min sur la courbe, puis Rb ≤ P_S / (N₀ · 10^((Eb/N₀)dB / 10))."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Méthode : S/N minimal pour un débit visé (Shannon),"S/N ≥ 2^(Rb/B) − 1, puis (S/N)dB = 10 · log(S/N)."
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Taille minimale d'alphabet pour un débit dans une bande B,"n ≥ Rb / (2B), arrondi à l'entier SUPÉRIEUR, puis M = 2ⁿ."
