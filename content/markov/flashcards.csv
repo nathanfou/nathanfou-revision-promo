@@ -1,0 +1,59 @@
+matiere,chapitre,recto,verso
+Markov,Chaînes de Markov en temps discret,Vecteur stochastique,Un vecteur ligne π avec πᵢ ≥ 0 pour tout i et Σ πᵢ = 1.
+Markov,Chaînes de Markov en temps discret,Matrice stochastique,"Une matrice carrée à coefficients ≥ 0 dont chaque ligne somme à 1 (les colonnes, peu importe)."
+Markov,Chaînes de Markov en temps discret,Propriété de Markov,"Pᵢⱼ ne dépend que de i et de j : le futur ne dépend que de l'état présent, pas du passé (processus sans mémoire)."
+Markov,Chaînes de Markov en temps discret,Chaîne de Markov homogène,"La matrice P ne dépend pas du temps : π(t+1) = π(t) P pour tout t, avec la même P."
+Markov,Chaînes de Markov en temps discret,Lire Pᵢⱼ,"Ligne i = état de départ, colonne j = état d'arrivée. La ligne i contient toutes les flèches qui sortent de i, boucle comprise."
+Markov,Chaînes de Markov en temps discret,ET / OU entre événements,ET d'événements indépendants : on multiplie. OU d'événements incompatibles : on additionne.
+Markov,Chaînes de Markov en temps discret,π(n) en fonction de π(0),π(n) = π(0) Pⁿ. (Pⁿ)ᵢⱼ est la probabilité d'être en j au bout de n pas en partant de i.
+Markov,Chaînes de Markov en temps discret,Calculer Pⁿ par diagonalisation,"P = Q D Q⁻¹ ⇒ Pⁿ = Q Dⁿ Q⁻¹, avec les vecteurs propres en colonnes de Q. Vérifier avec n = 1."
+Markov,Chaînes de Markov en temps discret,Valeurs propres d'une matrice stochastique 2 × 2,"1 (vecteur propre (1, 1)ᵀ) et trace − 1, soit 1 − a − b pour P = (1−a a ; b 1−b)."
+Markov,Chaînes de Markov en temps discret,Chaîne ergodique,La limite de π(t) quand t → ∞ existe et ne dépend pas de π(0).
+Markov,Chaînes de Markov en temps discret,Distribution stationnaire (temps discret),"Un vecteur stochastique π tel que π = π P, avec Σ πᵢ = 1."
+Markov,Chaînes de Markov en temps discret,Critère d'ergodicité,"Si une puissance Pᵏ est strictement positive, la chaîne est ergodique. Condition suffisante seulement."
+Markov,Chaînes de Markov en temps discret,Théorèmes sur la distribution stationnaire,"Une chaîne finie en a au moins une. Si la chaîne est ergodique, la limite de π(t) est l'unique distribution stationnaire."
+Markov,Chaînes de Markov en temps discret,Stationnaire d'une chaîne à 2 états (1−a a ; b 1−b),π = (b/(a+b) ; a/(a+b)).
+Markov,Chaînes de Markov en temps discret,Résoudre π = π P,"Une équation par colonne, jeter la plus lourde, tout exprimer en fonction d'une inconnue, normaliser avec Σ πᵢ = 1, vérifier avec l'équation jetée."
+Markov,Chaînes de Markov en temps discret,Gain moyen par période,"E(G) = Σ Gᵢ πᵢ, où Gᵢ est le gain de l'état i par période et π la distribution stationnaire."
+Markov,Chaînes de Markov en temps discret,Temps de séjour (boucle de probabilité p),"Loi géométrique : Prob{T = n} = pⁿ⁻¹(1 − p), E(T) = 1/(1 − p) = 1/q où q est la probabilité de sortir."
+Markov,Chaînes de Markov en temps discret,"Tampon infini (arrivée a, départ s)",Si ρ = a/s < 1 : πₖ = (1 − ρ)ρᵏ et Prob{N ≥ n} = ρⁿ. Si ρ ≥ 1 : pas de distribution stationnaire.
+Markov,Chaînes de Markov en temps discret,Série géométrique,Σₖ≥₀ ρᵏ = 1/(1 − ρ) si 0 ≤ ρ < 1. Dérivée : Σₖ≥₁ kρᵏ⁻¹ = 1/(1 − ρ)².
+Markov,Chaînes de Markov en temps discret,Chaîne infinie : méthode,"Calculer π₁, π₂, π₃, deviner πₖ, le vérifier, sommer la série géométrique, donner la condition raison < 1."
+Markov,Chaînes de Markov en temps discret,Rendre un processus markovien,"Enrichir l'état pour qu'il contienne toute l'information utile : « chantier B 1re semaine / 2e semaine », couple (hier, aujourd'hui)."
+Markov,Chaînes de Markov en temps continu,Générateur stochastique infinitésimal (GSI),"Matrice carrée dont chaque ligne somme à 0, avec Aᵢᵢ ≤ 0 et Aᵢⱼ ≥ 0 pour i ≠ j."
+Markov,Chaînes de Markov en temps continu,Lire un GSI,Aᵢⱼ (i ≠ j) = taux de passage de i vers j. −Aᵢᵢ = Σⱼ≠ᵢ Aᵢⱼ = taux total de sortie de i. Pas de boucle dans le graphe.
+Markov,Chaînes de Markov en temps continu,Équation d'état d'une CMTC,"dπ/dt = π(t) A, de solution π(t) = π(0) exp(tA)."
+Markov,Chaînes de Markov en temps continu,exp(tA),"Id + tA + t²A²/2! + t³A³/3! + …, et d/dt exp(tA) = exp(tA) A."
+Markov,Chaînes de Markov en temps continu,Transitions sur un petit intervalle ε,Prob{i → j} = Aᵢⱼ ε + o(ε) pour j ≠ i ; rester en i : 1 + Aᵢᵢ ε + o(ε).
+Markov,Chaînes de Markov en temps continu,Justifier dπ/dt = π A,"P(ε) = Id + εA + o(ε), donc π(t+ε) − π(t) = ε π(t) A + o(ε). On divise par ε et on fait ε → 0⁺."
+Markov,Chaînes de Markov en temps continu,Distribution stationnaire (temps continu),π A = 0 (une équation par colonne) et Σ πᵢ = 1. Une équation est redondante : elle sert à vérifier.
+Markov,Chaînes de Markov en temps continu,Balance globale d'un état j,Flux sortant = flux entrant : πⱼ Σₖ≠ⱼ Aⱼₖ = Σᵢ≠ⱼ πᵢ Aᵢⱼ. S'écrit directement sur le graphe.
+Markov,Chaînes de Markov en temps continu,"CMTC à 2 états (0 → 1 au taux a, 1 → 0 au taux b)",π = (b/(a+b) ; a/(a+b)) : on reste plus longtemps dans l'état qu'on quitte lentement.
+Markov,Chaînes de Markov en temps continu,Temps de séjour en temps continu,"Loi exponentielle de paramètre −Aᵢᵢ : Prob{T > t} = e^(Aᵢᵢ t), moyenne 1/(−Aᵢᵢ). Sans mémoire."
+Markov,Chaînes de Markov en temps continu,Temps discret ↔ temps continu,P (lignes de somme 1) ↔ A (lignes de somme 0) ; π = π P ↔ π A = 0 ; séjour géométrique ↔ séjour exponentiel.
+Markov,Chaînes de Markov en temps continu,Hypothèses d'un processus de naissance et de mort,"Sur [t, t+ε] en k : arrivée avec probabilité λₖε + o(ε), départ avec probabilité μₖε + o(ε), tout le reste en o(ε)."
+Markov,Chaînes de Markov en temps continu,GSI d'un processus de naissance et de mort,"Tridiagonal : λₖ au-dessus de la diagonale, μₖ en dessous, −(λₖ + μₖ) sur la diagonale (−λ₀ et −μₙ aux bouts)."
+Markov,Chaînes de Markov en temps continu,Balances d'un processus de naissance et de mort,λₖ πₖ = μₖ₊₁ πₖ₊₁. Attention aux indices : il n'existe ni μ₀ ni λₙ.
+Markov,Chaînes de Markov en temps continu,Formule générale (naissance et mort),"πₖ = (λ₀λ₁…λₖ₋₁)/(μ₁μ₂…μₖ) π₀, avec π₀ = (1 + λ₀/μ₁ + λ₀λ₁/(μ₁μ₂) + …)⁻¹."
+Markov,Chaînes de Markov en temps continu,"Naissance et mort avec λₖ = λ, μₖ = μ (file illimitée)",πₖ = (1 − ρ)ρᵏ avec ρ = λ/μ < 1 : c'est la file M/M/1.
+Markov,Chaînes de Markov en temps continu,Durée fixe dans une CMTC,Impossible directement : le séjour dans un état est exponentiel (sans mémoire). Une durée fixe casse la propriété de Markov.
+Markov,Files d'attente,"E/E, S/S, E/S, S/E",E/E : entre deux entrées (inter-arrivée). S/S : entre deux sorties. E/S : temps de réponse. S/E : temps de réflexion.
+Markov,Files d'attente,Notation de Kendall A/B/S/N,Loi d'arrivée / loi de service / nombre de stations en parallèle / capacité totale du système.
+Markov,Files d'attente,"Lettres M, D, Eₖ, G (Kendall)","M : markovien (Poisson, exponentielle). D : déterministe. Eₖ : Erlang d'ordre k. G : loi générale."
+Markov,Files d'attente,λ et μ,"λ = 1 / (inter-arrivée moyenne), μ = 1 / (durée moyenne de service), dans la même unité. Ex. 3 min de service : μ = 20 par heure."
+Markov,Files d'attente,Loi de Poisson (arrivées),"P(N(t) = k) = e^(−λt) (λt)ᵏ / k!, avec E(N(t)) = λt."
+Markov,Files d'attente,Loi exponentielle,"P(T > t) = e^(−λt), P(T ≤ t) = 1 − e^(−λt), E(T) = 1/λ. Sans mémoire."
+Markov,Files d'attente,Théorème des trois conditions équivalentes,Arrivée pendant ε avec probabilité λε + o(ε) ⇔ N(t) suit une loi de Poisson de moyenne λt ⇔ inter-arrivées exponentielles de paramètre λ.
+Markov,Files d'attente,Formule de Little,"E(L) = λₑ E(T) et E(L_q) = λₑ E(T_q), avec λₑ le taux des clients entrant effectivement. Valable pour tout système."
+Markov,Files d'attente,Trafic offert,"a = λ/μ. Dans une M/M/1/∞, c'est aussi la probabilité que le serveur soit occupé."
+Markov,Files d'attente,M/M/1/∞ : existence et loi,"Existe si a < 1. πₖ = (1 − a)aᵏ (loi géométrique), π₀ = 1 − a, P(N ≥ k) = aᵏ."
+Markov,Files d'attente,M/M/1/∞ : nombres moyens de clients,"E(L) = a/(1 − a) dans le système, E(L_q) = a²/(1 − a) en attente."
+Markov,Files d'attente,M/M/1/∞ : temps moyens,"E(T) = 1/(μ − λ) (T exponentielle de paramètre μ − λ), E(T_q) = λ/(μ(μ − λ))."
+Markov,Files d'attente,« Au moins k clients attendent »,= au moins k + 1 clients dans le système (un est en service) : P(N ≥ k+1) = aᵏ⁺¹.
+Markov,Files d'attente,M/M/1/N : distribution stationnaire,"πₖ = aᵏ / (1 + a + … + a^N) pour k = 0, …, N. Existe toujours, même si λ ≥ μ."
+Markov,Files d'attente,M/M/1/N : perte et Little,"Pourcentage de perte : 100 π_N. λₑ = λ(1 − π_N) = μ(1 − π₀), puis E(T) = E(L)/λₑ (jamais λ)."
+Markov,Files d'attente,Routeur sans mémoire (M/M/1/1),"π₀ = μ/(λ + μ) (libre), π₁ = λ/(λ + μ) (occupé) ; pourcentage de perte 100 π₁."
+Markov,Files d'attente,M/M/∞,"μₖ = kμ, pas d'attente. πₖ = e⁻ᵃ aᵏ/k! (loi de Poisson de paramètre a), E(L) = a, E(T) = 1/μ."
+Markov,Files d'attente,M/M/S/S,"Au plus S clients, tous en service, pas d'attente. πₖ ∝ aᵏ/k! pour k ≤ S, perte 100 π_S."
+Markov,Files d'attente,"Relations entre T, T_q, L, L_q",E(T) = E(T_q) + 1/μ et E(L) = E(L_q) + λₑ/μ.
+Markov,Files d'attente,Valeurs utiles sans calculatrice,"e⁻¹ ≈ 0,37 et e⁻² ≈ 0,14."

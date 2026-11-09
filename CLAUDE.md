@@ -93,6 +93,9 @@ toute fonctionnalité. Réponds à Nathan en français.
   Figures de signaux (`labo/moteur/widgets-signaux.js`) : `[[widget:spectre|...]]`, `[[widget:signal|...]]`
   (codes en ligne, paliers, sinusoïdes), `[[widget:dsp|...]]`, `[[widget:teb|...]]` ; options en tête du fichier.
   Contenu : `content/transmission/`.
+  Figures du Markov Bootcamp (`labo/moteur/widgets-markov.js`) : `[[widget:chaine|n=machine]]` (graphe d'une
+  chaîne : machine, ascenseurs, deux-etats, tampon, gsi-exemple, naissance-mort, mm1, mm11, mminf, mm1k),
+  `[[widget:markov|modele=deux-etats;a=0.4;b=0.2]]` (π(t) pas à pas), `[[widget:mm1|lambda=6;mu=10]]`. Contenu : `content/markov/`.
 - Découpage en chantiers parallèles : `docs/chantiers.md`.
 
 ## Plan de construction (spec, section "Plan de construction")
