@@ -1,0 +1,1088 @@
+matiere,chapitre,titre,enonce,correction,duree_min
+Markov,Chaînes de Markov en temps discret,Question de cours : les définitions,"1. Quand dit-on qu'un vecteur ligne $\pi = (\pi_0, \dots, \pi_n)$ est stochastique ?
+2. Quand dit-on qu'une matrice carrée $P$ est stochastique ?
+3. Énonce la propriété de Markov.
+4. Que signifie « chaîne homogène dans le temps » ?","1. $\pi$ est stochastique si tous ses coefficients sont positifs ou nuls, $\pi_i \ge 0$, et si leur somme vaut 1 : $\sum_{i=0}^{n} \pi_i = 1$.
+2. $P$ est stochastique si chacune de ses **lignes** est un vecteur stochastique : coefficients $\ge 0$ et chaque ligne somme à 1.
+3. La probabilité $P_{ij}$ de passer de l'état $i$ à l'état $j$ ne dépend que de $i$ et de $j$, pas des états antérieurs : le futur ne dépend que de l'état présent (processus sans mémoire).
+4. La matrice de transition $P$ ne dépend pas du temps : $\pi(t+1) = \pi(t) P$ avec la même $P$ pour tout $t$.",5
+Markov,Chaînes de Markov en temps discret,Stochastique ou pas ?,"Pour chaque matrice, dis si elle est stochastique. Justifie.
+
+$$A = \begin{pmatrix} 0{,}3 & 0{,}7 \\ 0{,}6 & 0{,}4 \end{pmatrix} \qquad B = \begin{pmatrix} 0{,}5 & 0{,}5 \\ 0{,}5 & 0{,}6 \end{pmatrix} \qquad C = \begin{pmatrix} 1{,}2 & -0{,}2 \\ 0 & 1 \end{pmatrix}$$
+$$D = \begin{pmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{pmatrix} \qquad E = \begin{pmatrix} 0{,}2 & 0{,}8 \\ 0{,}8 & 0{,}2 \\ 0 & 1 \end{pmatrix}$$","- $A$ : coefficients $\ge 0$, lignes $0{,}3 + 0{,}7 = 1$ et $0{,}6 + 0{,}4 = 1$. **Stochastique**. (Les colonnes font $0{,}9$ et $1{,}1$ : sans importance.)
+- $B$ : ligne 1 : $0{,}5 + 0{,}6 = 1{,}1 \ne 1$. **Pas stochastique**.
+- $C$ : les lignes somment bien à 1, mais $-0{,}2 < 0$. **Pas stochastique** (une probabilité est toujours positive).
+- $D$ : coefficients 0 ou 1, chaque ligne contient un seul 1. **Stochastique** (la chaîne tourne $0 \to 1 \to 2 \to 0$ de façon certaine).
+- $E$ : elle n'est **pas carrée** (3 lignes, 2 colonnes). **Pas stochastique**.",5
+Markov,Chaînes de Markov en temps discret,Du graphe à la matrice et retour,"1. Une chaîne a 3 états. Depuis 0 : on reste en 0 avec probabilité $0{,}6$, on va en 1 avec probabilité $0{,}4$. Depuis 1 : on va en 0 avec probabilité $0{,}1$, en 2 avec probabilité $0{,}5$, sinon on reste en 1. Depuis 2 : on va toujours en 0. Écris la matrice $P$.
+2. Complète la matrice suivante (les $?$ sont inconnus) et décris le graphe en une phrase par état :
+$$P = \begin{pmatrix} ? & 0{,}25 & 0{,}25 \\ 0 & ? & 0{,}8 \\ 0{,}5 & 0{,}5 & ? \end{pmatrix}$$
+
+:::astuce Indice
+La ligne $i$ contient les flèches qui partent de $i$. Le « sinon » se calcule par complément à 1.
+:::","1. Depuis 1, rester en 1 : $1 - 0{,}1 - 0{,}5 = 0{,}4$.
+$$P = \begin{pmatrix} 0{,}6 & 0{,}4 & 0 \\ 0{,}1 & 0{,}4 & 0{,}5 \\ 1 & 0 & 0 \end{pmatrix}$$
+Contrôle : $0{,}6 + 0{,}4 = 1$ ; $0{,}1 + 0{,}4 + 0{,}5 = 1$ ; $1 = 1$.
+2. Complément à 1 sur chaque ligne : $P_{00} = 1 - 0{,}5 = 0{,}5$ ; $P_{11} = 1 - 0{,}8 = 0{,}2$ ; $P_{22} = 1 - 1 = 0$.
+   - Depuis 0 : boucle $0{,}5$, flèche vers 1 et flèche vers 2, chacune $0{,}25$.
+   - Depuis 1 : boucle $0{,}2$, flèche vers 2 de $0{,}8$ (aucune flèche vers 0).
+   - Depuis 2 : pas de boucle, flèches vers 0 et vers 1 de $0{,}5$ chacune.",5
+Markov,Chaînes de Markov en temps discret,Markovien ou pas ?,"1. Un routeur est « en marche » ou « en panne ». Chaque jour, s'il marche, il tombe en panne avec probabilité $0{,}1$, indépendamment des jours précédents ; s'il est en panne, il est réparé dans la journée avec probabilité $0{,}7$. L'état « marche / panne » forme-t-il une chaîne de Markov ? Si oui, donne $P$.
+2. On observe la météo (soleil ou pluie). La probabilité qu'il pleuve demain dépend du temps d'aujourd'hui **et** de celui d'hier. Le processus « temps du jour » est-il markovien ? Comment le rendre markovien ?","1. Oui. La probabilité de l'état de demain ne dépend que de l'état d'aujourd'hui (panne avec probabilité $0{,}1$ s'il marche, réparation avec probabilité $0{,}7$ s'il est en panne), pas de l'historique : le processus est sans mémoire. Et ces probabilités ne changent pas d'un jour à l'autre : la chaîne est homogène. Avec 0 = marche, 1 = panne :
+$$P = \begin{pmatrix} 0{,}9 & 0{,}1 \\ 0{,}7 & 0{,}3 \end{pmatrix}$$
+2. Non : avec l'état « temps du jour », le futur dépend aussi d'hier, donc du passé. On le rend markovien en **enrichissant l'état** : l'état devient le couple (temps d'hier, temps d'aujourd'hui), soit 4 états SS, SP, PS, PP. Le couple de demain (aujourd'hui, demain) ne dépend alors que du couple actuel.
+
+C'est une idée qui revient dans les TD : on découpe « chantier B » en « B 1re semaine » et « B 2e semaine » pour que l'état contienne toute l'information utile.",5
+Markov,Chaînes de Markov en temps discret,Le produit d'un vecteur stochastique par une matrice stochastique (bonus),"Soit $\pi = (\pi_0, \pi_1)$ un vecteur stochastique et $P = \begin{pmatrix} P_{00} & P_{01} \\ P_{10} & P_{11} \end{pmatrix}$ une matrice stochastique. Montre que $\pi P$ est encore un vecteur stochastique. Pourquoi est-ce indispensable pour que $\pi(t+1) = \pi(t) P$ ait un sens ?","$\pi P = (\pi_0 P_{00} + \pi_1 P_{10},\ \pi_0 P_{01} + \pi_1 P_{11})$.
+
+- Positivité : chaque terme est un produit de nombres $\ge 0$, donc chaque coefficient est $\ge 0$.
+- Somme : $\pi_0 P_{00} + \pi_1 P_{10} + \pi_0 P_{01} + \pi_1 P_{11} = \pi_0 (P_{00} + P_{01}) + \pi_1 (P_{10} + P_{11}) = \pi_0 \times 1 + \pi_1 \times 1 = 1$.
+
+Donc $\pi P$ est stochastique. C'est indispensable : $\pi(t+1)$ doit être une distribution de probabilité. La preuve marche à l'identique pour $n + 1$ états (on regroupe les termes par ligne de $P$).",5
+Markov,Chaînes de Markov en temps discret,Question de cours : produit ou somme ?,"Deux serveurs fonctionnent indépendamment. Chaque jour, le serveur 1 tombe en panne avec probabilité $0{,}1$, le serveur 2 avec probabilité $0{,}2$.
+
+1. Quelle règle permet de calculer P(les deux tombent en panne) ? Calcule-la.
+2. Calcule P(exactement un serveur tombe en panne), en justifiant la règle utilisée.
+3. Calcule P(aucun ne tombe en panne) et vérifie que les trois probabilités somment à 1.","1. « Le 1er tombe ET le 2e tombe », événements indépendants : on multiplie. $0{,}1 \times 0{,}2 = 0{,}02$.
+2. « Exactement un » = (le 1er tombe ET le 2e tient) OU (le 1er tient ET le 2e tombe). Les deux cas sont incompatibles : on additionne. $0{,}1 \times 0{,}8 + 0{,}9 \times 0{,}2 = 0{,}08 + 0{,}18 = 0{,}26$.
+3. $0{,}9 \times 0{,}8 = 0{,}72$. Contrôle : $0{,}02 + 0{,}26 + 0{,}72 = 1$.",5
+Markov,Chaînes de Markov en temps discret,TD : la machine à deux éléments,"Une machine est constituée de 2 éléments non réparables. Chaque élément a une fiabilité $p$ sur une journée : il tombe en panne avec probabilité $1 - p$ pendant la journée, indépendamment de l'autre. Au départ, les deux éléments fonctionnent.
+
+1. Quels sont les états de la machine ?
+2. Justifie chaque probabilité de transition, donne le graphe et la matrice $P$.
+3. Application numérique : $p = 0{,}9$.
+
+:::astuce Indice
+Seul compte le nombre d'éléments en panne. Pour $P_{01}$, découpe « un seul tombe en panne » en deux cas incompatibles.
+:::","**1.** 0 : les deux éléments fonctionnent ; 1 : un élément est en panne ; 2 : les deux sont en panne.
+
+**2.** Depuis 0 :
+- $P_{00}$ = P(le 1er ne tombe pas en panne ET le 2e non plus). Événements indépendants : $P_{00} = p \cdot p = p^2$.
+- $P_{02}$ = P(le 1er tombe en panne ET le 2e aussi) $= (1-p)^2$.
+- $P_{01}$ = P(le 1er tombe ET le 2e tient) + P(le 1er tient ET le 2e tombe) (cas incompatibles) $= (1-p)p + p(1-p) = 2p(1-p)$.
+- Vérification : $1 - p^2 - (1-p)^2 = 2p - 2p^2 = 2p(1-p)$.
+
+Depuis 1 : l'élément restant tient ($P_{11} = p$) ou tombe ($P_{12} = 1-p$) ; pas de réparation donc $P_{10} = 0$.
+Depuis 2 : plus rien ne change, $P_{22} = 1$ (état absorbant).
+
+[[widget:chaine|n=machine]]
+
+$$P = \begin{pmatrix} p^2 & 2p(1-p) & (1-p)^2 \\ 0 & p & 1-p \\ 0 & 0 & 1 \end{pmatrix}$$
+
+Chaque ligne somme à 1 (la première car $p^2 + 2p(1-p) + (1-p)^2 = (p + 1 - p)^2 = 1$).
+
+**3.** Avec $p = 0{,}9$ : $p^2 = 0{,}81$, $2p(1-p) = 2 \times 0{,}9 \times 0{,}1 = 0{,}18$, $(1-p)^2 = 0{,}01$.
+$$P = \begin{pmatrix} 0{,}81 & 0{,}18 & 0{,}01 \\ 0 & 0{,}9 & 0{,}1 \\ 0 & 0 & 1 \end{pmatrix}$$",10
+Markov,Chaînes de Markov en temps discret,"TD : l'installateur d'ascenseurs, questions 1 et 2","Un installateur d'ascenseurs dispose d'une seule équipe, qui travaille sur un seul chantier à la fois. Les demandes sont de deux types : A (une semaine de travaux) et B (deux semaines). Il n'y a pas de liste d'attente. Les demandes arrivent le lundi ; la probabilité de recevoir un lundi donné au moins une demande A vaut $p = 0{,}5$, au moins une demande B vaut $q = 0{,}6$, et ces événements sont indépendants. Si l'équipe est occupée par un B, les demandes sont refusées. Si l'installateur reçoit à la fois une demande A et une demande B, il donne suite à B.
+
+1. On représente par une chaîne de Markov l'activité de l'équipe d'une semaine sur l'autre. Quels sont les 4 états ?
+2. Dessine le graphe et donne la matrice de transition, en justifiant chaque probabilité.
+
+:::astuce Indice
+Un chantier B dure deux semaines : il faut deux états pour savoir si l'équipe sera libre lundi prochain.
+:::","**1.** 0 : l'équipe est inactive ; 1 : chantier A ; 2 : chantier B, 1re semaine ; 3 : chantier B, 2e semaine. On découpe B en deux car, sinon, l'état ne dirait pas si l'équipe est libre la semaine suivante (la chaîne ne serait pas markovienne).
+
+**2.** Depuis 0, 1 ou 3, l'équipe est libre lundi prochain.
+- $P_{00}$ : pas de demande A ET pas de demande B, indépendants : $(1-p)(1-q) = 0{,}5 \times 0{,}4 = 0{,}2$. De même $P_{10} = P_{30} = 0{,}2$.
+- $P_{01}$ : une demande A ET pas de demande B (sinon B est prioritaire) : $p(1-q) = 0{,}2$. De même $P_{11} = P_{31} = 0{,}2$.
+- $P_{02}$ : une demande B ET (une demande A OU pas de demande A) : $q \big(p + (1-p)\big) = q = 0{,}6$. De même $P_{12} = P_{32} = 0{,}6$.
+- $P_{03} = P_{13} = P_{33} = 0$ : on n'entre pas dans un B par sa 2e semaine.
+
+Depuis 2 : la semaine suivante est forcément la 2e semaine du B, les demandes sont refusées : $P_{23} = 1$, les autres $P_{2j}$ sont nuls.
+
+[[widget:chaine|n=ascenseurs]]
+
+$$P = \begin{pmatrix} 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0 & 0 & 0 & 1 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \end{pmatrix}$$
+
+Vérification : $(1-p)(1-q) + p(1-q) + q = (1-q) + q = 1$ pour les lignes 0, 1, 3 ; la ligne 2 vaut $1$.",10
+Markov,Chaînes de Markov en temps discret,Un routeur réparé en deux jours,"Un routeur tombe en panne, un jour donné, avec probabilité $0{,}1$ s'il fonctionne. Une fois en panne, sa réparation dure **exactement deux jours** ; il refonctionne le jour suivant.
+
+1. Pourquoi deux états « marche » et « panne » ne suffisent-ils pas ?
+2. Propose 3 états, puis donne le graphe (en mots) et la matrice $P$.","1. Avec un seul état « panne », on ne saurait pas si le routeur est au 1er ou au 2e jour de réparation : la probabilité de refonctionner demain dépendrait du passé. Ce ne serait pas markovien.
+2. 0 : le routeur fonctionne ; 1 : 1er jour de réparation ; 2 : 2e jour de réparation.
+- Depuis 0 : panne avec probabilité $0{,}1$ ($P_{01} = 0{,}1$), sinon il reste en marche ($P_{00} = 0{,}9$).
+- Depuis 1 : la réparation continue de façon certaine, $P_{12} = 1$.
+- Depuis 2 : la réparation est finie, $P_{20} = 1$.
+$$P = \begin{pmatrix} 0{,}9 & 0{,}1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{pmatrix}$$
+Graphe : boucle $0{,}9$ sur 0, flèche $0 \to 1$ ($0{,}1$), $1 \to 2$ ($1$), $2 \to 0$ ($1$). Chaque ligne somme à 1. C'est exactement l'astuce du chantier B.",5
+Markov,Chaînes de Markov en temps discret,Variante : priorité aux chantiers A (bonus),"Même installateur, mais avec $p = 0{,}6$ (au moins une demande A), $q = 0{,}5$ (au moins une demande B), et cette fois, s'il reçoit les deux, il donne suite à **A**. Donne la matrice de transition en justifiant chaque coefficient. (On la réutilise dans le bonus de la distribution stationnaire.)","Mêmes états : 0 inactive, 1 chantier A, 2 B 1re semaine, 3 B 2e semaine. Depuis 0, 1 ou 3 :
+- vers 0 : pas de A ET pas de B : $(1-p)(1-q) = 0{,}4 \times 0{,}5 = 0{,}2$ ;
+- vers 1 : une demande A, qu'il y ait ou non un B (A est prioritaire) : $p = 0{,}6$ ;
+- vers 2 : une demande B ET pas de demande A : $(1-p)q = 0{,}4 \times 0{,}5 = 0{,}2$ ;
+- vers 3 : $0$.
+
+Depuis 2 : $P_{23} = 1$.
+$$P = \begin{pmatrix} 0{,}2 & 0{,}6 & 0{,}2 & 0 \\ 0{,}2 & 0{,}6 & 0{,}2 & 0 \\ 0 & 0 & 0 & 1 \\ 0{,}2 & 0{,}6 & 0{,}2 & 0 \end{pmatrix}$$
+Vérification : $0{,}2 + 0{,}6 + 0{,}2 = 1$.",10
+Markov,Chaînes de Markov en temps discret,Une machine à trois éléments (bonus),"Même situation que le TD machine, mais avec **trois** éléments non réparables, chacun de fiabilité $p$ sur une journée, indépendants. Donne les états et la matrice de transition.
+
+:::astuce Indice
+Depuis l'état « 3 éléments en marche », compte de combien de façons exactement un élément peut tomber en panne.
+:::","États : $k$ = nombre d'éléments en panne, $k = 0, 1, 2, 3$.
+
+Depuis 0 (trois en marche) :
+- aucune panne : $p^3$ ;
+- exactement une panne : 3 cas incompatibles (le 1er, le 2e ou le 3e tombe, les deux autres tiennent), chacun de probabilité $(1-p)p^2$ : $3p^2(1-p)$ ;
+- exactement deux pannes : 3 cas (choix de celui qui tient) : $3p(1-p)^2$ ;
+- trois pannes : $(1-p)^3$.
+
+Depuis 1 (deux en marche) : c'est le TD machine, $p^2$, $2p(1-p)$, $(1-p)^2$. Depuis 2 : $p$, $1-p$. Depuis 3 : absorbant.
+$$P = \begin{pmatrix} p^3 & 3p^2(1-p) & 3p(1-p)^2 & (1-p)^3 \\ 0 & p^2 & 2p(1-p) & (1-p)^2 \\ 0 & 0 & p & 1-p \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+Ligne 0 : $p^3 + 3p^2(1-p) + 3p(1-p)^2 + (1-p)^3 = (p + 1 - p)^3 = 1$ (binôme de Newton).",10
+Markov,Chaînes de Markov en temps discret,Question de cours : démontrer π(n) = π(0)Pⁿ,"1. Rappelle la relation entre $\pi(t+1)$, $\pi(t)$ et $P$ et explique d'où vient la formule donnant $\pi_0(t+1)$.
+2. Démontre que $\pi(n) = \pi(0) P^n$ pour tout $n \ge 1$.","1. $\pi(t+1) = \pi(t) P$. Pour être en 0 à $t+1$, on était en $i$ à $t$ (avec probabilité $\pi_i(t)$) puis on est passé de $i$ à 0 (probabilité $P_{i0}$). Ces cas sont incompatibles, on les additionne : $\pi_0(t+1) = \sum_i \pi_i(t) P_{i0}$, qui est le produit de $\pi(t)$ par la colonne 0 de $P$.
+2. Par récurrence. Pour $n = 1$ : $\pi(1) = \pi(0) P$. Si $\pi(n) = \pi(0) P^n$, alors $\pi(n+1) = \pi(n) P = \pi(0) P^n P = \pi(0) P^{n+1}$.",5
+Markov,Chaînes de Markov en temps discret,Deux pas à la main,"$P = \begin{pmatrix} 0{,}6 & 0{,}4 \\ 0{,}2 & 0{,}8 \end{pmatrix}$.
+
+1. On part de l'état 0. Calcule $\pi(1)$ et $\pi(2)$.
+2. On part avec $\pi(0) = (0{,}5,\ 0{,}5)$. Calcule $\pi(1)$.","1. $\pi(0) = (1, 0)$ donc $\pi(1)$ est la ligne 0 : $\pi(1) = (0{,}6,\ 0{,}4)$.
+$\pi(2) = (0{,}6 \times 0{,}6 + 0{,}4 \times 0{,}2,\ 0{,}6 \times 0{,}4 + 0{,}4 \times 0{,}8) = (0{,}36 + 0{,}08,\ 0{,}24 + 0{,}32) = (0{,}44,\ 0{,}56)$. Somme : 1.
+2. $\pi(1) = (0{,}5 \times 0{,}6 + 0{,}5 \times 0{,}2,\ 0{,}5 \times 0{,}4 + 0{,}5 \times 0{,}8) = (0{,}4,\ 0{,}6)$. Somme : 1.
+
+[[widget:markov|modele=deux-etats;a=0.4;b=0.2]]",5
+Markov,Chaînes de Markov en temps discret,La machine au bout de deux jours,"On reprend la machine à deux éléments avec $p = 0{,}9$ :
+$$P = \begin{pmatrix} 0{,}81 & 0{,}18 & 0{,}01 \\ 0 & 0{,}9 & 0{,}1 \\ 0 & 0 & 1 \end{pmatrix}$$
+Au départ, les deux éléments fonctionnent.
+
+1. Calcule $\pi(1)$ puis $\pi(2)$.
+2. Quelle est la probabilité que la machine soit complètement hors service au bout de deux jours ?
+3. Retrouve $\pi_0(2)$ par un raisonnement direct.","1. $\pi(0) = (1, 0, 0)$, donc $\pi(1) = (0{,}81,\ 0{,}18,\ 0{,}01)$.
+- $\pi_0(2) = 0{,}81 \times 0{,}81 = 0{,}6561$ (seul l'état 0 mène à 0).
+- $\pi_1(2) = 0{,}81 \times 0{,}18 + 0{,}18 \times 0{,}9 = 0{,}1458 + 0{,}162 = 0{,}3078$.
+- $\pi_2(2) = 0{,}81 \times 0{,}01 + 0{,}18 \times 0{,}1 + 0{,}01 \times 1 = 0{,}0081 + 0{,}018 + 0{,}01 = 0{,}0361$.
+
+Contrôle : $0{,}6561 + 0{,}3078 + 0{,}0361 = 1$.
+
+2. $\pi_2(2) = 0{,}0361$, soit environ $3{,}6\ \%$.
+3. Être dans l'état 0 au bout de 2 jours, c'est : les 2 éléments tiennent 2 jours de suite, soit 4 « survies » indépendantes : $0{,}9^4 = 0{,}6561$.
+
+[[widget:markov|modele=machine;p=0.9]]",5
+Markov,Chaînes de Markov en temps discret,Diagonaliser et calculer Pⁿ,"$P = \begin{pmatrix} 0{,}6 & 0{,}4 \\ 0{,}2 & 0{,}8 \end{pmatrix}$.
+
+1. Calcule les valeurs propres de $P$.
+2. Donne un vecteur propre (colonne) pour chacune, puis $Q$, $D$ et $Q^{-1}$ telles que $P = QDQ^{-1}$.
+3. En déduire $P^n$, puis $\pi(n)$ si l'on part de l'état 0.
+4. Vers quoi tend $\pi(n)$ ?
+
+:::astuce Indice
+1 est toujours valeur propre ; l'autre vaut trace moins 1. Vérifie ton $P^n$ avec $n = 1$.
+:::","**1.** $P$ est stochastique donc 1 est valeur propre. La trace vaut $1{,}4$, donc l'autre valeur propre est $1{,}4 - 1 = 0{,}4$.
+(Vérification par le polynôme : $\lambda^2 - 1{,}4\lambda + \det P$, avec $\det P = 0{,}48 - 0{,}08 = 0{,}4$ ; les racines $1$ et $0{,}4$ ont bien pour somme $1{,}4$ et pour produit $0{,}4$.)
+
+**2.** Pour $\lambda = 1$ : $v_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}$ (lignes de somme 1).
+Pour $\lambda = 0{,}4$ : $P - 0{,}4 I = \begin{pmatrix} 0{,}2 & 0{,}4 \\ 0{,}2 & 0{,}4 \end{pmatrix}$, on veut $0{,}2x + 0{,}4y = 0$, soit $x = -2y$ : $v_2 = \begin{pmatrix} 2 \\ -1 \end{pmatrix}$.
+$$Q = \begin{pmatrix} 1 & 2 \\ 1 & -1 \end{pmatrix}, \quad D = \begin{pmatrix} 1 & 0 \\ 0 & 0{,}4 \end{pmatrix}, \quad \det Q = -1 - 2 = -3, \quad Q^{-1} = \frac{1}{3}\begin{pmatrix} 1 & 2 \\ 1 & -1 \end{pmatrix}.$$
+(Contrôle : $Q Q^{-1} = \frac{1}{3}\begin{pmatrix} 3 & 0 \\ 0 & 3 \end{pmatrix} = I$.)
+
+**3.** $Q D^n = \begin{pmatrix} 1 & 2 \times 0{,}4^n \\ 1 & -0{,}4^n \end{pmatrix}$, puis
+$$P^n = Q D^n Q^{-1} = \frac{1}{3}\begin{pmatrix} 1 + 2 \times 0{,}4^n & 2 - 2 \times 0{,}4^n \\ 1 - 0{,}4^n & 2 + 0{,}4^n \end{pmatrix}.$$
+Contrôle $n = 1$ : $\frac{1}{3}\begin{pmatrix} 1{,}8 & 1{,}2 \\ 0{,}6 & 2{,}4 \end{pmatrix} = \begin{pmatrix} 0{,}6 & 0{,}4 \\ 0{,}2 & 0{,}8 \end{pmatrix}$.
+
+En partant de 0, $\pi(n)$ est la ligne 0 de $P^n$ :
+$$\pi(n) = \left(\tfrac{1}{3} + \tfrac{2}{3} \times 0{,}4^n,\ \tfrac{2}{3} - \tfrac{2}{3} \times 0{,}4^n\right).$$
+Pour $n = 2$ : $\frac{1}{3} + \frac{2}{3} \times 0{,}16 = \frac{1{,}32}{3} = 0{,}44$, comme à l'exercice précédent.
+
+**4.** $0{,}4^n \to 0$, donc $\pi(n) \to \left(\frac{1}{3},\ \frac{2}{3}\right)$. La ligne 1 de $P^n$ tend vers la même limite : le point de départ est oublié.",10
+Markov,Chaînes de Markov en temps discret,Une chaîne qui ne converge pas (bonus),"$P = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$ et $\pi(0) = (1, 0)$.
+
+1. Calcule $\pi(1)$, $\pi(2)$, $\pi(3)$. $\pi(n)$ a-t-il une limite ?
+2. Quelles sont les valeurs propres de $P$ ? Qu'est-ce qui empêche la convergence ?
+3. Que se passe-t-il si $\pi(0) = (0{,}5,\ 0{,}5)$ ?","1. $\pi(1) = (0, 1)$, $\pi(2) = (1, 0)$, $\pi(3) = (0, 1)$ : la chaîne alterne, $\pi(n)$ n'a pas de limite.
+2. Trace $0$, donc valeurs propres $1$ et $0 - 1 = -1$. Dans $P^n = QD^nQ^{-1}$ apparaît $(-1)^n$, qui oscille au lieu de tendre vers 0. (Avec la formule générale, $\lambda = 1 - a - b = 1 - 1 - 1 = -1$.)
+3. $\pi(1) = (0{,}5,\ 0{,}5)$ : la distribution ne bouge plus. La limite existe donc pour ce départ-là mais pas pour $(1, 0)$ : elle dépend de $\pi(0)$. Cette chaîne n'est **pas ergodique** (voir le sous-chapitre suivant).
+
+[[widget:markov|modele=deux-etats;a=1;b=1]]",5
+Markov,Chaînes de Markov en temps discret,Question de cours : stationnaire et ergodique,"1. Définis une distribution stationnaire.
+2. Définis une chaîne ergodique.
+3. Énonce le critère d'ergodicité vu en cours et les deux théorèmes sur la distribution stationnaire.","1. Un vecteur stochastique $\pi$ est stationnaire pour $P$ s'il est constant dans le temps : $\pi = \pi P$.
+2. La chaîne est ergodique si $\lim_{t \to \infty} \pi(t)$ existe et ne dépend pas de $\pi(0)$.
+3. Critère : si une puissance de $P$ n'a que des coefficients strictement positifs, la chaîne est ergodique. Théorèmes : une chaîne finie admet au moins une distribution stationnaire (pas forcément si l'espace d'états est infini) ; si la chaîne est ergodique, la limite de $\pi(t)$ est l'unique distribution stationnaire.",5
+Markov,Chaînes de Markov en temps discret,Distribution stationnaire à 2 états,"$P = \begin{pmatrix} 0{,}6 & 0{,}4 \\ 0{,}2 & 0{,}8 \end{pmatrix}$. Calcule la distribution stationnaire et compare avec la limite trouvée par diagonalisation dans le sous-chapitre précédent.","Colonne 0 : $\pi_0 = 0{,}6\pi_0 + 0{,}2\pi_1$, soit $0{,}4\pi_0 = 0{,}2\pi_1$, donc $\pi_1 = 2\pi_0$. (La colonne 1 donne la même équation.)
+
+Normalisation : $\pi_0 + 2\pi_0 = 1$, donc $\pi_0 = \frac{1}{3}$ et $\pi_1 = \frac{2}{3}$.
+
+On retrouve la limite $\left(\frac{1}{3}, \frac{2}{3}\right)$ obtenue avec $P^n$. Normal : tous les coefficients de $P$ sont strictement positifs ($k = 1$), la chaîne est ergodique, sa limite est l'unique distribution stationnaire.
+
+[[widget:markov|modele=deux-etats;a=0.4;b=0.2]]",5
+Markov,Chaînes de Markov en temps discret,Ergodique ou pas ?,"1. $P = \begin{pmatrix} 0{,}5 & 0{,}5 \\ 1 & 0 \end{pmatrix}$. Montre que la chaîne est ergodique et calcule sa distribution stationnaire.
+2. $P = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$. Cette chaîne a-t-elle une distribution stationnaire ? Est-elle ergodique ?","1. $P$ a un 0. $P^2 = \begin{pmatrix} 0{,}25 + 0{,}5 & 0{,}25 + 0 \\ 0{,}5 & 0{,}5 \end{pmatrix} = \begin{pmatrix} 0{,}75 & 0{,}25 \\ 0{,}5 & 0{,}5 \end{pmatrix}$, strictement positive : la chaîne est ergodique.
+Colonne 1 : $\pi_1 = 0{,}5\pi_0$. Normalisation : $1{,}5\pi_0 = 1$, $\pi = \left(\frac{2}{3}, \frac{1}{3}\right)$. Vérification colonne 0 : $0{,}5 \times \frac{2}{3} + \frac{1}{3} = \frac{2}{3}$.
+2. $\pi = \pi P$ donne $\pi_0 = \pi_1$, donc $\pi = (0{,}5;\ 0{,}5)$ : elle existe (chaîne finie). Mais la chaîne n'est pas ergodique : en partant de $(1, 0)$, $\pi(t)$ alterne entre $(1, 0)$ et $(0, 1)$ sans limite. Les puissances de $P$ valent $P$ ou $I$, qui ont toujours des zéros.",5
+Markov,Chaînes de Markov en temps discret,Le routeur réparé en deux jours : disponibilité et gain,"On reprend le routeur (0 : marche, 1 : 1er jour de réparation, 2 : 2e jour) :
+$$P = \begin{pmatrix} 0{,}9 & 0{,}1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{pmatrix}$$
+1. Calcule la distribution stationnaire.
+2. Quelle proportion du temps le routeur est-il disponible ?
+3. Un jour de fonctionnement rapporte $600$ €, un jour de réparation coûte $300$ €. Quel est le gain moyen par jour ?","1. Colonnes :
+$$\begin{cases} \pi_0 = 0{,}9\pi_0 + \pi_2 \\ \pi_1 = 0{,}1\pi_0 \\ \pi_2 = \pi_1 \end{cases}$$
+On jette la 1re (la plus chargée). $\pi_1 = \pi_2 = 0{,}1\pi_0$. Normalisation : $\pi_0 (1 + 0{,}1 + 0{,}1) = 1$, donc $\pi_0 = \frac{1}{1{,}2} = \frac{5}{6}$ et $\pi_1 = \pi_2 = \frac{1}{12}$.
+Vérification de l'équation jetée : $0{,}9 \times \frac{5}{6} + \frac{1}{12} = \frac{9}{12} + \frac{1}{12} = \frac{10}{12} = \frac{5}{6}$.
+2. $\pi_0 = \frac{5}{6} \approx 83\ \%$ du temps.
+3. $E(G) = 600 \times \frac{5}{6} - 300 \times \left(\frac{1}{12} + \frac{1}{12}\right) = 500 - 50 = 450$ € par jour.",5
+Markov,Chaînes de Markov en temps discret,"TD : l'installateur d'ascenseurs, questions 3 et 4","[[widget:chaine|n=ascenseurs]]
+
+On reprend l'installateur ($p = 0{,}5$, $q = 0{,}6$, B prioritaire) avec les états 0 : inactive, 1 : chantier A, 2 : B 1re semaine, 3 : B 2e semaine, et
+$$P = \begin{pmatrix} 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0 & 0 & 0 & 1 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \end{pmatrix}$$
+Un chantier A procure un bénéfice de $5\,000$ €, un chantier B $12\,000$ €, et une semaine d'inactivité une perte de $2\,500$ €.
+
+3. En supposant que l'entreprise fonctionne depuis plusieurs semaines, trouve la probabilité de chacun des états ; justifie la validité de ce calcul.
+4. En déduire l'espérance mathématique du gain relatif à une semaine de fonctionnement.
+
+:::astuce Indice
+$\pi_0 + \pi_1 + \pi_3$ revient dans trois équations : remplace-le par $1 - \pi_2$.
+:::","**3. Validité.** Les lignes 0, 1, 3 sont $r = (0{,}2;\ 0{,}2;\ 0{,}6;\ 0)$. On calcule :
+- $P^2$ : lignes 0, 1, 3 égales à $(0{,}08;\ 0{,}08;\ 0{,}24;\ 0{,}6)$, ligne 2 égale à $r$ (un zéro).
+- $P^3$ : lignes 0, 1, 3 égales à $(0{,}152;\ 0{,}152;\ 0{,}456;\ 0{,}24)$, ligne 2 égale à $(0{,}08;\ 0{,}08;\ 0{,}24;\ 0{,}6)$.
+
+$P^3$ est strictement positive, la chaîne est ergodique : $\pi(t)$ converge, indépendamment de $\pi(0)$, vers l'unique distribution stationnaire. Après plusieurs semaines, la probabilité des états est donc donnée par $\pi = \pi P$.
+
+**Calcul.**
+$$\begin{cases} \pi_0 = 0{,}2(\pi_0 + \pi_1 + \pi_3) \\ \pi_1 = 0{,}2(\pi_0 + \pi_1 + \pi_3) \\ \pi_2 = 0{,}6(\pi_0 + \pi_1 + \pi_3) \\ \pi_3 = \pi_2 \\ \pi_0 + \pi_1 + \pi_2 + \pi_3 = 1 \end{cases}$$
+Avec $\pi_0 + \pi_1 + \pi_3 = 1 - \pi_2$ : $\pi_2 = 0{,}6(1 - \pi_2)$, d'où $1{,}6\,\pi_2 = 0{,}6$ et $\pi_2 = \frac{3}{8}$.
+Puis $\pi_0 = \pi_1 = 0{,}2 \times \frac{5}{8} = \frac{1}{8}$ et $\pi_3 = \frac{3}{8}$.
+$$\pi = \left(\frac{1}{8},\ \frac{1}{8},\ \frac{3}{8},\ \frac{3}{8}\right), \qquad \frac{1 + 1 + 3 + 3}{8} = 1.$$
+(En littéral : $\pi_2 = \pi_3 = \frac{q}{1+q}$, $\pi_0 = \frac{(1-p)(1-q)}{1+q}$, $\pi_1 = \frac{p(1-q)}{1+q}$.)
+
+**4.** Gains par semaine : $G_0 = -2\,500$, $G_1 = 5\,000$, $G_2 = G_3 = 6\,000$ (les $12\,000$ € d'un B répartis sur ses deux semaines).
+$$E(G) = \sum_{i=0}^{3} G_i \pi_i = \frac{-2\,500 + 5\,000}{8} + \frac{12\,000 \times 3}{8} = \frac{2\,500 + 36\,000}{8} = \frac{38\,500}{8} = 4\,812{,}50 \text{ €}$$
+par semaine en moyenne.
+
+[[widget:markov|modele=ascenseurs]]",10
+Markov,Chaînes de Markov en temps discret,Quelle politique de priorité choisir ? (bonus),"L'installateur reçoit au moins une demande A avec probabilité $p = 0{,}6$ et au moins une demande B avec probabilité $q = 0{,}5$ (indépendantes). Un chantier A (1 semaine) rapporte $6\,000$ €, un chantier B (2 semaines) $12\,000$ €, une semaine d'inactivité coûte $3\,000$ €.
+
+1. Politique « A prioritaire » (matrice du bonus de modélisation) : calcule $\pi$ et le gain moyen par semaine.
+2. Politique « B prioritaire » (comme au TD) : même question.
+3. Quelle politique conseilles-tu ?","**1.** Lignes 0, 1, 3 : $(0{,}2;\ 0{,}6;\ 0{,}2;\ 0)$, ligne 2 : $(0, 0, 0, 1)$. Avec $S = \pi_0 + \pi_1 + \pi_3 = 1 - \pi_2$ :
+$\pi_2 = 0{,}2(1 - \pi_2)$ donc $\pi_2 = \frac{0{,}2}{1{,}2} = \frac{1}{6}$, $\pi_3 = \frac{1}{6}$, $S = \frac{5}{6}$, $\pi_0 = 0{,}2 \times \frac{5}{6} = \frac{1}{6}$, $\pi_1 = 0{,}6 \times \frac{5}{6} = \frac{1}{2}$.
+Somme : $\frac{1 + 3 + 1 + 1}{6} = 1$.
+$E(G) = -3\,000 \times \frac{1}{6} + 6\,000 \times \frac{1}{2} + 6\,000 \times \frac{1}{6} + 6\,000 \times \frac{1}{6} = -500 + 3\,000 + 1\,000 + 1\,000 = 4\,500$ €.
+
+**2.** Lignes 0, 1, 3 : $\big((1-p)(1-q),\ p(1-q),\ q,\ 0\big) = (0{,}2;\ 0{,}3;\ 0{,}5;\ 0)$.
+$\pi_2 = 0{,}5(1 - \pi_2)$ donc $\pi_2 = \frac{1}{3}$, $\pi_3 = \frac{1}{3}$, $S = \frac{2}{3}$, $\pi_0 = 0{,}2 \times \frac{2}{3} = \frac{2}{15}$, $\pi_1 = 0{,}3 \times \frac{2}{3} = \frac{1}{5} = \frac{3}{15}$.
+Somme : $\frac{2 + 3 + 5 + 5}{15} = 1$.
+$E(G) = \frac{-3\,000 \times 2 + 6\,000 \times 3 + 6\,000 \times 5 + 6\,000 \times 5}{15} = \frac{72\,000}{15} = 4\,800$ €.
+
+**3.** « B prioritaire » rapporte $300$ € de plus par semaine en moyenne : c'est la meilleure politique. Intuition : un B occupe deux semaines d'un coup, ce qui évite des semaines d'inactivité, et une semaine de B rapporte autant qu'une semaine de A.",10
+Markov,Chaînes de Markov en temps discret,Question de cours : démontrer E(T) = 1/(1 − p),"Un état a une boucle de probabilité $p$ ($0 \le p < 1$). Soit $T$ le temps de séjour dans cet état.
+
+1. Donne $\text{Prob}\{T = n\}$ pour $n \ge 1$ en justifiant.
+2. Démontre que $E(T) = \frac{1}{1-p}$.
+
+:::astuce Indice
+$k\,p^{k-1}$ est la dérivée de $p^k$. Et $\sum_{k \ge 0} p^k = \frac{1}{1-p}$.
+:::","1. $T = n$ signifie : rester $n - 1$ fois (probabilité $p$ à chaque fois) ET sortir au pas $n$ (probabilité $1-p$). Par la propriété de Markov, ces pas sont indépendants : $\text{Prob}\{T = n\} = p^{n-1}(1-p)$. C'est une loi géométrique.
+2.
+$$E(T) = \sum_{k=1}^{\infty} k\, p^{k-1}(1-p) = (1-p) \sum_{k=1}^{\infty} (p^k)' = (1-p) \left(\sum_{k=0}^{\infty} p^k\right)' = (1-p)\left(\frac{1}{1-p}\right)' = (1-p) \times \frac{1}{(1-p)^2} = \frac{1}{1-p}.$$
+On a utilisé : somme des dérivées = dérivée de la somme, et la somme de la série géométrique de raison $p < 1$.",5
+Markov,Chaînes de Markov en temps discret,Une loi géométrique en chiffres,"Un état a une boucle $P_{ii} = 0{,}8$.
+
+1. Calcule $\text{Prob}\{T = 1\}$ et $\text{Prob}\{T = 3\}$.
+2. Calcule le temps de séjour moyen.
+3. Quelle est la probabilité de rester **plus de** 2 pas ?","1. $\text{Prob}\{T = 1\} = 1 - 0{,}8 = 0{,}2$. $\text{Prob}\{T = 3\} = 0{,}8^2 \times 0{,}2 = 0{,}64 \times 0{,}2 = 0{,}128$.
+2. $q = 0{,}2$, $E(T) = \frac{1}{0{,}2} = 5$ pas.
+3. Rester plus de 2 pas, c'est rester aux 2 premiers pas : $0{,}8^2 = 0{,}64$. (Ou $1 - 0{,}2 - 0{,}16 = 0{,}64$.)",5
+Markov,Chaînes de Markov en temps discret,La machine : temps avant la première panne,"[[widget:chaine|n=machine]]
+
+Machine à deux éléments, fiabilité $p$ par jour (matrice du TD).
+
+1. Quel est, en fonction de $p$, le temps moyen avant la première panne (on part avec les deux éléments en marche) ?
+2. Une fois un élément en panne, combien de temps en moyenne la machine fonctionne-t-elle encore sur un seul élément ?
+3. Applications numériques pour $p = 0{,}9$ puis $p = 0{,}5$.","1. Le temps avant la première panne est le temps de séjour dans l'état 0. $P_{00} = p^2$, donc $q = 1 - p^2$ et $E(T_0) = \frac{1}{1 - p^2}$.
+2. Temps de séjour dans l'état 1 : $P_{11} = p$, $E(T_1) = \frac{1}{1-p}$.
+3. $p = 0{,}9$ : $E(T_0) = \frac{1}{0{,}19} = \frac{100}{19} \approx 5{,}3$ jours ; $E(T_1) = 10$ jours.
+$p = 0{,}5$ : $E(T_0) = \frac{1}{0{,}75} = \frac{4}{3} \approx 1{,}3$ jour ; $E(T_1) = 2$ jours.",5
+Markov,Chaînes de Markov en temps discret,L'installateur : durée des périodes,"[[widget:chaine|n=ascenseurs]]
+
+TD ascenseurs ($p = 0{,}5$, $q = 0{,}6$) :
+$$P = \begin{pmatrix} 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \\ 0 & 0 & 0 & 1 \\ 0{,}2 & 0{,}2 & 0{,}6 & 0 \end{pmatrix}$$
+1. Quelle est la durée moyenne d'une période d'inactivité ?
+2. Quelle est la durée moyenne d'une suite ininterrompue de chantiers A ?
+3. Que vaut le temps de séjour dans l'état 2 ? Était-ce prévisible ?","1. $P_{00} = 0{,}2$, probabilité de sortir $q = 0{,}8$ : $E(T_0) = \frac{1}{0{,}8} = 1{,}25$ semaine.
+2. $P_{11} = 0{,}2$ : $E(T_1) = 1{,}25$ semaine.
+3. $P_{22} = 0$ : $q = 1$ et $E(T_2) = 1$ semaine. Prévisible : l'état 2 est la 1re semaine d'un B, suivie à coup sûr de la 2e semaine (état 3).",5
+Markov,Chaînes de Markov en temps discret,Durée de vie totale de la machine (bonus),"Machine à deux éléments avec $p = 0{,}9$. Combien de jours, en moyenne, avant que la machine soit complètement hors service ?
+
+:::astuce Indice
+En quittant l'état 0, on peut aller en 1 ou directement en 2. Calcule la probabilité de passer par l'état 1.
+:::","En partant de 0, on passe d'abord $T_0$ jours dans 0, avec $E(T_0) = \frac{100}{19}$.
+
+Quand on quitte 0, on va en 1 ou en 2. Sachant qu'on sort, la probabilité d'aller en 1 est $\frac{P_{01}}{P_{01} + P_{02}} = \frac{0{,}18}{0{,}19} = \frac{18}{19}$. Dans ce cas, on passe encore en moyenne $E(T_1) = 10$ jours dans l'état 1. Sinon (probabilité $\frac{1}{19}$), la machine est directement hors service.
+
+$$E(\text{durée de vie}) = \frac{100}{19} + \frac{18}{19} \times 10 = \frac{100 + 180}{19} = \frac{280}{19} \approx 14{,}7 \text{ jours.}$$
+
+Contrôle d'ordre de grandeur : chaque élément vit en moyenne $\frac{1}{0{,}1} = 10$ jours ; la machine meurt quand le **dernier** élément meurt, un peu moins de 15 jours est cohérent.",10
+Markov,Chaînes de Markov en temps discret,Temps de séjour et distribution stationnaire (bonus),"Routeur réparé en deux jours : $P = \begin{pmatrix} 0{,}9 & 0{,}1 & 0 \\ 0 & 0 & 1 \\ 1 & 0 & 0 \end{pmatrix}$.
+
+1. Calcule la durée moyenne d'une période de fonctionnement.
+2. En déduire la durée moyenne d'un cycle « fonctionnement + réparation » et la proportion du temps où le routeur fonctionne. Compare avec $\pi_0 = \frac{5}{6}$ trouvé dans le sous-chapitre précédent.","1. $P_{00} = 0{,}9$ : $E(T_0) = \frac{1}{0{,}1} = 10$ jours.
+2. Un cycle dure en moyenne $10 + 2 = 12$ jours, dont 10 de fonctionnement : proportion $\frac{10}{12} = \frac{5}{6}$. On retrouve exactement $\pi_0$ : la distribution stationnaire mesure bien la proportion du temps passée dans chaque état.",5
+Markov,Chaînes de Markov en temps discret,Question de cours : chaîne infinie,"1. Pourquoi le tampon sans limite de taille donne-t-il une chaîne à infinité d'états ?
+2. Quel théorème sur les distributions stationnaires ne s'applique plus ?
+3. Donne la somme $\sum_{k=0}^{\infty} \rho^k$ et sa condition de validité.","1. L'état est le nombre de paquets dans le tampon, qui peut prendre toutes les valeurs $0, 1, 2, \dots$ : l'espace d'états est $\mathbb{N}$, la matrice $P$ est infinie.
+2. « Une chaîne finie admet au moins une distribution stationnaire » : pour une chaîne infinie, il peut ne pas y en avoir (par exemple si les arrivées sont plus fréquentes que les départs).
+3. $\sum_{k=0}^{\infty} \rho^k = \frac{1}{1-\rho}$, valable pour $0 \le \rho < 1$ (et plus généralement $|\rho| < 1$).",5
+Markov,Chaînes de Markov en temps discret,Un tampon en chiffres,"Tampon du cours : à chaque tranche, un paquet arrive avec probabilité $a$, ou (si le tampon n'est pas vide) un paquet part avec probabilité $s$, jamais les deux.
+
+1. Avec $a = 0{,}2$ et $s = 0{,}3$ : écris les trois premières lignes de $P$, puis donne $\pi_k$.
+2. Probabilité que le tampon soit vide ? Qu'il contienne au moins 2 paquets ?
+3. Avec $a = 0{,}3$ et $s = 0{,}2$, que se passe-t-il ?","1.
+$$P = \begin{pmatrix} 0{,}8 & 0{,}2 & 0 & 0 & \cdots \\ 0{,}3 & 0{,}5 & 0{,}2 & 0 & \cdots \\ 0 & 0{,}3 & 0{,}5 & 0{,}2 & \cdots \\ \vdots & & \ddots & \ddots & \ddots \end{pmatrix}$$
+Chaque ligne somme à 1. Colonne 0 : $0{,}2\pi_0 = 0{,}3\pi_1$ donc $\pi_1 = \frac{2}{3}\pi_0$, et de même $\pi_k = \left(\frac{2}{3}\right)^k \pi_0$ avec $\rho = \frac{0{,}2}{0{,}3} = \frac{2}{3} < 1$.
+Normalisation : $\pi_0 \times \frac{1}{1 - 2/3} = 3\pi_0 = 1$, donc $\pi_0 = \frac{1}{3}$ et $\pi_k = \frac{1}{3}\left(\frac{2}{3}\right)^k$.
+2. Vide : $\pi_0 = \frac{1}{3}$. Au moins 2 : $1 - \pi_0 - \pi_1 = 1 - \frac{1}{3} - \frac{2}{9} = \frac{4}{9}$, qui est bien $\rho^2$.
+3. $\rho = \frac{0{,}3}{0{,}2} = 1{,}5 \ge 1$ : la série $\sum \rho^k$ diverge, $\pi_0 \times \infty = 1$ est impossible. Pas de distribution stationnaire : les arrivées sont plus fréquentes que les départs, le tampon grossit sans limite.",5
+Markov,Chaînes de Markov en temps discret,Dimensionner le tampon,"Dans le modèle du cours avec $\rho = \frac{a}{s} < 1$ :
+
+1. Montre que $\text{Prob}\{N \ge n\} = \rho^n$.
+2. En pratique, le tampon a une taille finie $K$. On veut que la probabilité d'avoir au moins $K$ paquets (tampon plein) reste inférieure à $1\ \%$. Avec $a = 0{,}2$ et $s = 0{,}4$, quelle taille $K$ minimale choisir ?","1. $\text{Prob}\{N \ge n\} = \sum_{k=n}^{\infty} (1-\rho)\rho^k = (1-\rho)\rho^n \sum_{j=0}^{\infty} \rho^j = (1-\rho)\rho^n \times \frac{1}{1-\rho} = \rho^n$.
+2. $\rho = 0{,}5$. On veut $0{,}5^K \le 0{,}01$, soit $2^K \ge 100$. Or $2^6 = 64 < 100$ et $2^7 = 128 \ge 100$. Il faut $K = 7$ places (probabilité $\frac{1}{128} \approx 0{,}8\ \%$).",5
+Markov,Chaînes de Markov en temps discret,Tampon avec réveil : l'état 0 à part,"Un tampon fonctionne comme dans le cours, sauf quand il est vide : le routeur « se réveille » et accepte alors un paquet avec probabilité $b$ (au lieu de $a$). On a donc :
+- depuis 0 : vers 1 avec probabilité $b$, reste en 0 avec probabilité $1 - b$ ;
+- depuis $k \ge 1$ : vers $k+1$ avec probabilité $a$, vers $k-1$ avec probabilité $s$, reste avec probabilité $1 - a - s$.
+
+On prend $b = 0{,}4$, $a = 0{,}2$, $s = 0{,}4$.
+
+1. Écris les équations d'équilibre des colonnes 0, 1, 2 et calcule $\pi_1$, $\pi_2$, $\pi_3$ en fonction de $\pi_0$.
+2. Devine $\pi_k$ pour $k \ge 1$ et vérifie-le dans l'équation de la colonne $k \ge 2$.
+3. Calcule $\pi_0$. À quelle condition sur $a$, $b$, $s$ une distribution stationnaire existe-t-elle ?
+
+:::astuce Indice
+Ici $\pi_1$ n'a pas la même forme que la suite : cherche $\pi_k = C\,\rho^{k-1}\pi_0$.
+:::","**1.**
+- Colonne 0 : $\pi_0 = (1-b)\pi_0 + s\pi_1$, donc $\pi_1 = \frac{b}{s}\pi_0 = \frac{0{,}4}{0{,}4}\pi_0 = \pi_0$.
+- Colonne 1 : $\pi_1 = b\pi_0 + (1-a-s)\pi_1 + s\pi_2$, soit $s\pi_2 = (a+s)\pi_1 - b\pi_0 = 0{,}6\pi_0 - 0{,}4\pi_0 = 0{,}2\pi_0$, donc $\pi_2 = 0{,}5\,\pi_0$.
+- Colonne 2 : $\pi_2 = a\pi_1 + (1-a-s)\pi_2 + s\pi_3$, soit $s\pi_3 = (a+s)\pi_2 - a\pi_1 = 0{,}3\pi_0 - 0{,}2\pi_0 = 0{,}1\pi_0$, donc $\pi_3 = 0{,}25\,\pi_0$.
+
+**2.** On devine $\pi_k = \left(\frac{1}{2}\right)^{k-1}\pi_0$ pour $k \ge 1$, soit $\pi_k = \frac{b}{s}\rho^{k-1}\pi_0$ avec $\rho = \frac{a}{s} = \frac{1}{2}$.
+Colonne $k \ge 2$ : $(a+s)\pi_k = a\pi_{k-1} + s\pi_{k+1}$. On divise par $\left(\frac{1}{2}\right)^{k-2}\pi_0$ :
+$0{,}6 \times \frac{1}{2} = 0{,}2 + 0{,}4 \times \frac{1}{4}$, soit $0{,}3 = 0{,}2 + 0{,}1$. Vrai.
+
+**3.** $\pi_0 + \sum_{k \ge 1} \left(\frac{1}{2}\right)^{k-1}\pi_0 = \pi_0 \left(1 + \frac{1}{1 - 1/2}\right) = 3\pi_0 = 1$, donc $\pi_0 = \frac{1}{3}$ et $\pi_k = \frac{1}{3}\left(\frac{1}{2}\right)^{k-1}$ pour $k \ge 1$.
+
+En général, $\pi_0\left(1 + \frac{b}{s} \cdot \frac{1}{1-\rho}\right) = 1$, qui n'a de sens que si la série converge : $\rho = \frac{a}{s} < 1$, soit $a < s$. La valeur de $b$ ne joue pas : seul compte le comportement « loin de 0 », où les arrivées doivent être plus rares que les départs.",10
+Markov,Chaînes de Markov en temps discret,Nombre moyen de paquets dans le tampon (bonus),"Modèle du cours avec $\rho = \frac{a}{s} < 1$, donc $\pi_k = (1-\rho)\rho^k$.
+
+1. Montre que le nombre moyen de paquets vaut $E(N) = \frac{\rho}{1-\rho}$.
+2. Application : $a = 0{,}2$, $s = 0{,}3$. Que devient $E(N)$ si $a$ passe à $0{,}25$ ?
+
+:::astuce Indice
+Même astuce que pour le temps de séjour moyen : $k\rho^{k-1}$ est la dérivée de $\rho^k$.
+:::","1.
+$$E(N) = \sum_{k=0}^{\infty} k(1-\rho)\rho^k = (1-\rho)\rho \sum_{k=1}^{\infty} k\rho^{k-1} = (1-\rho)\rho \left(\frac{1}{1-\rho}\right)' = (1-\rho)\rho \times \frac{1}{(1-\rho)^2} = \frac{\rho}{1-\rho}.$$
+2. $\rho = \frac{2}{3}$ : $E(N) = \frac{2/3}{1/3} = 2$ paquets.
+Avec $a = 0{,}25$ : $\rho = \frac{0{,}25}{0{,}3} = \frac{5}{6}$, $E(N) = \frac{5/6}{1/6} = 5$ paquets. Une hausse de 25 % des arrivées fait plus que doubler le remplissage moyen : quand $\rho$ s'approche de 1, $E(N)$ explose. On retrouvera ce phénomène avec la file M/M/1.",10
+Markov,Chaînes de Markov en temps continu,Reconnaître un GSI,"1. Rappelle la définition d'un générateur stochastique infinitésimal.
+2. Parmi les matrices suivantes, lesquelles sont des GSI ? Justifie.
+
+$$M_1 = \begin{pmatrix} -3 & 3 \\ 1 & -1 \end{pmatrix} \quad M_2 = \begin{pmatrix} -1 & 2 \\ 1 & -1 \end{pmatrix} \quad M_3 = \begin{pmatrix} 1 & -1 \\ -2 & 2 \end{pmatrix} \quad M_4 = \begin{pmatrix} 0 & 0 & 0 \\ 2 & -3 & 1 \\ 0 & 4 & -4 \end{pmatrix}$$
+
+:::astuce Indice
+Trois conditions : lignes de somme nulle, diagonale $\le 0$, reste $\ge 0$. Une seule condition fausse suffit à exclure.
+:::","1. Une matrice carrée $A$ de réels est un GSI si et seulement si la somme de chaque ligne est nulle, $A_{ii} \le 0$ pour tout $i$, et $A_{ij} \ge 0$ pour tous $i \ne j$.
+2. - $M_1$ : lignes $-3 + 3 = 0$ et $1 - 1 = 0$, diagonale $-3, -1 \le 0$, reste $3, 1 \ge 0$. **GSI**.
+   - $M_2$ : première ligne $-1 + 2 = 1 \ne 0$. **Pas un GSI**.
+   - $M_3$ : les lignes somment bien à 0, mais la diagonale contient $1 > 0$ et le reste contient $-1 < 0$. **Pas un GSI** : les signes sont inversés.
+   - $M_4$ : lignes $0$, $2 - 3 + 1 = 0$, $4 - 4 = 0$ ; diagonale $0, -3, -4 \le 0$ ; reste $\ge 0$. **GSI**. La ligne nulle est permise : l'état 0 n'a aucune sortie, il est **absorbant**.",5
+Markov,Chaînes de Markov en temps continu,Du graphe de taux au GSI,"Une CMTC à trois états $0, 1, 2$ a les transitions suivantes (taux par heure) :
+
+| Arc | $0 \to 1$ | $0 \to 2$ | $1 \to 2$ | $2 \to 0$ |
+|---|---|---|---|---|
+| Taux | 4 | 1 | 2 | 3 |
+
+1. Écris le GSI $A$.
+2. Quel est le taux total de sortie de l'état 0 ?
+3. Écris les trois équations de $\frac{d}{dt}\pi(t) = \pi(t) A$ composante par composante.
+
+:::astuce Indice
+Diagonale : moins la somme des taux sortants. Pour $\pi_j'$, lis la **colonne** $j$ de $A$.
+:::","1. Hors diagonale, on recopie les taux ($0$ quand il n'y a pas d'arc). Sur la diagonale, moins la somme des taux sortants : état 0 : $-(4 + 1) = -5$ ; état 1 : $-2$ ; état 2 : $-3$.
+$$A = \begin{pmatrix} -5 & 4 & 1 \\ 0 & -2 & 2 \\ 3 & 0 & -3 \end{pmatrix}$$
+Contrôle : chaque ligne somme à 0.
+2. Taux de sortie de 0 : $-A_{00} = 5$ par heure.
+3. $\pi_j'(t) = \sum_i \pi_i(t) A_{ij}$ (colonne $j$) :
+   - $\pi_0'(t) = -5\pi_0(t) + 3\pi_2(t)$ ;
+   - $\pi_1'(t) = 4\pi_0(t) - 2\pi_1(t)$ ;
+   - $\pi_2'(t) = \pi_0(t) + 2\pi_1(t) - 3\pi_2(t)$.
+
+   Contrôle : la somme vaut $(-5 + 4 + 1)\pi_0 + (-2 + 2)\pi_1 + (3 - 3)\pi_2 = 0$.",5
+Markov,Chaînes de Markov en temps continu,Taux et probabilité sur un petit intervalle,"[[widget:chaine|n=gsi-exemple]]
+
+On reprend le GSI du cours, le temps étant en secondes :
+$$A = \begin{pmatrix} -2 & 1 & 1 \\ 3 & -5 & 2 \\ 0 & 1 & -1 \end{pmatrix}$$
+
+1. Avec $\varepsilon = 0{,}01$ s, écris l'approximation $P(\varepsilon) \approx Id + \varepsilon A$. Vérifie que c'est une matrice stochastique.
+2. Pour quelles valeurs de $\varepsilon$ l'approximation $Id + \varepsilon A$ a-t-elle tous ses coefficients positifs ?
+3. À l'instant $t$, $\pi(t) = (0{,}5 \,;\, 0{,}5 \,;\, 0)$. Donne une valeur approchée de $\pi(t + 0{,}01)$.
+
+:::astuce Indice
+$1 + \varepsilon A_{ii}$ sur la diagonale, $\varepsilon A_{ij}$ ailleurs. Pour 3, $\pi(t + \varepsilon) \approx \pi(t)(Id + \varepsilon A)$.
+:::","1. Hors diagonale, $\varepsilon A_{ij}$ : la probabilité d'aller de $i$ en $j$ pendant $0{,}01$ s. Sur la diagonale, $1 + \varepsilon A_{ii}$ : la probabilité de rester.
+$$P(0{,}01) \approx \begin{pmatrix} 0{,}98 & 0{,}01 & 0{,}01 \\ 0{,}03 & 0{,}95 & 0{,}02 \\ 0 & 0{,}01 & 0{,}99 \end{pmatrix}$$
+Lignes : $0{,}98 + 0{,}01 + 0{,}01 = 1$, $0{,}03 + 0{,}95 + 0{,}02 = 1$, $0 + 0{,}01 + 0{,}99 = 1$, et tous les coefficients sont entre 0 et 1 : matrice stochastique.
+2. Hors diagonale, $\varepsilon A_{ij} \ge 0$ toujours. Sur la diagonale, il faut $1 - 2\varepsilon \ge 0$, $1 - 5\varepsilon \ge 0$, $1 - \varepsilon \ge 0$ : la plus exigeante est $\varepsilon \le \frac{1}{5} = 0{,}2$ s. C'est normal : l'approximation n'est valable que pour $\varepsilon$ **petit** devant les durées moyennes.
+3. $\pi(t + 0{,}01) \approx 0{,}5 \times (\text{ligne } 0) + 0{,}5 \times (\text{ligne } 1) + 0 \times (\text{ligne } 2)$ :
+$$\pi(t + 0{,}01) \approx (0{,}49 + 0{,}015 \,;\, 0{,}005 + 0{,}475 \,;\, 0{,}005 + 0{,}01) = (0{,}505 \,;\, 0{,}48 \,;\, 0{,}015)$$
+Contrôle : la somme vaut 1. Autre façon : $\pi'(t) = \pi(t)A = (0{,}5 \,;\, -2 \,;\, 1{,}5)$, et $\pi(t) + 0{,}01\,\pi'(t)$ donne le même résultat.",5
+Markov,Chaînes de Markov en temps continu,Restituer la justification de l'équation d'état,"Question de cours.
+
+1. On admet que, sur un intervalle de durée $\varepsilon \to 0^+$, $P(\varepsilon) = Id + \varepsilon A + o(\varepsilon)$. Montre que $\frac{d}{dt}\pi(t) = \pi(t) A$.
+2. Rappelle le développement de Taylor de $\exp(tA)$ et montre que $\pi(t) = \pi(0)\exp(tA)$ vérifie l'équation d'état.
+
+:::astuce Indice
+Écris $\pi(t + \varepsilon) = \pi(t) P(\varepsilon)$, puis forme le taux d'accroissement.
+:::","1. - Sur $[t, t + \varepsilon]$ : $\pi(t + \varepsilon) = \pi(t) P(\varepsilon) = \pi(t)\big(Id + \varepsilon A + o(\varepsilon)\big) = \pi(t) + \varepsilon\,\pi(t) A + o(\varepsilon)$.
+   - Donc $\pi(t + \varepsilon) - \pi(t) = \varepsilon\,\pi(t) A + o(\varepsilon)$.
+   - On divise par $\varepsilon$ : $\dfrac{\pi(t + \varepsilon) - \pi(t)}{\varepsilon} = \pi(t) A + \dfrac{o(\varepsilon)}{\varepsilon}$.
+   - Quand $\varepsilon \to 0^+$, le taux d'accroissement tend vers $\frac{d}{dt}\pi(t)$ et $\frac{o(\varepsilon)}{\varepsilon} \to 0$ : $\frac{d}{dt}\pi(t) = \pi(t) A$.
+2. $\exp(tA) = Id + tA + \frac{t^2}{2!}A^2 + \frac{t^3}{3!}A^3 + \dots$ En dérivant terme à terme :
+$$\frac{d}{dt}\exp(tA) = A + tA^2 + \frac{t^2}{2!}A^3 + \dots = \Big(Id + tA + \frac{t^2}{2!}A^2 + \dots\Big)A = \exp(tA)A$$
+Donc $\frac{d}{dt}\big(\pi(0)\exp(tA)\big) = \pi(0)\exp(tA)A = \pi(t)A$. De plus, en $t = 0$, $\exp(0) = Id$, donc on part bien de $\pi(0)$.",5
+Markov,Chaînes de Markov en temps continu,Exponentielle d'un GSI à deux états (bonus),"On considère une CMTC à deux états, $0 \to 1$ au taux $a > 0$ et $1 \to 0$ au taux $b > 0$.
+
+1. Écris $A$ et montre que $A^2 = -(a+b)A$.
+2. En déduire $A^k$ pour $k \ge 1$, puis que $\exp(tA) = Id + \dfrac{1 - e^{-(a+b)t}}{a+b}\,A$.
+3. Application : $a = 2$, $b = 3$, $\pi(0) = (1, 0)$. Calcule $\pi(t)$ et sa limite quand $t \to \infty$.
+
+:::astuce Indice
+Pose $s = a + b$. $A^k = (-s)^{k-1}A$, puis regroupe la série : $\sum_{k \ge 1} \frac{(-st)^k}{k!} = e^{-st} - 1$.
+:::","1. $A = \begin{pmatrix} -a & a \\ b & -b \end{pmatrix}$, puis
+$$A^2 = \begin{pmatrix} a^2 + ab & -a^2 - ab \\ -ab - b^2 & ab + b^2 \end{pmatrix} = (a+b)\begin{pmatrix} a & -a \\ -b & b \end{pmatrix} = -(a+b)A$$
+2. Avec $s = a + b$ : par récurrence, $A^k = (-s)^{k-1}A$. Donc
+$$\exp(tA) = Id + \sum_{k \ge 1}\frac{t^k(-s)^{k-1}}{k!}A = Id - \frac{1}{s}\Big(\sum_{k \ge 1}\frac{(-st)^k}{k!}\Big)A = Id - \frac{e^{-st} - 1}{s}A = Id + \frac{1 - e^{-st}}{s}A$$
+3. $s = 5$. $\pi(t) = (1, 0)\exp(tA)$ est la première ligne de $\exp(tA)$ :
+$$\pi(t) = \Big(1 - \frac{2(1 - e^{-5t})}{5} \,;\, \frac{2(1 - e^{-5t})}{5}\Big) = \Big(\frac{3}{5} + \frac{2}{5}e^{-5t} \,;\, \frac{2}{5} - \frac{2}{5}e^{-5t}\Big)$$
+Contrôle : somme égale à 1, et $\pi(0) = (1, 0)$. Quand $t \to \infty$, $e^{-5t} \to 0$ : $\pi(t) \to \big(\frac{3}{5}, \frac{2}{5}\big)$. On retrouve la distribution stationnaire $\big(\frac{b}{a+b}, \frac{a}{a+b}\big)$ du sous-chapitre suivant.",10
+Markov,Chaînes de Markov en temps continu,Stationnarité et temps de séjour : questions de cours,"1. En partant de l'équation d'état, justifie qu'une distribution stationnaire $\pi$ vérifie $\pi A = 0$. Quelle autre condition faut-il ajouter ?
+2. Quelle est la loi du temps passé dans l'état $i$ à chaque visite ? Quelle est sa moyenne ? Quel est l'analogue en temps discret ?
+3. Avec $A = \begin{pmatrix} -2 & 1 & 1 \\ 3 & -5 & 2 \\ 0 & 1 & -1 \end{pmatrix}$ (temps en minutes), donne la durée moyenne d'un séjour dans l'état 1.","1. $\frac{d}{dt}\pi(t) = \pi(t) A$. $\pi(t)$ est constant dans le temps si et seulement si sa dérivée est nulle, c'est-à-dire $\pi A = 0$. Il faut ajouter que $\pi$ est une distribution de probabilité : $\sum_i \pi_i = 1$ (et $\pi_i \ge 0$).
+2. Loi **exponentielle** de paramètre $q = -A_{ii}$ (taux total de sortie de $i$), de moyenne $\frac{1}{-A_{ii}}$. En temps discret, c'est la loi **géométrique** $\text{Prob}\{T = n\} = p^{n-1}(1-p)$ avec $p = P_{ii}$, de moyenne $\frac{1}{1 - P_{ii}}$.
+3. $-A_{11} = 5$ par minute, donc séjour moyen $\frac{1}{5}$ min $= 12$ s.",5
+Markov,Chaînes de Markov en temps continu,Chaîne à deux états,"Un lien réseau alterne entre « libre » (état 0) et « occupé » (état 1). Il devient occupé au taux $a = 2$ par seconde et se libère au taux $b = 3$ par seconde.
+
+1. Écris le GSI $A$.
+2. Calcule la distribution stationnaire.
+3. Calcule la durée moyenne d'une période libre et d'une période occupée. Retrouve la proportion du temps où le lien est libre à partir de ces deux durées.","1. Depuis 0, seule sortie vers 1 au taux 2 ; depuis 1, seule sortie vers 0 au taux 3 :
+$$A = \begin{pmatrix} -2 & 2 \\ 3 & -3 \end{pmatrix}$$
+Lignes de somme nulle : c'est bien un GSI.
+2. Colonne 0 de $\pi A = 0$ : $-2\pi_0 + 3\pi_1 = 0$, donc $\pi_1 = \frac{2}{3}\pi_0$. Avec $\pi_0 + \pi_1 = 1$ : $\frac{5}{3}\pi_0 = 1$, $\pi_0 = \frac{3}{5}$, $\pi_1 = \frac{2}{5}$. Vérification colonne 1 : $2 \times \frac{3}{5} - 3 \times \frac{2}{5} = 0$.
+3. Période libre : $\frac{1}{2}$ s. Période occupée : $\frac{1}{3}$ s. Les périodes alternent, donc la proportion du temps libre est
+$$\frac{1/2}{1/2 + 1/3} = \frac{3/6}{5/6} = \frac{3}{5}$$
+On retrouve $\pi_0$.",5
+Markov,Chaînes de Markov en temps continu,Chaîne à trois états,"On reprend le GSI obtenu dans l'exercice « Du graphe de taux au GSI » :
+$$A = \begin{pmatrix} -5 & 4 & 1 \\ 0 & -2 & 2 \\ 3 & 0 & -3 \end{pmatrix}$$
+
+1. Calcule la distribution stationnaire.
+2. Vérifie ton résultat avec les équations de balance de chaque état.
+
+:::astuce Indice
+Les colonnes 0 et 1 ne font intervenir que deux inconnues chacune : exprime $\pi_1$ et $\pi_2$ en fonction de $\pi_0$.
+:::","1. $\pi A = 0$, colonne par colonne :
+   - colonne 0 : $-5\pi_0 + 3\pi_2 = 0$, donc $\pi_2 = \frac{5}{3}\pi_0$ ;
+   - colonne 1 : $4\pi_0 - 2\pi_1 = 0$, donc $\pi_1 = 2\pi_0$ ;
+   - colonne 2 : $\pi_0 + 2\pi_1 - 3\pi_2 = 0$ (redondante).
+
+   Normalisation : $\pi_0\big(1 + 2 + \frac{5}{3}\big) = \frac{14}{3}\pi_0 = 1$, donc $\pi_0 = \frac{3}{14}$, $\pi_1 = \frac{6}{14} = \frac{3}{7}$, $\pi_2 = \frac{5}{14}$.
+$$\pi = \Big(\frac{3}{14}, \frac{6}{14}, \frac{5}{14}\Big)$$
+2. Balances (sortant = entrant) :
+   - état 0 : sort au taux 5, entre depuis 2 au taux 3 : $5 \times \frac{3}{14} = \frac{15}{14}$ et $3 \times \frac{5}{14} = \frac{15}{14}$ ;
+   - état 1 : $2 \times \frac{6}{14} = \frac{12}{14}$ et $4 \times \frac{3}{14} = \frac{12}{14}$ ;
+   - état 2 : $3 \times \frac{5}{14} = \frac{15}{14}$ et $1 \times \frac{3}{14} + 2 \times \frac{6}{14} = \frac{15}{14}$.
+
+   Tout est cohérent.",5
+Markov,Chaînes de Markov en temps continu,Serveur en panne : modéliser et exploiter,"Un serveur peut être dans trois situations : en marche (état 0), en panne en attendant le technicien (état 1), en réparation (état 2). On suppose :
+- la durée de fonctionnement avant une panne suit une loi exponentielle de moyenne 1 semaine ;
+- le délai d'arrivée du technicien suit une loi exponentielle de moyenne $\frac{1}{3}$ de semaine ;
+- la réparation suit une loi exponentielle de moyenne $\frac{1}{2}$ semaine, après quoi le serveur repart.
+
+1. Pourquoi peut-on modéliser l'état du serveur par une CMTC ? Donne les taux de transition et le GSI $A$ (temps en semaines).
+2. Calcule la distribution stationnaire.
+3. Le serveur rapporte 1100 € par semaine de fonctionnement, rien sinon. Quel est le gain moyen par semaine sur le long terme ?
+
+:::astuce Indice
+Un taux est l'inverse d'une durée moyenne. Les transitions sont $0 \to 1 \to 2 \to 0$.
+:::","1. Toutes les durées sont exponentielles, donc **sans mémoire** : l'évolution future ne dépend que de l'état présent, pas du temps déjà passé. Le processus est markovien, en temps continu.
+
+   Taux = inverse de la durée moyenne :
+   - $0 \to 1$ (panne) : $\frac{1}{1} = 1$ par semaine ;
+   - $1 \to 2$ (arrivée du technicien) : $\frac{1}{1/3} = 3$ par semaine ;
+   - $2 \to 0$ (fin de réparation) : $\frac{1}{1/2} = 2$ par semaine.
+
+   Diagonale = moins la somme des taux sortants :
+$$A = \begin{pmatrix} -1 & 1 & 0 \\ 0 & -3 & 3 \\ 2 & 0 & -2 \end{pmatrix}$$
+Chaque ligne somme à 0.
+2. $\pi A = 0$ :
+   - colonne 0 : $-\pi_0 + 2\pi_2 = 0$, donc $\pi_0 = 2\pi_2$ ;
+   - colonne 1 : $\pi_0 - 3\pi_1 = 0$, donc $\pi_1 = \frac{\pi_0}{3} = \frac{2}{3}\pi_2$ ;
+   - normalisation : $\pi_2\big(2 + \frac{2}{3} + 1\big) = \frac{11}{3}\pi_2 = 1$.
+
+   $$\pi = \Big(\frac{6}{11}, \frac{2}{11}, \frac{3}{11}\Big)$$
+   Vérification colonne 2 : $3 \times \frac{2}{11} - 2 \times \frac{3}{11} = 0$.
+
+   Contrôle intuitif : un cycle dure en moyenne $1 + \frac{1}{3} + \frac{1}{2} = \frac{11}{6}$ semaine, dont 1 en marche : proportion $\frac{6}{11}$.
+3. Gain moyen $= 1100 \times \pi_0 + 0 \times \pi_1 + 0 \times \pi_2 = 1100 \times \frac{6}{11} = 600$ € par semaine.",10
+Markov,Chaînes de Markov en temps continu,Où va-t-on en sortant d'un état ? (bonus),"[[widget:chaine|n=gsi-exemple]]
+
+On reprend $A = \begin{pmatrix} -2 & 1 & 1 \\ 3 & -5 & 2 \\ 0 & 1 & -1 \end{pmatrix}$.
+
+1. Le processus est dans l'état $i$ à l'instant $t$. En utilisant $P(\varepsilon) = Id + \varepsilon A + o(\varepsilon)$, calcule la probabilité d'aller en $j$ **sachant** qu'on quitte $i$ pendant $[t, t+\varepsilon]$, quand $\varepsilon \to 0$.
+2. Application : depuis l'état 1, avec quelle probabilité va-t-on en 0 ? en 2 ? Même question depuis l'état 0.","1. Probabilité de quitter $i$ : $1 - P_{ii}(\varepsilon) = -A_{ii}\varepsilon + o(\varepsilon)$. Probabilité d'aller en $j \ne i$ : $A_{ij}\varepsilon + o(\varepsilon)$. Par définition de la probabilité conditionnelle :
+$$\frac{A_{ij}\varepsilon + o(\varepsilon)}{-A_{ii}\varepsilon + o(\varepsilon)} \xrightarrow[\varepsilon \to 0]{} \frac{A_{ij}}{-A_{ii}}$$
+C'est la part du taux vers $j$ dans le taux total de sortie.
+2. Depuis 1 : vers 0 avec $\frac{3}{5}$, vers 2 avec $\frac{2}{5}$ (somme 1). Depuis 0 : vers 1 et vers 2 avec $\frac{1}{2}$ chacun.",10
+Markov,Chaînes de Markov en temps continu,Hypothèses et GSI d'un processus à 3 états,"Question de cours.
+
+1. Énonce les hypothèses d'un processus de naissance et de mort sur un intervalle $[t, t+\varepsilon]$.
+2. On prend $n = 2$ (états 0, 1, 2). Écris $P(\varepsilon)$ en justifiant le terme diagonal de l'état 1, puis le GSI $A$.","1. Sachant qu'il y a $k$ clients à l'instant $t$ : un client arrive pendant $[t, t+\varepsilon]$ avec probabilité $\lambda_k\varepsilon + o(\varepsilon)$, un client part avec probabilité $\mu_k\varepsilon + o(\varepsilon)$, et toute autre éventualité (plusieurs événements) a une probabilité en $o(\varepsilon)$.
+2. Depuis 0 : arrivée seulement. Depuis 2 : départ seulement. Depuis 1 : rester, c'est « pas d'arrivée et pas de départ », de probabilité $(1 - \lambda_1\varepsilon)(1 - \mu_1\varepsilon) + o(\varepsilon) = 1 - (\lambda_1 + \mu_1)\varepsilon + o(\varepsilon)$ car $\lambda_1\mu_1\varepsilon^2 = o(\varepsilon)$.
+$$P(\varepsilon) = \begin{pmatrix} 1-\lambda_0\varepsilon & \lambda_0\varepsilon & 0 \\ \mu_1\varepsilon & 1-(\lambda_1+\mu_1)\varepsilon & \lambda_1\varepsilon \\ 0 & \mu_2\varepsilon & 1-\mu_2\varepsilon \end{pmatrix} + o(\varepsilon)$$
+Chaque ligne somme à 1. Avec $P(\varepsilon) = Id + \varepsilon A + o(\varepsilon)$ :
+$$A = \begin{pmatrix} -\lambda_0 & \lambda_0 & 0 \\ \mu_1 & -(\lambda_1+\mu_1) & \lambda_1 \\ 0 & \mu_2 & -\mu_2 \end{pmatrix}$$
+Chaque ligne somme à 0 : c'est un GSI.",5
+Markov,Chaînes de Markov en temps continu,Application directe de la formule,"Processus de naissance et de mort sur les états 0, 1, 2 avec $\lambda_0 = 4$, $\lambda_1 = 2$, $\mu_1 = 2$, $\mu_2 = 4$ (par heure).
+
+1. Écris les équations de balance.
+2. Calcule la distribution stationnaire.
+3. Calcule le nombre moyen de clients.","1. Entre 0 et 1 : $\lambda_0\pi_0 = \mu_1\pi_1$, soit $4\pi_0 = 2\pi_1$. Entre 1 et 2 : $\lambda_1\pi_1 = \mu_2\pi_2$, soit $2\pi_1 = 4\pi_2$.
+2. $\pi_1 = 2\pi_0$ et $\pi_2 = \frac{2}{4}\pi_1 = \pi_0$. Normalisation : $\pi_0(1 + 2 + 1) = 1$, donc
+$$\pi = \Big(\frac{1}{4}, \frac{1}{2}, \frac{1}{4}\Big)$$
+Formule générale : $\pi_2 = \frac{\lambda_1\lambda_0}{\mu_2\mu_1}\pi_0 = \frac{8}{8}\pi_0$, cohérent.
+3. $E(N) = 0 \times \frac{1}{4} + 1 \times \frac{1}{2} + 2 \times \frac{1}{4} = 1$ client.",5
+Markov,Chaînes de Markov en temps continu,Trois terminaux et un serveur,"Trois terminaux envoient des requêtes à un serveur. Un terminal qui n'a pas de requête en cours en émet une au taux 1 par seconde. Le serveur traite toutes les requêtes en cours **en parallèle**, chacune indépendamment, et chacune se termine au taux 1 par seconde. Un terminal attend la fin de sa requête avant d'en envoyer une autre. L'état est le nombre $k \in \{0, 1, 2, 3\}$ de requêtes en cours.
+
+1. Justifie que, depuis l'état $k$, la probabilité d'une nouvelle requête pendant $[t, t+\varepsilon]$ est $(3-k)\varepsilon + o(\varepsilon)$. En déduire $\lambda_k$ et, de même, $\mu_k$.
+2. Calcule la distribution stationnaire.
+3. Nombre moyen de requêtes en cours ? Proportion du temps où le serveur est inactif ?
+
+:::astuce Indice
+Parmi $3 - k$ terminaux libres, « exactement un émet » : chacun avec probabilité $\varepsilon$, deux à la fois c'est du $\varepsilon^2$.
+:::","1. Dans l'état $k$, $3 - k$ terminaux sont libres. Chacun émet pendant $[t, t+\varepsilon]$ avec probabilité $\varepsilon + o(\varepsilon)$. La probabilité qu'exactement un d'entre eux émette vaut $(3-k)\varepsilon(1-\varepsilon)^{2-k} + o(\varepsilon) = (3-k)\varepsilon + o(\varepsilon)$, et deux émissions ou plus ont une probabilité en $\varepsilon^2$, donc $o(\varepsilon)$. D'où $\lambda_k = 3 - k$ : $\lambda_0 = 3$, $\lambda_1 = 2$, $\lambda_2 = 1$.
+
+   De même, $k$ requêtes sont en cours, chacune se termine avec probabilité $\varepsilon + o(\varepsilon)$ : $\mu_k = k$, soit $\mu_1 = 1$, $\mu_2 = 2$, $\mu_3 = 3$.
+2. Formule générale :
+   - $\pi_1 = \frac{\lambda_0}{\mu_1}\pi_0 = 3\pi_0$ ;
+   - $\pi_2 = \frac{\lambda_1\lambda_0}{\mu_2\mu_1}\pi_0 = \frac{6}{2}\pi_0 = 3\pi_0$ ;
+   - $\pi_3 = \frac{\lambda_2\lambda_1\lambda_0}{\mu_3\mu_2\mu_1}\pi_0 = \frac{6}{6}\pi_0 = \pi_0$.
+
+   $\pi_0(1 + 3 + 3 + 1) = 1$, donc
+$$\pi = \Big(\frac{1}{8}, \frac{3}{8}, \frac{3}{8}, \frac{1}{8}\Big)$$
+Vérification d'une balance : $\lambda_1\pi_1 = 2 \times \frac{3}{8} = \frac{6}{8}$ et $\mu_2\pi_2 = 2 \times \frac{3}{8} = \frac{6}{8}$.
+3. $E(N) = \frac{0 + 3 + 6 + 3}{8} = \frac{12}{8} = 1{,}5$ requête. Serveur inactif : $\pi_0 = \frac{1}{8}$ du temps.",10
+Markov,Chaînes de Markov en temps continu,Petite file de capacité 2,"Un routeur possède un seul processeur et un tampon : il peut contenir au plus 2 paquets (un en traitement, un en attente). Les paquets arrivent au taux $\lambda = 2$ par ms ; un paquet qui trouve le routeur plein est perdu. Le traitement se fait au taux $\mu = 3$ par ms.
+
+1. Donne les états, les $\lambda_k$ et $\mu_k$, puis le GSI $A$.
+2. Calcule la distribution stationnaire.
+3. Un paquet qui arrive trouve le routeur dans l'état $k$ avec probabilité $\pi_k$ (admis). Quelle est la probabilité de perte ? Quel est le nombre moyen de paquets dans le routeur ?","1. État = nombre de paquets présents : 0, 1 ou 2. Arrivée possible depuis 0 et 1 : $\lambda_0 = \lambda_1 = 2$ (depuis 2, le paquet est perdu : pas de transition). Départ possible depuis 1 et 2, un seul processeur : $\mu_1 = \mu_2 = 3$.
+$$A = \begin{pmatrix} -2 & 2 & 0 \\ 3 & -5 & 2 \\ 0 & 3 & -3 \end{pmatrix}$$
+Lignes de somme nulle.
+2. Balances : $2\pi_0 = 3\pi_1$ et $2\pi_1 = 3\pi_2$, donc $\pi_1 = \frac{2}{3}\pi_0$ et $\pi_2 = \frac{4}{9}\pi_0$. Normalisation : $\pi_0\,\frac{9 + 6 + 4}{9} = 1$, donc
+$$\pi = \Big(\frac{9}{19}, \frac{6}{19}, \frac{4}{19}\Big)$$
+3. Perte : le paquet trouve le routeur plein, probabilité $\pi_2 = \frac{4}{19} \approx 0{,}21$. Nombre moyen : $E(N) = 1 \times \frac{6}{19} + 2 \times \frac{4}{19} = \frac{14}{19} \approx 0{,}74$ paquet.",10
+Markov,Chaînes de Markov en temps continu,Vers la file M/M/1 (bonus),"On considère un processus de naissance et de mort sur $\{0, 1, 2, \dots\}$ (file illimitée) avec $\lambda_k = \lambda$ et $\mu_k = \mu$ constants. On note $a = \frac{\lambda}{\mu}$.
+
+1. Exprime $\pi_k$ en fonction de $a$ et $\pi_0$.
+2. À quelle condition la somme des $\pi_k$ peut-elle valoir 1 ? Calcule alors $\pi_0$.
+3. Application : $\lambda = 1$, $\mu = 2$. Calcule $\pi_0$, $\pi_1$ et la probabilité qu'il y ait au moins 2 clients.","1. Balances $\lambda\pi_k = \mu\pi_{k+1}$, donc $\pi_{k+1} = a\pi_k$ et $\pi_k = a^k\pi_0$.
+2. $\sum_{k \ge 0}a^k\pi_0 = 1$. La série géométrique converge si et seulement si $a < 1$ (soit $\lambda < \mu$ : on sert plus vite qu'on ne reçoit), et vaut $\frac{1}{1-a}$. Donc $\pi_0 = 1 - a$ et $\pi_k = (1-a)a^k$. Si $a \ge 1$, la file grossit sans limite : pas de distribution stationnaire.
+3. $a = \frac{1}{2}$ : $\pi_0 = \frac{1}{2}$, $\pi_1 = \frac{1}{4}$. $P(N \ge 2) = 1 - \pi_0 - \pi_1 = \frac{1}{4} = a^2$. Suite au chapitre Files d'attente.
+
+[[widget:chaine|n=mm1]]",10
+Markov,Files d'attente,Question de cours : durées et théorème,"1. Définis les durées E/E, S/S, E/S et S/E. Laquelle s'appelle le temps de réponse ? le temps de réflexion ?
+2. Énonce le théorème des trois conditions équivalentes sur les arrivées.
+3. Pourquoi choisit-on une loi de Poisson pour compter les arrivées ?
+
+:::astuce Indice
+E pour entrée, S pour sortie : la première lettre est le début de la durée, la seconde sa fin.
+:::","1. - **E/E** : durée séparant deux entrées consécutives (inter-arrivée).
+   - **S/S** : durée séparant deux sorties consécutives.
+   - **E/S** : durée séparant l'entrée d'un client de sa sortie : c'est le **temps de réponse**.
+   - **S/E** : durée séparant la sortie d'un client de sa nouvelle entrée : c'est le **temps de réflexion**.
+2. Les trois conditions suivantes sont équivalentes :
+   - la probabilité qu'un client arrive dans la file pendant un intervalle $\varepsilon \to 0$ vaut $\lambda\varepsilon + o(\varepsilon)$ ;
+   - le nombre de clients arrivant pendant un intervalle quelconque $t$ suit une loi de Poisson de moyenne $\lambda t$ : $P(N(t) = k) = e^{-\lambda t}\frac{(\lambda t)^k}{k!}$ ;
+   - le temps entre deux arrivées consécutives suit une loi exponentielle de paramètre $\lambda$, de moyenne $\frac{1}{\lambda}$ : $P(T > t) = e^{-\lambda t}$.
+3. La population susceptible d'alimenter la file est nombreuse et les choix individuels sont indépendants.",5
+Markov,Files d'attente,Décoder la notation de Kendall,"Traduis en français chacune des notations suivantes : lois, nombre de stations, capacité, y a-t-il de l'attente ?
+
+1. M/M/1/$\infty$
+2. M/M/3/3
+3. M/M/1/5
+4. M/E$_2$/1/$\infty$
+5. M/M/$\infty$
+
+Dans les cas 2 et 3, que se passe-t-il pour un client qui arrive quand le système est plein ?","1. **M/M/1/$\infty$** : arrivées de Poisson (inter-arrivées exponentielles), services exponentiels, 1 station, capacité infinie. Un client attend si la station est occupée.
+2. **M/M/3/3** : 3 stations en parallèle, au plus 3 clients dans le système, **tous en cours de traitement** : pas d'espace d'attente, donc jamais d'attente.
+3. **M/M/1/5** : 1 station, au plus 5 clients dans le système, soit 1 en service et 4 en attente.
+4. **M/E$_2$/1/$\infty$** : arrivées de Poisson, durée de service suivant une loi d'Erlang d'ordre 2, 1 station, capacité infinie.
+5. **M/M/$\infty$** : une infinité de stations : chaque client est servi dès son arrivée, il n'y a jamais d'attente.
+
+En 2 et 3, un client qui arrive quand la capacité est atteinte (3 clients en 2, 5 clients en 3) est **perdu** : il n'entre pas dans le système.",5
+Markov,Files d'attente,Calculs avec la loi de Poisson,"Des requêtes arrivent sur un serveur selon un processus de Poisson de taux $\lambda = 2$ requêtes par minute.
+
+1. Quelle est la probabilité qu'aucune requête n'arrive pendant une minute ?
+2. Quelle est la probabilité qu'exactement 2 requêtes arrivent pendant une minute ?
+3. Quelle est la probabilité qu'au moins une requête arrive pendant 30 secondes ?
+4. Combien de requêtes arrivent en moyenne en 5 minutes ?
+5. Quelle est la durée moyenne entre deux requêtes ? Quelle est la probabilité que cette durée dépasse une minute ?
+
+On donne $e^{-1} \approx 0{,}37$ et $e^{-2} \approx 0{,}14$.
+
+:::astuce Indice
+Pour une durée $t$, la moyenne de la loi de Poisson est $\lambda t$, pas $\lambda$. Et « au moins une » est le contraire de « aucune ».
+:::","Le nombre de requêtes arrivées pendant $t$ minutes suit une loi de Poisson de moyenne $\lambda t = 2t$.
+
+1. Pour $t = 1$ : $P(N(1) = 0) = e^{-2}\frac{2^0}{0!} = e^{-2} \approx 0{,}14$.
+2. $P(N(1) = 2) = e^{-2}\frac{2^2}{2!} = 2e^{-2} \approx 0{,}27$.
+3. Pour $t = 0{,}5$ min : $\lambda t = 1$. « Au moins une » est le contraire de « aucune » :
+$$P(N(0{,}5) \ge 1) = 1 - P(N(0{,}5) = 0) = 1 - e^{-1} \approx 0{,}63$$
+4. $E(N(5)) = \lambda t = 2 \times 5 = 10$ requêtes.
+5. Les inter-arrivées sont exponentielles de paramètre $\lambda = 2$ : moyenne $\frac{1}{\lambda} = \frac{1}{2}$ min $= 30$ s.
+$$P(T > 1) = e^{-2 \times 1} = e^{-2} \approx 0{,}14$$
+C'est la même valeur qu'en 1, et c'est normal : « l'inter-arrivée dépasse une minute » est le même événement que « aucune arrivée pendant une minute ».",5
+Markov,Files d'attente,Durée de service exponentielle,"Le traitement d'une requête par un serveur dure en moyenne $0{,}5$ s, selon une loi exponentielle.
+
+1. Quel est le paramètre $\mu$ de cette loi, en requêtes par seconde ?
+2. Quelle est la probabilité qu'un traitement dure plus d'une seconde ?
+3. Quelle est la probabilité qu'un traitement soit terminé en moins de $0{,}5$ s ? Commente.
+4. Quelle durée $t$ un traitement dépasse-t-il une fois sur deux ?
+
+On donne $e^{-1} \approx 0{,}37$, $e^{-2} \approx 0{,}14$ et $\ln 2 \approx 0{,}69$.
+
+:::astuce Indice
+$P(T_S > t) = e^{-\mu t}$ et $P(T_S \le t) = 1 - e^{-\mu t}$.
+:::","1. $\mu = \frac{1}{\text{durée moyenne}} = \frac{1}{0{,}5} = 2$ requêtes/s.
+2. $P(T_S > 1) = e^{-2 \times 1} = e^{-2} \approx 0{,}14$.
+3. $P(T_S \le 0{,}5) = 1 - e^{-2 \times 0{,}5} = 1 - e^{-1} \approx 0{,}63$. Plus de la moitié des traitements durent **moins que la moyenne** : quelques traitements très longs tirent la moyenne vers le haut.
+4. On cherche $t$ tel que $e^{-2t} = \frac{1}{2}$, soit $2t = \ln 2$ et $t = \frac{\ln 2}{2} \approx 0{,}35$ s.",5
+Markov,Files d'attente,Convertir en taux,"Pour chaque système, calcule $\lambda$ et $\mu$ dans la **même unité**, puis le rapport $\frac{\lambda}{\mu}$.
+
+1. Un guichet reçoit 12 clients par heure ; un service dure en moyenne 4 minutes.
+2. Un routeur reçoit 30 paquets par seconde ; le traitement d'un paquet dure en moyenne 20 ms.
+3. Une imprimante reçoit un travail toutes les 5 minutes en moyenne ; une impression dure en moyenne 2 minutes. Donne les taux par heure.
+
+:::astuce Indice
+$\mu = \frac{1}{\text{durée moyenne de service}}$, avec la durée exprimée dans l'unité de $\lambda$.
+:::","1. $\lambda = 12$ clients/h. Service : $4$ min $= \frac{4}{60} = \frac{1}{15}$ h, donc $\mu = 15$ clients/h. Rapport $\frac{12}{15} = 0{,}8$.
+2. $\lambda = 30$ paquets/s. Service : $20$ ms $= 0{,}02$ s $= \frac{1}{50}$ s, donc $\mu = 50$ paquets/s. Rapport $\frac{30}{50} = 0{,}6$.
+3. Une arrivée toutes les 5 min : $\lambda = \frac{60}{5} = 12$ travaux/h. Une impression de 2 min : $\mu = \frac{60}{2} = 30$ travaux/h. Rapport $\frac{12}{30} = 0{,}4$.
+
+Contrôle : dans les trois cas le rapport est inférieur à 1, la station traite plus vite qu'on ne lui envoie du travail.",5
+Markov,Files d'attente,"De Poisson à la condition 1, et absence de mémoire (bonus)","Les arrivées sont poissonniennes de taux $\lambda$.
+
+1. Montre que la probabilité d'exactement une arrivée pendant $\varepsilon$ vaut $\lambda\varepsilon + o(\varepsilon)$, et que celle d'au moins deux arrivées est un $o(\varepsilon)$.
+2. Soit $T$ l'inter-arrivée. Montre que $P(T > s + t \mid T > s) = P(T > t)$. Interprète.
+
+:::astuce Indice
+Utilise $e^{-x} = 1 - x + o(x)$ quand $x \to 0$.
+:::","1. $P(N(\varepsilon) = 1) = e^{-\lambda\varepsilon}\lambda\varepsilon = (1 - \lambda\varepsilon + o(\varepsilon))\lambda\varepsilon = \lambda\varepsilon + o(\varepsilon)$.
+   $P(N(\varepsilon) = 0) = e^{-\lambda\varepsilon} = 1 - \lambda\varepsilon + o(\varepsilon)$.
+   Donc $P(N(\varepsilon) \ge 2) = 1 - (1 - \lambda\varepsilon) - \lambda\varepsilon + o(\varepsilon) = o(\varepsilon)$.
+2. L'événement $\{T > s + t\}$ est inclus dans $\{T > s\}$, donc
+$$P(T > s + t \mid T > s) = \frac{P(T > s + t)}{P(T > s)} = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(T > t)$$
+Interprétation : avoir déjà attendu $s$ ne change rien à ce qui reste à attendre. La loi exponentielle est **sans mémoire**, et c'est ce qui rend le processus markovien : le futur ne dépend que de l'état présent, pas du temps déjà écoulé.",10
+Markov,Files d'attente,Question de cours : Little et la M/M/1/∞,"1. Énonce la formule de Little pour un système quelconque. Que représentent $\lambda$ et $\lambda_e$ ? Montre que $E(L) = E(L_q) + \frac{\lambda_e}{\mu}$.
+2. Explique pourquoi le nombre de clients dans une file M/M/1/$\infty$ est un processus de naissance et de mort. Donne $\lambda_k$ et $\mu_k$.
+3. En déduire $\pi_k$ en fonction de $\pi_0$, la condition d'existence de la distribution stationnaire et la valeur de $\pi_0$.
+4. Quelle est la probabilité que le serveur soit occupé ? Quelle loi suit le temps de séjour $T$ ?
+
+:::astuce Indice
+Formule générale : $\pi_k = \frac{\lambda_0\cdots\lambda_{k-1}}{\mu_1\cdots\mu_k}\pi_0$. Pour la question 1, pars de $E(T) = E(T_q) + \frac{1}{\mu}$.
+:::","1. En régime stationnaire, $E(L) = \lambda_e E(T)$ et $E(L_q) = \lambda_e E(T_q)$. $\lambda$ est l'inverse du temps moyen entre deux arrivées de clients désirant entrer ; $\lambda_e$ est le taux des clients entrant effectivement. Comme $E(T) = E(T_q) + \frac{1}{\mu}$, en multipliant par $\lambda_e$ : $E(L) = E(L_q) + \frac{\lambda_e}{\mu}$ (le trafic offert).
+2. L'état est le nombre de clients dans le système. Pendant un intervalle $\varepsilon$ infiniment petit, il ne peut se produire qu'**une arrivée** ($k \to k+1$) ou **un départ** ($k \to k-1$). Les arrivées sont poissonniennes de paramètre $\lambda$ quel que soit $k$ : $\lambda_k = \lambda$. Pour $k \ge 1$, un seul client est en service, de durée exponentielle de paramètre $\mu$ : $\mu_k = \mu$.
+3. $\pi_k = \left(\frac{\lambda}{\mu}\right)^k\pi_0 = a^k\pi_0$ avec $a = \frac{\lambda}{\mu}$. Normalisation : $\pi_0\sum_{k \ge 0}a^k = 1$. La série converge si et seulement si $a < 1$ et vaut $\frac{1}{1-a}$, donc $\pi_0 = 1 - a$ et $\pi_k = (1-a)a^k$. Si $a \ge 1$, pas de distribution stationnaire : le nombre de clients croît à l'infini.
+4. Serveur occupé : $1 - \pi_0 = a$. Le temps de séjour suit une loi exponentielle de paramètre $\mu - \lambda$ : $P(T > t) = e^{-(\mu - \lambda)t}$, $E(T) = \frac{1}{\mu - \lambda}$.
+
+[[widget:chaine|n=mm1]]",5
+Markov,Files d'attente,Application directe,"Un guichet reçoit en moyenne 6 clients par heure (arrivées poissonniennes). Un service dure en moyenne 6 minutes (durée exponentielle). Personne n'est refusé.
+
+1. Donne la notation de Kendall, $\lambda$ et $\mu$ par heure, puis $a$. La distribution stationnaire existe-t-elle ?
+2. Quelle est la probabilité que le guichetier soit libre ? qu'un client doive attendre ?
+3. Calcule $E(L)$ et $E(L_q)$.
+4. Calcule $E(T)$ et $E(T_q)$ en minutes. Vérifie $E(L) = \lambda E(T)$.
+5. Quelle est la probabilité qu'un client passe plus de 30 minutes au guichet (attente comprise) ?
+
+On donne $e^{-2} \approx 0{,}14$.","1. M/M/1/$\infty$. $\lambda = 6$ clients/h. Un service dure $6$ min $= 0{,}1$ h, donc $\mu = 10$ clients/h. $a = \frac{6}{10} = 0{,}6 < 1$ : la distribution stationnaire existe, $\pi_k = 0{,}4 \times 0{,}6^k$.
+2. Guichetier libre : $\pi_0 = 1 - a = 0{,}4$. Attendre : $1 - \pi_0 = a = 0{,}6$.
+3. $E(L) = \frac{a}{1-a} = \frac{0{,}6}{0{,}4} = 1{,}5$ client. $E(L_q) = \frac{a^2}{1-a} = \frac{0{,}36}{0{,}4} = 0{,}9$ client.
+4. $E(T) = \frac{1}{\mu - \lambda} = \frac{1}{4}$ h $= 15$ min. $E(T_q) = E(T) - \frac{1}{\mu} = 15 - 6 = 9$ min.
+   Little : $\lambda E(T) = 6 \times 0{,}25 = 1{,}5 = E(L)$. Et $\lambda E(T_q) = 6 \times 0{,}15 = 0{,}9 = E(L_q)$.
+5. $T$ suit une loi exponentielle de paramètre $\mu - \lambda = 4$/h, et $30$ min $= 0{,}5$ h :
+$$P(T > 0{,}5) = e^{-4 \times 0{,}5} = e^{-2} \approx 0{,}14$$
+
+[[widget:mm1|lambda=6;mu=10]]",10
+Markov,Files d'attente,Combien de travaux attendent ?,"Un serveur d'impression reçoit 8 travaux par heure (Poisson) ; une impression dure en moyenne 6 minutes (exponentielle). File M/M/1/$\infty$, régime stationnaire.
+
+1. Calcule $a$ et justifie que la distribution stationnaire existe.
+2. Quelle est la probabilité qu'il y ait exactement 2 travaux dans le système ?
+3. Quelle est la probabilité qu'au moins un travail attende ?
+4. Quelle est la probabilité qu'au moins 3 travaux attendent ?
+
+On pourra laisser les résultats sous forme de puissances de $0{,}8$, puis donner une valeur décimale.
+
+:::astuce Indice
+Un travail est en cours d'impression dès que le système n'est pas vide. « $k$ travaux attendent » veut dire $k + 1$ travaux dans le système.
+:::","1. $\lambda = 8$/h, $\mu = \frac{60}{6} = 10$/h, $a = 0{,}8 < 1$ : la distribution stationnaire existe, $\pi_k = (1-a)a^k = 0{,}2 \times 0{,}8^k$.
+2. $\pi_2 = 0{,}2 \times 0{,}64 = 0{,}128$.
+3. Un travail attend dès qu'un autre est à l'impression : il faut au moins 2 travaux dans le système. $P(N \ge 2) = a^2 = 0{,}64$.
+4. Au moins 3 en attente, plus celui qui s'imprime : au moins 4 dans le système.
+$$\pi_4 + \pi_5 + \dots = a^4 = 0{,}8^4 = 0{,}4096 \approx 0{,}41$$
+Piège évité : $a^3 = 0{,}512$ serait la probabilité qu'au moins 3 travaux soient **dans le système**, pas en attente.
+
+[[widget:mm1|lambda=8;mu=10]]",10
+Markov,Files d'attente,Le guichet d'un organisme public (exercice du cours),"Un organisme public est ouvert chaque jour de 9 h à 17 h. Il accueille en moyenne 64 usagers par jour. Un guichet unique traite le dossier de chaque usager, en 2,5 minutes en moyenne. Les usagers font la queue si nécessaire, dans l'ordre de leur arrivée ; même si l'attente est longue, on ne refuse aucun usager. Une étude statistique a montré que la durée des services suit une loi exponentielle et que les arrivées suivent un processus de Poisson.
+
+1. Donne la notation de ce système.
+2. Donne l'expression de la probabilité $\pi_k$ d'avoir $k$ usagers dans l'organisme, et justifie son existence.
+3. Quels sont les temps moyens passés par chaque usager à attendre ? dans l'organisme ?
+4. Quelle est la probabilité qu'il n'arrive aucun usager entre 15 h et 16 h ? que 6 usagers arrivent entre 16 h et 17 h ?
+5. Quelle est en moyenne, en heures, la durée pendant laquelle l'employé du guichet ne s'occupe pas d'usagers dans une journée ?
+6. Quelle est la probabilité d'observer une file d'attente de 4 usagers derrière celui en cours de service ?
+
+:::astuce Indice
+Travaille en heures : 64 usagers en 8 h. À la question 4, la durée est d'une heure, donc la moyenne de la loi de Poisson est $\lambda \times 1$. À la question 6, compte aussi l'usager au guichet.
+:::","1. Arrivées poissonniennes, services exponentiels, un seul guichet, aucun usager refusé (capacité infinie) : **M/M/1/$\infty$**.
+2. $\lambda = \frac{64}{8} = 8$ usagers/h. Un service dure $2{,}5$ min $= \frac{2{,}5}{60} = \frac{1}{24}$ h, donc $\mu = 24$ usagers/h. $a = \frac{\lambda}{\mu} = \frac{8}{24} = \frac{1}{3} < 1$ : la distribution stationnaire existe et
+$$\pi_k = (1-a)a^k = \frac{2}{3}\left(\frac{1}{3}\right)^k, \qquad k \ge 0$$
+3. Dans l'organisme : $E(T) = \frac{1}{\mu - \lambda} = \frac{1}{16}$ h $= 3{,}75$ min.
+   À attendre : $E(T_q) = E(T) - \frac{1}{\mu} = \frac{\lambda}{\mu(\mu - \lambda)} = \frac{8}{24 \times 16} = \frac{1}{48}$ h $= 1{,}25$ min.
+   Contrôle : $3{,}75 = 1{,}25 + 2{,}5$ min.
+4. Sur une heure, le nombre d'arrivées suit une loi de Poisson de moyenne $\lambda \times 1 = 8$ :
+$$P(N = 0) = e^{-8} \approx 3{,}4 \times 10^{-4}, \qquad P(N = 6) = e^{-8}\frac{8^6}{6!} \approx 0{,}12$$
+5. Le guichet est libre avec la probabilité $\pi_0 = 1 - a = \frac{2}{3}$, c'est-à-dire pendant deux tiers du temps. Sur une journée de 8 h : $\frac{2}{3} \times 8 = \frac{16}{3} \approx 5{,}33$ h, soit 5 h 20 min.
+6. 4 usagers en attente plus celui en service : 5 usagers dans l'organisme.
+$$\pi_5 = \frac{2}{3}\left(\frac{1}{3}\right)^5 = \frac{2}{729} \approx 0{,}0027$$",10
+Markov,Files d'attente,Serveur web chargé : effet d'une hausse du trafic (bonus),"Un serveur web traite les requêtes une par une. Elles arrivent selon un processus de Poisson de taux 40 requêtes/s ; un traitement dure en moyenne 20 ms (loi exponentielle).
+
+1. Quelle notation de Kendall ? Donne $\lambda$, $\mu$, $a$ et conclus sur l'existence du régime stationnaire.
+2. Calcule le nombre moyen de requêtes dans le serveur $E(L)$ et le temps de séjour moyen $E(T)$ en ms.
+3. Le trafic augmente de 10 %. Reprends les calculs. De combien le temps de séjour moyen a-t-il augmenté, en pourcentage ?
+4. Quel trafic maximal peut-on accepter si l'on veut un temps de séjour moyen d'au plus 200 ms ?
+
+:::astuce Indice
+Tout en secondes : $\mu = \frac{1}{0{,}02}$. Pour la question 4, résous $\frac{1}{\mu - \lambda} \le 0{,}2$.
+:::","1. Arrivées poissonniennes, service exponentiel, un serveur, pas de limite de capacité : **M/M/1/$\infty$**. $\lambda = 40$/s, $\mu = \frac{1}{0{,}02} = 50$/s, $a = \frac{40}{50} = 0{,}8 < 1$ : la distribution stationnaire existe.
+2. $E(L) = \frac{0{,}8}{0{,}2} = 4$ requêtes. $E(T) = \frac{1}{\mu - \lambda} = \frac{1}{10}$ s $= 100$ ms. Contrôle Little : $\lambda E(T) = 40 \times 0{,}1 = 4 = E(L)$.
+3. $\lambda' = 1{,}1 \times 40 = 44$/s, $a' = \frac{44}{50} = 0{,}88 < 1$.
+   $E(T') = \frac{1}{50 - 44} = \frac{1}{6}$ s $\approx 167$ ms, $E(L') = \lambda' E(T') = \frac{44}{6} = \frac{22}{3} \approx 7{,}3$ requêtes.
+   Hausse : $\frac{E(T')}{E(T)} = \frac{1/6}{1/10} = \frac{10}{6} \approx 1{,}67$, soit **environ 67 %** de plus pour seulement 10 % de trafic en plus.
+4. $E(T) = \frac{1}{50 - \lambda} \le 0{,}2 \iff 50 - \lambda \ge 5 \iff \lambda \le 45$ requêtes/s (et on a bien $\lambda < \mu$).",10
+Markov,Files d'attente,Dimensionner un guichet (bonus),"Un poste de contrôle M/M/1/$\infty$ reçoit 15 véhicules par heure. On veut qu'un véhicule sur deux au plus ait à attendre.
+
+1. Quel taux de service minimal faut-il ? Quelle durée moyenne de contrôle maximale, en minutes ?
+2. Avec ce taux minimal, calcule $E(T)$ et $E(T_q)$ en minutes, puis $E(L_q)$.
+3. On veut en plus un temps moyen dans le système d'au plus 3 minutes. Quel $\mu$ minimal ?","1. $P(\text{attendre}) = a = \frac{15}{\mu} \le 0{,}5 \iff \mu \ge 30$/h. Durée moyenne de contrôle $\frac{1}{\mu} \le \frac{1}{30}$ h $= 2$ min.
+2. $\mu = 30$ : $E(T) = \frac{1}{30 - 15} = \frac{1}{15}$ h $= 4$ min. $E(T_q) = E(T) - \frac{1}{\mu} = 4 - 2 = 2$ min. Little : $E(L_q) = \lambda E(T_q) = 15 \times \frac{2}{60} = 0{,}5$ véhicule (contrôle : $\frac{a^2}{1-a} = \frac{0{,}25}{0{,}5} = 0{,}5$).
+3. $3$ min $= 0{,}05$ h. $\frac{1}{\mu - 15} \le 0{,}05 \iff \mu - 15 \ge 20 \iff \mu \ge 35$/h, soit une durée moyenne de contrôle d'au plus $\frac{60}{35} = \frac{12}{7} \approx 1{,}7$ min.",10
+Markov,Files d'attente,Question de cours : capacité finie et M/M/∞,"1. Pour une file M/M/1/3, dessine le graphe, donne les états et écris le GSI $A$.
+2. Pourquoi la distribution stationnaire d'une M/M/1/N existe-t-elle toujours, même si $\lambda > \mu$ ?
+3. Quel est le pourcentage de clients perdus ? Avec quel taux applique-t-on la formule de Little ?
+4. Pour une M/M/$\infty$, donne $\mu_k$ et justifie-le. Quelle loi suit le nombre de clients ? Que vaut $E(L)$ ?","1. États $0, 1, 2, 3$ (nombre de clients dans le système). Arcs $k \to k+1$ au taux $\lambda$ pour $k = 0, 1, 2$, arcs $k \to k-1$ au taux $\mu$ pour $k = 1, 2, 3$ ; pas d'arc depuis $3$ vers $4$ (client perdu).
+$$A = \begin{pmatrix} -\lambda & \lambda & 0 & 0 \\ \mu & -(\lambda+\mu) & \lambda & 0 \\ 0 & \mu & -(\lambda+\mu) & \lambda \\ 0 & 0 & \mu & -\mu \end{pmatrix}$$
+2. L'espace d'états $\{0, 1, \dots, N\}$ est fini : $\pi_0(1 + a + \dots + a^N)$ est une somme finie, on peut toujours normaliser. Si $\lambda > \mu$, la file est souvent pleine et on perd beaucoup de clients, mais elle ne grossit pas à l'infini.
+3. Un client est perdu s'il arrive dans l'état $N$ : pourcentage de perte $100\,\pi_N$. Little s'applique avec le taux des clients entrant effectivement, $\lambda_e = \lambda(1 - \pi_N)$ : $E(L) = \lambda_e E(T)$.
+4. Avec $k$ clients, $k$ services sont en cours, chacun se termine pendant $\varepsilon$ avec probabilité $\mu\varepsilon + o(\varepsilon)$ : un départ a lieu au taux $\mu_k = k\mu$. Le nombre de clients suit une loi de Poisson de paramètre $a = \frac{\lambda}{\mu}$ : $\pi_k = e^{-a}\frac{a^k}{k!}$, et $E(L) = a$.
+
+[[widget:chaine|n=mm1k]]
+
+[[widget:chaine|n=mminf]]",5
+Markov,Files d'attente,"Le routeur du cours, avec des nombres","Un routeur reçoit des paquets selon un processus de Poisson de taux $\lambda = 2$ paquets/ms ; un traitement dure en moyenne $0{,}25$ ms (loi exponentielle).
+
+1. **Sans espace d'attente** : un paquet qui arrive quand le routeur est occupé est perdu. Modélise par une CMTC (états, GSI), calcule la distribution stationnaire et le pourcentage de paquets perdus.
+2. **Avec une place de mémoire** (au plus 1 paquet en attente) : mêmes questions.
+3. Toujours avec la mémoire, quel est le pourcentage de paquets ayant dû attendre ?
+4. Calcule $E(L)$, $\lambda_e$, puis le temps moyen $E(T)$ passé dans le routeur par un paquet accepté. Vérifie avec $E(T) = E(T_q) + \frac{1}{\mu}$.
+
+:::astuce Indice
+$\mu = 4$ paquets/ms, $a = \frac{1}{2}$. Pour la question 4, divise par le taux d'entrée **effectif**.
+:::","$\mu = \frac{1}{0{,}25} = 4$ paquets/ms, $a = \frac{\lambda}{\mu} = \frac{1}{2}$.
+
+1. **M/M/1/1**, états $0$ (libre) et $1$ (occupé).
+$$A = \begin{pmatrix} -2 & 2 \\ 4 & -4 \end{pmatrix}, \qquad -2\pi_0 + 4\pi_1 = 0 \;\Rightarrow\; \pi_1 = \frac{1}{2}\pi_0$$
+   Avec $\pi_0 + \pi_1 = 1$ : $\pi_0 = \frac{\mu}{\lambda + \mu} = \frac{2}{3}$, $\pi_1 = \frac{\lambda}{\lambda + \mu} = \frac{1}{3}$. Perte : $100\,\pi_1 \approx 33{,}3\,\%$.
+2. **M/M/1/2**, états $0$, $1$ (1 en traitement), $2$ (1 en traitement et 1 en attente).
+$$A = \begin{pmatrix} -2 & 2 & 0 \\ 4 & -6 & 2 \\ 0 & 4 & -4 \end{pmatrix}$$
+   $\pi A = 0$ : $\pi_1 = \frac{1}{2}\pi_0$, $\pi_2 = \frac{1}{2}\pi_1 = \frac{1}{4}\pi_0$. Somme : $\pi_0\left(1 + \frac{1}{2} + \frac{1}{4}\right) = \frac{7}{4}\pi_0 = 1$.
+$$\pi = \left(\frac{4}{7}, \frac{2}{7}, \frac{1}{7}\right)$$
+   Perte : un paquet est perdu dans l'état 2, soit $100\,\pi_2 = \frac{100}{7} \approx 14{,}3\,\%$. La place de mémoire divise les pertes par plus de 2.
+3. Un paquet attend s'il arrive dans l'état 1 : $100\,\pi_1 = \frac{200}{7} \approx 28{,}6\,\%$ des paquets arrivant. Parmi les paquets traités seulement : $\frac{\pi_1}{1 - \pi_2} = \frac{2/7}{6/7} = \frac{1}{3}$, soit $33{,}3\,\%$.
+4. $E(L) = 0 \times \frac{4}{7} + 1 \times \frac{2}{7} + 2 \times \frac{1}{7} = \frac{4}{7}$ paquet.
+   $\lambda_e = \lambda(1 - \pi_2) = 2 \times \frac{6}{7} = \frac{12}{7}$ paquets/ms (contrôle : $\mu(1 - \pi_0) = 4 \times \frac{3}{7} = \frac{12}{7}$).
+   Little : $E(T) = \frac{E(L)}{\lambda_e} = \frac{4/7}{12/7} = \frac{1}{3}$ ms.
+   Vérification : $E(L_q) = 1 \times \pi_2 = \frac{1}{7}$, $E(T_q) = \frac{1/7}{12/7} = \frac{1}{12}$ ms, et $E(T_q) + \frac{1}{\mu} = \frac{1}{12} + \frac{3}{12} = \frac{1}{3}$ ms.
+
+[[widget:chaine|n=mm11]]",10
+Markov,Files d'attente,TD du cours : file d'attente et CMTC,"C'est le TD « File d'attente et chaîne de Markov en temps continu » du professeur.
+
+On considère un routeur qui reçoit en moyenne 1 paquet par unité de temps (milliseconde) selon un processus de Poisson. On suppose que le temps de traitement d'un paquet par le routeur est distribué selon une loi exponentielle de moyenne $0{,}2$ ms.
+
+1. Quelle est la probabilité qu'il arrive exactement 2 paquets pendant une unité de temps ?
+2. Quelle est la probabilité que le temps de service d'un client soit de 1 ms au moins ?
+3. On prévoit une file d'attente de capacité illimitée. Modéliser par une chaîne de Markov en temps continu.
+4. Calculer la distribution stationnaire. Quelle est la probabilité qu'un client soit servi sans séjourner dans la file d'attente ?
+5. On prévoit maintenant une file d'attente pouvant contenir au plus 3 clients (il y a donc au plus 4 clients dans le système à un instant donné). Lorsqu'un paquet arrive pendant que le routeur est occupé (plein), il est perdu. Modéliser par une chaîne de Markov en temps continu.
+6. Calculer la distribution stationnaire. Quelle est la probabilité qu'un client soit servi sans séjourner dans la file d'attente ?
+7. Calculer le pourcentage de paquets perdus.
+
+On donne $e^{-1} \approx 0{,}368$ et $e^{-5} \approx 0{,}0067$.
+
+:::astuce Indice
+$\lambda = 1$, $\mu = \frac{1}{0{,}2} = 5$, $a = \frac{1}{5}$. Un client est servi sans attendre s'il trouve le routeur vide.
+:::","On a $\lambda = 1$ paquet/ms et $\mu = \frac{1}{0{,}2} = 5$ paquets/ms, donc $a = \frac{\lambda}{\mu} = \frac{1}{5}$.
+
+1. Le nombre de paquets arrivant pendant $t$ suit une loi de Poisson de moyenne $\lambda t$. Pour $t = 1$ et $k = 2$ :
+$$P(N(1) = 2) = e^{-1}\frac{1^2}{2!} = \frac{1}{2e} \approx 0{,}18$$
+2. Le temps de service $T_S$ suit une loi exponentielle de paramètre $\mu = 5$ (moyenne $\frac{1}{\mu}$) :
+$$P(T_S > 1) = e^{-5 \times 1} = e^{-5} \approx 0{,}0067$$
+3. C'est la file **M/M/1/$\infty$** : processus de naissance et de mort sur $0, 1, 2, \dots$ avec $\lambda_k = \lambda = 1$ et $\mu_k = \mu = 5$.
+4. La condition d'existence est $a = \frac{\lambda}{\mu} < 1$, vérifiée puisque $a = \frac{1}{5}$. La distribution stationnaire est
+$$\pi_n = (1-a)a^n = \frac{4}{5}\left(\frac{1}{5}\right)^n$$
+   Un client est servi sans séjourner dans la file d'attente s'il trouve le routeur vide : $\pi_0 = \frac{4}{5} = 0{,}8$.
+5. C'est la file **M/M/1/4** : états $0, 1, 2, 3, 4$, naissance et mort avec $\lambda_k = \lambda$ pour $k \le 3$, $\mu_k = \mu$ pour $k \ge 1$, pas d'arc de $4$ vers $5$.
+$$A = \begin{pmatrix} -1 & 1 & 0 & 0 & 0 \\ 5 & -6 & 1 & 0 & 0 \\ 0 & 5 & -6 & 1 & 0 \\ 0 & 0 & 5 & -6 & 1 \\ 0 & 0 & 0 & 5 & -5 \end{pmatrix}$$
+6. La formule de naissance et de mort donne $\pi_k = a^k\pi_0$, et donc
+$$\pi_k = \frac{a^k}{1 + a + a^2 + a^3 + a^4}, \qquad k = 0, \dots, 4, \quad a = \frac{1}{5}$$
+   Servi sans attendre :
+$$\pi_0 = \frac{1}{1 + 0{,}2 + 0{,}04 + 0{,}008 + 0{,}0016} = \frac{1}{1{,}2496} \approx 0{,}8$$
+   (Presque la même valeur qu'en 4 : avec $a = 0{,}2$, le routeur dépasse rarement 4 paquets.)
+7. Un paquet est perdu s'il arrive dans l'état 4. Pourcentage de perte :
+$$100\,\pi_4 = 100 \times \frac{0{,}2^4}{1{,}2496} = 100 \times \frac{0{,}0016}{1{,}2496} \approx 0{,}13\,\%$$
+   (Le corrigé du professeur écrit $\pi_4 = 0{,}0012$ en tronquant ; la valeur exacte est $0{,}00128$.)",10
+Markov,Files d'attente,Un serveur de sessions M/M/∞,"Un très gros serveur accepte toutes les sessions sans jamais les faire attendre. Les sessions s'ouvrent selon un processus de Poisson de taux 6 par minute ; une session dure en moyenne 30 secondes (loi exponentielle).
+
+1. Quelle notation de Kendall ? Donne $\lambda$, $\mu$ par minute et $a$.
+2. Quelle est la probabilité qu'aucune session ne soit ouverte ? qu'exactement 3 le soient ?
+3. Quelle est la probabilité qu'au moins 3 sessions soient ouvertes ?
+4. Donne le nombre moyen de sessions ouvertes et le temps moyen passé dans le système. Vérifie avec Little.
+
+On donne $e^{-3} \approx 0{,}05$.
+
+:::astuce Indice
+Le nombre de sessions ouvertes suit une loi de Poisson de paramètre $a$. « Au moins 3 » est le contraire de « 0, 1 ou 2 ».
+:::","1. Chaque session est servie dès son arrivée, sans limite : **M/M/$\infty$**. $\lambda = 6$/min, $\mu = \frac{1}{0{,}5} = 2$/min, $a = \frac{6}{2} = 3$.
+2. $\pi_k = e^{-3}\frac{3^k}{k!}$ :
+$$\pi_0 = e^{-3} \approx 0{,}05, \qquad \pi_3 = e^{-3}\frac{27}{6} = 4{,}5\,e^{-3} \approx 0{,}22$$
+3. $\pi_1 = 3e^{-3}$, $\pi_2 = \frac{9}{2}e^{-3} = 4{,}5\,e^{-3}$, donc
+$$P(N \ge 3) = 1 - (\pi_0 + \pi_1 + \pi_2) = 1 - (1 + 3 + 4{,}5)e^{-3} = 1 - 8{,}5\,e^{-3} \approx 0{,}58$$
+4. $E(L) = a = 3$ sessions. Personne n'attend : $E(T) = \frac{1}{\mu} = 0{,}5$ min. Little : $\lambda E(T) = 6 \times 0{,}5 = 3 = E(L)$.
+   Remarque : $a = 3 > 1$ ne pose aucun problème ici, la M/M/$\infty$ a toujours une distribution stationnaire.
+
+[[widget:chaine|n=mminf]]",10
+Markov,Files d'attente,M/M/1/3 surchargée (bonus),"Une file M/M/1/3 reçoit $\lambda = 4$ clients/min et sert $\mu = 2$ clients/min.
+
+1. La M/M/1/$\infty$ correspondante aurait-elle une distribution stationnaire ? Et cette M/M/1/3 ?
+2. Calcule la distribution stationnaire, le pourcentage de perte et le taux d'entrée effectif $\lambda_e$.
+3. Que devient $\lambda_e$ si l'on fait tendre $N$ vers l'infini ? Interprète.","1. $a = \frac{4}{2} = 2 \ge 1$ : la M/M/1/$\infty$ n'aurait pas de distribution stationnaire, le nombre de clients croîtrait à l'infini. La M/M/1/3 a un nombre fini d'états : sa distribution stationnaire existe.
+2. $\pi_k = 2^k\pi_0$ pour $k = 0, \dots, 3$ : $\pi_0(1 + 2 + 4 + 8) = 15\pi_0 = 1$.
+$$\pi = \left(\frac{1}{15}, \frac{2}{15}, \frac{4}{15}, \frac{8}{15}\right)$$
+   Perte : $100\,\pi_3 = \frac{800}{15} \approx 53\,\%$. $\lambda_e = \lambda(1 - \pi_3) = 4 \times \frac{7}{15} = \frac{28}{15}$ clients/min. Contrôle : $\mu(1 - \pi_0) = 2 \times \frac{14}{15} = \frac{28}{15}$.
+3. Pour $a > 1$, $\pi_0 = \frac{a - 1}{a^{N+1} - 1} \to 0$, donc $\lambda_e = \mu(1 - \pi_0) \to \mu = 2$ clients/min. Le serveur travaille en permanence et ne peut pas écouler plus que $\mu$ : tout le surplus est perdu.",10
+Markov,Files d'attente,Dimensionner la mémoire d'un routeur (bonus),"Un routeur M/M/1/N a un trafic offert $a = \frac{1}{2}$.
+
+1. Montre que le pourcentage de perte vaut $100\,\pi_N$ avec $\pi_N = \frac{1}{2^{N+1} - 1}$.
+2. Quelle capacité $N$ minimale faut-il pour perdre moins de 1 % des paquets ? Combien de places d'attente cela représente-t-il ?
+
+:::astuce Indice
+$1 + a + \dots + a^N = \frac{1 - a^{N+1}}{1 - a}$, puis multiplie numérateur et dénominateur par $2^{N+1}$.
+:::","1. $\pi_N = \frac{a^N(1 - a)}{1 - a^{N+1}} = \frac{(1/2)^{N+1}}{1 - (1/2)^{N+1}}$. En multipliant en haut et en bas par $2^{N+1}$ : $\pi_N = \frac{1}{2^{N+1} - 1}$.
+   Contrôle : $N = 1$ donne $\frac{1}{3}$ et $N = 2$ donne $\frac{1}{7}$, comme pour le routeur du cours.
+2. $\pi_N < \frac{1}{100} \iff 2^{N+1} - 1 > 100 \iff 2^{N+1} > 101$. Or $2^6 = 64$ et $2^7 = 128$, donc $N + 1 \ge 7$, soit $N \ge 6$.
+   Avec $N = 5$ : $\pi_5 = \frac{1}{63} \approx 1{,}6\,\%$ ; avec $N = 6$ : $\pi_6 = \frac{1}{127} \approx 0{,}79\,\%$.
+   Il faut une capacité de 6 paquets : 1 en traitement et **5 places d'attente**.",10
+Markov,Annales et contrôle blanc,File d'attente et chaîne de Markov en temps discret (20 points),"[[widget:chrono|duree=60;cle=markov-a1]]
+
+*Exercice adapté d'après Anthony Busson.*
+
+Considérons la file d'attente à temps discret suivante, constituée d'un tampon de transmission où les paquets sont mémorisés avant leur émission sur un canal de transmission. Le temps est découpé en tranches. À chaque tranche, le système essaie d'émettre un paquet. Comme la ligne de transmission n'est pas fiable, on peut observer une perte du paquet en cours de transmission avec la probabilité $p$. Le cas échéant, le paquet est maintenu dans le tampon et une nouvelle tentative est faite à l'intervalle de temps suivant.
+
+Les paquets arrivent dans le tampon avec un taux $a$, c'est-à-dire que $a$ est la probabilité pour qu'un nouveau paquet arrive pendant un intervalle de temps. Les arrivées de paquets et les pertes en cours de transmission sont supposées indépendantes quel que soit l'intervalle de temps.
+
+Considérons $(X_n)_{n \in \mathbb{N}}$ la suite de variables aléatoires représentant le nombre de paquets dans le tampon à l'intervalle de temps $n$. On suppose qu'il n'y a pas de paquets dans le tampon initialement ($X_0 = 0$).
+
+1. $(X_n)_{n \in \mathbb{N}}$ est-elle une chaîne de Markov ?
+2. Donner la probabilité $p_{0,0}$ signifiant pas de nouveau paquet à transmettre ni de paquet transmis.
+3. Donner la probabilité $p_{0,1}$ représentant l'arrivée d'un nouveau paquet à transmettre.
+4. Donner la probabilité $p_{i,i-1}$ signifiant pas de nouveau paquet à transmettre et un paquet a été transmis sans erreur.
+5. Donner la probabilité $p_{i,i}$ signifiant pas de nouveau paquet à transmettre et la transmission du paquet est une erreur, le paquet reste donc dans le tampon.
+6. Donner la probabilité $p_{i,i+1}$ signifiant qu'un nouveau paquet est arrivé alors que la transmission du paquet en attente n'a pu se faire.
+7. En déduire la matrice de transition.
+8. Une telle chaîne est apériodique, homogène et irréductible. Cela suffit pour prouver l'existence et l'unicité d'une distribution d'équilibre. Calculer cette distribution d'équilibre. À partir de $\pi_1$ et de $\pi_2$, supposer que $\pi_k$ a une forme de récurrence donnée en fonction de $\pi_0$ et montrer par calcul de l'équation d'équilibre que $\pi_k$ satisfait bien la forme de récurrence.
+9. Quelle est la condition d'existence de la distribution d'équilibre ? Interpréter cette condition.
+
+:::astuce Indice
+- Dans l'état $i \ge 1$, deux événements indépendants se produisent pendant une tranche : une arrivée (proba $a$) ou non, une transmission réussie (proba $1-p$) ou non.
+- Dans l'état $0$, il n'y a rien à transmettre : seule l'arrivée compte.
+- Pour $p_{i,i}$, il y a **deux** façons de rester au même niveau.
+- Pour la question 8, écris l'équation de la colonne $0$, puis celle de la colonne $1$, et exprime $\pi_1$ puis $\pi_2$ en fonction de $\pi_0$.
+:::","[[widget:chaine|n=tampon]]
+
+**1. (2 pts)** Oui. Le nombre de paquets à la tranche $n+1$ ne dépend que du nombre de paquets à la tranche $n$ et des événements de la tranche (arrivée, succès ou perte de la transmission), qui sont indépendants du passé. La probabilité $P_{ij}$ de passer de $i$ à $j$ ne dépend que de $i$ et $j$, pas des états antérieurs : le système est **sans mémoire**, c'est une chaîne de Markov. Elle est homogène car $a$ et $p$ ne dépendent pas du temps.
+
+**2. (1 pt)** Dans l'état $0$, rien n'est transmis. On reste en $0$ si aucun paquet n'arrive : $p_{0,0} = 1 - a$.
+
+**3. (1 pt)** On passe en $1$ si un paquet arrive : $p_{0,1} = a$. (Contrôle : $p_{0,0} + p_{0,1} = 1$.)
+
+**4. (1 pt)** Pour $i \ge 1$ : pas d'arrivée **et** transmission réussie, événements indépendants, donc
+$$p_{i,i-1} = (1-a)(1-p)$$
+
+**5. (1 pt)** On reste en $i$ si (pas d'arrivée **et** perte) **ou** (arrivée **et** transmission réussie). Ces deux cas s'excluent, on additionne :
+$$p_{i,i} = (1-a)p + a(1-p)$$
+
+**6. (1 pt)** Arrivée **et** perte : $p_{i,i+1} = ap$.
+
+Contrôle : $(1-a)(1-p) + (1-a)p + a(1-p) + ap = (1-a) + a = 1$.
+
+**7. (2 pts)** En notant $d = (1-a)(1-p)$ et $r = (1-a)p + a(1-p)$ :
+$$P = \begin{pmatrix} 1-a & a & 0 & 0 & \cdots \\ d & r & ap & 0 & \cdots \\ 0 & d & r & ap & \cdots \\ 0 & 0 & d & r & \cdots \\ \vdots & & & \ddots & \ddots \end{pmatrix}$$
+Chaque ligne somme à $1$ : $P$ est stochastique.
+
+**8. (8 pts)** On résout $\pi = \pi P$ et $\sum_{i \ge 0} \pi_i = 1$. Colonne par colonne :
+
+- colonne $0$ : $\pi_0 = (1-a)\pi_0 + d\,\pi_1$ ;
+- colonne $1$ : $\pi_1 = a\pi_0 + r\pi_1 + d\,\pi_2$ ;
+- colonne $k \ge 2$ : $\pi_k = ap\,\pi_{k-1} + r\pi_k + d\,\pi_{k+1}$.
+
+La colonne $0$ donne $a\pi_0 = (1-a)(1-p)\pi_1$, donc
+$$\pi_1 = \frac{a}{(1-a)(1-p)}\pi_0$$
+
+La colonne $1$ donne $d\,\pi_2 = (1-r)\pi_1 - a\pi_0$. Or $a\pi_0 = d\,\pi_1$ et $1 - r = d + ap$, donc $d\,\pi_2 = ap\,\pi_1$ :
+$$\pi_2 = \frac{ap}{(1-a)(1-p)}\pi_1 = \frac{a^2 p}{(1-a)^2(1-p)^2}\pi_0$$
+
+On suppose donc, pour $k \ge 1$ :
+$$\pi_k = \frac{a^k p^{k-1}}{(1-a)^k(1-p)^k}\pi_0$$
+
+**Vérification** dans l'équation de la colonne $k$ : on remplace $\pi_{k-1}$, $\pi_k$, $\pi_{k+1}$ par cette forme dans le membre de droite.
+$$ap\,\pi_{k-1} + r\pi_k + d\,\pi_{k+1} = \pi_0 \frac{a^k p^{k-1}}{(1-p)^k(1-a)^k}\big[(1-a)(1-p) + (1-a)p + a(1-p) + ap\big]$$
+Le crochet vaut $(1-a) + a = 1$ : on retrouve $\pi_k$. La forme est bonne.
+
+**Normalisation.** On pose $x = \frac{ap}{(1-a)(1-p)}$. Alors $\pi_k = \frac{1}{p}x^k\pi_0$ pour $k \ge 1$ et
+$$\sum_{k=0}^{+\infty}\pi_k = \pi_0\left[1 + \frac{1}{p}\sum_{k=1}^{+\infty}x^k\right] = \pi_0\left[1 + \frac{1}{p}\cdot\frac{x}{1-x}\right] = 1$$
+Comme $\frac{1}{p}\cdot\frac{x}{1-x} = \frac{a}{(1-a)(1-p) - ap} = \frac{a}{1-a-p}$, on obtient
+$$\pi_0 = \frac{1-a-p}{1-p}, \qquad \pi_k = \frac{1-a-p}{1-p}\cdot\frac{a^k p^{k-1}}{(1-a)^k(1-p)^k} \quad (k \ge 1)$$
+
+**9. (3 pts)** La série géométrique ne converge que si sa raison est strictement inférieure à $1$ :
+$$ap < (1-a)(1-p) \iff ap < 1 - a - p + ap \iff a < 1 - p$$
+**Interprétation :** la probabilité d'arrivée d'un paquet doit être inférieure à la probabilité de transmission réussie. Sinon, le tampon reçoit en moyenne plus de paquets qu'il n'en émet : il se remplit sans fin et il n'y a pas d'équilibre.
+
+*Corrigé établi d'après celui du professeur, rédigé en français et complété (vérification, calcul de $\pi_0$).*",30
+Markov,Annales et contrôle blanc,"Exercice 1 : M/M/1, au moins deux clients en attente (7 points)","Soit un système d'attente $M/M/1/\infty$. 10 clients arrivent en moyenne toutes les heures. La moyenne de service est de 3 minutes.
+
+1. Donner la valeur des paramètres $\lambda$ et $\mu$.
+2. Le système admet-il une probabilité stationnaire ? Pourquoi ?
+3. Calculer la probabilité $p$ pour que 2 clients au moins attendent avant d'être servis.
+4. Calculer l'augmentation relative de $p$ lorsque le taux d'entrée $\lambda$ augmente de 20 %.
+
+:::astuce Indice
+Exprime $\lambda$ et $\mu$ dans la **même unité**. « Au moins 2 clients attendent » : un client est au guichet, donc il faut au moins 3 clients dans le système.
+:::","**1. (1,5 pt)** $\lambda = 10$ clients par heure. Un service dure en moyenne $3$ min, donc $\mu = \frac{60}{3} = 20$ clients par heure.
+
+**2. (1,5 pt)** Trafic offert $a = \frac{\lambda}{\mu} = \frac{10}{20} = 0{,}5 < 1$ : le serveur traite plus vite que les clients n'arrivent, la file ne grossit pas indéfiniment. Il existe une unique distribution stationnaire, $\pi_k = (1-a)a^k = 0{,}5^{k+1}$.
+
+**3. (2 pts)** Deux clients au moins attendent si, en plus du client en service, il y en a au moins deux dans la file, soit $N \ge 3$ :
+$$p = \pi_3 + \pi_4 + \dots = (1-a)a^3\sum_{k \ge 0}a^k = a^3 = 0{,}125$$
+
+**4. (2 pts)** $\lambda' = 1{,}2 \times 10 = 12$, $a' = \frac{12}{20} = 0{,}6$, $p' = 0{,}6^3 = 0{,}216$.
+$$\frac{p' - p}{p} = \frac{0{,}216 - 0{,}125}{0{,}125} = 0{,}728$$
+$p$ augmente de **72,8 %** pour seulement 20 % de clients en plus : $p = a^3$ réagit très fortement à la charge. Raccourci : $\frac{p'}{p} = 1{,}2^3 = 1{,}728$.
+
+[[widget:mm1|lambda=10;mu=20]]",20
+Markov,Annales et contrôle blanc,Exercice 2 : retrouver le temps de service (5 points),"Soit un système d'attente $M/M/1/\infty$. 20 clients arrivent en moyenne toutes les heures. La probabilité qu'un client attende avant d'être servi est de 0,5.
+
+1. Calculer le temps moyen de service.
+2. Calculer la probabilité qu'un client qui arrive trouve devant lui une file d'attente de $N$ personnes.
+
+:::astuce Indice
+Un client attend si le serveur est occupé à son arrivée. Avec des arrivées poissonniennes, un client qui arrive voit le système dans sa distribution stationnaire.
+:::","**1. (2 pts)** Un client attend si le serveur est occupé : $P(\text{attendre}) = 1 - \pi_0 = 1 - (1 - a) = a$. Donc $a = \frac{1}{2}$ et
+$$\mu = \frac{\lambda}{a} = \frac{20}{1/2} = 40 \text{ clients par heure}$$
+Le temps moyen de service est $\frac{1}{\mu} = \frac{1}{40}$ h $= 1{,}5$ min.
+
+**2. (3 pts)** Les arrivées étant poissonniennes, un client qui arrive trouve $k$ clients dans le système avec la probabilité stationnaire $\pi_k$. Il voit une file de $N$ personnes **devant lui** s'il y a $N$ personnes qui attendent plus celle en service, soit $N + 1$ clients dans le système (c'est la lecture du prof en cours) :
+$$\pi_{N+1} = (1-a)a^{N+1} = \frac{1}{2}\left(\frac{1}{2}\right)^{N+1} = \left(\frac{1}{2}\right)^{N+2}$$
+
+Au contrôle, **écris en une phrase ce que tu comptes** (clients dans le système ou en attente) avant de calculer.",10
+Markov,Annales et contrôle blanc,Exercice 3 : le routeur bi-processeur (hors programme) (bonus),"Une entreprise dispose d'un routeur bi-processeur. Chaque processeur traite en moyenne 4 paquets par seconde. Les 2 processeurs partagent la même file d'attente. L'entreprise constate des performances en baisse et une analyse statistique montre que la demande est passée à 10 paquets par seconde. L'entreprise se voit proposer 2 choix :
+
+- acheter un processeur de la même famille aux performances semblables ;
+- changer les processeurs pour augmenter leur traitement de 50 %.
+
+Les demandes étant poissonniennes et les temps de service exponentiels, quelle solution est la plus avantageuse ?
+
+:::astuce Indice
+- Commence par expliquer la baisse de performance : compare $\lambda$ à la capacité $c\mu$.
+- Chaque solution est une M/M/c, donc un processus de naissance et de mort avec $\mu_k = \min(k, c)\,\mu$. Calcule $\pi_0$, puis $E(L)$, puis $E(T) = E(L)/\lambda$ (Little).
+- Série utile : $\sum_{j \ge 0} r^j = \frac{1}{1-r}$ et $\sum_{j \ge 1} j r^{j-1} = \frac{1}{(1-r)^2}$.
+:::","**Situation actuelle (1 pt).** M/M/2 avec $\mu = 4$ : capacité $2\mu = 8 < \lambda = 10$ paquets/s. La file est **instable** : elle grossit sans fin, d'où la baisse de performance. Les deux solutions portent la capacité à $12$ paquets/s, donc $\frac{\lambda}{3\mu} = \frac{10}{12} = \frac{5}{6} < 1$ : les deux sont stables, il faut les comparer sur le temps de réponse $E(T)$.
+
+**Solution B : M/M/2 avec $\mu = 6$ (3 pts).** Taux de départ : $\mu_1 = 6$, $\mu_k = 12$ pour $k \ge 2$.
+$$\pi_1 = \frac{10}{6}\pi_0 = \frac{5}{3}\pi_0, \qquad \pi_k = \frac{5}{3}\left(\frac{5}{6}\right)^{k-1}\pi_0 \ (k \ge 1)$$
+$$\sum \pi_k = \pi_0\left[1 + \frac{5}{3}\cdot\frac{1}{1 - 5/6}\right] = 11\,\pi_0 = 1 \Rightarrow \pi_0 = \frac{1}{11}$$
+$$E(L) = \sum_{k \ge 1} k\pi_k = \frac{5}{3}\cdot\frac{1}{11}\sum_{k \ge 1}k\left(\frac{5}{6}\right)^{k-1} = \frac{5}{33}\cdot 36 = \frac{60}{11} \approx 5{,}45$$
+$$E(T) = \frac{E(L)}{\lambda} = \frac{6}{11} \approx 0{,}545 \text{ s}$$
+
+**Solution A : M/M/3 avec $\mu = 4$ (3 pts).** Taux de départ : $4$, $8$, puis $12$ pour $k \ge 3$.
+$$\pi_1 = \frac{10}{4}\pi_0 = \frac{5}{2}\pi_0, \quad \pi_2 = \frac{10}{8}\pi_1 = \frac{25}{8}\pi_0, \quad \pi_k = \frac{25}{8}\left(\frac{5}{6}\right)^{k-2}\pi_0 \ (k \ge 2)$$
+$$\sum \pi_k = \pi_0\left[1 + \frac{5}{2} + \frac{25}{8}\cdot 6\right] = \frac{89}{4}\pi_0 = 1 \Rightarrow \pi_0 = \frac{4}{89}$$
+Avec $r = \frac{5}{6}$ : $\sum_{k \ge 2}k r^{k-2} = \sum_{j \ge 0}(j+2)r^j = \frac{r}{(1-r)^2} + \frac{2}{1-r} = 30 + 12 = 42$.
+$$E(L) = \pi_0\left[\frac{5}{2} + \frac{25}{8}\cdot 42\right] = \frac{4}{89}\cdot\frac{535}{4} = \frac{535}{89} \approx 6{,}01, \qquad E(T) = \frac{E(L)}{10} \approx 0{,}601 \text{ s}$$
+
+**Conclusion (1 pt).** Même capacité totale, mais $E(T)$ vaut $0{,}545$ s pour B contre $0{,}601$ s pour A, et $E(L)$ est aussi plus petit pour B : **changer les processeurs** est plus avantageux. Quand il y a peu de paquets, un processeur rapide les traite plus vite, alors qu'avec trois processeurs lents, deux restent inoccupés. (L'attente en file seule est un peu plus courte avec trois processeurs, mais c'est le temps de réponse total qui compte pour l'utilisateur.)",20
+Markov,Annales et contrôle blanc,Exercice 1 : questions de cours (4 points),"1. Quand dit-on qu'une matrice carrée est stochastique ? Qu'est-ce qu'un générateur stochastique infinitésimal ?
+2. Que signifie « une chaîne de Markov est ergodique » ? Donne une condition suffisante portant sur la matrice de transition.
+3. Énonce la loi de Little en précisant le sens de chaque lettre.","**1. (1,5 pt)** $P$ est **stochastique** si tous ses coefficients sont positifs ou nuls et si chaque ligne somme à $1$ (chaque ligne est un vecteur stochastique). $A$ est un **GSI** si chaque ligne somme à $0$, si ses coefficients diagonaux sont négatifs ou nuls et les autres positifs ou nuls.
+
+**2. (1,5 pt)** La chaîne est **ergodique** si $\lim_{t \to \infty}\pi(t)$ existe et ne dépend pas du vecteur initial $\pi(0)$. Condition suffisante : une puissance $P^k$ de la matrice de transition n'a que des coefficients strictement positifs. La limite est alors l'unique distribution stationnaire.
+
+**3. (1 pt)** Pour un système quelconque en régime stationnaire : $E(L) = \lambda_e E(T)$ et $E(L_q) = \lambda_e E(T_q)$, où $L$ est le nombre de clients dans le système, $L_q$ dans l'espace d'attente, $T$ le temps de séjour dans le système, $T_q$ le temps passé dans l'espace d'attente, et $\lambda_e$ le taux des clients qui entrent effectivement. On a aussi $E(T) = E(T_q) + \frac{1}{\mu}$.",10
+Markov,Annales et contrôle blanc,Exercice 2 : l'état d'un routeur (9 points),"Chaque soir, un technicien note l'état d'un routeur : **normal** (état $0$), **dégradé** (état $1$) ou **en panne** (état $2$). Les statistiques montrent que :
+
+- un routeur normal le reste le lendemain avec la probabilité $0{,}8$, sinon il est dégradé ;
+- un routeur dégradé redevient normal avec la probabilité $0{,}5$, reste dégradé avec la probabilité $0{,}3$, sinon il tombe en panne ;
+- un routeur en panne est réparé dans la journée et redevient normal le lendemain.
+
+Ces probabilités ne dépendent ni du jour, ni de l'historique du routeur.
+
+1. Justifie que l'état du routeur est une chaîne de Markov homogène. Dessine son graphe et donne sa matrice de transition $P$.
+2. Le routeur est normal lundi soir. Calcule la loi de son état mercredi soir.
+3. Montre que la chaîne est ergodique.
+4. Calcule la distribution stationnaire.
+5. Un jour normal rapporte 100 €, un jour dégradé 40 €, un jour de panne coûte 300 €. Calcule le gain moyen par jour à long terme.
+6. Combien de jours de suite, en moyenne, le routeur reste-t-il normal ?
+
+:::astuce Indice
+- Question 3 : $P$ contient des zéros ; calcule $P^2$, puis $P^3$ si besoin.
+- Question 4 : écris $\pi = \pi P$ colonne par colonne. Les colonnes $1$ et $2$ donnent directement $\pi_1$ et $\pi_2$ en fonction de $\pi_0$.
+- Question 6 : temps de séjour, loi géométrique.
+:::","**1. (2 pts)** L'état du lendemain ne dépend que de l'état du jour, avec des probabilités qui ne dépendent pas du jour : chaîne de Markov homogène à trois états.
+$$P = \begin{pmatrix} 0{,}8 & 0{,}2 & 0 \\ 0{,}5 & 0{,}3 & 0{,}2 \\ 1 & 0 & 0 \end{pmatrix}$$
+Chaque ligne somme à $1$ : $P$ est stochastique. Graphe : boucles $0{,}8$ sur $0$ et $0{,}3$ sur $1$ ; arcs $0 \to 1$ ($0{,}2$), $1 \to 0$ ($0{,}5$), $1 \to 2$ ($0{,}2$), $2 \to 0$ ($1$).
+
+**2. (1,5 pt)** $\pi(0) = (1, 0, 0)$ lundi. Mardi : $\pi(1) = \pi(0)P = (0{,}8 ;\ 0{,}2 ;\ 0)$. Mercredi :
+$$\pi(2) = \pi(1)P = (0{,}8 \times 0{,}8 + 0{,}2 \times 0{,}5 ;\ 0{,}8 \times 0{,}2 + 0{,}2 \times 0{,}3 ;\ 0{,}2 \times 0{,}2) = (0{,}74 ;\ 0{,}22 ;\ 0{,}04)$$
+
+**3. (1,5 pt)** $P^2$ a pour lignes $(0{,}74 ;\ 0{,}22 ;\ 0{,}04)$, $(0{,}75 ;\ 0{,}19 ;\ 0{,}06)$ et $(0{,}8 ;\ 0{,}2 ;\ 0)$ : il reste un zéro. On calcule $P^3 = P^2 P$ : ses lignes sont $(0{,}742 ;\ 0{,}214 ;\ 0{,}044)$, $(0{,}755 ;\ 0{,}207 ;\ 0{,}038)$ et $(0{,}74 ;\ 0{,}22 ;\ 0{,}04)$. $P^3$ n'a que des coefficients strictement positifs, la chaîne est **ergodique**.
+
+**4. (2 pts)** $\pi = \pi P$ :
+
+- colonne $1$ : $\pi_1 = 0{,}2\pi_0 + 0{,}3\pi_1$, donc $\pi_1 = \frac{2}{7}\pi_0$ ;
+- colonne $2$ : $\pi_2 = 0{,}2\pi_1 = \frac{2}{35}\pi_0$.
+
+Avec $\pi_0 + \pi_1 + \pi_2 = 1$ : $\pi_0\left(1 + \frac{10}{35} + \frac{2}{35}\right) = \frac{47}{35}\pi_0 = 1$.
+$$\pi = \left(\frac{35}{47} ;\ \frac{10}{47} ;\ \frac{2}{47}\right) \approx (0{,}745 ;\ 0{,}213 ;\ 0{,}043)$$
+La colonne $0$ sert de vérification : $0{,}8 \times 35 + 0{,}5 \times 10 + 1 \times 2 = 35$.
+
+**5. (1 pt)** $E(G) = 100\pi_0 + 40\pi_1 - 300\pi_2 = \frac{3500 + 400 - 600}{47} = \frac{3300}{47} \approx 70{,}21$ € par jour.
+
+**6. (1 pt)** On quitte l'état $0$ avec la probabilité $q = 1 - P_{00} = 0{,}2$ chaque jour. Le temps de séjour suit une loi géométrique de moyenne $\frac{1}{q} = 5$ jours.",30
+Markov,Annales et contrôle blanc,Exercice 3 : le serveur d'impression (7 points),"Un serveur d'impression reçoit en moyenne 12 requêtes par minute, selon un processus de Poisson. Il traite une requête à la fois, en un temps exponentiel de moyenne 4 secondes. La file est illimitée.
+
+1. Quel est le modèle de Kendall de ce système ? Donne $\lambda$ et $\mu$ en requêtes par minute.
+2. Le système est-il stable ? Quelle est la probabilité que le serveur soit inactif ?
+3. Calcule la probabilité qu'au moins 3 requêtes attendent.
+4. Calcule le nombre moyen de requêtes dans le système $E(L)$, puis le temps moyen de réponse $E(T)$ et le temps moyen d'attente $E(T_q)$, en secondes.
+5. Quel temps moyen de traitement faudrait-il pour que $E(T)$ ne dépasse pas 10 secondes ?","**1. (1 pt)** M/M/1/$\infty$ (arrivées poissonniennes, service exponentiel, une station, capacité infinie). $\lambda = 12$ requêtes/min, $\mu = \frac{60}{4} = 15$ requêtes/min.
+
+**2. (1 pt)** Trafic offert $a = \frac{12}{15} = 0{,}8 < 1$ : la distribution stationnaire existe. Serveur inactif : $\pi_0 = 1 - a = 0{,}2$.
+
+**3. (1,5 pt)** Au moins 3 requêtes en attente, plus celle en cours : $N \ge 4$. $\pi_4 + \pi_5 + \dots = a^4 = 0{,}8^4 = 0{,}4096$.
+
+**4. (2,5 pts)** $E(L) = \frac{a}{1-a} = \frac{0{,}8}{0{,}2} = 4$ requêtes. Little : $E(T) = \frac{E(L)}{\lambda} = \frac{4}{12}$ min $= 20$ s. Ou directement $E(T) = \frac{1}{\mu - \lambda} = \frac{1}{3}$ min. Attente : $E(T_q) = E(T) - \frac{1}{\mu} = 20 - 4 = 16$ s.
+
+**5. (1 pt)** $E(T) = \frac{1}{\mu - 12} \le \frac{1}{6}$ min (10 s) $\iff \mu - 12 \ge 6 \iff \mu \ge 18$ requêtes/min. Le temps moyen de traitement doit être au plus $\frac{60}{18} \approx 3{,}3$ s.",20
