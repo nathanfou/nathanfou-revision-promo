@@ -1,0 +1,60 @@
+matiere,chapitre,titre,enonce,correction,duree_min
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,"Comparer LAN, MAN, WAN et PAN","Définissez les réseaux PAN, LAN, MAN et WAN, donnez un exemple pour chacun, puis comparez LAN et WAN (étendue, débit, fiabilité, propriétaire).","**PAN** : réseau personnel de quelques mètres (Bluetooth, USB).
+
+**LAN** : réseau d'un bâtiment ou d'un site d'entreprise (Ethernet, Wi-Fi).
+
+**MAN** : réseau d'une ville (interconnexion des sites d'un campus).
+
+**WAN** : réseau étendu (pays, monde ; Internet, réseaux d'opérateurs).
+
+LAN vs WAN : le LAN est petit, privé, rapide et fiable. Le WAN couvre de grandes distances, passe souvent par des infrastructures louées à des opérateurs, avec des débits plus faibles, des délais plus longs et plus d'erreurs.",5
+Réseaux d'entreprise,Modèle OSI : couches et architectures,"Comparer OSI, TCP/IP et IEEE","Comparez les modèles OSI, TCP/IP et IEEE 802 : origine, type d'architecture, nombre de couches, niveaux couverts. Placez les couches TCP/IP face aux couches OSI.","| | OSI | TCP/IP | IEEE |
+|---|---|---|---|
+| Origine | ISO | IETF | IEEE |
+| Type | Architecture fonctionnelle | Architecture protocolaire | Architecture protocolaire |
+| Couches | 7 | 4 | 3 |
+| Niveaux | Couches basses et applicatives | Couches basses et applicatives | Couches basses |
+
+**Correspondance** : Application TCP/IP = Session + Présentation + Application OSI ; Transport = Transport ; Internet = Réseau ; Interface réseau = Liaison + Physique. IEEE : Physique, puis MAC et LLC (couche Liaison découpée en deux).",10
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Transfert de fichiers sur liaison série,"On veut une application de transfert de fichiers sous UNIX entre deux ordinateurs homogènes reliés par une liaison série. En vous appuyant sur le modèle OSI, décrivez les fonctions à mettre en œuvre à chaque niveau.","- **Physique** : connecteurs et signaux de la liaison série, codage des bits, débit.
+- **Liaison** : délimitation des trames, détection d'erreurs (CRC), reprise par retransmission, contrôle de flux local.
+- **Réseau** : quasi vide, liaison point à point entre deux machines, pas de routage.
+- **Transport** : pas indispensable non plus (une seule liaison fiabilisée par la couche 2) ; éventuellement multiplexage de plusieurs transferts.
+- **Session** : ouverture et fermeture du dialogue, points de reprise pour reprendre un gros transfert après incident.
+- **Présentation** : machines homogènes, donc peu de conversion (même codage) ; éventuellement compression.
+- **Application** : commandes de transfert (envoyer, recevoir, lister, supprimer un fichier), contrôle d'accès.
+
+Idée clé : toutes les couches ne sont pas forcément utiles, OSI est un cadre.",10
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Diagrammes de primitives de connexion transport,"Avec les primitives T_CONNECT.request, .indication, .response, .confirm et T_DISCONNECT.request, .indication, tracez les diagrammes pour : (1) établissement réussi ; (2) refus par l'appelé ; (3) refus par le fournisseur du service ; (4) déconnexion à l'initiative d'un utilisateur.","1. **Réussi** : appelant T_CONNECT.request → appelé T_CONNECT.indication → appelé T_CONNECT.response → appelant T_CONNECT.confirm.
+2. **Refus par l'appelé** : T_CONNECT.request → T_CONNECT.indication → l'appelé émet T_DISCONNECT.request → l'appelant reçoit T_DISCONNECT.indication.
+3. **Refus par le fournisseur** : T_CONNECT.request → le fournisseur renvoie T_DISCONNECT.indication à l'appelant ; rien côté appelé.
+4. **Déconnexion** : T_DISCONNECT.request d'un côté → T_DISCONNECT.indication de l'autre (service non confirmé).
+
+Rappel : requête = demande, indication = événement signalé, réponse = réaction de l'appelé, confirmation = résultat pour le demandeur.",10
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Analyser une capture DNS,Une capture Wireshark montre une requête DNS sur un réseau local. (1) Quelle est la pile de protocoles ? (2) Comparez les niveaux d'adressage et leur rôle. (3) Donnez la structure d'une adresse Ethernet. (4) Comment IP sait-il que le contenu est UDP et non TCP ?,"1. Architecture TCP/IP : **DNS / UDP / IP / Ethernet**.
+2. Trois niveaux d'adressage :
+   - adresse **MAC** (physique) : gestion de la liaison, livraison sur le lien local ;
+   - adresse **IP** (logique) : accès à la machine à travers le réseau ;
+   - **port UDP** : extrémité de la communication, le processus, en mode non connecté de bout en bout.
+3. Adresse MAC de **48 bits** : 3 octets constructeur + 3 octets numéro de série du contrôleur.
+4. Par le champ **Protocol** de l'en-tête IP (son PCI) : 17 = UDP, 6 = TCP. Toute PDU qui encapsule une SDU de la couche supérieure porte un champ qui identifie ce protocole.",10
+Réseaux d'entreprise,Commutation et VLAN,Expliquer les VLAN et leurs types,"À quoi sert un VLAN ? Quels sont les différents types de VLAN, et à quel niveau OSI se situe chacun ?","Un VLAN segmente un réseau local en **sous-réseaux logiques**, indépendamment du raccordement physique. Par défaut, deux VLAN ne communiquent pas, même sur le même commutateur. Avantages : **sécurité**, **performances** (domaine de diffusion limité, flux séparés), **économie de ressources** (diffusion ciblée), **gestion facilitée**.
+
+Types :
+- **par port** (niveau 1) : chaque port est associé à un VLAN ;
+- **par adresse MAC** (niveau 2) : la MAC de la machine détermine le VLAN ;
+- **par adresse IP** (niveau 3) ;
+- **par protocole** (niveau 3 ou plus).",5
+Réseaux d'entreprise,Commutation et VLAN,Scénario VLAN sur deux commutateurs,"SW1 relie PC1 à PC4 (ports P1 à P4), SW2 relie PC5 à PC8. VLAN 10 = machines impaires, VLAN 20 = machines paires.
+
+(a) Sans 802.1Q : quelle configuration ? PC1 émet une diffusion : que se passe-t-il ?
+
+(b) Avec 802.1Q : en quoi consiste-t-il, quelle configuration ? PC2 émet une diffusion : que se passe-t-il ?","**(a) Sans 802.1Q** : deux liens entre SW1 et SW2 (Lien1, Lien2). Créer les VLAN 10 et 20 sur chaque commutateur. Ports des machines impaires et Lien1 en mode access dans le VLAN 10 ; ports des machines paires et Lien2 dans le VLAN 20.
+Diffusion de PC1 : SW1 la reçoit sur P1, l'envoie sur ses ports du VLAN 10 sauf P1 (PC3) et sur Lien1 ; SW2 la diffuse à PC5 et PC7.
+
+**(b) Avec 802.1Q** : le lien trunk transporte plusieurs VLAN grâce à une étiquette (TAG) insérée dans l'en-tête de trame par le commutateur émetteur ; le récepteur la lit, identifie le VLAN, retire l'étiquette et traite la trame d'origine. Un seul lien, ses deux ports en mode trunk.
+Diffusion de PC2 : SW1 l'envoie à PC4 et sur le trunk avec le TAG 20 ; SW2 décode le tag et diffuse la trame d'origine à PC6 et PC8.",10
+Réseaux d'entreprise,STP et redondance,Tempête de diffusion et STP,"Après l'ajout d'un commutateur redondant, les voyants de tous les commutateurs clignotent sans arrêt et plus personne n'accède au réseau. (1) Qu'est-ce qu'une tempête de diffusion et une boucle de commutation ? (2) Comment les éviter ? (3) Quelle est la norme de STP et ses variantes ? (4) Décrivez les 4 étapes de STP.","1. **Boucle de commutation** : plusieurs chemins actifs de niveau 2 entre équipements (liens redondants). **Tempête de diffusion** : une trame de diffusion (ex : ARP) est réinondée par chaque commutateur, tourne sans fin (pas de TTL en Ethernet) et se multiplie jusqu'à saturer le réseau. Autres effets : trames dupliquées chez l'hôte, table MAC instable.
+2. Activer **STP** sur tous les commutateurs : il bloque logiciellement les ports qui ferment une boucle et garde un arbre. Premier réflexe ici : vérifier STP ou débrancher le lien redondant.
+3. **IEEE 802.1D** ; variantes RSTP (802.1w), MSTP (802.1s), PVST+ (Cisco).
+4. (a) élection du **pont racine** (plus petit BID = priorité + MAC) ; (b) choix d'un **port racine** sur chaque commutateur non racine (plus petit coût cumulé vers la racine) ; (c) un **port désigné** par segment ; (d) **blocage** des autres ports.",10
