@@ -1,0 +1,652 @@
+/*
+ * Styles du moteur du Labo Graphes (figures, corrigés animés, encadrés, formules), repris de
+ * app.css et pages.css du Labo et limités à .labo. Les variables du Labo pointent vers les
+ * tokens de src/index.css. Fichier généré : préférer modifier les variables ci-dessous.
+ */
+.labo {
+  --bg: var(--card-tint);
+  --bg-elev: var(--card);
+  --bg-sunk: var(--chip);
+  --line: var(--border);
+  --line-strong: var(--border-strong);
+  --text-3: var(--muted);
+  --accent-strong: var(--accent-hover);
+  --accent-ink: var(--accent-text);
+  --accent-soft: rgba(187, 77, 0, 0.08);
+  --accent-line: rgba(187, 77, 0, 0.32);
+  --fill: var(--accent);
+  --fill-strong: var(--accent-hover);
+  --fill-ink: var(--accent-text);
+  --grad: linear-gradient(90deg, var(--brandy), var(--accent) 50%, var(--caramel));
+  --glass: var(--card);
+  --glass-strong: var(--card);
+  --glass-inner: var(--card-tint);
+  --glass-line: var(--border-soft);
+  --glass-edge: var(--border-soft);
+  --glass-shadow: var(--shadow-card);
+  --page-base: var(--bg-top);
+  --review: var(--ko);
+  --review-soft: var(--ko-bg);
+  --review-line: var(--ko-border);
+  --bonus: var(--ok);
+  --bonus-line: var(--ok);
+  --bonus-soft: var(--ok-bg);
+  --danger: var(--ko);
+  --danger-soft: var(--ko-bg);
+  --shadow: var(--shadow-card);
+  --g-edge: var(--faint);
+  /* Palette catégorielle des colorations de sommets (celle du Labo). */
+  --c1: #2a78d6; --c2: #eda100; --c3: #e87ba4; --c4: #008300;
+  --c5: #eb6834; --c6: #1baf7a; --c7: #4a3aa7; --c8: #e34948;
+  --r-panel: 14px;
+  --r-inner: 10px;
+  --r-ctl: 8px;
+  --font-sans: var(--font);
+  --font-mono: var(--mono);
+  --topbar-h: 0px;
+  --ease: var(--ease-out);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.labo .ic {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  vertical-align: -0.2em;
+}
+
+
+.labo .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: var(--r-ctl);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 560;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+.labo .btn:active { transform: translateY(1px); }
+.labo .btn .ic { width: 17px; height: 17px; }
+
+.labo .btn-primary { background: var(--fill); color: var(--fill-ink); }
+.labo .btn-primary:hover { background: var(--fill-strong); }
+
+.labo .btn-ghost { border-color: var(--line-strong); color: var(--text); background: var(--bg-elev); }
+.labo .btn-ghost:hover { border-color: var(--text-3); }
+
+.labo .btn-outline { border-color: var(--accent-line); color: var(--accent); background: transparent; }
+.labo .btn-outline:hover { background: var(--accent-soft); }
+.labo .btn-outline[aria-expanded="true"] { background: var(--accent-soft); }
+
+.labo .btn-done { background: var(--accent-soft); color: var(--accent); border-color: var(--accent-line); }
+
+.labo .btn-danger { background: var(--danger); color: #fafbfc; }
+.labo .btn-danger { color: #0e1013; }
+.labo .btn-danger-ghost { border-color: var(--line-strong); color: var(--danger); background: var(--bg-elev); }
+.labo .btn-danger-ghost:hover { background: var(--danger-soft); }
+
+.labo .btn-small { min-height: 36px; padding: 0 13px; font-size: 14px; }
+
+/* ------------------------------------------------------ Texte rédigé */
+
+.labo .prose {
+  font-size: 17px;
+  line-height: 1.72;
+  color: var(--text);
+  overflow-wrap: break-word;
+}
+.labo .prose > *:first-child { margin-top: 0; }
+.labo .prose > *:last-child { margin-bottom: 0; }
+.labo .prose p { margin: 0 0 1em; }
+.labo .prose h2 {
+  font-size: 1.5rem;
+  margin: 2.2em 0 0.7em;
+  letter-spacing: -0.02em;
+}
+.labo .prose h3 { font-size: 1.18rem; margin: 1.8em 0 0.6em; }
+.labo .prose h4 { font-size: 1rem; margin: 1.4em 0 0.5em; }
+.labo .prose ul, .labo .prose ol { margin: 0 0 1em; padding-left: 1.5em; }
+.labo .prose li { margin: 0.3em 0; }
+.labo .prose li::marker { color: var(--text-3); }
+.labo .prose ol.alpha > li::marker { font-weight: 600; color: var(--text-2); }
+.labo .prose strong { font-weight: 620; }
+.labo .prose a { color: var(--accent); text-underline-offset: 3px; }
+.labo .prose hr { border: 0; height: 1px; background: var(--line); margin: 2em 0; }
+.labo .prose mark {
+  background: var(--accent-soft);
+  color: inherit;
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+}
+
+.labo .math-block { margin: 1em 0; }
+.labo .katex { font-size: 1.07em; }
+.labo .katex-display {
+  margin: 0.9em 0;
+  padding: 0.2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.labo .katex-display > .katex { white-space: nowrap; }
+.labo .math-error { color: var(--danger); font-family: var(--font-mono); font-size: 0.9em; }
+
+.labo .table-wrap {
+  overflow-x: auto;
+  margin: 1.2em 0 1.4em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-inner);
+}
+.labo .prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+.labo .prose th, .labo .prose td {
+  padding: 9px 14px;
+  text-align: left;
+  vertical-align: middle;
+}
+.labo .prose thead th {
+  background: var(--bg-sunk);
+  font-weight: 600;
+  color: var(--text-2);
+  font-size: 14px;
+}
+.labo .prose tbody tr + tr td { border-top: 1px solid var(--line); }
+
+/* Encadrés */
+.labo .callout {
+  margin: 1.6em 0;
+  padding: 16px 20px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--bg-elev);
+}
+.labo .callout-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.labo .callout-head .ic { width: 19px; height: 19px; color: var(--text-3); }
+.labo .callout-titles { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.labo .callout-kind { font-size: 13px; color: var(--text-3); }
+.labo .callout-title { font-weight: 620; font-size: 16px; }
+.labo .callout-body { font-size: 16.5px; }
+.labo .callout-body > *:last-child { margin-bottom: 0; }
+
+.labo .callout-def, .labo .callout-prop {
+  background: var(--accent-soft);
+  border-color: var(--accent-line);
+}
+.labo .callout-def .callout-head .ic, .labo .callout-prop .callout-head .ic { color: var(--accent); }
+.labo .callout-piege { background: var(--review-soft); border-color: var(--review-line); }
+.labo .callout-piege .callout-head .ic { color: var(--review); }
+.labo .callout-elec .callout-head .ic { color: var(--accent); }
+.labo .callout-exemple { background: transparent; border-style: dashed; border-color: var(--line-strong); }
+
+/* --------------------------------------------------- Figures interactives */
+
+.labo .widget {
+  margin: 1.8em 0;
+  padding: 16px 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-panel);
+  background: var(--bg-elev);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.labo .widget-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+.labo .widget-title .ic { color: var(--accent); width: 17px; height: 17px; }
+.labo .widget-help { color: var(--text-3); font-size: 13.5px; margin: 0 0 12px; }
+.labo .widget-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.labo .widget-body.stack { grid-template-columns: minmax(0, 1fr); }
+.labo .widget svg.fig {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  border-radius: var(--r-inner);
+  background: var(--bg);
+  border: 1px solid var(--line);
+}
+.labo .fig .grid { stroke: var(--line); stroke-width: 1; }
+.labo .fig .axis { stroke: var(--text-3); stroke-width: 1.2; }
+.labo .fig .curve { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linejoin: round; }
+.labo .fig .curve-2 { fill: none; stroke: var(--review); stroke-width: 2.2; stroke-dasharray: 6 5; }
+.labo .fig .curve-3 { fill: none; stroke: var(--text-2); stroke-width: 1.6; }
+.labo .fig .helper { stroke: var(--text-3); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+.labo .fig .proj-cos { stroke: var(--accent); stroke-width: 3.2; stroke-linecap: round; }
+.labo .fig .proj-sin { stroke: var(--review); stroke-width: 3.2; stroke-linecap: round; }
+.labo .fig .vec { stroke: var(--text); stroke-width: 2; fill: none; }
+.labo .fig .vec-accent { stroke: var(--accent); stroke-width: 2.4; fill: none; }
+.labo .fig .vec-review { stroke: var(--review); stroke-width: 2.4; fill: none; }
+.labo .fig .area { fill: var(--accent-soft); stroke: none; }
+.labo .fig .rect { fill: var(--accent-soft); stroke: var(--accent-line); stroke-width: 1; }
+.labo .fig .rect-neg { fill: var(--review-soft); stroke: var(--review-line); stroke-width: 1; }
+.labo .fig .handle { fill: var(--accent); stroke: var(--bg-elev); stroke-width: 2.5; cursor: grab; }
+.labo .fig .handle:active { cursor: grabbing; }
+.labo .fig .dot { fill: var(--text); }
+.labo .fig .lbl { fill: var(--text-2); font-size: 12px; font-family: var(--font-sans); }
+.labo .fig .lbl-accent { fill: var(--accent); font-size: 12.5px; font-weight: 600; font-family: var(--font-sans); }
+.labo .fig .lbl-review { fill: var(--review); font-size: 12.5px; font-weight: 600; font-family: var(--font-sans); }
+.labo .fig .hit { fill: transparent; cursor: crosshair; }
+
+.labo .readout {
+  display: grid;
+  gap: 8px;
+  font-size: 14.5px;
+}
+.labo .readout-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}
+.labo .readout-row:last-child { border-bottom: 0; }
+.labo .readout-row span:first-child { color: var(--text-2); }
+.labo .readout-row .katex { font-size: 1em; }
+.labo .readout-val .katex { font-size: 1.15em; }
+.labo .readout-val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  text-align: right;
+}
+.labo .readout-val.accent { color: var(--accent); }
+.labo .readout-val.review { color: var(--review); }
+
+.labo .controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 4px; }
+.labo .control label {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+.labo .control output {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.labo .control input[type="range"] { width: 100%; accent-color: var(--accent); }
+.labo .control select {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: var(--r-ctl);
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--text);
+}
+.labo .widget-note { margin-top: 10px; font-size: 13.5px; color: var(--text-3); }
+
+
+/* =================================================================== Graphes */
+
+.labo .widget.widget-graphe {
+  padding: 16px 16px 14px;
+  background: var(--bg);
+}
+.labo .gfig-wrap { display: flex; justify-content: center; }
+.labo svg.gfig {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.labo .gfig-legende {
+  margin: 10px auto 0;
+  max-width: 60ch;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.labo .gfig-legende .katex { font-size: 1em; }
+
+.labo .gfig .g-forme {
+  fill: var(--bg-elev);
+  stroke: var(--text-2);
+  stroke-width: 1.6;
+  transition: fill 0.3s var(--ease), stroke 0.3s var(--ease), stroke-width 0.3s var(--ease);
+}
+.labo .gfig .g-halo { fill: none; stroke: var(--accent); stroke-width: 2; opacity: 0; transition: opacity 0.3s var(--ease); }
+.labo .gfig .g-nom {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 620;
+  fill: var(--text);
+  pointer-events: none;
+  transition: fill 0.3s var(--ease);
+}
+.labo .gfig .g-nom-long { font-size: 12.5px; font-weight: 580; }
+.labo .gfig .g-note {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 520;
+  fill: var(--text-2);
+  font-variant-numeric: tabular-nums;
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.labo .widget-algo .gfig .g-note { stroke: var(--bg); }
+
+.labo .gfig .g-sommet { transition: opacity 0.3s var(--ease); }
+.labo .gfig .g-sommet[data-etat="courant"] .g-forme { fill: var(--fill); stroke: var(--accent); }
+.labo .gfig .g-sommet[data-etat="courant"] .g-nom { fill: var(--fill-ink); }
+.labo .gfig .g-sommet[data-etat="courant"] .g-halo { opacity: 0.35; }
+.labo .gfig .g-sommet[data-etat="pile"] .g-forme { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2.2; }
+.labo .gfig .g-sommet[data-etat="attente"] .g-forme { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 4 3; }
+.labo .gfig .g-sommet[data-etat="fini"] .g-forme { fill: var(--bg-sunk); stroke: var(--accent-line); stroke-width: 1.8; }
+.labo .gfig .g-sommet[data-etat="fini"] .g-nom { fill: var(--text-2); }
+.labo .gfig .g-sommet[data-etat="retire"] { opacity: 0.3; }
+.labo .gfig .g-sommet[data-etat="bloque"] .g-forme,
+.labo .gfig .g-sommet[data-etat="refuse"] .g-forme { fill: var(--danger-soft); stroke: var(--danger); stroke-width: 2.2; }
+.labo .gfig .g-sommet[data-etat="refuse"] .g-forme { stroke-dasharray: 3 3; }
+.labo .gfig .g-sommet[data-etat="impair"] .g-forme { fill: var(--review-soft); stroke: var(--review); stroke-width: 2.4; }
+.labo .gfig .g-sommet[data-etat="marque"] .g-forme { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2.6; }
+.labo .gfig .g-sommet[data-etat="noyau"] .g-forme { fill: var(--fill); stroke: var(--accent); }
+.labo .gfig .g-sommet[data-etat="noyau"] .g-nom { fill: var(--fill-ink); }
+
+.labo .gfig .g-sommet[data-couleur="1"] { --gc: var(--c1); }
+.labo .gfig .g-sommet[data-couleur="2"] { --gc: var(--c2); }
+.labo .gfig .g-sommet[data-couleur="3"] { --gc: var(--c3); }
+.labo .gfig .g-sommet[data-couleur="4"] { --gc: var(--c4); }
+.labo .gfig .g-sommet[data-couleur="5"] { --gc: var(--c5); }
+.labo .gfig .g-sommet[data-couleur="6"] { --gc: var(--c6); }
+.labo .gfig .g-sommet[data-couleur="7"] { --gc: var(--c7); }
+.labo .gfig .g-sommet[data-couleur="8"] { --gc: var(--c8); }
+.labo .gfig .g-sommet[data-couleur] .g-forme {
+  fill: color-mix(in srgb, var(--gc) 24%, var(--bg-elev));
+  stroke: var(--gc);
+  stroke-width: 2.6;
+}
+.labo .gfig .g-sommet[data-couleur] .g-nom { fill: var(--text); }
+.labo .gfig .g-sommet[data-couleur][data-etat="courant"] .g-halo { stroke: var(--gc); }
+
+.labo .gfig .g-trait {
+  fill: none;
+  stroke: var(--g-edge);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  transition: stroke 0.3s var(--ease), stroke-width 0.3s var(--ease);
+}
+.labo .gfig .g-fleche { fill: var(--g-edge); transition: fill 0.3s var(--ease); }
+.labo .gfig .g-arete { transition: opacity 0.3s var(--ease); }
+.labo .gfig .g-arete[data-etat="arbre"] .g-trait { stroke: var(--accent); stroke-width: 2.8; }
+.labo .gfig .g-arete[data-etat="arbre"] .g-fleche { fill: var(--accent); }
+.labo .gfig .g-arete[data-etat="examen"] .g-trait { stroke: var(--accent); stroke-width: 2.8; stroke-dasharray: 7 5; }
+.labo .gfig .g-arete[data-etat="examen"] .g-fleche { fill: var(--accent); }
+.labo .gfig .g-arete[data-etat="refus"] .g-trait { stroke: var(--review); stroke-width: 2.4; stroke-dasharray: 4 4; }
+.labo .gfig .g-arete[data-etat="refus"] .g-fleche { fill: var(--review); }
+.labo .gfig .g-arete[data-etat="ignore"] { opacity: 0.55; }
+.labo .gfig .g-arete[data-etat="ignore"] .g-trait { stroke-dasharray: 3 4; }
+.labo .gfig .g-arete[data-etat="rejet"] .g-trait { stroke: var(--danger); stroke-width: 2.6; stroke-dasharray: 6 4; }
+.labo .gfig .g-arete[data-etat="rejet"] .g-fleche { fill: var(--danger); }
+.labo .gfig .g-arete[data-etat="cycle"] .g-trait,
+.labo .gfig .g-arete[data-etat="cycleArbre"] .g-trait { stroke: var(--danger); stroke-width: 2.8; }
+.labo .gfig .g-arete[data-etat="cycle"] .g-fleche,
+.labo .gfig .g-arete[data-etat="cycleArbre"] .g-fleche { fill: var(--danger); }
+.labo .gfig .g-arete[data-etat="attenue"] { opacity: 0.22; }
+.labo .gfig .g-arete[data-etat="efface"] { opacity: 0.12; }
+.labo .gfig .g-arete[data-etat="efface"] .g-trait { stroke-dasharray: 3 5; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .labo .gfig .g-arete[data-etat="examen"] .g-trait { animation: g-marche 0.7s linear infinite; }
+}
+@keyframes g-marche { to { stroke-dashoffset: -12; } }
+
+.labo .gfig .g-poids rect { fill: var(--bg-elev); stroke: var(--line-strong); stroke-width: 1; transition: stroke 0.3s var(--ease); }
+.labo .gfig .g-poids text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.labo .gfig .g-poids { transition: opacity 0.3s var(--ease); }
+.labo .gfig .g-poids[data-etat="arbre"] rect { stroke: var(--accent); }
+.labo .gfig .g-poids[data-etat="arbre"] text { fill: var(--accent); }
+.labo .gfig .g-poids[data-etat="rejet"] rect,
+.labo .gfig .g-poids[data-etat="cycle"] rect,
+.labo .gfig .g-poids[data-etat="cycleArbre"] rect { stroke: var(--danger); }
+.labo .gfig .g-poids[data-etat="examen"] rect { stroke: var(--accent); stroke-width: 1.6; }
+.labo .gfig .g-poids[data-etat="attenue"],
+.labo .gfig .g-poids[data-etat="efface"] { opacity: 0.35; }
+
+/* -------------------------------------------------------- Lecteur pas à pas */
+
+.labo .widget.widget-algo { padding: 16px 18px 18px; outline: none; }
+.labo .widget-algo:focus-visible { box-shadow: 0 0 0 2px var(--accent-line); }
+.labo .algo-tag {
+  margin-left: 4px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 560;
+}
+.labo .algo-config {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  margin: 10px 0 2px;
+}
+.labo .algo-select { display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-2); }
+.labo .algo-select select {
+  min-height: 34px;
+  padding: 0 8px;
+  border-radius: var(--r-ctl);
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--text);
+  max-width: 260px;
+}
+.labo .algo-fig {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 14px 10px;
+  border-radius: var(--r-inner);
+  background: var(--bg);
+}
+.labo .algo-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 18px;
+  margin-top: 12px;
+}
+.labo .algo-btns { display: inline-flex; gap: 6px; }
+.labo .algo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  border-radius: var(--r-ctl);
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 560;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+}
+.labo .algo-btn:hover:not(:disabled) { border-color: var(--text-3); }
+.labo .algo-btn:active:not(:disabled) { transform: translateY(1px); }
+.labo .algo-btn:disabled { opacity: 0.4; cursor: default; }
+.labo .algo-btn .ic { width: 16px; height: 16px; }
+.labo .algo-btn.algo-next { background: var(--fill); border-color: var(--fill); color: var(--fill-ink); padding: 0 12px 0 14px; }
+.labo .algo-btn.algo-next:hover:not(:disabled) { background: var(--fill-strong); border-color: var(--fill-strong); }
+.labo .widget-algo.is-playing .algo-play { border-color: var(--accent-line); color: var(--accent); background: var(--accent-soft); }
+.labo .algo-progress { flex: 1; min-width: 180px; display: flex; align-items: center; gap: 12px; }
+.labo .algo-progress input[type="range"] { flex: 1; accent-color: var(--accent); }
+.labo .algo-count {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--text-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.labo .algo-texte {
+  margin-top: 12px;
+  min-height: 4.6em;
+  padding: 12px 14px;
+  border-radius: var(--r-inner);
+  background: var(--bg-sunk);
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+.labo .algo-texte .katex { font-size: 1.02em; }
+.labo .algo-panneaux {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+.labo .algo-panel {
+  min-width: 0;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-inner);
+}
+.labo .algo-panel-table { grid-column: 1 / -1; }
+.labo .algo-panel-t { font-size: 13px; font-weight: 600; color: var(--text-2); margin-bottom: 8px; }
+.labo .algo-panel .table-wrap { margin: 0; }
+.labo .algo-panel table { font-size: 13.5px; }
+.labo .algo-panel th, .labo .algo-panel td { padding: 5px 10px; }
+.labo .algo-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.labo .algo-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 9px;
+  border-radius: 6px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.labo .algo-chip.is-top { background: var(--fill); border-color: var(--fill); color: var(--fill-ink); }
+.labo .algo-chip[data-couleur] { border-width: 2px; }
+.labo .algo-chip[data-couleur="1"] { border-color: var(--c1); }
+.labo .algo-chip[data-couleur="2"] { border-color: var(--c2); }
+.labo .algo-chip[data-couleur="3"] { border-color: var(--c3); }
+.labo .algo-chip[data-couleur="4"] { border-color: var(--c4); }
+.labo .algo-chip[data-couleur="5"] { border-color: var(--c5); }
+.labo .algo-chip[data-couleur="6"] { border-color: var(--c6); }
+.labo .algo-chip[data-couleur="7"] { border-color: var(--c7); }
+.labo .algo-chip[data-couleur="8"] { border-color: var(--c8); }
+.labo .algo-empty { font-size: 13px; color: var(--text-3); }
+.labo .algo-note { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.labo .algo-note span { font-size: 13px; color: var(--text-2); font-weight: 600; }
+.labo .algo-note strong { font-family: var(--font-mono); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Tableaux calculés */
+.labo .widget.widget-table { padding: 0; border: 0; background: none; margin: 1.2em 0 1.4em; }
+.labo .widget-table .table-wrap { margin: 0; }
+.labo .table-dico th:first-child { white-space: nowrap; }
+.labo .table-dico td, .labo .table-dico th { text-align: center; }
+.labo .table-dico tbody th { background: var(--bg-sunk); font-weight: 600; color: var(--text-2); font-size: 14px; text-align: left; }
+.labo .table-matrice td, .labo .table-matrice th { text-align: center; font-family: var(--font-mono); font-size: 14px; padding: 6px 10px; }
+.labo .table-matrice tbody th { background: var(--bg-sunk); }
+.labo .prose tr.is-hl td, .labo .prose tr.is-hl th, .labo .algo-panel tr.is-hl td, .labo .algo-panel tr.is-hl th { background: var(--accent-soft); }
+.labo td[data-couleur], .labo th[data-couleur] { position: relative; padding-left: 26px !important; }
+.labo td[data-couleur]::before, .labo th[data-couleur]::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-radius: 3px;
+  background: var(--sw);
+}
+.labo [data-couleur="1"] { --sw: var(--c1); }
+.labo [data-couleur="2"] { --sw: var(--c2); }
+.labo [data-couleur="3"] { --sw: var(--c3); }
+.labo [data-couleur="4"] { --sw: var(--c4); }
+.labo [data-couleur="5"] { --sw: var(--c5); }
+.labo [data-couleur="6"] { --sw: var(--c6); }
+.labo [data-couleur="7"] { --sw: var(--c7); }
+.labo [data-couleur="8"] { --sw: var(--c8); }
+.labo .prose s { color: var(--text-3); }
+
+/* Pseudo-code */
+.labo .prose pre.pseudo, .labo pre.pseudo {
+  margin: 1.2em 0 1.4em;
+  padding: 14px 18px;
+  border-radius: var(--r-inner);
+  background: var(--bg-sunk);
+  border: 1px solid var(--line);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  tab-size: 4;
+}
+.labo pre.pseudo b { font-weight: 650; color: var(--accent); }
+.labo pre.pseudo .pseudo-com { color: var(--text-3); }
+
+.labo .callout-algo { background: var(--bg-elev); border-color: var(--accent-line); }
+.labo .callout-algo .callout-head .ic, .labo .callout-examen .callout-head .ic { color: var(--accent); }
+.labo .callout-algo pre.pseudo { background: var(--bg); }
+
+/* Chronomètre */
+.labo .widget.widget-chrono {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.labo .chrono-temps {
+  font-family: var(--font-mono);
+  font-size: 2.4rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.labo .chrono-sous { font-size: 13.5px; color: var(--text-3); }
+.labo .widget-chrono.is-running .chrono-temps { color: var(--accent); }
+.labo .widget-chrono.is-over .chrono-temps { color: var(--danger); }
+

@@ -1,79 +1,79 @@
 matiere,chapitre,recto,verso
-Graphes,Plus courts chemins : Dijkstra,Poids d'un chemin,La somme des poids de ses arcs.
-Graphes,Plus courts chemins : Dijkstra,Chemin ij-minimal,Un chemin de i à j de poids minimum parmi tous les chemins de i à j (« plus court chemin »).
-Graphes,Plus courts chemins : Dijkstra,Racine d'un graphe,"Un sommet x tel que, pour tout sommet y ≠ x, il existe au moins un chemin de x à y."
-Graphes,Plus courts chemins : Dijkstra,Arborescence,"Un arbre qui admet une racine (orientation prise en compte) : depuis la racine, un unique chemin mène à chaque sommet."
-Graphes,Plus courts chemins : Dijkstra,Principe d'optimalité de Bellman,"Si le chemin minimal de A à B passe par C, ses portions A→C et C→B sont elles aussi minimales.
+Graphes partie 2,Plus courts chemins : Dijkstra,Poids d'un chemin,La somme des poids de ses arcs.
+Graphes partie 2,Plus courts chemins : Dijkstra,Chemin ij-minimal,Un chemin de i à j de poids minimum parmi tous les chemins de i à j (« plus court chemin »).
+Graphes partie 2,Plus courts chemins : Dijkstra,Racine d'un graphe,"Un sommet x tel que, pour tout sommet y ≠ x, il existe au moins un chemin de x à y."
+Graphes partie 2,Plus courts chemins : Dijkstra,Arborescence,"Un arbre qui admet une racine (orientation prise en compte) : depuis la racine, un unique chemin mène à chaque sommet."
+Graphes partie 2,Plus courts chemins : Dijkstra,Principe d'optimalité de Bellman,"Si le chemin minimal de A à B passe par C, ses portions A→C et C→B sont elles aussi minimales.
 Toute portion d'un chemin minimal est minimale."
-Graphes,Plus courts chemins : Dijkstra,Poids positifs : à quoi ressemble un chemin minimal ?,"Il est élémentaire, ou il contient un circuit de poids nul (propriété 1)."
-Graphes,Plus courts chemins : Dijkstra,Quel algorithme si tous les poids sont égaux ? Complexité ?,"Parcours en largeur, O(m)."
-Graphes,Plus courts chemins : Dijkstra,Quel algorithme si les poids sont positifs ? Complexité ?,"Dijkstra, O(n²)."
-Graphes,Plus courts chemins : Dijkstra,"Quel algorithme pour un graphe sans circuit, poids quelconques ?","Bellman sans circuit (avec la mise en niveaux), O(m). Marche aussi en max."
-Graphes,Plus courts chemins : Dijkstra,Quel algorithme pour des poids quelconques avec circuits ?,"Bellman-Kalaba, O(nm) (de l'ordre de n³). Il détecte les circuits absorbants."
-Graphes,Plus courts chemins : Dijkstra,Dijkstra : initialisation,λ(i0) = 0 et λ(i) = ∞ pour tous les autres sommets ; S = ∅.
-Graphes,Plus courts chemins : Dijkstra,Dijkstra : étape de sélection,"Prendre, hors de S, le sommet de plus petite marque λ, et l'ajouter à S (sa valeur est définitive)."
-Graphes,Plus courts chemins : Dijkstra,Dijkstra : ajustement d'un successeur j de i (hors de S),"Si λi + pij < λj (inégalité stricte), alors λj ← λi + pij et père de j = i."
-Graphes,Plus courts chemins : Dijkstra,Tableau de Dijkstra : comment lire le père d'un sommet ?,Sa valeur définitive est entourée sur la ligne où elle apparaît pour la première fois : le sommet de cette ligne est son père.
-Graphes,Plus courts chemins : Dijkstra,Dijkstra : un sommet garde λ = ∞ à la fin. Que dire ?,Il n'est pas descendant de i0 (i0 n'est pas racine).
-Graphes,Plus courts chemins : Dijkstra,Pourquoi Dijkstra se trompe avec des poids négatifs ?,"Il est glouton : il fige un sommet dès qu'il le sélectionne, en supposant qu'aucun détour ne fait mieux. Avec un poids négatif, un détour peut faire mieux."
-Graphes,Plus courts chemins : Dijkstra,Graphe non orienté : comment appliquer les algorithmes ?,Une arête de poids p compte comme deux arcs opposés de poids p. On parle de chaînes ij-minimales.
-Graphes,Plus courts chemins : Dijkstra,Matrice des poids Λ,λij = poids du chemin ij-minimal. Symétrique dans le cas non orienté.
-Graphes,Plus courts chemins : Dijkstra,Matrice de routage M,"mij = le sommet qui suit i sur le chemin ij-minimal (le « prochain saut »). Jamais symétrique, même en non orienté."
-Graphes,Plus courts chemins : Dijkstra,Pré-remplir Λ et M depuis une arborescence : x ancêtre de y sur une branche,"λxy = λy − λx et mxy = successeur de x sur la branche.
+Graphes partie 2,Plus courts chemins : Dijkstra,Poids positifs : à quoi ressemble un chemin minimal ?,"Il est élémentaire, ou il contient un circuit de poids nul (propriété 1)."
+Graphes partie 2,Plus courts chemins : Dijkstra,Quel algorithme si tous les poids sont égaux ? Complexité ?,"Parcours en largeur, O(m)."
+Graphes partie 2,Plus courts chemins : Dijkstra,Quel algorithme si les poids sont positifs ? Complexité ?,"Dijkstra, O(n²)."
+Graphes partie 2,Plus courts chemins : Dijkstra,"Quel algorithme pour un graphe sans circuit, poids quelconques ?","Bellman sans circuit (avec la mise en niveaux), O(m). Marche aussi en max."
+Graphes partie 2,Plus courts chemins : Dijkstra,Quel algorithme pour des poids quelconques avec circuits ?,"Bellman-Kalaba, O(nm) (de l'ordre de n³). Il détecte les circuits absorbants."
+Graphes partie 2,Plus courts chemins : Dijkstra,Dijkstra : initialisation,λ(i0) = 0 et λ(i) = ∞ pour tous les autres sommets ; S = ∅.
+Graphes partie 2,Plus courts chemins : Dijkstra,Dijkstra : étape de sélection,"Prendre, hors de S, le sommet de plus petite marque λ, et l'ajouter à S (sa valeur est définitive)."
+Graphes partie 2,Plus courts chemins : Dijkstra,Dijkstra : ajustement d'un successeur j de i (hors de S),"Si λi + pij < λj (inégalité stricte), alors λj ← λi + pij et père de j = i."
+Graphes partie 2,Plus courts chemins : Dijkstra,Tableau de Dijkstra : comment lire le père d'un sommet ?,Sa valeur définitive est entourée sur la ligne où elle apparaît pour la première fois : le sommet de cette ligne est son père.
+Graphes partie 2,Plus courts chemins : Dijkstra,Dijkstra : un sommet garde λ = ∞ à la fin. Que dire ?,Il n'est pas descendant de i0 (i0 n'est pas racine).
+Graphes partie 2,Plus courts chemins : Dijkstra,Pourquoi Dijkstra se trompe avec des poids négatifs ?,"Il est glouton : il fige un sommet dès qu'il le sélectionne, en supposant qu'aucun détour ne fait mieux. Avec un poids négatif, un détour peut faire mieux."
+Graphes partie 2,Plus courts chemins : Dijkstra,Graphe non orienté : comment appliquer les algorithmes ?,Une arête de poids p compte comme deux arcs opposés de poids p. On parle de chaînes ij-minimales.
+Graphes partie 2,Plus courts chemins : Dijkstra,Matrice des poids Λ,λij = poids du chemin ij-minimal. Symétrique dans le cas non orienté.
+Graphes partie 2,Plus courts chemins : Dijkstra,Matrice de routage M,"mij = le sommet qui suit i sur le chemin ij-minimal (le « prochain saut »). Jamais symétrique, même en non orienté."
+Graphes partie 2,Plus courts chemins : Dijkstra,Pré-remplir Λ et M depuis une arborescence : x ancêtre de y sur une branche,"λxy = λy − λx et mxy = successeur de x sur la branche.
 Non orienté : aussi λyx (même valeur) et myx = prédécesseur de y."
-Graphes,Plus courts chemins : Dijkstra,Lire la route de i à j dans M,"x1 = mij, puis x2 = m(x1, j), et ainsi de suite jusqu'à j."
-Graphes,Bellman : poids négatifs et plus longs chemins,Formule de Bellman-Kalaba,"λk(j) = min sur i ∈ Γ⁻(j) de ( λk−1(i) + pij )
+Graphes partie 2,Plus courts chemins : Dijkstra,Lire la route de i à j dans M,"x1 = mij, puis x2 = m(x1, j), et ainsi de suite jusqu'à j."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Formule de Bellman-Kalaba,"λk(j) = min sur i ∈ Γ⁻(j) de ( λk−1(i) + pij )
 (max pour les chemins maximaux)."
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : initialisation,"On ajoute un arc fictif (i0, i0) de poids 0. λ0(i0) = 0, les autres ∞ (−∞ en max)."
-Graphes,Bellman : poids négatifs et plus longs chemins,"À quoi sert l'arc fictif (i0, i0) de poids 0 ?","λk devient le meilleur chemin d'au plus k arcs, et i0 ne « perd » pas sa valeur 0 s'il n'a pas de prédécesseur."
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : critère d'arrêt,STOP dès que λk = λk−1 sur toute la ligne (pas seulement une colonne).
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : les valeurs changent encore à k = n,Circuit absorbant : circuit de poids négatif (en min) ou positif (en max) atteignable depuis i0. Pas de chemin optimal.
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : que signifie λk(j) ?,Le poids du meilleur chemin de i0 à j d'au plus k arcs.
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : avec quelles valeurs calcule-t-on une ligne ?,"Uniquement celles de la ligne précédente, avec le dictionnaire des prédécesseurs (pas des successeurs)."
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : deux candidats égaux pour le minimum,On garde le père de la ligne précédente.
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : où lire l'arborescence ?,Dans les pères de la dernière ligne du tableau.
-Graphes,Bellman : poids négatifs et plus longs chemins,Complexité de Bellman-Kalaba,"O(nm) : au plus n étapes, chacune examine les m arcs."
-Graphes,Bellman : poids négatifs et plus longs chemins,Chemins maximaux avec Bellman-Kalaba : ce qui change,"max au lieu de min, initialisation à −∞ au lieu de ∞ ; le circuit absorbant est un circuit de poids positif."
-Graphes,Bellman : poids négatifs et plus longs chemins,Dijkstra peut-il calculer un plus long chemin ?,"Jamais : son caractère glouton repose sur « un détour ne peut qu'allonger », ce qui est faux en max."
-Graphes,Bellman : poids négatifs et plus longs chemins,Comment justifier qu'un graphe est sans circuit ?,"En le mettant en niveaux : si la mise en niveaux aboutit, il n'y a pas de circuit."
-Graphes,Bellman : poids négatifs et plus longs chemins,Bellman sans circuit : principe,"Traiter les sommets dans l'ordre des niveaux : λ(i0) = 0 puis λ(j) = min (ou max) sur les prédécesseurs de λ(i) + pij. Une seule passe, O(m)."
-Graphes,Bellman : poids négatifs et plus longs chemins,Quels algorithmes sont gloutons ?,Dijkstra et Bellman sans circuit (chaque étape donne une valeur définitive). Bellman-Kalaba ne l'est pas.
-Graphes,Bellman : poids négatifs et plus longs chemins,Moore et Bellman-Ford,Moore : variante non gloutonne de Dijkstra pour des poids quelconques. Bellman-Ford : variante plus rapide de Bellman-Kalaba (utilise la ligne en cours).
-Graphes,Ordonnancement,Graphe potentiels-tâches : sommets,"Un sommet par tâche, plus α (début du projet) et ω (fin)."
-Graphes,Ordonnancement,Graphe potentiels-tâches : arc pour « y après x »,"Un arc x → y de poids dx, la durée de la tâche d'origine x."
-Graphes,Ordonnancement,Graphe potentiels-tâches : arcs depuis α et vers ω,α → x de poids 0 pour chaque tâche sans prédécesseur ; x → ω de poids dx pour chaque tâche sans successeur.
-Graphes,Ordonnancement,Pourquoi le graphe potentiels-tâches est-il sans circuit ?,Un circuit voudrait dire des contraintes de précédence contradictoires.
-Graphes,Ordonnancement,Début au plus tôt tv,"tα = 0 et tv = max sur x ∈ Γ⁻(v) de (tx + dx). Ordre des niveaux, Bellman sans circuit en max."
-Graphes,Ordonnancement,Pourquoi un max pour le début au plus tôt ?,v doit attendre la fin de toutes les tâches qui la précèdent : c'est la plus tardive qui compte.
-Graphes,Ordonnancement,Durée minimale du projet,"tω, la longueur du plus long chemin de α à ω."
-Graphes,Ordonnancement,Début au plus tard t*v,t*ω = tω et t*v = min sur x ∈ Γ⁺(v) de t*x − dv (ordre inverse des niveaux).
-Graphes,Ordonnancement,Fin au plus tôt fv,fv = tv + dv.
-Graphes,Ordonnancement,Marge totale MTv,MTv = t*v − tv : retard possible sur v sans retarder la fin du projet.
-Graphes,Ordonnancement,Marge libre mlv,mlv = min sur x ∈ Γ⁺(v) de tx − fv : retard possible sans modifier les dates des tâches suivantes.
-Graphes,Ordonnancement,Inégalité entre les marges,0 ≤ mlv ≤ MTv.
-Graphes,Ordonnancement,Tâche critique,Une tâche de marge totale nulle (tv = t*v) : tout retard sur elle allonge d'autant le projet.
-Graphes,Ordonnancement,Chemin critique,"Un chemin de α à ω formé de tâches critiques : c'est le plus long chemin, sa longueur est la durée minimale du projet."
-Graphes,Ordonnancement,Que signifie mlv < MTv ?,La marge est partagée avec un successeur qui commence au plus tôt dès la fin de v : retarder v mange sa marge.
-Graphes,Ordonnancement,Retard de r sur une tâche v : effet sur le projet,"Le projet est retardé de max(0, r − MTv)."
-Graphes,Ordonnancement,Raccourcir un projet au moindre coût,"Raccourcir tous les chemins critiques à la fois, avec la combinaison de tâches la moins chère (une tâche commune à plusieurs chemins vaut souvent le coup). Arrêt quand un chemin critique est entièrement à ses durées minimales."
-Graphes,Ordonnancement,Méthode PERT (potentiels-étapes),"Les tâches sont les arcs et les sommets des étapes. Moins d'arcs, graphe non unique (tâches fictives parfois), mêmes calculs de dates."
-Graphes,Flots et réseaux de transport,Flot,Un vecteur φ (un flux par arc) qui vérifie la loi de Kirchhoff en chaque sommet.
-Graphes,Flots et réseaux de transport,Loi de Kirchhoff,"En chaque sommet, le flux entrant est égal au flux sortant (conservation du flux)."
-Graphes,Flots et réseaux de transport,Propriété 1 des flots,Toute combinaison linéaire de flots est un flot ; le vecteur nul est un flot ; tout vecteur cycle est un flot.
-Graphes,Flots et réseaux de transport,Vecteur cycle,"+1 sur les arcs parcourus dans leur sens, −1 sur ceux parcourus à contre-sens, 0 ailleurs. C'est un flot."
-Graphes,Flots et réseaux de transport,Réseau de transport,"Graphe orienté connexe avec une entrée s (sans prédécesseur), une sortie t (sans successeur), des capacités c(u) ≥ 0, et un arc de retour (t, s) de capacité infinie."
-Graphes,Flots et réseaux de transport,Flot compatible,"Un flot sur le réseau avec l'arc de retour (Kirchhoff partout, s et t compris), qui respecte 0 ≤ φ(u) ≤ c(u) sur chaque arc."
-Graphes,Flots et réseaux de transport,Valeur d'un flot compatible,"v(φ) = flux sur l'arc de retour (t, s) = flux sortant de s = flux entrant en t."
-Graphes,Flots et réseaux de transport,Arc saturé,Un arc dont le flux est égal à la capacité : φ(u) = c(u).
-Graphes,Flots et réseaux de transport,Plusieurs fournisseurs et plusieurs clients : modélisation,Une super-source reliée à chaque fournisseur (capacité = son offre) et un super-puits relié depuis chaque client (capacité = sa demande).
-Graphes,Flots et réseaux de transport,Ford-Fulkerson : marquage direct,"y est marqué +x s'il existe un arc (x, y) non saturé : φ(x, y) < c(x, y)."
-Graphes,Flots et réseaux de transport,Ford-Fulkerson : marquage indirect,"y est marqué −x s'il existe un arc (y, x) (qui arrive en x) de flux non nul : φ(y, x) > 0."
-Graphes,Flots et réseaux de transport,Ford-Fulkerson : calcul de ε,"ε = min( c − φ sur les arcs directs de la chaîne , φ sur les arcs indirects )."
-Graphes,Flots et réseaux de transport,Ford-Fulkerson : mise à jour du flot,"+ε sur les arcs directs, −ε sur les arcs indirects. La valeur du flot augmente de ε."
-Graphes,Flots et réseaux de transport,Ford-Fulkerson : critère d'arrêt,Quand on ne peut plus marquer t : le flot est maximum.
-Graphes,Flots et réseaux de transport,Pourquoi le flot reste un flot après une augmentation ?,"On ajoute ε fois le cycle formé par la chaîne augmentante et l'arc de retour, et un cycle est un flot."
-Graphes,Flots et réseaux de transport,Coupe séparant s et t,"Une partition des sommets en A et B avec s ∈ A et t ∈ B. Ses arcs sont ceux de ω⁺(A), les arcs qui sortent de A."
-Graphes,Flots et réseaux de transport,Capacité d'une coupe,C(ω⁺(A)) = somme des capacités des arcs sortants de A. Les arcs entrants ne comptent pas.
-Graphes,Flots et réseaux de transport,Théorème de la coupe,Pour tout flot compatible φ et toute coupe : v(φ) ≤ C(ω⁺(A)).
-Graphes,Flots et réseaux de transport,Flot max = coupe min : quelle coupe ?,"A = sommets marqués à la dernière itération de Ford-Fulkerson : arcs sortants saturés, arcs entrants à flux nul, donc v(φ) = C(ω⁺(A))."
-Graphes,Flots et réseaux de transport,Comment augmenter le flot maximum ?,Augmenter la capacité d'un arc présent dans toutes les coupes minimum (ou d'un arc dans chacune).
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : initialisation,"On ajoute un arc fictif (i0, i0) de poids 0. λ0(i0) = 0, les autres ∞ (−∞ en max)."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,"À quoi sert l'arc fictif (i0, i0) de poids 0 ?","λk devient le meilleur chemin d'au plus k arcs, et i0 ne « perd » pas sa valeur 0 s'il n'a pas de prédécesseur."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : critère d'arrêt,STOP dès que λk = λk−1 sur toute la ligne (pas seulement une colonne).
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : les valeurs changent encore à k = n,Circuit absorbant : circuit de poids négatif (en min) ou positif (en max) atteignable depuis i0. Pas de chemin optimal.
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : que signifie λk(j) ?,Le poids du meilleur chemin de i0 à j d'au plus k arcs.
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : avec quelles valeurs calcule-t-on une ligne ?,"Uniquement celles de la ligne précédente, avec le dictionnaire des prédécesseurs (pas des successeurs)."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : deux candidats égaux pour le minimum,On garde le père de la ligne précédente.
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman-Kalaba : où lire l'arborescence ?,Dans les pères de la dernière ligne du tableau.
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Complexité de Bellman-Kalaba,"O(nm) : au plus n étapes, chacune examine les m arcs."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Chemins maximaux avec Bellman-Kalaba : ce qui change,"max au lieu de min, initialisation à −∞ au lieu de ∞ ; le circuit absorbant est un circuit de poids positif."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Dijkstra peut-il calculer un plus long chemin ?,"Jamais : son caractère glouton repose sur « un détour ne peut qu'allonger », ce qui est faux en max."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Comment justifier qu'un graphe est sans circuit ?,"En le mettant en niveaux : si la mise en niveaux aboutit, il n'y a pas de circuit."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Bellman sans circuit : principe,"Traiter les sommets dans l'ordre des niveaux : λ(i0) = 0 puis λ(j) = min (ou max) sur les prédécesseurs de λ(i) + pij. Une seule passe, O(m)."
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Quels algorithmes sont gloutons ?,Dijkstra et Bellman sans circuit (chaque étape donne une valeur définitive). Bellman-Kalaba ne l'est pas.
+Graphes partie 2,Bellman : poids négatifs et plus longs chemins,Moore et Bellman-Ford,Moore : variante non gloutonne de Dijkstra pour des poids quelconques. Bellman-Ford : variante plus rapide de Bellman-Kalaba (utilise la ligne en cours).
+Graphes partie 2,Ordonnancement,Graphe potentiels-tâches : sommets,"Un sommet par tâche, plus α (début du projet) et ω (fin)."
+Graphes partie 2,Ordonnancement,Graphe potentiels-tâches : arc pour « y après x »,"Un arc x → y de poids dx, la durée de la tâche d'origine x."
+Graphes partie 2,Ordonnancement,Graphe potentiels-tâches : arcs depuis α et vers ω,α → x de poids 0 pour chaque tâche sans prédécesseur ; x → ω de poids dx pour chaque tâche sans successeur.
+Graphes partie 2,Ordonnancement,Pourquoi le graphe potentiels-tâches est-il sans circuit ?,Un circuit voudrait dire des contraintes de précédence contradictoires.
+Graphes partie 2,Ordonnancement,Début au plus tôt tv,"tα = 0 et tv = max sur x ∈ Γ⁻(v) de (tx + dx). Ordre des niveaux, Bellman sans circuit en max."
+Graphes partie 2,Ordonnancement,Pourquoi un max pour le début au plus tôt ?,v doit attendre la fin de toutes les tâches qui la précèdent : c'est la plus tardive qui compte.
+Graphes partie 2,Ordonnancement,Durée minimale du projet,"tω, la longueur du plus long chemin de α à ω."
+Graphes partie 2,Ordonnancement,Début au plus tard t*v,t*ω = tω et t*v = min sur x ∈ Γ⁺(v) de t*x − dv (ordre inverse des niveaux).
+Graphes partie 2,Ordonnancement,Fin au plus tôt fv,fv = tv + dv.
+Graphes partie 2,Ordonnancement,Marge totale MTv,MTv = t*v − tv : retard possible sur v sans retarder la fin du projet.
+Graphes partie 2,Ordonnancement,Marge libre mlv,mlv = min sur x ∈ Γ⁺(v) de tx − fv : retard possible sans modifier les dates des tâches suivantes.
+Graphes partie 2,Ordonnancement,Inégalité entre les marges,0 ≤ mlv ≤ MTv.
+Graphes partie 2,Ordonnancement,Tâche critique,Une tâche de marge totale nulle (tv = t*v) : tout retard sur elle allonge d'autant le projet.
+Graphes partie 2,Ordonnancement,Chemin critique,"Un chemin de α à ω formé de tâches critiques : c'est le plus long chemin, sa longueur est la durée minimale du projet."
+Graphes partie 2,Ordonnancement,Que signifie mlv < MTv ?,La marge est partagée avec un successeur qui commence au plus tôt dès la fin de v : retarder v mange sa marge.
+Graphes partie 2,Ordonnancement,Retard de r sur une tâche v : effet sur le projet,"Le projet est retardé de max(0, r − MTv)."
+Graphes partie 2,Ordonnancement,Raccourcir un projet au moindre coût,"Raccourcir tous les chemins critiques à la fois, avec la combinaison de tâches la moins chère (une tâche commune à plusieurs chemins vaut souvent le coup). Arrêt quand un chemin critique est entièrement à ses durées minimales."
+Graphes partie 2,Ordonnancement,Méthode PERT (potentiels-étapes),"Les tâches sont les arcs et les sommets des étapes. Moins d'arcs, graphe non unique (tâches fictives parfois), mêmes calculs de dates."
+Graphes partie 2,Flots et réseaux de transport,Flot,Un vecteur φ (un flux par arc) qui vérifie la loi de Kirchhoff en chaque sommet.
+Graphes partie 2,Flots et réseaux de transport,Loi de Kirchhoff,"En chaque sommet, le flux entrant est égal au flux sortant (conservation du flux)."
+Graphes partie 2,Flots et réseaux de transport,Propriété 1 des flots,Toute combinaison linéaire de flots est un flot ; le vecteur nul est un flot ; tout vecteur cycle est un flot.
+Graphes partie 2,Flots et réseaux de transport,Vecteur cycle,"+1 sur les arcs parcourus dans leur sens, −1 sur ceux parcourus à contre-sens, 0 ailleurs. C'est un flot."
+Graphes partie 2,Flots et réseaux de transport,Réseau de transport,"Graphe orienté connexe avec une entrée s (sans prédécesseur), une sortie t (sans successeur), des capacités c(u) ≥ 0, et un arc de retour (t, s) de capacité infinie."
+Graphes partie 2,Flots et réseaux de transport,Flot compatible,"Un flot sur le réseau avec l'arc de retour (Kirchhoff partout, s et t compris), qui respecte 0 ≤ φ(u) ≤ c(u) sur chaque arc."
+Graphes partie 2,Flots et réseaux de transport,Valeur d'un flot compatible,"v(φ) = flux sur l'arc de retour (t, s) = flux sortant de s = flux entrant en t."
+Graphes partie 2,Flots et réseaux de transport,Arc saturé,Un arc dont le flux est égal à la capacité : φ(u) = c(u).
+Graphes partie 2,Flots et réseaux de transport,Plusieurs fournisseurs et plusieurs clients : modélisation,Une super-source reliée à chaque fournisseur (capacité = son offre) et un super-puits relié depuis chaque client (capacité = sa demande).
+Graphes partie 2,Flots et réseaux de transport,Ford-Fulkerson : marquage direct,"y est marqué +x s'il existe un arc (x, y) non saturé : φ(x, y) < c(x, y)."
+Graphes partie 2,Flots et réseaux de transport,Ford-Fulkerson : marquage indirect,"y est marqué −x s'il existe un arc (y, x) (qui arrive en x) de flux non nul : φ(y, x) > 0."
+Graphes partie 2,Flots et réseaux de transport,Ford-Fulkerson : calcul de ε,"ε = min( c − φ sur les arcs directs de la chaîne , φ sur les arcs indirects )."
+Graphes partie 2,Flots et réseaux de transport,Ford-Fulkerson : mise à jour du flot,"+ε sur les arcs directs, −ε sur les arcs indirects. La valeur du flot augmente de ε."
+Graphes partie 2,Flots et réseaux de transport,Ford-Fulkerson : critère d'arrêt,Quand on ne peut plus marquer t : le flot est maximum.
+Graphes partie 2,Flots et réseaux de transport,Pourquoi le flot reste un flot après une augmentation ?,"On ajoute ε fois le cycle formé par la chaîne augmentante et l'arc de retour, et un cycle est un flot."
+Graphes partie 2,Flots et réseaux de transport,Coupe séparant s et t,"Une partition des sommets en A et B avec s ∈ A et t ∈ B. Ses arcs sont ceux de ω⁺(A), les arcs qui sortent de A."
+Graphes partie 2,Flots et réseaux de transport,Capacité d'une coupe,C(ω⁺(A)) = somme des capacités des arcs sortants de A. Les arcs entrants ne comptent pas.
+Graphes partie 2,Flots et réseaux de transport,Théorème de la coupe,Pour tout flot compatible φ et toute coupe : v(φ) ≤ C(ω⁺(A)).
+Graphes partie 2,Flots et réseaux de transport,Flot max = coupe min : quelle coupe ?,"A = sommets marqués à la dernière itération de Ford-Fulkerson : arcs sortants saturés, arcs entrants à flux nul, donc v(φ) = C(ω⁺(A))."
+Graphes partie 2,Flots et réseaux de transport,Comment augmenter le flot maximum ?,Augmenter la capacité d'un arc présent dans toutes les coupes minimum (ou d'un arc dans chacune).

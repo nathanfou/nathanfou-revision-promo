@@ -1,5 +1,7 @@
 // Découpage du texte brut des énoncés et corrections (voir RichText.tsx).
 
+import { estTexteLabo } from './labo/detect'
+
 export type Block =
   | { kind: 'table'; rows: string[][] }
   | { kind: 'ol'; items: string[] }
@@ -37,6 +39,7 @@ export function parseBlocks(text: string): Block[] {
  * (tableau…), auquel cas on l'affiche avec RichText.
  */
 export function correctionSteps(text: string): string[] | null {
+  if (estTexteLabo(text)) return null
   const lines = text.replace(/\r\n?/g, '\n').split('\n').map((l) => l.trim()).filter(Boolean)
   if (lines.length < 2 || lines.some((l) => l.startsWith('|'))) return null
   return lines.map((l) => l.replace(OL_RE, '').replace(UL_RE, ''))

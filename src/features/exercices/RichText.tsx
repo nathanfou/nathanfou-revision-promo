@@ -4,12 +4,25 @@
 //   * lignes "1. ..." / "1) ..." -> liste numérotée
 //   * lignes "- ..." / "• ..."  -> liste à puces
 //   * sinon                     -> paragraphe (retours à la ligne conservés)
-import type { CSSProperties, ReactNode } from 'react'
+// Un texte au format du Labo Graphes (formules $...$, **gras**, encadrés :::, figures
+// [[widget:...]]) est rendu par le moteur du Labo, chargé à la demande (voir labo/).
+import { lazy, Suspense, type CSSProperties, type ReactNode } from 'react'
+import { InlineLoader } from '../../components/Loader'
+import { estTexteLabo } from './labo/detect'
 import { parseBlocks } from './text'
+
+const LaboText = lazy(() => import('./labo/LaboText').then((m) => ({ default: m.LaboText })))
 
 const cell: CSSProperties = { padding: '10px 12px', textAlign: 'center', fontFamily: 'var(--mono)' }
 
 export function RichText({ text, size = 16 }: { text: string; size?: number }) {
+  if (estTexteLabo(text)) {
+    return (
+      <Suspense fallback={<InlineLoader label="Chargement des figures…" />}>
+        <LaboText text={text} size={size} />
+      </Suspense>
+    )
+  }
   const blocks = parseBlocks(text)
   return (
     <>
