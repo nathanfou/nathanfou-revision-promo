@@ -1,0 +1,332 @@
+"matiere","chapitre","recto","verso"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Quelles sont les deux parties d'un algorithme ?","Algorithme Nom_algorithme
+  Partie Déclarations (Constante, Type, Variable)
+  Partie Instructions (entre Début et Fin)"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Squelette complet d'un algorithme","Algorithme Nom
+/* Rôle : ... */
+Constante
+    PI <- 3.1416 : réel
+Variable
+    x : réel
+Début
+    instructions
+Fin"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Mots qui délimitent un bloc d'instructions (instruction composée)","Début … Fin
+En C : { … }"
+"Algorithmique","Forme d'un algorithme, variables et constantes","En C, quel caractère termine une instruction simple ?","Le point-virgule ;"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Comment écrire un commentaire ?","/* Ceci est un commentaire */
+(débute par /* et finit par */)"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Que doit contenir le commentaire d'en-tête d'un algorithme ?","Au minimum : le rôle (fonction) de l'algorithme, les données en entrée, les données en sortie.
+On peut ajouter l'auteur, la version, la date de création."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Les deux éléments d'une déclaration de variable","Un nom et le type de données qu'elle contient.
+Toute variable utilisée doit être déclarée."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Déclarer deux entiers n1 et n2 (algo puis C)","Algo : n1, n2 : entier
+C : int n1, n2;"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Déclarer deux réels x1 et x2 (algo puis C)","Algo : x1, x2 : réel
+C : float x1, x2;  (ou double)"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Déclarer deux caractères c1 et c2 (algo puis C)","Algo : c1, c2 : caractère
+C : char c1, c2;"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Le type booléen existe-t-il en C ?","Non (dans le cours) : il faut le définir.
+En algorithmique : a, b : booléen, valeurs {VRAI, FAUX}."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Quel type pour une chaîne de caractères en algorithmique ?","chaîne
+ex. nom : chaîne"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Les 4 types simples du cours","entier, réel, caractère, booléen
+(+ le type chaîne pour les chaînes de caractères)"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Symbole de l'affectation en algorithmique, et comment le lire ?","<-
+Se lit « reçoit » ou « prend pour valeur ».
+ex. i <- 3"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Affectation en C, et le piège","i = 3;
+Le = du C est une affectation, PAS l'égalité mathématique (l'égalité se teste avec ==)."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Que fait i <- i + 1 ?","Ajoute 1 à la valeur de i (incrémentation) : on calcule i + 1 puis on range le résultat dans i."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Déclarer la constante PI en algorithmique","Constante
+    PI <- 3.1416 : réel"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Déclarer la constante PI en C (deux façons)","const float PI = 3.1416;
+#define PI 3.1416"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Règle obligatoire pour une constante","Elle reçoit sa valeur dès sa déclaration (et ne change plus)."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Intérêt d'une constante","Lisibilité (un nom parlant au lieu d'un nombre) et souplesse (on change la valeur à un seul endroit)."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Différence entre #define et const en C","#define est traité par le préprocesseur, qui fait du simple remplacement de texte avant la compilation.
+const est traité par le compilateur (variable typée non modifiable)."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Taille et plage d'un int en C (machine 32 bits)","4 octets : [−2 147 483 648 .. 2 147 483 647]
+La taille dépend du mot du processeur."
+"Algorithmique","Forme d'un algorithme, variables et constantes","Taille et plage d'un short int","2 octets : [−32 768 .. 32 767]"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Plage d'un unsigned short int","2 octets : [0 .. 65 535]"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Les deux types flottants du C et leur taille","float : 4 octets
+double : 8 octets (plus précis)"
+"Algorithmique","Forme d'un algorithme, variables et constantes","Qu'est-ce qu'un modificateur de type en C ?","Un mot qui fixe la taille ou le signe d'un entier : short, long, unsigned.
+ex. unsigned int : [0 .. 4 294 967 295]"
+"Algorithmique","Opérateurs et entrées/sorties","Les deux opérateurs unaires du cours","Le signe − (opposé d'un nombre)
+La négation logique NON (en C : !)"
+"Algorithmique","Opérateurs et entrées/sorties","Opérateurs unaires propres au C","Incrémentation ++ : pré (++a) ou post (a++)
+Décrémentation -- : pré (--a) ou post (a--)"
+"Algorithmique","Opérateurs et entrées/sorties","Différence entre ++a et a++","++a incrémente puis renvoie la nouvelle valeur.
+a++ renvoie l'ancienne valeur puis incrémente.
+ex. a = 5 ; b = a++ → b = 5, a = 6"
+"Algorithmique","Opérateurs et entrées/sorties","Les 5 opérateurs arithmétiques","+  −  *  /  %
+(% = modulo, reste de la division entière)"
+"Algorithmique","Opérateurs et entrées/sorties","Que vaut 17 % 5 ?","2 (17 = 3 × 5 + 2)"
+"Algorithmique","Opérateurs et entrées/sorties","Comment tester qu'un entier n est pair ?","Si (n % 2 == 0) Alors …"
+"Algorithmique","Opérateurs et entrées/sorties","Les 6 opérateurs de comparaison","==  (égal)
+!=  (différent)
+>  <  >=  <="
+"Algorithmique","Opérateurs et entrées/sorties","Les opérateurs logiques (algo et C)","ET → &&
+OU → ||
+NON → !"
+"Algorithmique","Opérateurs et entrées/sorties","Ordre de priorité des opérateurs (du plus au moins prioritaire)","1. * / %
+2. + −
+3. (comparaisons)
+4. ET
+5. OU
+Dans le doute : parenthèses."
+"Algorithmique","Opérateurs et entrées/sorties","Que vaut ((3>4) ET (8==8)) OU (0!=4) ?","VRAI : (FAUX ET VRAI) = FAUX, puis FAUX OU VRAI = VRAI."
+"Algorithmique","Opérateurs et entrées/sorties","Que vaut (3>4) ET ((8==8) OU (0!=4)) ?","FAUX : (VRAI OU VRAI) = VRAI, puis FAUX ET VRAI = FAUX.
+Les parenthèses changent le résultat."
+"Algorithmique","Opérateurs et entrées/sorties","Table de vérité : quand A ET B est-il VRAI ?","Seulement si A et B sont tous les deux VRAI."
+"Algorithmique","Opérateurs et entrées/sorties","Table de vérité : quand A OU B est-il FAUX ?","Seulement si A et B sont tous les deux FAUX."
+"Algorithmique","Opérateurs et entrées/sorties","Contraire (négation) de (a > 0 ET b > 0)","(a <= 0 OU b <= 0)
+Lois de De Morgan : NON(A ET B) = NON A OU NON B."
+"Algorithmique","Opérateurs et entrées/sorties","Contraire de (rep == 'O' OU rep == 'N')","(rep != 'O' ET rep != 'N')"
+"Algorithmique","Opérateurs et entrées/sorties","Opérateurs bit à bit du C","&  et binaire
+|  ou binaire
+^  ou exclusif
+<<  décalage à gauche
+>>  décalage à droite
+~  complément à 1"
+"Algorithmique","Opérateurs et entrées/sorties","Que fait a << 1 sur un entier ?","Décale les bits d'un cran à gauche : multiplie a par 2."
+"Algorithmique","Opérateurs et entrées/sorties","Instruction de lecture au clavier (algo et C)","Lire(nomVariable)
+C : scanf(""%d"", &n);"
+"Algorithmique","Opérateurs et entrées/sorties","Instruction d'affichage à l'écran (algo et C)","Ecrire(""texte"", nomVariable)
+C : printf(""texte %d"", n);"
+"Algorithmique","Opérateurs et entrées/sorties","Afficher « V vaut 10. » avec V <- 10","Ecrire(""V vaut "", V, ""."")
+Le texte est entre guillemets, la variable non."
+"Algorithmique","Opérateurs et entrées/sorties","Pourquoi un & devant la variable dans scanf ?","scanf doit écrire dans la variable : on lui passe son adresse (&rayon)."
+"Algorithmique","Opérateurs et entrées/sorties","Format scanf / printf d'un int, d'un float, d'un double, d'un char","%d  int
+%f  float
+%lf  double (dans scanf)
+%c  char"
+"Algorithmique","Opérateurs et entrées/sorties","Que signifie %4.2f dans printf ?","Un réel affiché sur 4 caractères au moins, avec 2 chiffres après la virgule."
+"Algorithmique","Opérateurs et entrées/sorties","Avant un Lire, que faut-il presque toujours faire ?","Un Ecrire qui dit à l'utilisateur quoi saisir.
+ex. Ecrire(""Rayon : "") puis Lire(rayon)"
+"Algorithmique","Opérateurs et entrées/sorties","Qu'est-ce qu'une séquence d'instructions ?","Des instructions exécutées l'une après l'autre, dans l'ordre, entre Début et Fin (en C entre { et })."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Syntaxe de la sélection simple","Si (condition) Alors
+    action1
+Sinon
+    action2
+
+Le Sinon n'est pas obligatoire."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Qu'est-ce qu'une condition ?","Une expression écrite entre parenthèses, à valeur booléenne : VRAI ou FAUX."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Le Si en C","if (condition)
+    action1;
+else
+    action2;"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Syntaxe des tests imbriqués (SinonSi)","Si (condition_1) Alors
+    bloc 1
+SinonSi (condition_2) Alors
+    bloc 2
+…
+Sinon
+    bloc final"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Dans un Si … SinonSi …, combien de blocs s'exécutent ?","Un seul : le premier dont la condition est VRAI (ou le Sinon final si aucune ne l'est)."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Syntaxe du choix multiple","Selon expression Dans
+    choix1 :
+        bloc 1
+    choix2 :
+        bloc 2
+Sinon
+    bloc par défaut"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Le choix multiple en C","switch (variable) {
+case v1 :
+    instructions;
+    break;
+case v2 : …
+default :
+    instructions;
+}"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Rôle du break dans un switch","Sortir du switch. Sans break, l'exécution continue dans le case suivant."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Équivalent du Sinon d'un Selon en C","default :"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Quand préférer Selon à des Si imbriqués ?","Quand on compare une même expression à plusieurs valeurs précises (menu 1, 2, 3, jour de la semaine…)."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Un bloc de plusieurs instructions dans un Si s'écrit…","Entre Début et Fin :
+Si (x > 0) Alors
+    Début
+        a <- a + 1
+        Ecrire(a)
+    Fin"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Piège : Si (a = b) en C","= affecte b dans a : le test vaut « vrai » dès que b ≠ 0. Pour comparer : if (a == b)."
+"Algorithmique","Sélection : Si, SinonSi, Selon","Tester qu'une note est entre 0 et 20","Si ((note >= 0) ET (note <= 20)) Alors …"
+"Algorithmique","Sélection : Si, SinonSi, Selon","Tester qu'une saisie est hors de [1 ; 120]","Si ((age < 1) OU (age > 120)) Alors …"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Syntaxe de la boucle TantQue","TantQue (condition) Faire
+    action"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quand la condition du TantQue est-elle évaluée ?","Avant d'entrer dans la boucle (et avant chaque tour). Si elle est FAUX dès le départ, la boucle ne s'exécute jamais (0 fois)."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","TantQue en C","while (condition)
+    action;"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Syntaxe de la boucle Faire … TantQue","Faire
+    action
+TantQue (condition)"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Faire … TantQue en C","do
+    action;
+while (condition);
+(attention au ; final)"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quand la condition du Faire … TantQue est-elle évaluée ?","À la fin de chaque tour : le corps s'exécute au moins une fois."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Syntaxe de la boucle Pour","Pour cpt de val_init à val_fin [ParPasDe n]
+    action"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Pour en C","for (exp_init; exp_cond; exp_iteration)
+    action;
+ex. for (i = 1; i <= 10; i++)"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Rôle des 3 expressions du for","exp_init : évaluée une fois au début
+exp_cond : condition pour continuer
+exp_iteration : exécutée à la fin de chaque tour"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Que veut dire ParPasDe ?","Le pas d'incrémentation du compteur (1 par défaut).
+ex. Pour i de 10 à 0 ParPasDe -2"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quelle boucle si le nombre d'itérations est connu ?","Pour"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quelle boucle si le nombre de tours est inconnu et que le traitement s'exécute au moins une fois ?","Faire … TantQue"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quelle boucle si le nombre de tours est inconnu et que le traitement peut ne jamais s'exécuter ?","TantQue"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Quelle boucle pour contrôler une saisie (redemander tant qu'elle est fausse) ?","Faire … TantQue : on doit lire au moins une fois avant de pouvoir tester.
+Faire
+    Lire(x)
+TantQue (x invalide)"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Risque principal d'un TantQue","La boucle infinie : la condition doit être modifiée par le corps de la boucle."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Saisir un rayon positif avec un TantQue (cours)","Ecrire(""Rentrer le rayon :"")
+Lire(Rayon)
+TantQue (Rayon <= 0) Faire
+    Début
+        Ecrire(""Rentrer le rayon (positif) :"")
+        Lire(Rayon)
+    Fin"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Rôle de break dans une boucle en C","Fin prématurée de la boucle (while, do ou for) qui le contient directement."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Rôle de continue dans une boucle en C","Passe immédiatement au tour suivant, comme si on venait d'exécuter la dernière instruction du corps."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Combien de tours fait Pour i de 1 à 25 ?","25 tours (i = 1, 2, …, 25)."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Combien de tours fait Pour i de 3 à 1 ?","Aucun (avec le pas par défaut +1, val_init > val_fin)."
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Schéma : compter les éléments qui vérifient une condition","nb <- 0  (avant la boucle)
+Dans la boucle : Si (condition) Alors nb <- nb + 1"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Schéma : faire une somme et une moyenne","somme <- 0 avant la boucle
+Dans la boucle : somme <- somme + x
+Après : moyenne <- somme / n  (moyenne : réel)"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Schéma : chercher le maximum d'une suite de valeurs","Initialiser max avec la 1re valeur (ou une valeur plus petite que toutes)
+Puis : Si (x > max) Alors max <- x"
+"Algorithmique","Répétition : TantQue, Faire…TantQue, Pour","Schéma : compteur de tentatives limitées","essais <- 0
+Faire
+    Lire(code)
+    essais <- essais + 1
+TantQue ((code != BON) ET (essais < MAX))
+Puis tester code == BON pour savoir pourquoi on est sorti."
+"Algorithmique","Tableaux et enregistrements","Définition d'un tableau","Une variable composée de données de même type, stockées de manière contiguë en mémoire. On accède à un élément grâce à son indice."
+"Algorithmique","Tableaux et enregistrements","Déclarer un tableau de 10 réels (algo puis C)","Algo : notes : tableau[1..10] de réels
+C : float notes[10];"
+"Algorithmique","Tableaux et enregistrements","Forme générale de déclaration d'un tableau","T1 : Tableau [Type_Indice] De Type_Élément"
+"Algorithmique","Tableaux et enregistrements","Déclarer une matrice 34 × 3 de réels (algo puis C)","Algo : notes : tableau[1..34][1..3] de réels
+C : float notes[34][3];"
+"Algorithmique","Tableaux et enregistrements","Vecteur ou matrice : quelle différence ?","Vecteur = tableau monodimensionnel (éléments simples).
+Matrice (table) = tableau multidimensionnel, contenant d'autres tableaux."
+"Algorithmique","Tableaux et enregistrements","Indices d'un tableau de 10 éléments en C","De 0 à 9 (en algo avec tableau[1..10] : de 1 à 10)."
+"Algorithmique","Tableaux et enregistrements","Accéder au 3e élément du tableau notes (algo)","notes[3]"
+"Algorithmique","Tableaux et enregistrements","Parcourir un tableau T de 30 éléments","Pour i de 1 à 30
+    traitement de T[i]"
+"Algorithmique","Tableaux et enregistrements","Définition d'un enregistrement","Une structure dont les éléments (champs) peuvent être de types différents et se rapportent à la même entité."
+"Algorithmique","Tableaux et enregistrements","Comment s'appellent les éléments d'un enregistrement ?","Les champs."
+"Algorithmique","Tableaux et enregistrements","Opérateur d'accès à un champ","Le point : nom_enregistrement.nom_champ
+ex. salarié.âge"
+"Algorithmique","Tableaux et enregistrements","Déclarer le type enregistrement tpersonne (nom, prénom, âge)","Type
+    tpersonne = enregistrement
+        nom : chaîne
+        prénom : chaîne
+        âge : entier
+    finenreg
+Variable
+    salarié : tpersonne"
+"Algorithmique","Tableaux et enregistrements","Enregistrement en C","struct Nom_Structure {
+    type_champ1 Nom_Champ1;
+    type_champ2 Nom_Champ2;
+};"
+"Algorithmique","Tableaux et enregistrements","Mot qui ferme une déclaration d'enregistrement","finenreg"
+"Algorithmique","Tableaux et enregistrements","Dans quelle section déclare-t-on un nouveau type ?","Dans la section Type, avant Variable."
+"Algorithmique","Tableaux et enregistrements","Déclarer un tableau de 30 emprunteurs","Variable
+    tab : tableau[1..30] de temprunteur"
+"Algorithmique","Tableaux et enregistrements","Afficher le nom du 5e emprunteur du tableau tab","Ecrire(tab[5].nom)"
+"Algorithmique","Tableaux et enregistrements","Tableau ou enregistrement : la différence clé","Tableau : éléments de même type, repérés par un indice.
+Enregistrement : champs de types différents, repérés par un nom."
+"Algorithmique","Tableaux et enregistrements","Avantage d'un tableau d'enregistrements sur plusieurs tableaux séparés","Les données d'une même entité restent regroupées : un seul indice, pas de risque de décalage entre tableaux, code plus lisible, on peut passer une personne entière en paramètre, ajout d'un champ facile."
+"Algorithmique","Procédures, fonctions et paramètres","Procédure : définition","Un sous-algorithme qui effectue un traitement sur des données transmises en arguments, sans renvoyer de valeur.
+ex. tri(liste_étudiants)"
+"Algorithmique","Procédures, fonctions et paramètres","Fonction : définition","Un sous-algorithme qui effectue un traitement et renvoie une valeur, utilisée dans une affectation ou une expression.
+ex. m <- moyenne(liste_notes)"
+"Algorithmique","Procédures, fonctions et paramètres","Squelette d'une procédure","Procédure nom(…)
+Variable
+    /* variables locales */
+Début
+    /* instructions */
+Fin"
+"Algorithmique","Procédures, fonctions et paramètres","Squelette d'une fonction","Fonction nom(…) : type
+Variable
+    /* variables locales */
+Début
+    /* instructions */
+    Retourne valeur
+Fin"
+"Algorithmique","Procédures, fonctions et paramètres","Où se trouve le type de retour d'une fonction ?","Après la parenthèse : Fonction nom(E x : entier) : réel"
+"Algorithmique","Procédures, fonctions et paramètres","Mot-clé pour renvoyer le résultat d'une fonction","Retourne valeur"
+"Algorithmique","Procédures, fonctions et paramètres","Procédure en C","Une fonction qui ne renvoie rien : void nom(…)
+Le C n'a que des fonctions."
+"Algorithmique","Procédures, fonctions et paramètres","Où place-t-on les sous-algorithmes ?","Avant l'algorithme principal."
+"Algorithmique","Procédures, fonctions et paramètres","Que mettre en commentaire au début d'un sous-algorithme ?","Son objectif et ses paramètres en entrée et en sortie (son interface)."
+"Algorithmique","Procédures, fonctions et paramètres","Appeler correctement une fonction","Dans une affectation ou une expression :
+m <- minimum(i, j)
+Ecrire(minimum(3, 8))
+Jamais seule sur une ligne."
+"Algorithmique","Procédures, fonctions et paramètres","Appeler une procédure","Sur une ligne, comme une instruction :
+permuter(i, j)"
+"Algorithmique","Procédures, fonctions et paramètres","Paramètre formel vs paramètre effectif","Formel : déclaré dans l'en-tête du module (variable locale particulière).
+Effectif (argument) : valeur passée lors de l'appel."
+"Algorithmique","Procédures, fonctions et paramètres","Les 3 modes de passage de paramètres","E : entrée (par valeur)
+S : sortie (par variable)
+ES : entrée/sortie (par variable)"
+"Algorithmique","Procédures, fonctions et paramètres","Que peut-on passer à un paramètre E ?","Une variable qui a une valeur, une constante ou une expression évaluée."
+"Algorithmique","Procédures, fonctions et paramètres","Que doit-on passer à un paramètre S ou ES ?","Une variable (le sous-algorithme doit pouvoir y ranger un résultat).
+permuter(i, 5) est donc invalide."
+"Algorithmique","Procédures, fonctions et paramètres","Règle pour un paramètre S","Il doit recevoir une valeur dans le sous-algorithme, et l'argument doit être une variable de l'appelant."
+"Algorithmique","Procédures, fonctions et paramètres","Les 2 correspondances à vérifier à l'appel","Même nombre de paramètres et mêmes types, dans le même ordre."
+"Algorithmique","Procédures, fonctions et paramètres","Procédure permuter du cours","Procédure permuter(ES a, b : Entier)
+Variable
+    tmp : Entier
+Début
+    tmp <- a
+    a <- b
+    b <- tmp
+Fin"
+"Algorithmique","Procédures, fonctions et paramètres","En-tête C d'une fonction avec paramètres en sortie","type_retour nom(type var_entree, type *var_sortie, type *var_es)
+Les sorties passent par pointeur (*)."
+"Algorithmique","Procédures, fonctions et paramètres","Variable locale","Déclarée dans un sous-algorithme : connue seulement dans ce sous-algorithme, existe pendant son exécution."
+"Algorithmique","Procédures, fonctions et paramètres","Variable globale","Déclarée dans l'algorithme principal : connue partout, existe pendant toute l'exécution de l'algorithme."
+"Algorithmique","Procédures, fonctions et paramètres","Une locale et une globale ont le même nom : laquelle est utilisée dans le sous-algorithme ?","La variable locale (elle masque la globale)."
+"Algorithmique","Procédures, fonctions et paramètres","Durée de vie d'une variable","Celle de l'exécution de l'algorithme (globale) ou du sous-algorithme (locale) où elle est déclarée."
+"Algorithmique","Procédures, fonctions et paramètres","Pourquoi éviter les variables globales dans les sous-algorithmes ?","Le module ne serait plus autonome ni réutilisable, et une modification cachée est difficile à repérer. On passe plutôt par des paramètres."
+"Algorithmique","Procédures, fonctions et paramètres","Avantages des sous-algorithmes (6)","Meilleure structuration et lisibilité
+Pas de répétition de traitements
+Tests unitaires
+Travail en équipe (répartition des tâches)
+Maintenance plus facile
+Réutilisation future"
+"Algorithmique","Conception et méthodologie","Les 4 phases d'un projet informatique","1. Analyse
+2. Spécifications fonctionnelles
+3. Conception
+4. Réalisation"
+"Algorithmique","Conception et méthodologie","Phase d'analyse","Analyse des besoins et de l'existant, étude d'opportunité et de faisabilité."
+"Algorithmique","Conception et méthodologie","Phase de spécifications fonctionnelles","Données initiales, résultats à obtenir, contraintes à respecter, cahier des charges."
+"Algorithmique","Conception et méthodologie","Phase de conception","Étude du traitement des données qui mène aux résultats ; décomposition du problème en sous-problèmes."
+"Algorithmique","Conception et méthodologie","Phase de réalisation","Développement et implémentation (programmation), tests, documentation."
+"Algorithmique","Conception et méthodologie","Qu'est-ce qui caractérise un algorithme ?","Une liste finie d'instructions pour un exécutant, sur un nombre fini de données, qui donne la solution après un nombre fini d'opérations. L'ordre peut dépendre du contexte (valeurs, événements)."
+"Algorithmique","Conception et méthodologie","Les 5 qualités d'un algorithme","Lisible et commenté
+De haut niveau
+Précis
+Concis
+Structuré"
+"Algorithmique","Conception et méthodologie","« De haut niveau » signifie…","Traduisible dans n'importe quel langage : aucune notion propre à un langage ou à un système d'exploitation."
+"Algorithmique","Conception et méthodologie","« Concis » signifie…","Pas plus d'une page ; sinon on décompose en sous-problèmes."
+"Algorithmique","Conception et méthodologie","« Précis » signifie…","Aucun élément ne doit prêter à confusion : on lève toute ambiguïté."
+"Algorithmique","Conception et méthodologie","Démarche par abstraction","Ne pas tenir compte des détails de réalisation qui n'influent pas sur le niveau d'analyse en cours. Les détails sont encapsulés dans des sous-algorithmes dont on définit les services et l'interface."
+"Algorithmique","Conception et méthodologie","Méthode des raffinages successifs","Décomposer une tâche complexe en actions de plus en plus simples, jusqu'aux actions élémentaires. Aussi appelée approche descendante (TOP-DOWN)."
+"Algorithmique","Conception et méthodologie","Quand un algorithme est-il au dernier niveau de raffinage ?","Quand il ne contient que des actions élémentaires et des structures de contrôle de base."
+"Algorithmique","Conception et méthodologie","Les deux approches de décomposition fonctionnelle","Top-Down : on raffine (du général au détail)
+Down-Top : on regroupe (du détail au général)"
+"Algorithmique","Conception et méthodologie","Décomposition fonctionnelle","Découper l'algorithme en modules logiques (sous-algorithmes) ayant chacun une fonction précise."
+"Algorithmique","Conception et méthodologie","Où ranger les modules d'une même logique fonctionnelle ?","Dans un même fichier (bibliothèque)."
+"Algorithmique","Conception et méthodologie","Qualités d'un module","Indépendant de son contexte (autonome) et réutilisable dans plusieurs contextes."
+"Algorithmique","Conception et méthodologie","Algorithme vs programme","L'algorithme décrit la méthode en pseudo-code, indépendamment du langage. Le programme est sa traduction dans un langage (C, Python…) exécutable par la machine."
