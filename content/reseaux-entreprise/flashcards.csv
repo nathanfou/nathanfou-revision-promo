@@ -1,0 +1,116 @@
+matiere,chapitre,recto,verso
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,PAN / WPAN,"Personal Area Network (Wireless) : réseau personnel de quelques mètres. Ex : Bluetooth, USB, Zigbee (IEEE 802.15)."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,LAN,"Local Area Network : réseau d'un bâtiment ou d'un site d'entreprise. Privé, débit élevé, faible taux d'erreur. Ex : Ethernet, Wi-Fi."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,MAN,"Metropolitan Area Network : réseau à l'échelle d'une ville, qui interconnecte des sites proches."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,WAN,"Wide Area Network : réseau étendu (pays, monde), souvent sur infrastructure d'opérateurs, débits plus faibles et délais plus longs qu'un LAN."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Topologie point à point vs à diffusion,"Point à point : une liaison relie deux équipements (routage pour joindre les autres). Diffusion : support partagé, tout le monde reçoit, il faut une adresse et une méthode d'accès."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Intérêt de la normalisation,"Interopérabilité entre constructeurs (systèmes ouverts), baisse des coûts, pérennité des investissements."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,ISO,"International Organization for Standardization : organisme international, à adhésion volontaire. Auteur du modèle OSI (ISO 7498)."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,ITU / UIT (ex-CCITT),"Union internationale des télécommunications, agence de l'ONU : normes télécoms (série X : X.25, X.200…)."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,IEEE,"Institute of Electrical and Electronics Engineers : normes PAN/LAN/MAN (comité 802 : 802.3 Ethernet, 802.11 Wi-Fi, 802.1Q, 802.1D)."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,IETF,"Internet Engineering Task Force : standards TCP/IP, publiés en RFC."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,AFNOR,Association française de normalisation (le modèle OSI y est la norme NF Z 70-001).
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,ANSI,American National Standards Institute : organisme de coordination de la normalisation aux États-Unis.
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,EIA,"Electronic Industries Association : association industrielle nord-américaine, auteur de RS-232-C."
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,NCS,National Communications System : consortium d'agences fédérales américaines.
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Les 7 couches OSI (de 1 à 7),"Physique, Liaison, Réseau, Transport, Session, Présentation, Application."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Couches basses / couches hautes OSI,Basses (1 à 4) : services de transport. Hautes (5 à 7) : services applicatifs.
+Réseaux d'entreprise,Modèle OSI : couches et architectures,OSI : définition,"Modèle de référence, cadre fonctionnel d'architecture de communication, normalisé par l'ISO (ISO 7498, 1984 ; X.200 ; NF Z 70-001)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Objectifs d'OSI,"Décomposer, structurer, assurer l'indépendance vis-à-vis du matériel et du logiciel."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Système réel / système ouvert,"Système réel : ordinateurs, logiciels, terminaux… Il devient ouvert quand il respecte les normes OSI pour communiquer avec d'autres systèmes."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,OSI vs TCP/IP vs IEEE,"OSI : ISO, architecture fonctionnelle, 7 couches, couches basses et applicatives. TCP/IP : IETF, protocolaire, 4 couches. IEEE : protocolaire, 3 couches (physique, MAC, LLC), couches basses seulement."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Couches TCP/IP et correspondance OSI,"Application (OSI 5-6-7), Transport (4), Internet (3), Interface réseau (1-2)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Communication horizontale,"Dialogue virtuel entre entités homologues de même niveau, régi par le protocole (N)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Communication verticale,"Interaction entre couches adjacentes d'un même système, par des primitives de service au (N)-SAP."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Où se déplacent réellement les données ?,Au niveau 1 (Physique) seulement. Les autres niveaux communiquent virtuellement.
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Premier identifiant (adresse) dans OSI,Au niveau 2 : l'adresse MAC. Le niveau 1 n'a pas d'adresse.
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Physique,"Transmission des bits : signaux, codage, connecteurs (RJ45), supports."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Liaison,"Trames, adressage physique (MAC), détection d'erreurs (CRC), contrôle de flux local, accès au support."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Réseau,"Adressage logique (IP), routage (itinéraire), contrôle de congestion."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Transport,"Bout en bout : contrôle d'erreurs et de flux entre extrémités, séquencement, ports (TCP, UDP)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Session,"Gestion du dialogue, synchronisation, reprise sur incident (points de reprise)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Présentation,"Représentation des données : syntaxe, codage (HTML, ASN.1), chiffrement, compression."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Application,"Services à l'utilisateur : HTTP, transfert et gestion de fichiers distants, messagerie."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Pourquoi deux systèmes OSI peuvent ne pas communiquer,"OSI est un cadre : ils peuvent avoir choisi des protocoles ou options différents dans une même couche (ex : Ethernet d'un côté, Token Ring de l'autre)."
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Pilote (driver),Composant du système d'exploitation qui prend en charge la carte réseau.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Sous-système (N),"Élément d'une division hiérarchique d'un système ouvert, qui n'interagit qu'avec les niveaux immédiatement supérieur et inférieur."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Couche (N),"Subdivision de l'architecture OSI, constituée des sous-systèmes de rang (N)."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Entité (N),Élément actif d'un sous-système (N) qui réalise les fonctions de la couche (N). Entités homologues : même couche.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Service (N),"Capacité de la couche (N) et des couches inférieures, offerte aux entités (N+1) à la frontière (N)/(N+1)."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Protocole (N),"Ensemble de règles et de formats (syntaxe, sémantique) qui déterminent le comportement de communication des entités (N) homologues."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",(N)-SAP,Point d'accès au service (N) : point où une entité (N) fournit le service (N) à une entité (N+1). Ex : port (T-SAP).
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Connexion (N),"Association demandée par des entités (N+1), établie par la couche (N), pour transférer des données entre elles."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",(N)-CEP,Extrémité de connexion : terminaison d'une connexion (N) en un (N)-SAP.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",PDU / PCI / SDU,(N)-PDU = (N)-PCI (en-tête de contrôle) + (N)-SDU (données reçues de la couche N+1). La (N+1)-PDU devient la (N)-SDU.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Segmentation / réassemblage,Une (N)-SDU projetée sur plusieurs (N)-PDU (adapter à la taille max) ; le réassemblage reconstitue la SDU.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Groupage / dégroupage,Plusieurs (N)-SDU dans une seule (N)-PDU ; le dégroupage les sépare.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Concaténation,Plusieurs (N)-PDU projetées sur une seule (N-1)-SDU.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Multiplexage / démultiplexage,Plusieurs connexions (N) sur une seule connexion (N-1) ; le démultiplexage identifie à quelle connexion appartient chaque PDU.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Éclatement / recombinaison,Une connexion (N) répartie sur plusieurs connexions (N-1) ; la recombinaison regroupe les PDU reçues.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Mode connecté : 3 phases,"Établissement (négociation), transfert de données séquencé, libération."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Mode sans connexion,"Chaque SDU est transmise indépendamment, sans établissement ni relation logique entre les SDU. Ex : IP, UDP."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Les 4 primitives de service,"Requête (demande du service), Indication (signale un événement), Réponse (à l'indication), Confirmation (informe le demandeur)."
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Établissement de connexion transport réussi,T_CONNECT.request (appelant) → T_CONNECT.indication (appelé) → T_CONNECT.response (appelé) → T_CONNECT.confirm (appelant).
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Refus de connexion par l'appelé,T_CONNECT.request → T_CONNECT.indication → T_DISCONNECT.request (appelé) → T_DISCONNECT.indication (appelant).
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Refus par le fournisseur du service,T_CONNECT.request → T_DISCONNECT.indication à l'appelant ; l'appelé ne reçoit rien.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Déconnexion par un utilisateur,T_DISCONNECT.request d'un côté → T_DISCONNECT.indication de l'autre (pas de confirmation).
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Simplex / semi-duplex / duplex,Simplex : un seul sens fixé. Semi-duplex (à l'alternat) : chacun son tour. Duplex (bilatérale simultanée) : les deux sens en même temps.
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Relais (N),Fonction par laquelle une entité (N) retransmet à une entité homologue les données reçues d'une autre entité homologue.
+Réseaux d'entreprise,Services de transport,Multiplexage : pourquoi ?,Regrouper plusieurs communications sur un support pour l'optimiser et réduire les coûts.
+Réseaux d'entreprise,Services de transport,Multiplexage fréquentiel,Chaque voie occupe en permanence une bande de fréquences distincte.
+Réseaux d'entreprise,Services de transport,Multiplexage temporel synchrone,Chaque voie reçoit à tour de rôle un intervalle de temps fixe : risque de gaspillage.
+Réseaux d'entreprise,Services de transport,Multiplexage temporel asynchrone,Intervalles attribués à la demande : meilleur rendement (il faut identifier la voie).
+Réseaux d'entreprise,Services de transport,Les 3 types d'adresses,Physique (MAC) : liaison multipoint. Logique (IP) : routage dans le réseau. Applicative (port) : entre processus.
+Réseaux d'entreprise,Services de transport,Routage vs commutation,"Routage : choisir le chemin (algorithme sur un graphe, statique ou dynamique). Commutation : passer d'un port d'entrée à un port de sortie, avec ou sans réservation."
+Réseaux d'entreprise,Services de transport,Commutation de circuits,Routage calculé à l'appel puis commutation ; ressources réservées pendant toute la communication.
+Réseaux d'entreprise,Services de transport,Commutation de paquets (datagramme),"Routage calculé à chaque paquet ; pas de réservation, chemins variables."
+Réseaux d'entreprise,Services de transport,Contrôle local vs de bout en bout,"Local : entre deux équipements adjacents (liaison). Bout en bout : entre les extrémités (transport, ex : TCP)."
+Réseaux d'entreprise,Services de transport,Détection et correction d'erreurs,"Détection par redondance (CRC, parité, checksum) ; correction par retransmission avec acquittement, time-out et numérotation."
+Réseaux d'entreprise,Services de transport,Contrôle de flux,"Asservissement du débit de l'émetteur par le récepteur. Protocoles : Stop and Wait, fenêtre glissante."
+Réseaux d'entreprise,Services de transport,Go-Back-N,Trame perdue : l'émetteur la renvoie avec toutes les suivantes ; le récepteur jette les trames hors séquence.
+Réseaux d'entreprise,Services de transport,Selective Repeat,Seule la trame perdue est renvoyée ; le récepteur garde les suivantes en tampon et réordonne.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Structure d'une adresse MAC,"48 bits (6 octets) : 3 octets constructeur (OUI, attribué par l'IEEE) + 3 octets numéro de série de la carte."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Ethernet et les erreurs,"Détection oui (FCS, CRC 32 bits), reprise non : la trame erronée est jetée."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",En-tête Ethernet,14 octets : MAC destination (6) + MAC source (6) + EtherType (2). FCS de 4 octets en fin de trame.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",EtherType,Champ de 16 bits de l'en-tête Ethernet qui identifie le protocole encapsulé (L-SAP).
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",EtherType à connaître,0x0800 IPv4 · 0x86DD IPv6 · 0x0806 ARP · 0x8035 RARP · 0x8100 802.1Q · 0x88A8 Q-in-Q · 0x8847 MPLS · 0x88CC LLDP.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Champ Protocol d'IPv4,"8 bits, identifie le protocole encapsulé dans IP (N-SAP) : 1 ICMP, 2 IGMP, 6 TCP, 17 UDP, 89 OSPF, 47 GRE, 50 ESP, 51 AH."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Comment IP sait que c'est UDP et pas TCP ?,"Par le champ Protocol de son en-tête (PCI) : 17 = UDP, 6 = TCP."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Numéro de protocole vs numéro de port,Protocole : distingue les protocoles encapsulés dans IP. Port : distingue les applications au sein de TCP ou UDP.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Les 3 SAP d'une trame HTTP,"L-SAP : EtherType (0x0800). N-SAP : Protocol IP (6). T-SAP : port TCP (80 côté serveur, port dynamique > 1024 côté client)."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",IANA,Internet Assigned Numbers Authority : attribue les numéros de protocole et les ports bien connus.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Tailles d'en-têtes,"Ethernet 14 · IPv4 20 (min) · TCP 20 (min, + options) · UDP 8 · ARP 28 octets."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Charge utile minimale Ethernet,46 octets : sinon bourrage (padding). Ex : ARP 28 octets + 18 de bourrage → trame de 60 octets sans FCS.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",ARP,"Résout une IP en MAC. Encapsulé dans Ethernet (0x0806), requête en diffusion, réponse en unicast. Protocole de service entre couches 2 et 3."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Protocoles portés directement par IP,"ICMP (ping, erreurs) et OSPF (routage) : sans TCP ni UDP."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Protocole (définition Wireshark),"Règles et conventions de communication : format des messages (PDU, champs) et séquence des échanges."
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Codes HTTP,GET demande une ressource. 200 OK succès · 204 No Content succès sans corps · 404 Not Found ressource absente.
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Ports bien connus,HTTP 80 · HTTPS 443 · DNS 53 · FTP 21 · SSH 22 · SMTP 25.
+Réseaux d'entreprise,Commutation et VLAN,Cut-through,"Retransmet dès la lecture de l'adresse destination : rapide, latence indépendante de la longueur, mais propage les trames erronées."
+Réseaux d'entreprise,Commutation et VLAN,Store and forward,"Reçoit toute la trame et vérifie le FCS avant de retransmettre : fiable, latence proportionnelle à la longueur."
+Réseaux d'entreprise,Commutation et VLAN,Table MAC (CAM),Associe adresse MAC et port. Apprise avec l'adresse source des trames reçues ; consultée avec l'adresse destination.
+Réseaux d'entreprise,Commutation et VLAN,Destination inconnue ou diffusion,"Le commutateur inonde la trame sur tous les ports du VLAN, sauf le port d'arrivée."
+Réseaux d'entreprise,Commutation et VLAN,Hub / pont-commutateur / routeur,"Hub : niveau 1, répète les bits. Pont, commutateur : niveau 2, lisent la MAC. Routeur : niveau 3, réécrit l'en-tête de trame (nouvelles MAC)."
+Réseaux d'entreprise,Commutation et VLAN,Domaines de collision et de diffusion,"Commutateur : un domaine de collision par port, un seul domaine de diffusion (sans VLAN). Routeur et VLAN : séparent la diffusion."
+Réseaux d'entreprise,Commutation et VLAN,VLAN,"Réseau local virtuel : segmentation logique indépendante du câblage. Sécurité, diffusion limitée, performances, gestion facilitée."
+Réseaux d'entreprise,Commutation et VLAN,Les 4 types de VLAN,"Par port (niveau 1), par adresse MAC (niveau 2), par adresse IP (niveau 3), par protocole (niveau 3 ou plus)."
+Réseaux d'entreprise,Commutation et VLAN,Communication entre VLAN,"Impossible par défaut, même sur un même commutateur : il faut un routeur (routage inter-VLAN)."
+Réseaux d'entreprise,Commutation et VLAN,802.1Q,"Norme d'étiquetage des trames : un TAG de 4 octets (TPID 0x8100, priorité 3 bits, DEI 1 bit, VLAN ID 12 bits) identifie le VLAN."
+Réseaux d'entreprise,Commutation et VLAN,Port access,"Appartient à un seul VLAN, relie une machine, trames non étiquetées."
+Réseaux d'entreprise,Commutation et VLAN,Port trunk,"Transporte plusieurs VLAN sur un lien entre équipements, trames étiquetées 802.1Q. L'étiquette est retirée avant la remise aux machines."
+Réseaux d'entreprise,Commutation et VLAN,"2 VLAN, 2 commutateurs, sans 802.1Q","Un lien par VLAN entre les commutateurs, chaque lien en mode access dans son VLAN."
+Réseaux d'entreprise,Commutation et VLAN,"2 VLAN, 2 commutateurs, avec 802.1Q","Un seul lien, ses deux ports en mode trunk."
+Réseaux d'entreprise,STP et redondance,Intérêts de la redondance,"Plusieurs chemins, continuité de service en cas de panne, équilibrage de charge."
+Réseaux d'entreprise,STP et redondance,Inconvénients d'une boucle de niveau 2,"Tempête de diffusion, duplication de trames chez l'hôte, instabilité de la table MAC."
+Réseaux d'entreprise,STP et redondance,Tempête de diffusion,Des trames de diffusion (ex : ARP) tournent sans fin dans une boucle et se multiplient jusqu'à saturer le réseau (Ethernet n'a pas de TTL).
+Réseaux d'entreprise,STP et redondance,Boucle de commutation,"Plusieurs chemins actifs de niveau 2 entre deux équipements, souvent créés par des liens redondants sans STP."
+Réseaux d'entreprise,STP et redondance,STP : rôle,Détecter les boucles et bloquer logiciellement des ports pour former un arbre (un seul chemin) ; reconfigurer en cas de panne.
+Réseaux d'entreprise,STP et redondance,STP : normes,"802.1D (STP). Variantes : RSTP 802.1w (rapide), MSTP 802.1s (plusieurs instances), PVST+ (Cisco)."
+Réseaux d'entreprise,STP et redondance,BPDU,"Bridge Protocol Data Unit : message STP échangé entre ponts, envoyé à une adresse MAC de groupe."
+Réseaux d'entreprise,STP et redondance,Les 4 étapes de STP,1) Élection du pont racine. 2) Port racine sur chaque commutateur non racine. 3) Port désigné sur chaque segment. 4) Blocage des autres ports.
+Réseaux d'entreprise,STP et redondance,BID (Bridge ID),Priorité (0x8000 = 32768 par défaut) + adresse MAC. Le plus petit BID devient racine.
+Réseaux d'entreprise,STP et redondance,Élection du pont racine,"Chacun se déclare racine ; un pont qui reçoit un ID de racine plus petit adopte cet ID. Plus petite priorité, puis plus petite MAC."
+Réseaux d'entreprise,STP et redondance,Port racine (root port),Port d'un commutateur non racine au plus petit coût cumulé vers la racine (root path cost reçu + coût du port). À égalité : plus petit identifiant.
+Réseaux d'entreprise,STP et redondance,Port désigné,"Sur chaque segment, le port au meilleur chemin vers la racine ; il relaie trames et BPDU. Tous les ports de la racine sont désignés."
+Réseaux d'entreprise,STP et redondance,Port bloqué,Ni racine ni désigné : ne transmet pas de données mais écoute les BPDU.
+Réseaux d'entreprise,STP et redondance,Coût de port STP par défaut,"Dépend du débit : 10 Mb/s = 100, 100 Mb/s = 19, 1 Gb/s = 4, 10 Gb/s = 2."
