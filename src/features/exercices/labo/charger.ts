@@ -1,5 +1,6 @@
 // Moteur du Labo Graphes (rendu Markdown + KaTeX, figures de graphes, tableaux calculés,
-// corrigés animés pas à pas). Fichiers repris tels quels du Labo dans ./moteur, qui
+// corrigés animés pas à pas), plus les figures du Markov Bootcamp (graphes de chaînes,
+// évolution de π(t), file M/M/1). Fichiers repris tels quels du Labo dans ./moteur, qui
 // s'enregistrent sur window ; chargé à la demande (import dynamique) pour ne pas alourdir
 // les autres pages.
 import katex from 'katex'
@@ -35,6 +36,7 @@ export function chargerLabo(): Promise<Labo> {
       await import('./moteur/widgets.js')
       await import('./moteur/graphe.js')
       await import('./moteur/widgets-graphes.js')
+      await import('./moteur/widgets-markov.js')
       return { Rendu: window.Rendu!, Widgets: window.Widgets! }
     })()
   }
