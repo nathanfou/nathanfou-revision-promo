@@ -17,7 +17,8 @@ export const PAGE_SIZE = 20
 export type ReactionCount = { emoji: Emoji; n: number; mine: boolean }
 export type Reply = { id: string; user_id: string; pseudo: string; pp_id: string; texte: string; created_at: string }
 
-/** Données d'un événement automatique (écrites par les triggers de feed_events). */
+/** Données d'un événement automatique (écrites par les triggers de feed_events et feed_seances).
+ * 'session' : ancien format, converti en 'seance' par la migration feed_seances. */
 export type EventData =
   | {
       type: 'session'
@@ -28,6 +29,15 @@ export type EventData =
       items: number
       reussis: number
       points: number
+    }
+  | {
+      /** séance : sessions regroupées (migration feed_seances) */
+      type: 'seance'
+      points: number
+      sessions: number
+      modes: Partial<Record<Database['public']['Enums']['activity_mode'], { items: number; reussis: number }>>
+      matieres: string[]
+      chapitres: string[]
     }
   | { type: 'top5' | 'premier'; rang: number; points: number }
 
