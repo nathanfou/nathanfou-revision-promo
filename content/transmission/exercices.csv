@@ -1,0 +1,375 @@
+matiere,chapitre,titre,enonce,correction,duree_min
+Techniques de transmission,"Signaux, puissance et décibels","Puissance dissipée dans une résistance, en dBm","Un signal de valeur efficace $V_{\text{eff}} = 4{,}1\ \text{V}$ est appliqué à une résistance $R = 75\ \Omega$.
+
+1. Calcule la puissance moyenne dissipée, en W puis en mW.
+2. Exprime-la en dBm, puis en dBW.
+
+:::astuce Indice
+$P = V_{\text{eff}}^2 / R$ donne des watts. Les dBm se calculent à partir de milliwatts.
+:::","1. $P = \dfrac{V_{\text{eff}}^2}{R} = \dfrac{4{,}1^2}{75} = \dfrac{16{,}81\ \text{V}^2}{75\ \Omega} \approx 0{,}224\ \text{W} = 224\ \text{mW}$.
+2. $P_{\text{dBm}} = 10 \log\left(\dfrac{224\ \text{mW}}{1\ \text{mW}}\right) \approx \mathbf{23{,}5\ dBm}$, et $P_{\text{dBW}} = P_{\text{dBm}} - 30 \approx \mathbf{-6{,}5\ dBW}$.
+
+:::piege Unités
+Vérifie l'unité avant de prendre le log : $10 \log(0{,}224) = -6{,}5$ donne des **dBW**, pas des dBm.
+:::",5
+Techniques de transmission,"Signaux, puissance et décibels","Conversions dBW, dBm, mW, pW, fW","1. À quelle puissance en dBm correspond $-15\ \text{dBW}$ ?
+2. À quelle puissance en dBm correspond $9{,}4\ \text{mW}$ ?
+3. Que valent $0\ \text{dBm}$ en mW, $-70\ \text{dBm}$ en pW et $-80\ \text{dBm}$ en fW ?","1. $P_{\text{dBm}} = P_{\text{dBW}} + 30 = -15 + 30 = \mathbf{15\ dBm}$ (car $1\ \text{W} = 10^3\ \text{mW}$ et $10\log 10^3 = 30$).
+2. $10 \log(9{,}4) \approx \mathbf{9{,}73\ dBm}$.
+3. On repasse par $P[\text{mW}] = 10^{P_{\text{dBm}}/10}$ :
+   - $0\ \text{dBm} \to 10^0 = \mathbf{1\ mW}$ ;
+   - $-70\ \text{dBm} \to 10^{-7}\ \text{mW} = 10^{-10}\ \text{W} = \mathbf{0{,}1\ pW}$ ($1\ \text{pW} = 10^{-12}\ \text{W}$) ;
+   - $-80\ \text{dBm} \to 10^{-8}\ \text{mW} = 10^{-11}\ \text{W} = \mathbf{10\ fW}$ ($1\ \text{fW} = 10^{-15}\ \text{W}$).
+
+:::methode Réflexe
+Chaque $-30\ \text{dB}$ fait descendre d'un préfixe : $0\ \text{dBm} = 1\ \text{mW}$, $-30\ \text{dBm} = 1\ \mu\text{W}$, $-60\ \text{dBm} = 1\ \text{nW}$, $-90\ \text{dBm} = 1\ \text{pW}$, $-120\ \text{dBm} = 1\ \text{fW}$.
+:::",5
+Techniques de transmission,"Signaux, puissance et décibels",Bilan d'une chaîne en dB,"Un système a un gain en puissance $G_p = P_s / P_e$.
+
+1. Exprime $P_s[\text{dBm}]$ en fonction de $P_e[\text{dBm}]$ et de $10 \log G_p$.
+2. Un signal de $P_e = -20\ \text{dBm}$ traverse un amplificateur de gain $25\ \text{dB}$, puis un câble qui perd $8\ \text{dB}$, puis un atténuateur qui divise la puissance par 2. Calcule la puissance de sortie en dBm puis en mW.
+3. Quel est le gain total de la chaîne, en dB puis en valeur naturelle ?","1. $P_s = G_p \cdot P_e$. On divise par $1\ \text{mW}$ et on prend $10\log$ :
+$$P_s[\text{dBm}] = P_e[\text{dBm}] + 10 \log G_p$$
+Un gain en dB s'**ajoute** à des dBm et donne des dBm.
+2. L'atténuateur $\div 2$ vaut $-3\ \text{dB}$ :
+$$P_s = -20 + 25 - 8 - 3 = \mathbf{-6\ dBm}$$
+soit $10^{-0{,}6} \approx \mathbf{0{,}25\ mW}$.
+3. $G = 25 - 8 - 3 = \mathbf{14\ dB}$, soit $10^{1{,}4} \approx \mathbf{25}$ (sans unité). Vérification : $0{,}01\ \text{mW} \times 25 = 0{,}25\ \text{mW}$.
+
+:::piege
+Ne jamais multiplier des dB entre eux : en dB, les gains d'une chaîne **s'additionnent**.
+:::",10
+Techniques de transmission,"Signaux, puissance et décibels",Additionner des puissances exprimées en dBm,"1. Deux signaux indépendants de $10\ \text{dBm}$ chacun arrivent sur la même charge. Quelle est la puissance totale en dBm ?
+2. Même question pour $10\ \text{dBm}$ et $0\ \text{dBm}$.
+3. Un signal de $-60\ \text{dBm}$ est accompagné d'un bruit de $-80\ \text{dBm}$. Calcule le rapport signal sur bruit en dB puis en valeur naturelle.","1. On repasse en mW : $10\ \text{mW} + 10\ \text{mW} = 20\ \text{mW}$, soit $10\log 20 \approx \mathbf{13\ dBm}$. Doubler une puissance fait $+3\ \text{dB}$, pas $\times 2$ sur les dBm.
+2. $10\ \text{mW} + 1\ \text{mW} = 11\ \text{mW}$, soit $\approx \mathbf{10{,}4\ dBm}$ : le plus faible ne compte presque pas.
+3. Un rapport de deux puissances, c'est une **différence** de dBm :
+$$\left(\frac{S}{N}\right)_{\text{dB}} = -60 - (-80) = \mathbf{20\ dB}, \qquad \frac{S}{N} = 10^{2} = \mathbf{100}$$
+
+:::prop À retenir
+dBm $+$ dBm : interdit. dBm $-$ dBm $=$ dB. dBm $+$ dB $=$ dBm.
+:::",10
+Techniques de transmission,"Signaux, puissance et décibels","Moyenne, efficace et puissance d'une sinusoïde","On considère $u_1(t) = A \cos(\omega_0 t)$ et $u_2(t) = U_0 + A \cos(\omega_0 t)$.
+
+1. Calcule la valeur moyenne, la valeur efficace et la puissance moyenne dissipée dans $R$ pour $u_1$.
+2. Même chose pour $u_2$.
+3. Application : $A = 3\ \text{V}$, $U_0 = 1{,}5\ \text{V}$, $R = 50\ \Omega$. Donne les puissances en mW et en dBm.","1. Sur une période, $\cos$ a une moyenne nulle : $U_{1,\text{moy}} = 0$.
+$\cos^2 x = \tfrac{1 + \cos 2x}{2}$ a pour moyenne $\tfrac12$, donc
+$$U_{1,\text{eff}} = \sqrt{\tfrac{A^2}{2}} = \frac{A}{\sqrt 2}, \qquad P_1 = \frac{U_{1,\text{eff}}^2}{R} = \frac{A^2}{2R}$$
+2. $U_{2,\text{moy}} = U_0$. $u_2^2 = U_0^2 + 2U_0 A \cos(\omega_0 t) + A^2 \cos^2(\omega_0 t)$, de moyenne $U_0^2 + A^2/2$ :
+$$U_{2,\text{eff}} = \sqrt{U_0^2 + \frac{A^2}{2}}, \qquad P_2 = \frac{U_0^2}{R} + \frac{A^2}{2R}$$
+Les puissances du continu et de la sinusoïde s'ajoutent.
+3. $P_1 = \dfrac{9}{100} = 90\ \text{mW} \approx \mathbf{19{,}5\ dBm}$ ($U_{1,\text{eff}} \approx 2{,}12\ \text{V}$).
+$P_2 = \dfrac{2{,}25}{50} + 0{,}09 = 0{,}045 + 0{,}09 = 135\ \text{mW} \approx \mathbf{21{,}3\ dBm}$ ($U_{2,\text{eff}} = \sqrt{2{,}25 + 4{,}5} \approx 2{,}60\ \text{V}$).",10
+Techniques de transmission,"Signaux, puissance et décibels",Lire les paramètres d'une sinusoïde et son déphasage,"[[widget:signal|s1=1,2000,0,0;s2=1.4,2000,36,1.5;t=ms;tmax=1;pasx=0.1;titre=Oscillogramme]]
+
+Sur cet oscillogramme, le signal de référence $S_{\text{ref}}(t)$ (trait plein) oscille entre $-1\ \text{V}$ et $+1\ \text{V}$ et se répète toutes les $0{,}5\ \text{ms}$. Le signal $S_1(t)$ (pointillés) oscille entre $0{,}1\ \text{V}$ et $2{,}9\ \text{V}$, a la même période, et atteint son maximum $0{,}05\ \text{ms}$ **avant** $S_{\text{ref}}$.
+
+1. Donne l'amplitude, la valeur moyenne, la période, la fréquence et la pulsation de $S_{\text{ref}}$, puis son expression (phase nulle à l'origine).
+2. Mêmes paramètres pour $S_1$, ainsi que son déphasage par rapport à $S_{\text{ref}}$. Écris $S_1(t)$.
+3. Deux signaux à $1\ \text{MHz}$ sont décalés de $0{,}2\ \mu\text{s}$. Quel est leur déphasage en radians et en degrés ?","1. Amplitude $1\ \text{V}$, moyenne $0\ \text{V}$, $T_0 = 0{,}5\ \text{ms}$, $f_0 = 1/T_0 = 2\ \text{kHz}$, $\omega_0 = 2\pi f_0 = 4000\pi\ \text{rad/s}$ :
+$$S_{\text{ref}}(t) = \cos(4000\pi t)$$
+2. Moyenne $= \tfrac{0{,}1 + 2{,}9}{2} = 1{,}5\ \text{V}$ ; amplitude $= \tfrac{2{,}9 - 0{,}1}{2} = 1{,}4\ \text{V}$ ; même $T_0$, $f_0$, $\omega_0$.
+Avance $\Delta t = 0{,}05\ \text{ms}$, donc $\Delta\varphi = 2\pi \dfrac{\Delta t}{T_0} = 2\pi \times \dfrac{0{,}05}{0{,}5} = \dfrac{\pi}{5}\ \text{rad}$ (positif car en avance) :
+$$S_1(t) = 1{,}5 + 1{,}4 \cos\left(4000\pi t + \frac{\pi}{5}\right)$$
+3. $T_0 = 1\ \mu\text{s}$ ; $\Delta\varphi = 2\pi \times \dfrac{0{,}2}{1} = \mathbf{0{,}4\pi\ rad} \approx 1{,}26\ \text{rad} = \mathbf{72°}$.",10
+Techniques de transmission,"Signaux, puissance et décibels",Puissance contenue dans les harmoniques d'un carré,"Un signal carré $s(t)$ de période $T_0$ vaut $+E$ pendant une demi-période et $-E$ pendant l'autre. On admet :
+$$s(t) = \frac{4E}{\pi} \sum_{k \ge 0} \frac{1}{2k+1} \sin\big((2k+1)\,\omega_0 t\big)$$
+
+1. Quelles fréquences contient le spectre ? Donne l'amplitude $A_n$ de l'harmonique de rang $n$.
+2. Calcule la valeur efficace de $s$ et sa puissance moyenne $P_{\text{moy}}$ dans $R$.
+3. Calcule la puissance $P_n$ du fondamental et des harmoniques 3, 5 et 7, en pourcentage de $P_{\text{moy}}$.
+4. Combien de pourcents de la puissance sont portés par les harmoniques jusqu'au rang 7 ? Qu'en conclure pour la bande passante nécessaire ?","1. Uniquement les harmoniques **impairs** $f_0, 3f_0, 5f_0, \ldots$ (pas de valeur moyenne), avec $A_n = \dfrac{4E}{n\pi}$.
+2. $s^2(t) = E^2$ en permanence : $S_{\text{eff}} = E$ et $P_{\text{moy}} = \dfrac{E^2}{R}$.
+3. Chaque harmonique est une sinusoïde : $P_n = \dfrac{A_n^2}{2R} = \dfrac{8E^2}{n^2\pi^2 R}$, donc $\dfrac{P_n}{P_{\text{moy}}} = \dfrac{8}{n^2\pi^2}$.
+
+| Rang $n$ | 1 | 3 | 5 | 7 |
+|---|---|---|---|---|
+| $P_n / P_{\text{moy}}$ | 81,1 % | 9,0 % | 3,2 % | 1,7 % |
+
+4. $81{,}1 + 9{,}0 + 3{,}2 + 1{,}7 \approx \mathbf{95\ \%}$. L'essentiel de la puissance est dans les premières raies : un canal qui laisse passer quelques harmoniques suffit à reconnaître le signal, c'est l'idée du « premier lobe » des codes en ligne.",20
+Techniques de transmission,"Signaux, puissance et décibels",Reconstruire un signal à partir de son spectre de puissance,"Un analyseur de spectre chargé par $50\ \Omega$ affiche les raies suivantes pour un signal $s(t)$ :
+
+[[widget:spectre|raies=0:3,1:10,3:0;unite=dBm;f=kHz;fmax=4;ymin=-10;ymax=15;phases=1:0,3:90]]
+
+| Fréquence | 0 Hz | 1 kHz | 3 kHz |
+|---|---|---|---|
+| Puissance | 3 dBm | 10 dBm | 0 dBm |
+| Phase | — | 0 | $\pi/2$ |
+
+1. Nomme chaque raie.
+2. Calcule la valeur de la composante continue et les amplitudes crête des deux sinusoïdes.
+3. Écris $s(t)$.
+4. Calcule la puissance totale (mW et dBm) et la valeur efficace de $s$.","1. 0 Hz : **valeur moyenne** ; 1 kHz : **fondamental** ($f_0 = 1\ \text{kHz}$) ; 3 kHz : **harmonique de rang 3**.
+2. On repasse en mW : $3\ \text{dBm} \approx 2\ \text{mW}$, $10\ \text{dBm} = 10\ \text{mW}$, $0\ \text{dBm} = 1\ \text{mW}$.
+   - Continu : $P_0 = U_0^2 / R \Rightarrow U_0 = \sqrt{50 \times 2 \cdot 10^{-3}} \approx 0{,}32\ \text{V}$.
+   - Sinusoïde : $P = A^2/(2R) \Rightarrow A = \sqrt{2RP}$. Fondamental : $A_1 = \sqrt{100 \times 10^{-2}} = 1\ \text{V}$. Rang 3 : $A_3 = \sqrt{100 \times 10^{-3}} \approx 0{,}32\ \text{V}$.
+3. $$s(t) \approx 0{,}32 + 1 \cdot \cos(2000\pi t) + 0{,}32 \cos\left(6000\pi t + \frac{\pi}{2}\right)\ \text{V}$$
+4. Les puissances des raies s'ajoutent : $P = 2 + 10 + 1 = 13\ \text{mW} \approx \mathbf{11{,}1\ dBm}$. $S_{\text{eff}} = \sqrt{R P} = \sqrt{50 \times 0{,}013} \approx \mathbf{0{,}81\ V}$.
+
+:::piege
+Pour la raie continue, $P = U_0^2/R$ (pas de facteur 2) ; pour une sinusoïde, $P = A^2/(2R)$.
+:::",20
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Lire une séquence NRZ 4-aire,"Un support de transmission en bande de base possède 4 niveaux de tension significatifs $V_0 < V_1 < V_2 < V_3$. On observe successivement les niveaux :
+$$V_1,\ V_2,\ V_0,\ V_3,\ V_2,\ V_2,\ V_1,\ V_3,\ V_0$$
+
+[[widget:signal|niveaux=-1,1,-3,3,1,1,-1,3,-3;duree=1;t=Tsymbole;titre=Signal reçu (niveaux −3, −1, +1, +3 V)]]
+
+1. Combien de bits par baud peut-on émettre sur ce canal ?
+2. Le protocole associe les niveaux, du plus bas au plus haut, aux valeurs binaires 0 à 3. Quelle séquence de bits est transmise ?
+3. Si $R_b = 10\ \text{Mbit/s}$, que valent $R_M$ et la durée d'un niveau ?","1. $M = V = 4 = 2^2$ : **2 bits par baud**.
+2. $00 \leftrightarrow V_0$, $01 \leftrightarrow V_1$, $10 \leftrightarrow V_2$, $11 \leftrightarrow V_3$ :
+$$01\ 10\ 00\ 11\ 10\ 10\ 01\ 11\ 00$$
+
+[[widget:signal|niveaux=-1,1,-3,3,1,1,-1,3,-3;duree=1;t=Tsymbole;etiquettes=01,10,00,11,10,10,01,11,00;titre=Lecture du signal]]
+
+3. $R_M = R_s = R_b / 2 = \mathbf{5\ Mbaud}$, donc $T_M = 1/R_M = \mathbf{0{,}2\ \mu s}$ (deux temps bit de $0{,}1\ \mu\text{s}$).",5
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Débit maximal d'une ligne selon le codage,"Le constructeur d'une ligne de transmission annonce une rapidité de modulation maximale de $8000$ bauds. Quel est le débit binaire maximal pour :
+
+1. un codage NRZ unipolaire ;
+2. un codage NRZ bipolaire 8-aire ;
+3. un codage Manchester ?","1. NRZ binaire : $T_b = T_s = T_M$, donc $R_b = R_M = \mathbf{8\ kbit/s}$.
+2. 8-aire : $M = 8 = 2^3$, le codeur prend les bits 3 par 3 : $T_M = T_s = 3T_b$, donc $R_b = 3 R_M = \mathbf{24\ kbit/s}$.
+3. Manchester : transition à mi-bit, $T_b = 2T_M$, donc $R_b = R_M / 2 = \mathbf{4\ kbit/s}$.
+
+:::prop À retenir
+$R_b = n \cdot R_M$ en NRZ $2^n$-aire ; $R_b = R_M/2$ en RZ et Manchester.
+:::",5
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Durées et débits d'un codage M-aire,"1. Un flux à $R_b = 2\ \text{Mbit/s}$ est transmis en NRZ 16-aire. Calcule $T_b$, le nombre de bits par symbole, $T_s$, $R_s$ et $R_M$ (avec leurs unités).
+2. Un symbole dure $T_s = 4\ \mu\text{s}$ et l'alphabet contient 8 symboles. Quel est le débit binaire ?
+3. On veut $R_b = 9600\ \text{bit/s}$ avec $R_s = 2400\ \text{baud}$. Quelle valence faut-il ?","1. $T_b = 1/R_b = 0{,}5\ \mu\text{s}$ ; $n = \log_2 16 = 4$ bits ; $T_s = n T_b = 2\ \mu\text{s}$ ; $R_s = 1/T_s = 500\ \text{kbaud}$ ; en NRZ M-aire $R_M = R_s = 500\ \text{kbaud}$.
+2. $R_s = 1/T_s = 250\ \text{kbaud}$, $n = \log_2 8 = 3$, donc $R_b = n R_s = \mathbf{750\ kbit/s}$.
+3. $n = R_b / R_s = 9600 / 2400 = 4$, donc $M = 2^4 = \mathbf{16}$.
+
+:::piege
+Les débits binaires sont en **bit/s**, les débits symbole et rapidités de modulation en **baud**.
+:::",10
+Techniques de transmission,"Symboles, débits et rapidité de modulation",Choix du codeur et table des niveaux (8-aire),"On souhaite un débit de $1{,}5\ \text{Mbit/s}$. Le codeur en ligne ne doit pas dépasser $500\ \text{kbaud}$, et on veut éviter d'émettre de la puissance à $0\ \text{Hz}$.
+
+1. Quel codeur en ligne proposes-tu ?
+2. Donne la table de conversion symboles → niveaux, avec des niveaux équidistants dans $[-3{,}5\ ;\ 3{,}5]\ \text{V}$, le niveau le plus bas pour $000$ (binaire naturel). Donne aussi l'étiquetage en code de Gray.
+3. On émet $100\,111\,001\,010\,100\,000\,111\,101$ (binaire naturel). Donne la suite des niveaux et la durée d'un symbole.","1. $n = \dfrac{R_b}{R_M} = \dfrac{1{,}5 \cdot 10^6}{5 \cdot 10^5} = 3$, donc $M = 2^3 = 8$. Pas de puissance à 0 Hz : niveaux symétriques autour de 0, soit un **NRZ bipolaire 8-aire**.
+2. Pas : $q = \dfrac{3{,}5 - (-3{,}5)}{2^3 - 1} = 1\ \text{V}$.
+
+| Tension (V) | −3,5 | −2,5 | −1,5 | −0,5 | 0,5 | 1,5 | 2,5 | 3,5 |
+|---|---|---|---|---|---|---|---|---|
+| Binaire | 000 | 001 | 010 | 011 | 100 | 101 | 110 | 111 |
+| Gray | 000 | 001 | 011 | 010 | 110 | 111 | 101 | 100 |
+
+3. $T_s = 3 T_b = 3 / (1{,}5 \cdot 10^6) = 2\ \mu\text{s}$. Niveaux : $0{,}5\ ;\ 3{,}5\ ;\ -2{,}5\ ;\ -1{,}5\ ;\ 0{,}5\ ;\ -3{,}5\ ;\ 3{,}5\ ;\ 1{,}5\ \text{V}$, chacun pendant $2\ \mu\text{s}$ (16 µs au total) :
+
+[[widget:signal|niveaux=0.5,3.5,-2.5,-1.5,0.5,-3.5,3.5,1.5;duree=2;t=µs;pasy=1;etiquettes=100,111,001,010,100,000,111,101;titre=Chronogramme émis]]",20
+Techniques de transmission,"Symboles, débits et rapidité de modulation","Valeur moyenne, efficace et puissance d'un chronogramme 8-aire","On reprend la suite de niveaux de l'exercice précédent, chaque niveau durant $2\ \mu\text{s}$ :
+$$0{,}5\ ;\ 3{,}5\ ;\ -2{,}5\ ;\ -1{,}5\ ;\ 0{,}5\ ;\ -3{,}5\ ;\ 3{,}5\ ;\ 1{,}5\ \text{V}$$
+
+1. Calcule la valeur moyenne du signal sur ces $16\ \mu\text{s}$.
+2. Calcule sa valeur efficace.
+3. Quelle puissance dissipe-t-il dans $50\ \Omega$, en W et en dBm ?
+4. Sur une longue suite de symboles équiprobables, que deviennent la moyenne et la valeur efficace ?","1. Tous les niveaux durent autant : la moyenne est la moyenne des niveaux.
+$$U_{\text{moy}} = \frac{0{,}5 + 3{,}5 - 2{,}5 - 1{,}5 + 0{,}5 - 3{,}5 + 3{,}5 + 1{,}5}{8} = \frac{2}{8} = \mathbf{0{,}25\ V}$$
+Elle n'est pas exactement nulle sur une suite aussi courte.
+2. $U_{\text{eff}} = \sqrt{\tfrac{1}{T}\int u^2\,dt}$ ; chaque palier compte pour $u_i^2 \times 2\ \mu\text{s}$ :
+$$U_{\text{eff}} = \sqrt{\frac{0{,}25 + 12{,}25 + 6{,}25 + 2{,}25 + 0{,}25 + 12{,}25 + 12{,}25 + 2{,}25}{8}} = \sqrt{\frac{48}{8}} = \sqrt 6 \approx \mathbf{2{,}45\ V}$$
+3. $P = U_{\text{eff}}^2 / R = 6 / 50 = \mathbf{0{,}12\ W}$, soit $10 \log(120) \approx \mathbf{20{,}8\ dBm}$.
+4. Avec les 8 niveaux équiprobables, la moyenne tend vers $0$ (niveaux symétriques) et $U_{\text{eff}}^2 \to \tfrac{2(0{,}25 + 2{,}25 + 6{,}25 + 12{,}25)}{8} = 5{,}25$, soit $U_{\text{eff}} \to \sqrt{5{,}25} \approx 2{,}29\ \text{V}$ et $P \to 0{,}105\ \text{W}$.",10
+Techniques de transmission,Codage en ligne et code de Gray,"Coder un message en NRZ, RZ et Manchester","On transmet le message $1\,0\,1\,1\,0$ avec $V_0 = 5\ \text{V}$. Pour chaque code, donne les niveaux sur chaque **demi-temps bit** (deux valeurs par bit) :
+
+1. NRZ unipolaire ;
+2. NRZ bipolaire ;
+3. RZ unipolaire ;
+4. Manchester (convention du cours : « 1 » = transition descendante à $T_b/2$).
+
+Trace les chronogrammes sur ta feuille, puis, pour $R_b = 2\ \text{Mbit/s}$, donne $R_M$ et la bande du premier lobe pour chaque code.","Chaque case donne (1re moitié, 2e moitié) du temps bit, en volts :
+
+| Code | 1 | 0 | 1 | 1 | 0 |
+|---|---|---|---|---|---|
+| NRZ unipolaire | 5, 5 | 0, 0 | 5, 5 | 5, 5 | 0, 0 |
+| NRZ bipolaire | 5, 5 | −5, −5 | 5, 5 | 5, 5 | −5, −5 |
+| RZ unipolaire | 5, 0 | 0, 0 | 5, 0 | 5, 0 | 0, 0 |
+| Manchester | 5, −5 | −5, 5 | 5, −5 | 5, −5 | −5, 5 |
+
+[[widget:signal|code=nrz-u;bits=1,0,1,1,0;v=5]]
+
+[[widget:signal|code=nrz-b;bits=1,0,1,1,0;v=5]]
+
+[[widget:signal|code=rz-u;bits=1,0,1,1,0;v=5]]
+
+[[widget:signal|code=manchester;bits=1,0,1,1,0;v=5]]
+
+- NRZ (uni et bipolaire) : $R_M = R_b = 2\ \text{Mbaud}$, premier lobe $0 \to 2\ \text{MHz}$.
+- RZ et Manchester : le motif dure $T_b/2$, $R_M = 2R_b = 4\ \text{Mbaud}$, premier lobe $0 \to 4\ \text{MHz}$.
+
+:::astuce
+Manchester : il y a **toujours** une transition à mi-bit, c'est elle qui porte l'horloge.
+:::",10
+Techniques de transmission,Codage en ligne et code de Gray,Décoder un signal Manchester,"On relève le signal Manchester suivant (axe des temps gradué en temps bit) :
+
+[[widget:signal|code=manchester;bits=1,0,0,1,0,1,1,0,0;v=1;sansbits=1;titre=Signal reçu]]
+
+Demi-bit par demi-bit (H = haut, B = bas) : $\text{HB}\ \ \text{BH}\ \ \text{BH}\ \ \text{HB}\ \ \text{BH}\ \ \text{HB}\ \ \text{HB}\ \ \text{BH}\ \ \text{BH}$.
+
+1. Décode la séquence avec la convention du cours.
+2. Le temps bit est $T_b = 0{,}1\ \mu\text{s}$. Quels sont $R_b$ et $R_M$ ?","1. HB = transition descendante à mi-bit = « 1 » ; BH = montante = « 0 » :
+$$1\ 0\ 0\ 1\ 0\ 1\ 1\ 0\ 0$$
+2. $R_b = 1/T_b = \mathbf{10\ Mbit/s}$ et $R_M = 2R_b = \mathbf{20\ Mbaud}$ (motifs de $0{,}05\ \mu\text{s}$).",5
+Techniques de transmission,Codage en ligne et code de Gray,Choisir un code en ligne selon le cahier des charges,"Pour chaque situation, choisis un code parmi NRZ unipolaire, NRZ bipolaire, NRZ bipolaire M-aire, RZ unipolaire, RZ bipolaire, Manchester, et justifie.
+
+1. Liaison longue avec des répéteurs **téléalimentés** par le câble, et récepteur qui doit **récupérer l'horloge** dans le signal.
+2. Câble de bande passante très limitée, $R_b$ élevé, pas de répéteurs, horloge transmise à part.
+3. Liaison courte, électronique la plus simple possible, horloge à récupérer, une composante continue ne gêne pas.
+4. Pourquoi ne choisit-on pas toujours un M-aire avec $M$ très grand ?","1. **Manchester** : pas de composante continue (le continu d'alimentation peut passer) et transition systématique à mi-bit, d'où la récupération d'horloge.
+2. **NRZ bipolaire M-aire** : occupation $0 < f \le R_b/n$, la bande la plus étroite pour un débit donné.
+3. **RZ unipolaire** : raie à la fréquence rythme $R_b$, codage tout simple (0 ou $V_0$).
+4. À $E_b/N_0$ fixé, le TEB se **dégrade** quand $M$ augmente (niveaux plus proches) : il faudrait plus de puissance pour garder la même qualité.",10
+Techniques de transmission,Codage en ligne et code de Gray,Conversions en code de Gray,"1. Convertis en code de Gray les mots binaires $110$, $1011$ et $0111$.
+2. Convertis en binaire naturel les mots Gray $101$, $1101$ et $1000$.
+3. Vérifie que les codes de Gray de 7 et 8 (sur 4 bits) ne diffèrent que d'un bit, alors qu'en binaire naturel les 4 bits changent.
+4. Une 16-QAM étiquetée en Gray a un taux d'erreur symbole $P_s = 4 \cdot 10^{-4}$. Estime le TEB.","1. Binaire → Gray : on garde le premier bit, puis $G_i = B_{i-1} \oplus B_i$.
+   - $110 \to 1,\ 1\oplus1,\ 1\oplus0 = \mathbf{101}$
+   - $1011 \to 1,\ 1\oplus0,\ 0\oplus1,\ 1\oplus1 = \mathbf{1110}$
+   - $0111 \to 0,\ 0\oplus1,\ 1\oplus1,\ 1\oplus1 = \mathbf{0100}$
+2. Gray → binaire : on garde le premier bit, puis $B_i = B_{i-1} \oplus G_i$.
+   - $101 \to 1,\ 1\oplus0 = 1,\ 1\oplus1 = 0 \Rightarrow \mathbf{110}$
+   - $1101 \to 1,\ 1\oplus1 = 0,\ 0\oplus0 = 0,\ 0\oplus1 = 1 \Rightarrow \mathbf{1001}$
+   - $1000 \to 1,\ 1,\ 1,\ 1 \Rightarrow \mathbf{1111}$
+3. $7 = 0111 \to 0100$ et $8 = 1000 \to 1100$ : seul le premier bit change. En binaire naturel, $0111 \to 1000$ change les 4 bits.
+4. $P_b \approx \dfrac{P_s}{\log_2 M} = \dfrac{4 \cdot 10^{-4}}{4} = \mathbf{10^{-4}}$.",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Nyquist : Manchester sur une paire torsadée,"1. On veut une liaison numérique à $R_b = 20\ \text{kbit/s}$ en codage Manchester. Quelle rapidité de modulation faut-il ?
+2. Le canal $[10\ \text{kHz}\ ;\ 25\ \text{kHz}]$ d'une paire torsadée est alloué. En l'absence de bruit, d'après le critère de Nyquist, peut-on garantir $20\ \text{kbit/s}$ en Manchester ?
+3. Avec ce même canal, quel débit maximal donnerait un NRZ bipolaire binaire ? Et un NRZ 4-aire ?","1. Manchester : $T_b = 2T_M$, donc $R_M = 2R_b = \mathbf{40\ kbaud}$.
+2. $B = 25 - 10 = 15\ \text{kHz}$, donc $(R_M)_{\max} = 2B = 30\ \text{kbaud}$. Il faudrait $40\ \text{kbaud} > 30\ \text{kbaud}$ : **non**, impossible sans IES.
+3. NRZ binaire : $R_b = R_M = \mathbf{30\ kbit/s}$. NRZ 4-aire : $R_b = 2 R_M = \mathbf{60\ kbit/s}$.
+
+:::piege
+La bande d'un canal $[f_1\ ;\ f_2]$ est $f_2 - f_1$, pas $f_2$. Et on compare des **baud** à des **baud**.
+:::",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Shannon : rapport signal sur bruit minimal,"Le canal $[10\ \text{kHz}\ ;\ 20\ \text{kHz}]$ est finalement alloué, mais il est bruité (puissance de bruit $N$).
+
+1. D'après la formule de Shannon-Hartley, quel rapport $C/N$ minimal garantit un débit binaire supérieur à $100\ \text{kbit/s}$ ? Donne-le en valeur naturelle et en dB.
+2. Avec ce rapport, quelle valence maximale $V$ autorise la relation $V^2 = 1 + C/N$ ? Retrouve le débit par Nyquist.","1. $B = 20 - 10 = 10\ \text{kHz}$ (une bande s'exprime en **Hz**). Shannon : $(R_b)_{\max} = B \log_2(1 + C/N)$, donc
+$$\frac{C}{N} \ge 2^{R_b / B} - 1 = 2^{100/10} - 1 = 2^{10} - 1 = \mathbf{1023}$$
+soit $10 \log(1023) \approx \mathbf{30\ dB}$.
+2. $V = \sqrt{1 + 1023} = \sqrt{1024} = 32$. Nyquist : $R_b = 2B \log_2 V = 2 \times 10^4 \times 5 = 100\ \text{kbit/s}$. Les deux formules coïncident.",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Débit maximal à probabilité d'erreur imposée,"Un code NRZ bipolaire de puissance $C = 100\ \text{mW}$ traverse un canal bruité de densité spectrale de puissance $N_0 = 10^{-3}\ \text{mW/Hz}$. On veut $P_e \le 10^{-3}$. Sur la courbe $P_e = f(E_b/N_0)$ du NRZ binaire ci-dessous, on lit qu'il faut $E_b/N_0 \ge 6{,}7\ \text{dB}$.
+
+[[widget:teb|m=2;lire=1e-3;xmax=14]]
+
+1. Convertis $N_0$ en W/Hz.
+2. Exprime $E_b/N_0$ en fonction de $C$, $R_b$ et $N_0$.
+3. Déduis-en le débit maximal.","1. $1\ \text{mW} = 10^{-3}\ \text{W}$, donc $N_0 = 10^{-3}\ \text{mW/Hz} = \mathbf{10^{-6}\ W/Hz}$.
+2. $E_b = \dfrac{C}{R_b}$ (en J/bit), donc $\dfrac{E_b}{N_0} = \dfrac{C}{R_b \cdot N_0}$ (sans unité).
+3. $10 \log\left(\dfrac{C}{R_b N_0}\right) \ge 6{,}7 \Rightarrow \dfrac{C}{R_b N_0} \ge 10^{0{,}67} \approx 4{,}68$, d'où
+$$R_b \le \frac{C}{10^{0{,}67} \cdot N_0} = \frac{100 \cdot 10^{-3}}{4{,}68 \times 10^{-6}} \approx \mathbf{21{,}4\ kbit/s}$$
+
+:::methode
+Toujours tout passer en unités SI (W, W/Hz, bit/s) **avant** l'application numérique.
+:::",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Bande passante et taille d'alphabet,"1. Transmission binaire en bande de base (NRZ bipolaire) sur un canal de bande $B = 70\ \text{kHz}$, sans bruit. D'après Nyquist, quel est le débit binaire maximal $R_{b\max}$ sans IES ?
+2. Les symboles sont maintenant pris dans l'alphabet $\{\pm g(t)\ ;\ \pm 3g(t)\}$. Quelle bande faut-il pour transmettre sans IES au même débit $R_{b\max}$ ?
+3. La bande est fixée à $20\ \text{kHz}$. Quelle taille minimale d'alphabet assure le même débit sans IES ?","1. $(R_M)_{\max} = 2B = 140\ \text{kbaud}$ ; en NRZ binaire $R_b = R_M$, donc $R_{b\max} = \mathbf{140\ kbit/s}$.
+2. 4 symboles : $n = 2$, $R_M = R_b / 2 = 70\ \text{kbaud}$, et $B = R_M / 2 = \mathbf{35\ kHz}$.
+3. $(R_M)_{\max} = 2 \times 20 = 40\ \text{kbaud}$. Il faut $n \ge \dfrac{R_b}{(R_M)_{\max}} = \dfrac{140}{40} = 3{,}5$, donc $n = 4$ (entier supérieur) et $M = 2^4 = \mathbf{16}$ symboles.",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB","Compromis valence, TEB et limite de Shannon","Un émetteur délivre des codes NRZ bipolaires M-aires sur un canal bruité. $C$ et $N_0$ sont constants avec $C/N_0 = 10^7\ \text{s}^{-1}$. On veut le débit $R_b$ maximal avec un TEB $P_{eb} < 10^{-4}$.
+
+1. Exprime $\log(R_b)$ en fonction de $(E_b/N_0)_{\text{dB}}$.
+[[widget:teb|m=2,4,8;pb=1e-4]]
+
+2. Bande illimitée. Sur les courbes de probabilité d'erreur symbole (avec Gray, $P_s \approx P_{eb} \log_2 M$ : seuils $10^{-4}$, $2 \cdot 10^{-4}$, $3 \cdot 10^{-4}$), on lit les $E_b/N_0$ minimaux pour $P_{eb} < 10^{-4}$ : $8{,}3\ \text{dB}$ ($M = 2$), $12{,}2\ \text{dB}$ ($M = 4$), $16{,}4\ \text{dB}$ ($M = 8$). Calcule les débits maximaux. Quel $M$ donne le plus grand débit ?
+3. Le canal devient un passe-bas idéal de coupure $f_C = 250\ \text{kHz}$. Quel débit maximal donne Shannon-Hartley ?
+4. Quels débits maximaux donne Nyquist pour $M = 2, 4, 8$ ? Garde ceux qui respectent la limite de Shannon et calcule leur $(E_b/N_0)_{\text{dB}}$ minimal.
+5. En tenant compte aussi de la contrainte sur le TEB, quelle valeur de $M$ choisir ?","1. $\left(\dfrac{E_b}{N_0}\right)_{\text{dB}} = 10 \log\left(\dfrac{C}{R_b N_0}\right) = 10 \log\left(\dfrac{C}{N_0}\right) - 10 \log R_b = 70 - 10 \log R_b$, donc
+$$\log R_b = 7 - \frac{1}{10}\left(\frac{E_b}{N_0}\right)_{\text{dB}}$$
+2. $M = 2$ : $R_b < 10^{7 - 0{,}83} \approx 1{,}48\ \text{Mbit/s}$. $M = 4$ : $10^{5{,}78} \approx 0{,}60\ \text{Mbit/s}$. $M = 8$ : $10^{5{,}36} \approx 0{,}23\ \text{Mbit/s}$. Sans limite de bande, **$M = 2$** l'emporte.
+3. $N = N_0 B$, donc $\dfrac{C}{N} = \dfrac{10^7}{2{,}5 \cdot 10^5} = 40$ et
+$$(R_b)_{\max} = 250 \cdot 10^3 \times \log_2(41) \approx \mathbf{1{,}34\ Mbit/s}$$
+4. $(R_b)_{\max} = 2B \log_2 V$ : $0{,}5\ \text{Mbit/s}$ ($M = 2$), $1\ \text{Mbit/s}$ ($M = 4$), $1{,}5\ \text{Mbit/s}$ ($M = 8$). $M = 8$ dépasse Shannon (1,34 Mbit/s) : on garde $M = 2$ et $M = 4$.
+$M = 2$ : $10 \log\left(\dfrac{10^7}{0{,}5 \cdot 10^6}\right) = 10 \log 20 \approx 13\ \text{dB}$. $M = 4$ : $10 \log 10 = 10\ \text{dB}$.
+5. Il faut respecter les deux contraintes à la fois.
+   - $M = 2$ : il faut $E_b/N_0 \ge 13\ \text{dB}$ pour $0{,}5\ \text{Mbit/s}$, bien au-dessus des $8{,}3\ \text{dB}$ du TEB : on obtient $0{,}5\ \text{Mbit/s}$ avec un TEB très surdimensionné.
+   - $M = 4$ : le TEB impose $12{,}2\ \text{dB}$ (plus que les $10\ \text{dB}$ de la limite de bande), donc $\log R_b = 7 - 1{,}22$ et $R_b \approx 0{,}6\ \text{Mbit/s}$.
+
+**$M = 4$** donne le meilleur débit ($0{,}6\ \text{Mbit/s}$) tout en respectant $P_{eb} < 10^{-4}$.",30
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Capacité d'une ligne téléphonique,"Une ligne téléphonique analogique transmet la bande $[300\ \text{Hz}\ ;\ 3400\ \text{Hz}]$ avec un rapport signal sur bruit de $30\ \text{dB}$.
+
+1. Calcule la bande passante et le rapport $S/N$ en valeur naturelle.
+2. Calcule la capacité de Shannon-Hartley.
+3. Sans bruit, quelle rapidité de modulation maximale autorise Nyquist ? Quelle valence faudrait-il pour atteindre la capacité de la question 2 ?","1. $B = 3400 - 300 = \mathbf{3100\ Hz}$ ; $S/N = 10^{30/10} = \mathbf{1000}$.
+2. $\log_2(1001) = 3{,}32 \times \log(1001) \approx 9{,}97$, donc
+$$C = 3100 \times 9{,}97 \approx \mathbf{30{,}9\ kbit/s}$$
+3. $(R_M)_{\max} = 2B = 6200\ \text{baud}$. Il faut $\log_2 V = \dfrac{30{,}9 \cdot 10^3}{6200} \approx 4{,}98$, soit $V \approx 31{,}6$ ; on retrouve $V = \sqrt{1 + S/N} = \sqrt{1001}$.
+
+:::piege
+Dans $\log_2(1 + S/N)$, on met $S/N = 1000$, **jamais** $30$.
+:::",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB","Bruit, rapport S/N et Eb/N0 en décibels","Au récepteur, le signal utile a une puissance $P_S = -90\ \text{dBm}$. La densité spectrale de bruit vaut $N_0 = -170\ \text{dBm/Hz}$. Le récepteur filtre une bande $B = 1\ \text{MHz}$ et le débit est $R_b = 2\ \text{Mbit/s}$.
+
+1. Calcule la puissance de bruit $N$ dans la bande, en dBm puis en W.
+2. Calcule le rapport $S/N$ en dB et en valeur naturelle.
+3. Calcule $E_b/N_0$ en dB. Vérifie la relation entre $S/N$ et $E_b/N_0$.
+4. La courbe du code utilisé exige $E_b/N_0 \ge 12\ \text{dB}$. Quel débit maximal peut-on viser à puissance égale ?","1. $N = N_0 \cdot B$, donc en dB : $N = -170 + 10 \log(10^6) = -170 + 60 = \mathbf{-110\ dBm}$, soit $10^{-11}\ \text{mW} = \mathbf{10^{-14}\ W}$.
+2. $(S/N)_{\text{dB}} = -90 - (-110) = \mathbf{20\ dB}$, soit $S/N = \mathbf{100}$.
+3. $E_b/N_0 = \dfrac{P_S}{N_0 R_b}$, donc $(E_b/N_0)_{\text{dB}} = -90 - (-170) - 10 \log(2 \cdot 10^6) = 80 - 63 = \mathbf{17\ dB}$.
+Vérification : $\dfrac{S}{N} = \dfrac{E_b}{N_0} \cdot \dfrac{R_b}{B}$, soit $17 + 10\log 2 = 17 + 3 = 20\ \text{dB}$. ✓
+4. $10 \log R_b \le 80 - 12 = 68$, donc $R_b \le 10^{6{,}8} \approx \mathbf{6{,}3\ Mbit/s}$ (il faudrait alors une bande plus large pour éviter l'IES).
+
+:::prop À retenir
+En dB, tout se fait par additions et soustractions : $N = N_0 + 10\log B$, $S/N = P_S - N$, $E_b/N_0 = P_S - N_0 - 10\log R_b$, avec $B$ en Hz et $R_b$ en bit/s.
+:::",20
+Techniques de transmission,"Signaux, puissance et décibels",Placer les raies d'un signal carré sur un spectre,"Un signal carré $s(t)$ vaut $+2\ \text{V}$ puis $-2\ \text{V}$ (rapport cyclique 50 %), à $f_0 = 1\ \text{kHz}$. Il est appliqué à un analyseur de spectre chargé par $50\ \Omega$.
+
+[[widget:spectre|raies=1:0;unite=dBm;f=kHz;fmax=8;ymin=-10;ymax=25;vide=1;titre=Spectre de puissance à compléter]]
+
+1. À quelles fréquences y a-t-il des raies jusqu'à $8\ \text{kHz}$ ? Y a-t-il une raie à 0 Hz ?
+2. Calcule l'amplitude crête du fondamental et des harmoniques 3, 5 et 7.
+3. Calcule la puissance de chaque raie en dBm et place-les sur le spectre.
+4. De combien de dB l'harmonique 3 est-il sous le fondamental ? Retrouve-le sans calculatrice.","1. Carré symétrique : uniquement les harmoniques **impairs**, à $1, 3, 5, 7\ \text{kHz}$. Pas de raie à 0 Hz (valeur moyenne nulle).
+2. $A_n = \dfrac{4E}{n\pi}$ avec $E = 2\ \text{V}$ : $A_1 \approx 2{,}55\ \text{V}$, $A_3 \approx 0{,}85\ \text{V}$, $A_5 \approx 0{,}51\ \text{V}$, $A_7 \approx 0{,}36\ \text{V}$.
+3. $P_n = \dfrac{A_n^2}{2R}$ : $P_1 = \dfrac{2{,}55^2}{100} \approx 64{,}8\ \text{mW} \approx 18{,}1\ \text{dBm}$, puis $8{,}6$ ; $4{,}1$ ; $1{,}2\ \text{dBm}$.
+
+[[widget:spectre|raies=1:18.1,3:8.6,5:4.1,7:1.2;unite=dBm;f=kHz;fmax=8;ymin=-10;ymax=25;titre=Spectre de puissance]]
+
+4. $A_3 = A_1 / 3$, donc $P_3 = P_1 / 9$ : $-10\log 9 = -20 \log 3 \approx -9{,}5\ \text{dB}$ (un peu moins que les $10\ \text{dB}$ d'un rapport 10). De même $A_5$ : $-20\log 5 \approx -14\ \text{dB}$.
+
+:::methode
+Une raie sinusoïdale : $P = A^2/(2R)$, puis $10\log(P / 1\ \text{mW})$. Entre deux raies, l'écart en dB vaut $20 \log$ du rapport des amplitudes.
+:::",20
+Techniques de transmission,"Signaux, puissance et décibels",Spectre d'une sinusoïde avec composante continue,"On considère $u(t) = 1{,}5 + 1{,}4 \cos\left(4000\pi t + \dfrac{\pi}{5}\right)\ \text{V}$, appliqué à $50\ \Omega$.
+
+1. Combien de raies a son spectre, à quelles fréquences ?
+2. Calcule la puissance de chaque raie en mW et en dBm.
+3. Trace le spectre de puissance (dBm) et le spectre de phase (degrés).
+4. Quelle est la puissance totale ?","1. Deux raies : la **valeur moyenne** à 0 Hz et la sinusoïde à $f_0 = \dfrac{4000\pi}{2\pi} = 2\ \text{kHz}$.
+2. Continu : $P_0 = \dfrac{U_0^2}{R} = \dfrac{2{,}25}{50} = 45\ \text{mW} \approx 16{,}5\ \text{dBm}$. Sinusoïde : $P_1 = \dfrac{A^2}{2R} = \dfrac{1{,}96}{100} = 19{,}6\ \text{mW} \approx 12{,}9\ \text{dBm}$.
+3. Phase : $\pi/5\ \text{rad} = 36°$.
+
+[[widget:spectre|raies=0:16.5,2:12.9;unite=dBm;f=kHz;fmax=3;ymin=-5;ymax=20;phases=2:36]]
+
+4. $P = 45 + 19{,}6 = 64{,}6\ \text{mW} \approx 18{,}1\ \text{dBm}$ (on additionne les mW, pas les dBm).",10
+Techniques de transmission,Codage en ligne et code de Gray,Reconnaître un code en ligne à son spectre,"Un flux à $R_b = 2\ \text{Mbit/s}$ est codé de trois façons. On obtient les densités spectrales ci-dessous.
+
+[[widget:dsp|codes=nrz-b;rb=2;titre=Figure 1]]
+
+[[widget:dsp|codes=manchester;rb=2;titre=Figure 2]]
+
+[[widget:dsp|codes=rz-u;rb=2;titre=Figure 3]]
+
+1. Pour chaque figure, donne la largeur du premier lobe et déduis-en $R_M$.
+2. Laquelle a une composante à 0 Hz ? Laquelle a une raie à la fréquence rythme $R_b$ ?
+3. Identifie le code de chaque figure parmi : NRZ bipolaire, RZ unipolaire, Manchester.
+4. Laquelle choisir pour des répéteurs téléalimentés avec récupération d'horloge ?","1. Figure 1 : premier zéro à $2\ \text{MHz}$, $R_M = 2\ \text{Mbaud} = R_b$. Figures 2 et 3 : premier zéro à $4\ \text{MHz}$, $R_M = 4\ \text{Mbaud} = 2R_b$.
+2. Figure 3 : raie (flèche) à 0 Hz **et** raie à $R_b = 2\ \text{MHz}$. La figure 2 s'annule en 0 Hz.
+3. Figure 1 : **NRZ bipolaire** (lobe $0 \to R_b$, maximum en 0, pas de raie). Figure 2 : **Manchester** (nul en 0, maximum vers $0{,}74 R_b \approx 1{,}5\ \text{MHz}$). Figure 3 : **RZ unipolaire** (lobe $0 \to 2R_b$, raies à 0 et $R_b$).
+4. **Manchester** : pas de continu et horloge récupérable par filtrage passe-bande autour de $R_b$.",10
+Techniques de transmission,"Limites du canal : Nyquist, Shannon, TEB",Lire une courbe de TEB et en déduire le débit,"Un émetteur NRZ M-aire délivre $C = 10\ \text{mW}$ sur un canal de densité de bruit $N_0 = 10^{-9}\ \text{W/Hz}$. On vise un TEB $\le 10^{-4}$, avec étiquetage de Gray.
+
+[[widget:teb|m=2,4,8]]
+
+1. Calcule $C/N_0$ en $\text{s}^{-1}$ puis en dB·Hz.
+2. Lis sur les courbes l'$E_b/N_0$ minimal pour $M = 2$ et $M = 4$ (seuils $P_s = 10^{-4}$ et $2 \cdot 10^{-4}$).
+3. Déduis-en le débit maximal dans chaque cas.","1. $C/N_0 = \dfrac{10^{-2}\ \text{W}}{10^{-9}\ \text{W/Hz}} = 10^{7}\ \text{s}^{-1}$, soit $70\ \text{dB}\cdot\text{Hz}$.
+2. Lecture :
+
+[[widget:teb|m=2,4;pb=1e-4]]
+
+$M = 2$ : $\approx 8{,}4\ \text{dB}$ ; $M = 4$ : $\approx 12{,}2\ \text{dB}$.
+3. $10 \log R_b = 70 - (E_b/N_0)_{\text{dB}}$ : $M = 2$ : $R_b \le 10^{6{,}16} \approx \mathbf{1{,}45\ Mbit/s}$ ; $M = 4$ : $R_b \le 10^{5{,}78} \approx \mathbf{0{,}60\ Mbit/s}$.",10

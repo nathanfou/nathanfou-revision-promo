@@ -36,6 +36,7 @@ export function chargerLabo(): Promise<Labo> {
       await import('./moteur/widgets.js')
       await import('./moteur/graphe.js')
       await import('./moteur/widgets-graphes.js')
+      await import('./moteur/widgets-signaux.js')
       await import('./moteur/widgets-markov.js')
       return { Rendu: window.Rendu!, Widgets: window.Widgets! }
     })()
