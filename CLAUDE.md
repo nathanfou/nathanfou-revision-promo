@@ -90,6 +90,9 @@ toute fonctionnalité. Réponds à Nathan en français.
   (Markdown + KaTeX, figures `[[widget:graphe|g=id]]`, tableaux `[[widget:table|...]]`, corrigés animés
   `[[widget:algo|...]]`), chargé à la demande. Les graphes sont déclarés dans `labo/moteur/catalogue.js` ;
   `labo/moteur/*.js` est repris tel quel du Labo (hors lint). Contenu : `content/graphes/`.
+  Figures de signaux (`labo/moteur/widgets-signaux.js`) : `[[widget:spectre|...]]`, `[[widget:signal|...]]`
+  (codes en ligne, paliers, sinusoïdes), `[[widget:dsp|...]]`, `[[widget:teb|...]]` ; options en tête du fichier.
+  Contenu : `content/transmission/`.
 - Découpage en chantiers parallèles : `docs/chantiers.md`.
 
 ## Plan de construction (spec, section "Plan de construction")
