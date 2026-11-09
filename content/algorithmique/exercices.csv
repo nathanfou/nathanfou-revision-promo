@@ -1,0 +1,1080 @@
+"matiere","chapitre","titre","enonce","correction","duree_min"
+"Algorithmique","Annale 2025-2026","Q1. Avantages des sous-algorithmes (1,5 pt)","**Question 1 du contrôle 2025-2026 (1,5 pt).**
+
+Quels sont les avantages de l'utilisation de sous-algorithmes (fonctions et procédures) dans un programme ?
+
+:::astuce Indice
+Le cours de Méthodologie en donne six. Pour 1,5 pt, cite-les et illustre-les par une phrase.
+:::","**Étape 1 : rappeler ce qu'est un sous-algorithme.** Un module (procédure ou fonction) qui réalise un traitement précis, défini une fois, avec une interface (paramètres en entrée et en sortie), et qu'on peut appeler plusieurs fois.
+
+**Étape 2 : lister les avantages (cours « Décomposition fonctionnelle »).**
+
+1. **Meilleure structuration et lisibilité** : l'algorithme principal se lit comme une suite d'appels aux noms parlants.
+2. **Pas de répétition** : un traitement utilisé plusieurs fois n'est écrit qu'une seule fois.
+3. **Tests unitaires** : chaque module se teste séparément.
+4. **Travail en équipe** : on répartit les modules entre les développeurs.
+5. **Maintenance plus aisée** : une correction se fait à un seul endroit.
+6. **Réutilisation future** : un module autonome peut resservir dans d'autres programmes (bibliothèque).
+
+**Étape 3 : illustrer.** Exemple : une fonction fraisRetard(jours, boursier) est écrite une fois puis appelée pour les 30 emprunteurs (question 8).
+
+:::examen
+Une réponse en liste à puces, avec une phrase par avantage, suffit pour tous les points.
+:::","5"
+"Algorithmique","Annale 2025-2026","Q2. Lire 'O' ou 'N' : quelle boucle ? (1,5 pt)","**Question 2 du contrôle 2025-2026 (1,5 pt).**
+
+Quelle est la structure itérative la plus adaptée pour lire un caractère au clavier jusqu'à ce que l'utilisateur saisisse 'O' (oui) ou 'N' (non) ? Justifier et donner l'algorithme associé.
+
+:::astuce Indice
+Deux questions : connaît-on le nombre de saisies à l'avance ? Faut-il lire au moins une fois ?
+:::","**Étape 1 : choisir la boucle avec l'arbre du cours.**
+
+- Le nombre d'itérations est-il connu ? **Non** : on ne sait pas combien de fois l'utilisateur se trompera, donc pas de Pour.
+- Le traitement est-il exécuté au moins une fois ? **Oui** : il faut lire un caractère avant de pouvoir le tester.
+
+Réponse : la boucle **Faire … TantQue** (la condition est évaluée à la fin de l'itération).
+
+**Étape 2 : écrire la condition de continuation.** On recommence tant que la réponse n'est **ni** 'O' **ni** 'N' : (rep != 'O') **ET** (rep != 'N'). Avec un OU, la condition serait toujours vraie (boucle infinie).
+
+**Étape 3 : l'algorithme.**
+
+```
+Algorithme SaisieOuiNon
+/* Rôle : lire un caractère jusqu'à obtenir 'O' ou 'N' */
+/* Sortie : rep contient 'O' ou 'N' */
+Variable
+    rep : caractère
+Début
+    Faire
+        Ecrire(""Voulez-vous continuer (O/N) ? "")
+        Lire(rep)
+    TantQue ((rep != 'O') ET (rep != 'N'))
+    Ecrire(""Réponse enregistrée : "", rep)
+Fin
+```
+
+:::piege
+Un TantQue marche aussi, mais il oblige à écrire un Lire avant la boucle **et** un Lire dedans (duplication). C'est justement ce que le Faire … TantQue évite : c'est l'argument attendu.
+:::","5"
+"Algorithmique","Annale 2025-2026","Q3. Variable locale et variable globale (1,5 pt)","**Question 3 du contrôle 2025-2026 (1,5 pt).**
+
+Quelles sont les principales différences entre une variable locale et une variable globale ?","**Étape 1 : la différence de déclaration (portée).**
+
+| | Variable locale | Variable globale |
+|---|---|---|
+| Où est-elle déclarée ? | dans un sous-algorithme | dans l'algorithme principal |
+| Où est-elle connue ? | seulement dans ce sous-algorithme | dans tout l'algorithme |
+| Durée de vie | l'exécution du sous-algorithme | toute l'exécution de l'algorithme |
+
+**Étape 2 : le cas du même nom.** Si une variable locale porte le même nom qu'une globale, c'est **la locale** qui est utilisée dans le sous-algorithme (elle masque la globale).
+
+**Étape 3 : la bonne pratique.** Un module doit être autonome : il communique par ses **paramètres**, pas en modifiant des globales, sinon il n'est plus réutilisable et les effets cachés rendent la maintenance difficile.
+
+**Exemple pour illustrer :**
+
+```
+Procédure afficherDouble(E x : entier)
+Variable
+    d : entier          /* d est locale */
+Début
+    d <- 2 * x
+    Ecrire(d)
+Fin
+```
+
+Après l'appel, d n'existe plus : l'algorithme principal ne peut pas l'utiliser.","5"
+"Algorithmique","Annale 2025-2026","Q4. Enregistrement ou tableaux séparés ? (1,5 pt)","**Question 4 du contrôle 2025-2026 (1,5 pt).**
+
+Quel est l'avantage d'utiliser un type enregistrement plutôt que plusieurs tableaux séparés pour gérer des données structurées ? Expliquez.
+
+:::astuce Indice
+Imagine 30 étudiants avec un nom, un prénom et un âge : compare 3 tableaux et 1 tableau d'enregistrements.
+:::","**Étape 1 : rappeler les deux notions.** Un tableau regroupe des données **de même type** repérées par un indice. Un enregistrement regroupe des **champs de types différents** qui se rapportent **à la même entité**.
+
+**Étape 2 : comparer sur un exemple.**
+
+Avec des tableaux séparés :
+
+```
+noms : tableau[1..30] de chaîne
+prenoms : tableau[1..30] de chaîne
+ages : tableau[1..30] de entier
+```
+
+Une personne est éparpillée dans trois tableaux : rien ne garantit que noms[5], prenoms[5] et ages[5] parlent de la même personne (un tri ou une suppression sur un seul tableau décale tout).
+
+Avec un enregistrement :
+
+```
+Type
+    tpersonne = enregistrement
+        nom : chaîne
+        prénom : chaîne
+        âge : entier
+    finenreg
+Variable
+    groupe : tableau[1..30] de tpersonne
+```
+
+**Étape 3 : conclure sur les avantages.**
+
+1. **Cohérence** : toutes les données d'une personne sont regroupées dans groupe[i].
+2. **Lisibilité** : groupe[i].âge dit clairement ce qu'on manipule.
+3. **Manipulation globale** : on peut copier, trier ou passer une personne entière en paramètre d'un sous-algorithme.
+4. **Évolutivité** : ajouter un champ (ex. téléphone) ne demande pas un nouveau tableau.","5"
+"Algorithmique","Annale 2025-2026","Q5. Corriger la procédure minimum (2 pts)","**Question 5 du contrôle 2025-2026 (2 pts).**
+
+L'algorithme ci-dessous est-il correct ? S'il ne l'est pas, corrigez les erreurs.
+
+```
+Procédure minimum (E a,b : Entier) : Entier
+Variable
+    Max : Entier
+Début
+    Si (a>b) Alors
+        Min <- b
+    Sinon
+        Min <- a
+    Retour (a,b)
+Fin
+
+Variable
+    i, j : Entier;
+Début
+    Lire(i)
+    Lire(j)
+    Minimum (i, j)
+    Minimum (3, 8)
+Fin
+```
+
+:::astuce Indice
+Il y a au moins 5 erreurs : regarde l'en-tête, les déclarations, le retour, les noms et les appels.
+:::","**Non, il n'est pas correct.** On relève les erreurs une par une.
+
+**Erreur 1 : Procédure au lieu de Fonction.** L'en-tête annonce un type de retour (: Entier) et le module doit renvoyer le minimum : c'est une **fonction**. Une procédure ne renvoie pas de valeur.
+
+**Erreur 2 : variable mal déclarée.** On déclare Max mais on utilise Min : Min n'est pas déclarée. On déclare **Min : Entier**.
+
+**Erreur 3 : le retour.** Retour (a,b) renvoie deux valeurs, et pas la bonne. Une fonction renvoie **une** valeur : **Retourne Min**.
+
+**Erreur 4 : les noms.** La fonction s'appelle minimum mais on appelle Minimum : on garde le même nom partout.
+
+**Erreur 5 : les appels.** Une fonction renvoie une valeur qu'il faut **utiliser** (affectation ou expression). minimum(i, j) seul sur une ligne perd le résultat.
+
+**Erreur 6 (présentation) :** l'algorithme principal n'a pas d'en-tête Algorithme, et il manque des Ecrire avant les Lire.
+
+**Version corrigée :**
+
+```
+Algorithme TestMinimum
+
+Fonction minimum(E a, b : Entier) : Entier
+/* Rôle : renvoyer le plus petit des deux entiers a et b */
+Variable
+    Min : Entier
+Début
+    Si (a > b) Alors
+        Min <- b
+    Sinon
+        Min <- a
+    Retourne Min
+Fin
+
+Variable
+    i, j, m : Entier
+Début
+    Ecrire(""Entrez deux entiers : "")
+    Lire(i)
+    Lire(j)
+    m <- minimum(i, j)
+    Ecrire(""Le minimum est "", m)
+    Ecrire(""Le minimum de 3 et 8 est "", minimum(3, 8))
+Fin
+```
+
+:::examen
+Pour les 2 points : **lister** chaque erreur avec sa justification, **puis** donner la version corrigée. Une version corrigée sans explication ne rapporte pas tout.
+:::","10"
+"Algorithmique","Annale 2025-2026","Q6. Code PIN avec 3 tentatives (3 pts)","**Question 6 du contrôle 2025-2026 (3 pts).**
+
+Lors de la lecture d'un code PIN de type entier à 4 chiffres au clavier, il est important de contrôler que le code soit égal à 2025. Écrire les instructions algorithmiques correspondant à ce contrôle, sachant que l'utilisateur n'a droit qu'à 3 tentatives.
+
+Si le code est correct, afficher ""Accès autorisé"", sinon après 3 tentatives erronées, afficher ""Carte bloquée"" et arrêter l'algorithme.
+
+:::astuce Indice
+Il faut un compteur de tentatives et une boucle qui s'arrête dans deux cas : bon code, ou 3 essais épuisés. Après la boucle, un Si dit lequel des deux cas s'est produit.
+:::","**Étape 1 : identifier les données.**
+
+- Constantes : le bon code CODE = 2025 et le nombre maximal d'essais MAX = 3.
+- Variables : pin (le code saisi) et essais (le nombre de tentatives faites).
+
+**Étape 2 : choisir la boucle.** On lit au moins une fois et on ne sait pas combien de fois (1, 2 ou 3) : **Faire … TantQue**.
+
+**Étape 3 : la condition de continuation.** On redemande si le code est faux **ET** qu'il reste des essais : (pin != CODE) ET (essais < MAX).
+
+**Étape 4 : après la boucle, savoir pourquoi on est sorti.** On teste **pin == CODE** (et non essais == 3 : un bon code au 3e essai donne aussi essais = 3).
+
+```
+Algorithme ControlePIN
+/* Rôle : vérifier un code PIN en 3 tentatives au plus */
+Constante
+    CODE <- 2025 : entier
+    MAX <- 3 : entier
+Variable
+    pin, essais : entier
+Début
+    essais <- 0
+    Faire
+        Ecrire(""Saisissez votre code PIN (4 chiffres) : "")
+        Lire(pin)
+        essais <- essais + 1
+        Si ((pin != CODE) ET (essais < MAX)) Alors
+            Ecrire(""Code faux, il vous reste "", MAX - essais, "" essai(s)"")
+    TantQue ((pin != CODE) ET (essais < MAX))
+    Si (pin == CODE) Alors
+        Ecrire(""Accès autorisé"")
+    Sinon
+        Ecrire(""Carte bloquée"")   /* l'algorithme s'arrête */
+Fin
+```
+
+**Étape 5 : vérifier sur des cas.**
+
+| Saisies | Tours | Affichage |
+|---|---|---|
+| 2025 | 1 | Accès autorisé |
+| 1111, 2025 | 2 | Accès autorisé |
+| 1111, 2222, 2025 | 3 | Accès autorisé |
+| 1111, 2222, 3333 | 3 | Carte bloquée |
+
+:::piege
+Ne pas écrire OU dans la condition : (pin != CODE) OU (essais < MAX) ferait continuer après un bon code saisi au premier essai.
+:::","10"
+"Algorithmique","Annale 2025-2026","Q7. Âges d'un groupe de 25 personnes (4 pts)","**Question 7 du contrôle 2025-2026 (4 pts).**
+
+Écrire un algorithme permettant à l'utilisateur de saisir les âges (entiers compris entre 1 et 120) d'un groupe de 25 personnes, de calculer et d'afficher :
+
+- le nombre de personnes mineures (âge < 18) ;
+- l'âge moyen du groupe ;
+- l'écart entre l'âge maximum et l'âge minimum.
+
+:::astuce Indice
+Deux boucles imbriquées : un Pour pour les 25 personnes, et dans chaque tour un Faire … TantQue pour contrôler que l'âge est dans [1 ; 120]. Pendant la saisie, mets à jour un compteur, une somme, un max et un min.
+:::","**Étape 1 : les variables.**
+
+- age (entier) : l'âge saisi ; i (entier) : compteur de personnes.
+- nbMineurs (entier), somme (entier), ageMax et ageMin (entiers), moyenne (réel).
+- Une constante N = 25.
+
+**Étape 2 : les initialisations** (avant la boucle) :
+
+- nbMineurs <- 0 et somme <- 0 ;
+- ageMax <- 0 (plus petit que tout âge valide) et ageMin <- 121 (plus grand que tout âge valide).
+
+**Étape 3 : la boucle principale.** Le nombre de personnes est connu (25) : boucle **Pour**. Dans chaque tour, saisie contrôlée avec **Faire … TantQue** ((age < 1) OU (age > 120)).
+
+**Étape 4 : les mises à jour** à chaque âge valide : compter si mineur, ajouter à la somme, comparer au max et au min.
+
+**Étape 5 : après la boucle**, calculer la moyenne (division réelle) et l'écart.
+
+```
+Algorithme StatistiquesAges
+/* Rôle : saisir 25 âges valides et afficher le nombre de mineurs,
+   l'âge moyen et l'écart entre l'âge max et l'âge min */
+Constante
+    N <- 25 : entier
+Variable
+    i, age, nbMineurs, somme, ageMax, ageMin : entier
+    moyenne : réel
+Début
+    nbMineurs <- 0
+    somme <- 0
+    ageMax <- 0
+    ageMin <- 121
+    Pour i de 1 à N
+        Début
+            Faire
+                Ecrire(""Âge de la personne "", i, "" (1 à 120) : "")
+                Lire(age)
+            TantQue ((age < 1) OU (age > 120))
+            Si (age < 18) Alors
+                nbMineurs <- nbMineurs + 1
+            somme <- somme + age
+            Si (age > ageMax) Alors
+                ageMax <- age
+            Si (age < ageMin) Alors
+                ageMin <- age
+        Fin
+    moyenne <- somme / N
+    Ecrire(""Nombre de mineurs : "", nbMineurs)
+    Ecrire(""Âge moyen : "", moyenne)
+    Ecrire(""Écart max - min : "", ageMax - ageMin)
+Fin
+```
+
+**Étape 6 : vérifier sur un petit cas** (3 personnes pour l'exemple) : 10, 40, 25.
+
+| Après | nbMineurs | somme | ageMax | ageMin |
+|---|---|---|---|---|
+| 10 | 1 | 10 | 10 | 10 |
+| 40 | 1 | 50 | 40 | 10 |
+| 25 | 1 | 75 | 40 | 10 |
+
+Moyenne 75 / 3 = 25, écart 40 − 10 = 30.
+
+:::piege
+Les deux tests de max et de min doivent être deux Si séparés (et non Si … Sinon) : le premier âge est à la fois le max et le min.
+:::","20"
+"Algorithmique","Annale 2025-2026","Q8a. Fonction des frais de retard (2,5 pts)","**Question 8 a) du contrôle 2025-2026.**
+
+Une bibliothèque universitaire calcule les frais de retard selon les règles suivantes :
+
+- retard de 1 à 7 jours : 0,50 € par jour ;
+- retard de 8 à 30 jours : 1 € par jour ;
+- retard de plus de 30 jours : 1,50 € par jour ;
+- les étudiants boursiers bénéficient d'une réduction de 50 % sur les frais.
+
+(Exemple : pour un retard de 45 jours, un étudiant non boursier paie 52,50 €.)
+
+Écrire une **fonction** qui retourne le montant total des frais de retard pour un emprunteur dont le nombre de jours de retard et le statut boursier sont passés en paramètres.
+
+:::astuce Indice
+Commence par vérifier ta lecture du barème sur l'exemple : 45 jours doivent donner 52,50 €. Essaie 45 × 1,50 puis le calcul « par tranches » : lequel colle ?
+:::","**Étape 1 : l'interface de la fonction.** Deux paramètres en entrée : jours (entier) et boursier (booléen). Elle retourne un réel (le montant en euros).
+
+**Étape 2 : déchiffrer le barème avec l'exemple.**
+
+- 45 × 1,50 = 67,50 € : ce n'est pas ça.
+- Par tranches strictes (7 × 0,50 + 23 × 1 + 15 × 1,50) = 3,50 + 23 + 22,50 = 49 € : ce n'est pas ça non plus.
+- **30 × 1 + 15 × 1,50 = 30 + 22,50 = 52,50 €** : c'est la bonne lecture. Les 30 premiers jours sont comptés à 1 €, et chaque jour au-delà du 30e à 1,50 €.
+
+Le barème retenu est donc :
+
+| Retard | Frais |
+|---|---|
+| 0 jour | 0 € |
+| 1 à 7 jours | jours × 0,50 |
+| 8 à 30 jours | jours × 1 |
+| plus de 30 jours | 30 × 1 + (jours − 30) × 1,50 |
+
+**Étape 3 : la structure.** Plusieurs intervalles successifs : **Si … SinonSi … Sinon**. Puis la réduction : Si boursier, on divise par 2.
+
+```
+Fonction fraisRetard(E jours : entier, E boursier : booléen) : réel
+/* Rôle : calculer les frais de retard d'un emprunteur
+   Entrées : jours = nombre de jours de retard (>= 0),
+             boursier = VRAI quand l'étudiant est boursier
+   Sortie : le montant des frais en euros */
+Variable
+    frais : réel
+Début
+    Si (jours <= 0) Alors
+        frais <- 0
+    SinonSi (jours <= 7) Alors
+        frais <- jours * 0.5
+    SinonSi (jours <= 30) Alors
+        frais <- jours * 1
+    Sinon
+        frais <- 30 * 1 + (jours - 30) * 1.5
+    Si (boursier) Alors
+        frais <- frais * 0.5
+    Retourne frais
+Fin
+```
+
+**Étape 4 : tester.**
+
+| jours | boursier | Calcul | Résultat |
+|---|---|---|---|
+| 5 | FAUX | 5 × 0,50 | 2,50 € |
+| 20 | FAUX | 20 × 1 | 20 € |
+| 45 | FAUX | 30 + 15 × 1,50 | 52,50 € (l'exemple) |
+| 45 | VRAI | 52,50 × 0,5 | 26,25 € |
+
+:::examen
+Quand l'énoncé est ambigu, **écris en commentaire la lecture que tu retiens** et montre qu'elle redonne l'exemple : c'est ce qui prouve la « justification des réponses » demandée en tête du sujet.
+:::","10"
+"Algorithmique","Annale 2025-2026","Q8b. Tableau de 30 emprunteurs (2,5 pts)","**Question 8 b) du contrôle 2025-2026.**
+
+On reprend la bibliothèque de la question 8 a) et la fonction fraisRetard(jours, boursier) qui retourne le montant des frais de retard.
+
+Après avoir donné la structure (type enregistrement) d'un emprunteur, écrire un algorithme qui parcourt un tableau préalablement rempli de 30 emprunteurs et affiche les noms des emprunteurs avec le montant total de leurs frais de retard. Vous utiliserez la fonction réalisée précédemment.
+
+:::astuce Indice
+Quels champs faut-il au minimum ? Ceux qu'on affiche (le nom) et ceux qu'on passe à la fonction.
+:::","**Étape 1 : le type enregistrement.** Il contient le nom (à afficher) et les deux informations dont la fonction a besoin.
+
+```
+Type
+    temprunteur = enregistrement
+        nom : chaîne
+        prénom : chaîne
+        joursRetard : entier
+        boursier : booléen
+    finenreg
+```
+
+**Étape 2 : le tableau.** 30 emprunteurs : tab : tableau[1..30] de temprunteur. Il est déjà rempli (on ne le saisit pas).
+
+**Étape 3 : le parcours.** Nombre d'éléments connu : boucle **Pour** de 1 à 30. Pour chaque case, on accède aux champs avec le point : tab[i].nom, tab[i].joursRetard, tab[i].boursier.
+
+**Étape 4 : l'appel de la fonction.** Une fonction s'utilise dans une expression : on range son résultat dans une variable (ou on l'écrit directement dans le Ecrire).
+
+```
+Algorithme FraisBibliotheque
+/* Rôle : afficher le nom et les frais de retard des 30 emprunteurs */
+Constante
+    NB <- 30 : entier
+Type
+    temprunteur = enregistrement
+        nom : chaîne
+        prénom : chaîne
+        joursRetard : entier
+        boursier : booléen
+    finenreg
+
+/* la fonction fraisRetard de la question a) est définie ici,
+   avant l'algorithme principal */
+
+Variable
+    tab : tableau[1..NB] de temprunteur   /* déjà rempli */
+    i : entier
+    montant : réel
+Début
+    Pour i de 1 à NB
+        Début
+            montant <- fraisRetard(tab[i].joursRetard, tab[i].boursier)
+            Ecrire(tab[i].nom, "" : "", montant, "" €"")
+        Fin
+Fin
+```
+
+:::piege
+Écrire tab.nom[i] est faux : tab[i] est l'enregistrement, et .nom est son champ. On écrit donc tab[i].nom.
+:::","10"
+"Algorithmique","Entraînement type contrôle","Procédure ou fonction ?","Pour chaque traitement, dis s'il faut écrire une **procédure** ou une **fonction**, et donne son en-tête complet (modes E, S, ES et types).
+
+1. Calculer la moyenne d'un tableau de 10 réels.
+2. Afficher un menu à l'écran.
+3. Échanger les valeurs de deux variables entières.
+4. Dire si un entier est pair.
+5. Lire au clavier une note entre 0 et 20 et la rendre à l'appelant.","**Règle :** un traitement qui **renvoie une valeur** utilisée dans une expression est une fonction ; sinon c'est une procédure (qui peut quand même modifier des paramètres S ou ES).
+
+1. **Fonction** : elle renvoie un réel.
+```
+Fonction moyenne(E t : tableau[1..10] de réels) : réel
+```
+2. **Procédure** : elle affiche, sans rien renvoyer.
+```
+Procédure afficherMenu()
+```
+3. **Procédure** avec deux paramètres **ES** : les deux variables sont lues puis modifiées.
+```
+Procédure permuter(ES a, b : entier)
+```
+4. **Fonction** booléenne :
+```
+Fonction estPair(E n : entier) : booléen
+Début
+    Retourne (n % 2 == 0)
+Fin
+```
+5. Deux réponses acceptées : une **fonction** qui retourne la note, ou une **procédure** avec un paramètre **S**.
+```
+Fonction lireNote() : réel
+Procédure lireNote(S note : réel)
+```","5"
+"Algorithmique","Entraînement type contrôle","Passage de paramètres : appels valides ?","On dispose de :
+
+```
+Procédure permuter(ES a, b : Entier)
+Fonction carre(E x : Entier) : Entier
+Procédure division(E a, b : Entier, S q, r : Entier)
+```
+
+et des variables i, j, k, l : Entier (i et j ont une valeur).
+
+Pour chaque appel, dis s'il est valide et justifie.
+
+1. permuter(i, j)
+2. permuter(i, 5)
+3. k <- carre(i + 2)
+4. carre(i)
+5. division(17, 5, k, l)
+6. division(i, j, 3, l)
+7. k <- carre(i, j)","**Rappels :** un paramètre **E** accepte une variable ayant une valeur, une constante ou une expression. Un paramètre **S** ou **ES** exige une **variable** (on doit pouvoir y ranger un résultat). Le nombre et le type des arguments doivent correspondre.
+
+1. **Valide** : deux variables pour deux paramètres ES.
+2. **Non valide** : 5 n'est pas une variable, on ne peut pas y ranger la valeur de a (exemple exact du cours).
+3. **Valide** : l'expression i + 2 est évaluée et passée en entrée ; le résultat est affecté à k.
+4. **Non valide** : la valeur renvoyée par la fonction n'est pas utilisée (il faut l'affecter ou l'utiliser dans une expression, ex. Ecrire(carre(i))).
+5. **Valide** : 17 et 5 en entrée ; k et l sont des variables qui reçoivent quotient (3) et reste (2).
+6. **Non valide** : 3 est passé à un paramètre S.
+7. **Non valide** : carre a un seul paramètre, on lui en donne deux (correspondance en nombre).","5"
+"Algorithmique","Entraînement type contrôle","Corriger une fonction moyenne","L'algorithme suivant doit lire 3 notes et afficher leur moyenne. Est-il correct ? Corrige les erreurs en les justifiant.
+
+```
+Procédure moyenne(E a, b, c : Réel)
+Variable
+    s : Entier
+Début
+    s <- a + b + c
+    m <- s / 3
+Fin
+
+Variable
+    n1, n2, n3 : Réel
+Début
+    Lire(n1, n2, n3)
+    moyenne(n1, n2)
+    Ecrire(""Moyenne : "", m)
+Fin
+```","**Non.** Les erreurs :
+
+1. **Procédure au lieu de fonction** : on veut récupérer une valeur, il faut une fonction de type réel : Fonction moyenne(E a, b, c : Réel) : Réel.
+2. **Type de s** : la somme de trois réels doit être un **réel**, pas un entier.
+3. **m n'est pas déclarée** et elle est locale à moyenne : l'algorithme principal ne peut pas la lire (portée). Il faut **Retourne** la moyenne.
+4. **Nombre de paramètres** : moyenne(n1, n2) ne passe que 2 arguments pour 3 paramètres.
+5. **Appel d'une fonction** : son résultat doit être affecté ou utilisé dans une expression.
+6. **Présentation** : en-tête Algorithme manquant, Ecrire avant la saisie, un Lire par variable comme dans le cours.
+
+```
+Algorithme MoyenneTroisNotes
+
+Fonction moyenne(E a, b, c : Réel) : Réel
+/* Rôle : renvoyer la moyenne de trois réels */
+Variable
+    s : Réel
+Début
+    s <- a + b + c
+    Retourne s / 3
+Fin
+
+Variable
+    n1, n2, n3, m : Réel
+Début
+    Ecrire(""Entrez trois notes : "")
+    Lire(n1)
+    Lire(n2)
+    Lire(n3)
+    m <- moyenne(n1, n2, n3)
+    Ecrire(""Moyenne : "", m)
+Fin
+```","10"
+"Algorithmique","Entraînement type contrôle","Saisie contrôlée d'une note","1. Quelle boucle est la plus adaptée pour obliger l'utilisateur à saisir une note comprise entre 0 et 20 ? Justifie.
+2. Écris les instructions correspondantes, avec un message d'erreur quand la note est hors de l'intervalle.
+3. Écris la même saisie avec un TantQue et explique ce qui change.","**1.** Le nombre de saisies est inconnu et il faut saisir au moins une fois : **Faire … TantQue**.
+
+**2.** On continue tant que la note est **hors** de [0 ; 20] : (note < 0) OU (note > 20).
+
+```
+Faire
+    Ecrire(""Note (0 à 20) : "")
+    Lire(note)
+    Si ((note < 0) OU (note > 20)) Alors
+        Ecrire(""Erreur : la note doit être entre 0 et 20"")
+TantQue ((note < 0) OU (note > 20))
+```
+
+**3.** Avec un TantQue, la condition est testée **avant** d'entrer : il faut une première saisie avant la boucle, puis une autre à l'intérieur (comme l'exemple du rayon positif du cours).
+
+```
+Ecrire(""Note (0 à 20) : "")
+Lire(note)
+TantQue ((note < 0) OU (note > 20)) Faire
+    Début
+        Ecrire(""Erreur, recommencez (0 à 20) : "")
+        Lire(note)
+    Fin
+```
+
+Le message d'erreur est plus naturel, mais la saisie est écrite deux fois.","5"
+"Algorithmique","Entraînement type contrôle","Mot de passe en 5 tentatives","Écrire un algorithme qui demande un mot de passe (une chaîne) et le compare à la constante ""promo2026"". L'utilisateur a droit à 5 tentatives. Après chaque erreur, on affiche le nombre d'essais restants. On affiche ""Bienvenue"" si le mot de passe est bon, ""Compte verrouillé"" sinon.","Même schéma que le code PIN de l'annale : compteur, Faire … TantQue avec deux conditions d'arrêt, puis un Si qui teste **le mot de passe** (pas le compteur).
+
+```
+Algorithme MotDePasse
+/* Rôle : vérifier un mot de passe en 5 tentatives au plus */
+Constante
+    MDP <- ""promo2026"" : chaîne
+    MAX <- 5 : entier
+Variable
+    saisie : chaîne
+    essais : entier
+Début
+    essais <- 0
+    Faire
+        Ecrire(""Mot de passe : "")
+        Lire(saisie)
+        essais <- essais + 1
+        Si ((saisie != MDP) ET (essais < MAX)) Alors
+            Ecrire(""Mot de passe faux, encore "", MAX - essais, "" essai(s)"")
+    TantQue ((saisie != MDP) ET (essais < MAX))
+    Si (saisie == MDP) Alors
+        Ecrire(""Bienvenue"")
+    Sinon
+        Ecrire(""Compte verrouillé"")
+Fin
+```
+
+Vérification : au 5e essai faux, essais = 5, la condition (essais < 5) est FAUX donc on sort, et saisie != MDP donne « Compte verrouillé ».","10"
+"Algorithmique","Entraînement type contrôle","Températures de la semaine","Écrire un algorithme qui saisit les températures (réels entre −50 et 60) des 7 jours de la semaine et affiche :
+
+- le nombre de jours de gel (température < 0) ;
+- la température moyenne ;
+- l'amplitude (température max − température min).","Même structure que la question 7 de l'annale : un Pour pour les 7 jours, une saisie contrôlée dans chaque tour, des cumuls mis à jour à chaque valeur.
+
+Ici, on initialise max et min avec **la première valeur** (méthode sûre pour n'importe quel intervalle) : on traite le jour 1 à part, ou on utilise un test sur i.
+
+```
+Algorithme Temperatures
+/* Rôle : statistiques des températures d'une semaine */
+Constante
+    N <- 7 : entier
+Variable
+    i, nbGel : entier
+    t, somme, tMax, tMin, moyenne : réel
+Début
+    nbGel <- 0
+    somme <- 0
+    Pour i de 1 à N
+        Début
+            Faire
+                Ecrire(""Température du jour "", i, "" : "")
+                Lire(t)
+            TantQue ((t < -50) OU (t > 60))
+            Si (i == 1) Alors
+                Début
+                    tMax <- t
+                    tMin <- t
+                Fin
+            Si (t > tMax) Alors
+                tMax <- t
+            Si (t < tMin) Alors
+                tMin <- t
+            Si (t < 0) Alors
+                nbGel <- nbGel + 1
+            somme <- somme + t
+        Fin
+    moyenne <- somme / N
+    Ecrire(""Jours de gel : "", nbGel)
+    Ecrire(""Moyenne : "", moyenne)
+    Ecrire(""Amplitude : "", tMax - tMin)
+Fin
+```
+
+:::piege
+Initialiser tMax à 0 serait faux pour une semaine où il gèle tous les jours : le max resterait 0 alors qu'aucun jour n'a fait 0 °C.
+:::","20"
+"Algorithmique","Entraînement type contrôle","Tarif de parking par tranches","Un parking applique les tarifs suivants :
+
+- jusqu'à 1 heure : gratuit ;
+- de 2 à 4 heures : 2 € par heure ;
+- plus de 4 heures : 8 € pour les 4 premières heures, puis 3 € par heure supplémentaire ;
+- les abonnés ont 20 % de réduction.
+
+1. Écrire une fonction qui retourne le prix à payer, à partir du nombre d'heures (entier) et du statut abonné.
+2. Donner un type enregistrement pour un véhicule (immatriculation, heures, abonné).
+3. Écrire un algorithme qui parcourt un tableau déjà rempli de 50 véhicules, affiche l'immatriculation et le prix de chacun, puis la recette totale.","**1. La fonction.** Plusieurs intervalles : Si … SinonSi … Sinon, puis la réduction.
+
+```
+Fonction prixParking(E heures : entier, E abonne : booléen) : réel
+/* Rôle : prix du stationnement ; heures >= 0 */
+Variable
+    prix : réel
+Début
+    Si (heures <= 1) Alors
+        prix <- 0
+    SinonSi (heures <= 4) Alors
+        prix <- heures * 2
+    Sinon
+        prix <- 8 + (heures - 4) * 3
+    Si (abonne) Alors
+        prix <- prix * 0.8
+    Retourne prix
+Fin
+```
+
+Tests : 1 h donne 0 € ; 3 h donnent 6 € ; 6 h donnent 8 + 2 × 3 = 14 € (abonné : 11,20 €).
+
+**2. Le type.**
+
+```
+Type
+    tvehicule = enregistrement
+        immat : chaîne
+        heures : entier
+        abonne : booléen
+    finenreg
+```
+
+**3. Le parcours.** Pour de 1 à 50, appel de la fonction pour chaque case, et cumul de la recette.
+
+```
+Variable
+    parc : tableau[1..50] de tvehicule   /* déjà rempli */
+    i : entier
+    p, recette : réel
+Début
+    recette <- 0
+    Pour i de 1 à 50
+        Début
+            p <- prixParking(parc[i].heures, parc[i].abonne)
+            Ecrire(parc[i].immat, "" : "", p, "" €"")
+            recette <- recette + p
+        Fin
+    Ecrire(""Recette totale : "", recette, "" €"")
+Fin
+```","20"
+"Algorithmique","Entraînement type contrôle","Menu avec Selon","Écrire un algorithme qui lit deux réels a et b, puis affiche un menu :
+
+1 : somme, 2 : différence, 3 : produit, 4 : quotient.
+
+L'utilisateur tape son choix (entier) et on affiche le résultat. On traite le cas de la division par zéro et le cas d'un choix invalide.","On compare **une même variable** (choix) à plusieurs valeurs précises : structure **Selon … Dans**, avec un Sinon pour les choix invalides.
+
+```
+Algorithme Calculatrice
+Variable
+    a, b : réel
+    choix : entier
+Début
+    Ecrire(""a = "")
+    Lire(a)
+    Ecrire(""b = "")
+    Lire(b)
+    Ecrire(""1 : somme, 2 : différence, 3 : produit, 4 : quotient"")
+    Lire(choix)
+    Selon choix Dans
+        1 :
+            Ecrire(a + b)
+        2 :
+            Ecrire(a - b)
+        3 :
+            Ecrire(a * b)
+        4 :
+            Si (b == 0) Alors
+                Ecrire(""Division par zéro impossible"")
+            Sinon
+                Ecrire(a / b)
+    Sinon
+        Ecrire(""Choix invalide"")
+Fin
+```
+
+En C, chaque case se termine par un **break** (sinon on enchaîne sur le case suivant) et le Sinon devient **default**.","10"
+"Algorithmique","Entraînement type contrôle","Trace d'exécution","Sans exécuter de programme, donne ce qu'affiche chaque fragment.
+
+**a)**
+```
+s <- 0
+Pour i de 1 à 5
+    Si (i % 2 == 1) Alors
+        s <- s + i
+Ecrire(s)
+```
+
+**b)**
+```
+n <- 10
+c <- 0
+TantQue (n > 1) Faire
+    Début
+        n <- n / 2      /* division entière */
+        c <- c + 1
+    Fin
+Ecrire(n, "" "", c)
+```
+
+**c)**
+```
+x <- 0
+Faire
+    x <- x + 3
+TantQue (x < 0)
+Ecrire(x)
+```","**a) 9.** On ajoute les i impairs : 1 + 3 + 5 = 9.
+
+| i | i % 2 == 1 ? | s |
+|---|---|---|
+| 1 | oui | 1 |
+| 2 | non | 1 |
+| 3 | oui | 4 |
+| 4 | non | 4 |
+| 5 | oui | 9 |
+
+**b) « 1 3 ».**
+
+| Tour | n | c |
+|---|---|---|
+| départ | 10 | 0 |
+| 1 | 5 | 1 |
+| 2 | 2 | 2 |
+| 3 | 1 | 3 |
+
+Au test suivant, n > 1 est FAUX : on sort.
+
+**c) 3.** Le corps d'un Faire … TantQue s'exécute au moins une fois : x passe à 3, puis (3 < 0) est FAUX et on sort.","5"
+"Algorithmique","Entraînement type contrôle","Maximum d'un tableau et sa position","On dispose d'un tableau T de 20 entiers déjà rempli.
+
+1. Écrire une fonction qui retourne l'indice du plus grand élément.
+2. Écrire une procédure qui retourne, par des paramètres en sortie, le maximum et le minimum du tableau.
+3. Écrire les appels dans l'algorithme principal et afficher les résultats.","**1.** On garde l'indice du meilleur élément vu jusqu'ici, en partant du premier.
+
+```
+Fonction indiceMax(E T : tableau[1..20] de entier) : entier
+Variable
+    i, iMax : entier
+Début
+    iMax <- 1
+    Pour i de 2 à 20
+        Si (T[i] > T[iMax]) Alors
+            iMax <- i
+    Retourne iMax
+Fin
+```
+
+**2.** Deux résultats à rendre : une fonction n'en renvoie qu'un, donc on écrit une **procédure** avec deux paramètres **S**.
+
+```
+Procédure maxMin(E T : tableau[1..20] de entier, S max, min : entier)
+Variable
+    i : entier
+Début
+    max <- T[1]
+    min <- T[1]
+    Pour i de 2 à 20
+        Début
+            Si (T[i] > max) Alors
+                max <- T[i]
+            Si (T[i] < min) Alors
+                min <- T[i]
+        Fin
+Fin
+```
+
+**3.** Les paramètres S reçoivent des **variables**.
+
+```
+Variable
+    T : tableau[1..20] de entier   /* déjà rempli */
+    k, grand, petit : entier
+Début
+    k <- indiceMax(T)
+    Ecrire(""Le maximum "", T[k], "" est à l'indice "", k)
+    maxMin(T, grand, petit)
+    Ecrire(""Max : "", grand, "", min : "", petit)
+Fin
+```","10"
+"Algorithmique","Entraînement type contrôle","Moyennes d'une promo de 34 étudiants","Chaque étudiant a un nom, un prénom et 3 notes.
+
+1. Définir un type enregistrement tetudiant (les notes dans un tableau de 3 réels).
+2. Écrire une fonction moyenneEtudiant qui reçoit un étudiant et retourne sa moyenne.
+3. Écrire un algorithme qui parcourt un tableau déjà rempli de 34 étudiants, affiche le nom, la moyenne et ""admis"" ou ""ajourné"" (admis si moyenne ≥ 10), puis le nombre d'admis.","**1. Le type.** Un champ peut lui-même être un tableau.
+
+```
+Type
+    tetudiant = enregistrement
+        nom : chaîne
+        prénom : chaîne
+        notes : tableau[1..3] de réels
+    finenreg
+```
+
+**2. La fonction.** On passe l'étudiant entier en paramètre : c'est l'avantage de l'enregistrement.
+
+```
+Fonction moyenneEtudiant(E e : tetudiant) : réel
+Variable
+    k : entier
+    s : réel
+Début
+    s <- 0
+    Pour k de 1 à 3
+        s <- s + e.notes[k]
+    Retourne s / 3
+Fin
+```
+
+**3. L'algorithme.**
+
+```
+Variable
+    promo : tableau[1..34] de tetudiant   /* déjà rempli */
+    i, nbAdmis : entier
+    m : réel
+Début
+    nbAdmis <- 0
+    Pour i de 1 à 34
+        Début
+            m <- moyenneEtudiant(promo[i])
+            Si (m >= 10) Alors
+                Début
+                    Ecrire(promo[i].nom, "" : "", m, "" admis"")
+                    nbAdmis <- nbAdmis + 1
+                Fin
+            Sinon
+                Ecrire(promo[i].nom, "" : "", m, "" ajourné"")
+        Fin
+    Ecrire(""Nombre d'admis : "", nbAdmis)
+Fin
+```
+
+Accès à une note : promo[i].notes[k] (l'étudiant i, son champ notes, la case k).","20"
+"Algorithmique","Entraînement type contrôle","Raffinages successifs : dessiner une croix","On dispose du vocabulaire suivant pour piloter un stylet :
+
+- CENTRER : met le stylet au centre de la table ;
+- LEVER / BAISSER : lève ou baisse le stylet ;
+- NORD, EST, SUD, OUEST : déplace le stylet d'une unité dans la direction.
+
+En procédant par raffinages successifs, écrire l'algorithme qui dessine une croix de 2 unités de longueur sur chaque branche, centrée au milieu de la table.","**Niveau 1 (le problème) :** dessiner une croix.
+
+**Niveau 2 (décomposition) :** se placer au centre, tracer la branche nord, revenir, tracer la branche est, revenir, etc.
+
+**Niveau 3 (actions élémentaires) :** on écrit une procédure pour « tracer une branche puis revenir au centre » afin de ne pas répéter le code (avantage des sous-algorithmes). Le retour se fait stylet levé pour ne pas repasser.
+
+```
+Procédure brancheNord()
+Début
+    BAISSER
+    NORD
+    NORD
+    LEVER
+    SUD
+    SUD
+Fin
+/* brancheEst, brancheSud et brancheOuest sur le même modèle */
+
+Algorithme Croix
+Début
+    LEVER
+    CENTRER
+    brancheNord()
+    brancheEst()
+    brancheSud()
+    brancheOuest()
+Fin
+```
+
+**Variante plus courte :** tracer la barre verticale d'un coup (2 au nord, 4 au sud), puis la barre horizontale.
+
+```
+LEVER
+CENTRER
+NORD
+NORD
+BAISSER
+SUD
+SUD
+SUD
+SUD
+LEVER
+NORD
+NORD
+OUEST
+OUEST
+BAISSER
+EST
+EST
+EST
+EST
+LEVER
+```
+
+On est au dernier niveau de raffinage : il ne reste que des actions élémentaires.","10"
+"Algorithmique","Entraînement type contrôle","Portée : qu'affiche cet algorithme ?","```
+Algorithme Portee
+
+Procédure modif(E a : entier)
+Variable
+    x : entier
+Début
+    x <- 100
+    a <- a + 1
+    Ecrire(""Dans modif : x = "", x, "", a = "", a)
+Fin
+
+Procédure ajout(ES a : entier)
+Début
+    a <- a + 10
+Fin
+
+Variable
+    x, y : entier
+Début
+    x <- 1
+    y <- 5
+    modif(y)
+    Ecrire(""x = "", x, "", y = "", y)
+    ajout(y)
+    Ecrire(""y = "", y)
+Fin
+```
+
+Donne les trois lignes affichées et explique.","**Affichage :**
+
+```
+Dans modif : x = 100, a = 6
+x = 1, y = 5
+y = 15
+```
+
+**Explications :**
+
+1. Dans modif, x est une **variable locale** : elle masque la globale x. Mettre 100 dans la locale ne touche pas la globale.
+2. a est un paramètre **E** (par valeur) : il reçoit une **copie** de y (5). a passe à 6 dans modif, mais y reste à 5.
+3. Après modif, la locale x a disparu (durée de vie = l'exécution du sous-algorithme) : on affiche la globale, x = 1.
+4. Dans ajout, a est **ES** (par variable) : a désigne y lui-même, donc y devient 15.","5"
+"Algorithmique","Entraînement type contrôle","Traduire en C : périmètre avec contrôle","Voici l'algorithme du cours, complété par un contrôle de saisie.
+
+```
+Algorithme Perimetre_Cercle
+Constante
+    PI <- 3.1416 : réel
+Variable
+    rayon, perimetre : réel
+Début
+    Faire
+        Ecrire(""Rayon : "")
+        Lire(rayon)
+    TantQue (rayon <= 0)
+    perimetre <- 2 * PI * rayon
+    Ecrire(""Le périmètre est : "", perimetre)
+Fin
+```
+
+Traduis-le en C.","Correspondances : Constante devient **const** (ou #define), réel devient **float/double**, Lire devient **scanf** (avec &), Ecrire devient **printf**, Faire … TantQue devient **do … while ( );**, Début / Fin deviennent **{ }**, et chaque instruction se termine par **;**.
+
+```
+/* Rôle : périmètre d'un cercle de rayon strictement positif */
+#include <stdio.h>
+
+int main()
+{
+    const float PI = 3.1416;
+    double rayon, perimetre;
+
+    do {
+        printf(""Rayon : "");
+        scanf(""%lf"", &rayon);
+    } while (rayon <= 0);
+
+    perimetre = 2 * PI * rayon;
+    printf(""Le périmètre est : %4.2f\n"", perimetre);
+    return 0;
+}
+```
+
+Points de vigilance : %lf pour lire un double, &rayon pour donner l'adresse, le ; après le while du do … while, et = pour l'affectation.","10"
+"Algorithmique","Entraînement type contrôle","Choisir la boucle : 5 situations","Pour chaque situation, indique la boucle la plus adaptée (Pour, TantQue, Faire … TantQue) et justifie avec les deux questions du cours.
+
+1. Afficher la table de multiplication de 7 (de 1 à 10).
+2. Lire des nombres et les additionner jusqu'à ce que l'utilisateur tape 0.
+3. Lire un mot de passe jusqu'à ce qu'il soit bon.
+4. Diviser un nombre par 2 tant qu'il est pair (il peut être impair dès le départ).
+5. Parcourir un tableau de 30 emprunteurs.","**Les deux questions :** le nombre d'itérations est-il connu ? Sinon, le traitement est-il exécuté au moins une fois ?
+
+1. **Pour** : 10 tours, nombre connu.
+2. **Faire … TantQue** : nombre inconnu, et on lit au moins un nombre (TantQue (x != 0)).
+3. **Faire … TantQue** : nombre inconnu, au moins une saisie (comme la question 2 de l'annale).
+4. **TantQue** : nombre inconnu, et si le nombre est impair dès le départ, on ne divise **jamais** (0 tour).
+5. **Pour** : 30 éléments, nombre connu (question 8 b de l'annale).","5"
