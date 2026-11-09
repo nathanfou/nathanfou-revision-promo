@@ -89,17 +89,16 @@ toute fonctionnalité. Réponds à Nathan en français.
 
 ## Plan de construction (spec, section "Plan de construction")
 
-1. ✅ Projet Supabase, schéma, droits (ce socle).
-2. Connexion pseudo/mot de passe, barre de navigation, page Profil (photos provisoires).
-3. Script d'import CSV (`content/templates/*.csv`, clé secrète dans `.env`) + page Révision.
-4. QCM corrigés côté serveur : RPC `start_session`, `submit_qcm_answer`
-   (lit `question_answers`, écrit `activity_log`, renvoie correction), `end_session`.
-5. Flashcards (RPC `review_flashcard`, paliers 1/3/7/14 j dans `card_states`),
-   vue téléphone limitée aux flashcards, exercices (RPC `submit_exercise`).
-6. Classements (RPC `leaderboard('week'|'total')` déjà en place) et progression
-   (vue `chapter_progress` déjà en place) ; mise en ligne.
-7. Feed (tables `feed_items`, `reactions` déjà créées, temps réel activé).
-8. Images finales. 9. Gamification (nouvelles tables à concevoir). 10. Ajustements.
+1. ✅ Projet Supabase, schéma, droits.
+2. ✅ Connexion pseudo/mot de passe, barre de navigation, page Profil (photos provisoires).
+3. ✅ Script d'import CSV (`npm run content:import`) + page Révision.
+4. ✅ QCM corrigés côté serveur (`submit_qcm_answer`, `qcm_session_review`, table `qcm_answers`).
+5. ✅ Flashcards (`review_flashcard`, `flashcard_queue`), vue téléphone, exercices (`submit_exercise`).
+6. ✅ Classements et progression ; mise en ligne (Vercel déploie `main`).
+7. ✅ Feed (posts, réponses, réactions, événements auto, notifications, temps réel).
+8. Images finales (remplacer `public/avatars/pp_XX.webp` en gardant les noms).
+9. Gamification : badges, défis hebdo, duels, défis à un ami, modale de niveau
+   (sections v2 de la maquette, masquées pour l'instant). 10. Ajustements.
 
 Barème : 10 points par minute estimée (QCM juste = 10, carte = 3, exercice
 5/10/20/30 min = 50/100/200/300, partiel 50 %, à refaire 25 %).
