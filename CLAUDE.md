@@ -85,6 +85,11 @@ toute fonctionnalité. Réponds à Nathan en français.
   écrire `activity_log` (règle "une fois par jour" incluse, met à jour score/points de la session).
 - Migrations appliquées via le MCP Supabase : après `apply_migration`, renommer le fichier local
   avec la version renvoyée par `list_migrations` pour que l'historique reste aligné.
+- Exercices au format du Labo Graphes (`src/features/exercices/labo/`) : un énoncé ou une correction
+  qui contient `$...$`, `**gras**`, `:::encadré` ou `[[widget:...]]` est rendu par le moteur du Labo
+  (Markdown + KaTeX, figures `[[widget:graphe|g=id]]`, tableaux `[[widget:table|...]]`, corrigés animés
+  `[[widget:algo|...]]`), chargé à la demande. Les graphes sont déclarés dans `labo/moteur/catalogue.js` ;
+  `labo/moteur/*.js` est repris tel quel du Labo (hors lint). Contenu : `content/graphes/`.
 - Découpage en chantiers parallèles : `docs/chantiers.md`.
 
 ## Plan de construction (spec, section "Plan de construction")

@@ -1,0 +1,757 @@
+"matiere","chapitre","titre","enonce","correction",duree_min
+"Graphes partie 2","Plus courts chemins : Dijkstra","Quel algorithme pour quel graphe ?","Pour chaque situation, donne l'algorithme le plus adapté et justifie en une phrase.
+
+1. Un réseau routier, poids = distances en kilomètres ; on veut les plus courts chemins depuis Toulouse.
+2. Un graphe d'états d'un jeu où chaque coup compte pour 1 ; on veut le nombre minimal de coups.
+3. Un graphe avec des poids négatifs et un circuit ; plus courts chemins depuis $A$.
+4. Le graphe d'un projet (sans circuit) ; on veut la **durée minimale** du projet, c'est-à-dire un plus long chemin.
+5. On veut la matrice de toutes les distances d'un graphe à poids positifs.
+
+:::astuce Indice
+Pose les deux questions dans l'ordre : poids positifs ? circuits ? Et pense que « durée minimale d'un projet » est un **plus long** chemin.
+:::","1. **Dijkstra** : les distances sont positives, c'est l'algorithme le plus efficace ($O(n^2)$).
+2. **Parcours en largeur** : tous les arcs ont le même poids, le plus court chemin est celui qui a le moins d'arcs, et la largeur visite les sommets par nombre d'arcs croissant ($O(m)$).
+3. **Bellman-Kalaba** : poids négatifs (Dijkstra exclu) et circuit (Bellman sans circuit exclu). Il détectera au passage un éventuel circuit absorbant.
+4. **Bellman sans circuit en version max** : le graphe est sans circuit, on le met en niveaux et une seule passe suffit ($O(m)$). Dijkstra ne sait pas calculer de plus long chemin.
+5. **Dijkstra depuis chaque sommet** (ou Roy-Floyd-Warshall en $O(n^3)$) ; on remplit la matrice ligne par ligne.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Racine et arborescence","On considère le graphe du cours (exemple 10).
+
+[[widget:graphe|g=dij-cours]]
+
+1. Le sommet $c$ est-il racine ? Et le sommet $a$ ?
+2. Les arcs $(c, e)$, $(e, d)$, $(d, a)$, $(d, b)$, $(a, f)$ forment-ils une arborescence ? De quelle racine ?
+3. Pourquoi les plus courts chemins depuis $a$ ne peuvent-ils pas former une arborescence couvrant tous les sommets ?","1. Depuis $c$ : $c \to a$, $c \to e$, $e \to d$, $d \to b$, $a \to f$. On atteint tous les sommets, **$c$ est racine**. Depuis $a$ : on atteint $b$, $f$, puis $d$ (par $f \to d$), mais aucun arc n'entre en $c$ : **$a$ n'est pas racine** ($c$ n'a pas de prédécesseur).
+2. Oui : 5 arcs pour 6 sommets, pas de cycle, et depuis $c$ un unique chemin vers chaque sommet ($c \to e \to d \to a \to f$ et $d \to b$). C'est une **arborescence de racine $c$**, celle des plus courts chemins (voir le sous-chapitre suivant).
+
+[[widget:graphe|g=dij-cours;vue=arbo;depart=c]]
+
+3. Les plus courts chemins depuis $a$ n'atteignent que les descendants de $a$. Comme $c$ (et $e$) ne sont pas atteignables, l'arborescence obtenue ne couvre pas tout : à la fin de Dijkstra, ces sommets gardent $\lambda = \infty$.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Principe d'optimalité","Dans un graphe à poids positifs, on sait que le chemin $[A, B, E, C, D]$ est $AD$-minimal, de poids 13, avec $p_{AB} = 5$, $p_{BE} = 3$, $p_{EC} = 1$, $p_{CD} = 4$.
+
+1. Donne toutes les distances $\lambda_{ij}$ que tu peux en déduire, avec le chemin minimal correspondant.
+2. Peut-on en déduire $\lambda_{DA}$ si le graphe est orienté ? Et s'il est non orienté ?","1. D'après le principe d'optimalité, toute portion du chemin est minimale. On lit les sommes partielles :
+
+| De, vers | $B$ | $E$ | $C$ | $D$ |
+| --- | --- | --- | --- | --- |
+| $A$ | 5 | 8 | 9 | 13 |
+| $B$ | | 3 | 4 | 8 |
+| $E$ | | | 1 | 5 |
+| $C$ | | | | 4 |
+
+Par exemple $\lambda_{BC} = 3 + 1 = 4$ par $[B, E, C]$.
+
+2. **Orienté** : non, rien ne dit qu'il existe un chemin de $D$ vers $A$. **Non orienté** : oui, on parcourt la chaîne à l'envers : $\lambda_{DA} = 13$ (et de même pour chaque couple). C'est pour ça que la matrice des poids est **symétrique** dans le cas non orienté.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Dijkstra et les poids négatifs","[[widget:graphe|g=dij-neg]]
+
+1. Applique Dijkstra depuis $A$. Quelle valeur obtiens-tu pour $\lambda_B$ ?
+2. Quel est le vrai plus court chemin de $A$ à $B$ ? Explique pourquoi Dijkstra se trompe.","1. Init : $\lambda_A = 0$. On sélectionne $A$ : $\lambda_B = 2$, $\lambda_C = 4$. On sélectionne $B$ (le plus petit, 2) : il devient **définitif** avec $\lambda_B = 2$. Puis $C$ : son successeur $B$ est déjà dans $S$, on ne le touche plus.
+
+[[widget:algo|g=dij-neg;algo=dijkstra;depart=A]]
+
+2. Le chemin $A \to C \to B$ pèse $4 - 3 = 1 < 2$. Dijkstra est **glouton** : il fige $B$ dès qu'il le sélectionne, en supposant qu'aucun détour ne peut faire mieux. C'est vrai seulement si les poids sont positifs (un détour ne fait qu'ajouter du poids). Ici, il faut Bellman-Kalaba (ou Bellman sans circuit, le graphe n'ayant pas de circuit), qui trouve $\lambda_B = 1$.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Vrai ou faux justifié (bonus)","Réponds par vrai ou faux, en justifiant.
+
+1. Si tous les poids sont positifs, un chemin minimal est toujours élémentaire.
+2. Les plus courts chemins depuis une racine forment un arbre couvrant de poids minimum.
+3. Avec des poids tous égaux à 1, Dijkstra et le parcours en largeur donnent les mêmes distances.","1. **Faux** dans l'absolu : la propriété 1 dit « élémentaire **ou** contient un circuit de poids nul ». Avec un circuit de poids 0, on peut le parcourir sans changer le poids. Mais il existe toujours un chemin minimal élémentaire (on retire le circuit).
+2. **Faux** : l'arborescence des plus courts chemins minimise chaque distance **depuis la racine**, l'ACPM minimise la **somme** des poids de l'arbre. Contre-exemple : triangle $A - B$ (2), $A - C$ (2), $B - C$ (1). Depuis $A$, les chaînes minimales gardent $A - B$ et $A - C$ (poids total 4) ; l'ACPM garde $B - C$ et une arête de poids 2 (poids 3).
+3. **Vrai** : la distance est alors le nombre d'arcs, que la largeur calcule ; Dijkstra donne la même chose, en plus lent.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Dijkstra sur le graphe du cours, depuis e","Applique Dijkstra au graphe de l'exemple 10 depuis le sommet $e$. Donne le tableau, les distances et l'arborescence.
+
+[[widget:graphe|g=dij-cours]]
+
+:::astuce Indice
+Un sommet n'a pas de prédécesseur atteignable depuis $e$ : sa marque restera infinie.
+:::","Les poids sont positifs : Dijkstra s'applique.
+
+[[widget:table|g=dij-cours;type=dijkstra;depart=e]]
+
+Distances : $\lambda_d = 2$, $\lambda_a = 4$ (par $d$), $\lambda_f = 5$ (par $a$), $\lambda_b = 7$ (par $d$ : $2 + 5 = 7$, alors que par $a$ on aurait $4 + 4 = 8$), et $\lambda_c = \infty$ : **$c$ n'a aucun prédécesseur**, ce n'est pas un descendant de $e$.
+
+[[widget:graphe|g=dij-cours;vue=arbo;depart=e]]
+
+[[widget:algo|g=dij-cours;algo=dijkstra;depart=e]]",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","TD 3, I.1 : chaînes Fi-minimales","Vérifie que l'application de Dijkstra au graphe $G_1$ (non orienté, valué positivement), à partir du sommet $F$, fournit l'arbre des chaînes $Fi$-minimales ci-dessous.
+
+[[widget:graphe|g=td3-g1]]
+
+[[widget:graphe|g=td3-g1;vue=arbo;depart=F;notes=non]]
+
+:::astuce Indice
+Chaque arête compte dans les deux sens. Commence par $F$ : ses voisins sont $A$ (7), $G$ (8), $D$ (15) et $E$ (19).
+:::","Les poids sont positifs : Dijkstra s'applique, chaque arête valant deux arcs.
+
+[[widget:table|g=td3-g1;type=dijkstra;depart=F]]
+
+Les valeurs surlignées donnent les pères : $A$ et $G$ depuis $F$, $B$ depuis $A$, $H$ depuis $G$, $C$ et $D$ depuis $H$, $E$ depuis $D$. On retrouve bien l'arbre de l'énoncé :
+
+- $\lambda_A = 7$, $\lambda_G = 8$, $\lambda_H = 11$, $\lambda_B = 12$, $\lambda_C = 13$, $\lambda_D = 14$, $\lambda_E = 18$.
+- Attention à $D$ : il vaut 15 dès la première ligne (arête $F - D$), puis 15 depuis $G$ (pas d'amélioration stricte), et enfin **14 depuis $H$** ($11 + 3$). De même $E$ passe de 19 à 18 par $D$.
+
+[[widget:algo|g=td3-g1;algo=dijkstra;depart=F]]",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","TD 3, I.3 : l'arbre depuis A","Applique Dijkstra à $G_1$ depuis $A$ et vérifie l'arbre des chaînes $Ai$-minimales donné par l'énoncé : $A - B$, $A - F$, $B - C$, $C - H$, $H - G$, $C - D$, $D - E$.
+
+[[widget:graphe|g=td3-g1]]","[[widget:table|g=td3-g1;type=dijkstra;depart=A]]
+
+Distances depuis $A$ : $B = 5$, $F = 7$, $C = 9$, $H = 11$, $D = 13$, $G = 14$, $E = 17$. Les pères (ligne de la valeur surlignée) donnent exactement l'arbre de l'énoncé.
+
+[[widget:graphe|g=td3-g1;vue=arbo;depart=A]]
+
+Point délicat : $G$ vaut 16 (arête directe), puis 15 depuis $F$, puis **14 depuis $H$** ($11 + 3$). L'arête $A - G$ de poids 16 n'est donc pas dans l'arbre.",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","Réseau de routeurs","Les poids sont des délais de transmission en millisecondes.
+
+[[widget:graphe|g=dij-ex1]]
+
+1. Calcule les délais minimaux depuis $R1$ vers tous les routeurs, avec le tableau de Dijkstra.
+2. Donne le chemin le plus rapide de $R1$ à $R7$.
+3. Si on ne voulait que le délai vers $R4$, à quelle étape pourrait-on s'arrêter ?","1. Poids positifs : Dijkstra depuis $R1$.
+
+[[widget:table|g=dij-ex1;type=dijkstra;depart=R1]]
+
+$\lambda = 0, 3, 1, 8, 10, 11, 12$ pour $R1, \dots, R7$.
+
+2. On remonte les pères depuis $R7$ : $R7 \leftarrow R6 \leftarrow R5 \leftarrow R4 \leftarrow R2 \leftarrow R3 \leftarrow R1$. Le chemin est $R1 \to R3 \to R2 \to R4 \to R5 \to R6 \to R7$, de délai $1 + 2 + 5 + 2 + 1 + 1 = 12$ ms.
+
+[[widget:graphe|g=dij-ex1;vue=arbo;depart=R1]]
+
+3. Dès que $R4$ est **sélectionné** (4e ligne, après $R1$, $R3$, $R2$) : sa valeur 8 est alors définitive, c'est le caractère glouton de Dijkstra.
+
+[[widget:algo|g=dij-ex1;algo=dijkstra;depart=R1]]",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","Un sommet hors d'atteinte","[[widget:graphe|g=dij-ex2]]
+
+1. Applique Dijkstra depuis $S$.
+2. Applique-le ensuite depuis $T$. Que se passe-t-il pour $S$ ? Comment l'interpréter ?","1. [[widget:table|g=dij-ex2;type=dijkstra;depart=S]]
+
+Distances : $T = 3$, $U = 5$ (par $T$, mieux que l'arc direct de poids 6), $W = 6$, $V = 8$ (par $W$), $X = 9$ (par $V$).
+
+2. Depuis $T$ : $U = 2$, $W = 3$, $V = 5$, $X = 6$, et **$S$ garde $\lambda = \infty$** : aucun arc n'entre en $S$, donc $T$ n'est pas racine et $S$ n'est pas un descendant de $T$. L'algorithme s'arrête quand le plus petit $\lambda$ hors de $S$ vaut $\infty$.
+
+[[widget:algo|g=dij-ex2;algo=dijkstra;depart=T]]",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","TD 3, I.2 : ce que donne l'arbre depuis F","Avec l'arbre des chaînes $Fi$-minimales de $G_1$ (exercice I.1) et le principe de Bellman, indique tous les termes des matrices $\Lambda$ (poids des chaînes $ij$-minimales) et $M$ (routage, $m_{ij}$ = sommet adjacent à $i$ sur la chaîne $ij$-minimale) qu'il est possible d'obtenir. Attention : $M$ n'est pas symétrique.
+
+[[widget:graphe|g=td3-g1;vue=arbo;depart=F]]
+
+:::astuce Indice
+Branches depuis $F$ : $F - A - B$, $F - G - H - C$, $F - G - H - D - E$. Le graphe est non orienté : chaque couple d'une même branche se lit dans les deux sens.
+:::","Distances depuis $F$ : $A = 7$, $B = 12$, $G = 8$, $H = 11$, $C = 13$, $D = 14$, $E = 18$. Branches :
+
+- $F - A - B$ ;
+- $F - G - H - C$ ;
+- $F - G - H - D - E$.
+
+Sur chaque branche, $\lambda_{xy} = \lambda_y - \lambda_x$ (par exemple $\lambda_{GE} = 18 - 8 = 10$) et, le graphe étant non orienté, $\lambda_{yx} = \lambda_{xy}$.
+
+[[widget:table|g=td3-g1;type=lambda;racines=F]]
+
+Routage : $m_{xy}$ est le sommet qui suit $x$ vers $y$ sur la branche, $m_{yx}$ celui qui précède $y$. Par exemple $m_{GE} = H$ mais $m_{EG} = D$.
+
+[[widget:table|g=td3-g1;type=routage;racines=F]]
+
+Les « ? » relient des sommets de branches différentes, par exemple $A$ et $G$ : la chaîne $A - F - G$ (poids 15) n'a aucune raison d'être minimale (et elle ne l'est pas : $\lambda_{AG} = 14$, voir I.3).",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","TD 3, I.3 : compléter avec l'arbre depuis A","Dijkstra depuis $A$ fournit l'arbre des chaînes $Ai$-minimales ci-dessous. Utilise-le pour calculer les termes manquants de $\Lambda$ et $M$.
+
+[[widget:graphe|g=td3-g1;vue=arbo;depart=A]]","Distances depuis $A$ : $B = 5$, $F = 7$, $C = 9$, $H = 11$, $G = 14$, $D = 13$, $E = 17$. Branches : $A - F$, $A - B - C - H - G$, $A - B - C - D - E$.
+
+On ajoute tous les couples de ces branches, par exemple $\lambda_{AG} = 14$ avec $m_{AG} = B$ et $m_{GA} = H$ ; $\lambda_{BD} = 13 - 5 = 8$ avec $m_{BD} = C$ ; $\lambda_{CG} = 14 - 9 = 5$.
+
+Avec les deux arbres, **toutes** les cases sont remplies :
+
+[[widget:table|g=td3-g1;type=lambda;racines=F,A]]
+
+[[widget:table|g=td3-g1;type=routage;racines=F,A]]
+
+Contrôle : la matrice $\Lambda$ est symétrique, et on retrouve la même matrice en lançant Dijkstra depuis chaque sommet.
+
+[[widget:table|g=td3-g1;type=lambda]]",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","Lire une route","Avec la matrice de routage complète de $G_1$ (exercice précédent), donne la route suivie par un paquet de $E$ vers $B$, puis de $B$ vers $E$. Retrouve leur longueur dans $\Lambda$.","**De $E$ vers $B$** : $m_{EB} = D$, puis $m_{DB} = C$, puis $m_{CB} = B$. Route $E \to D \to C \to B$, longueur $4 + 4 + 4 = 12 = \lambda_{EB}$.
+
+**De $B$ vers $E$** : $m_{BE} = C$, $m_{CE} = D$, $m_{DE} = E$. Route $B \to C \to D \to E$, la même chaîne à l'envers, longueur 12.
+
+Les deux routes empruntent les mêmes arêtes, mais les cases utilisées dans $M$ sont différentes : c'est pour ça que $M$ n'est pas symétrique.",5
+"Graphes partie 2","Plus courts chemins : Dijkstra","Exemple 11 du cours : finir la ligne a","Sur le graphe orienté de l'exemple 10 (et 11), l'arborescence depuis $c$ ne donne, dans la ligne $a$, que $\lambda_{af} = 1$ et $m_{af} = f$.
+
+1. Quel algorithme lancer pour compléter toute la ligne $a$ ? Depuis quel sommet ?
+2. Complète la ligne $a$ des deux matrices.","1. Les poids sont positifs : **Dijkstra depuis $a$**. La ligne $a$ de $\Lambda$ et de $M$ est exactement le résultat de Dijkstra depuis $a$.
+
+[[widget:table|g=dij-cours;type=dijkstra;depart=a]]
+
+2. $\lambda_{ab} = 4$ ($m_{ab} = b$), $\lambda_{af} = 1$ ($m_{af} = f$), $\lambda_{ad} = 4$ par $a \to f \to d$ ($m_{ad} = f$), et $\lambda_{ac} = \lambda_{ae} = \infty$ : $c$ et $e$ ne sont pas des descendants de $a$ (aucune route).",10
+"Graphes partie 2","Plus courts chemins : Dijkstra","Matrice complète d'un graphe orienté (bonus)","Calcule les matrices $\Lambda$ et $M$ complètes du réseau de routeurs, en lançant Dijkstra depuis chaque sommet (une case sans chemin vaut $\infty$ dans $\Lambda$ et « - » dans $M$).
+
+[[widget:graphe|g=dij-ex1]]","Une ligne par source, chacune issue d'un Dijkstra (et du principe d'optimalité pour aller plus vite : la ligne $R3$ se déduit en partie de l'arborescence depuis $R1$).
+
+[[widget:table|g=dij-ex1;type=lambda]]
+
+[[widget:table|g=dij-ex1;type=routage]]
+
+Les $\infty$ correspondent aux couples sans chemin ($R7$ n'a pas de successeur, rien ne revient vers $R1$).",20
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, II.c : chemins Ai-minimaux","Soit $G$ le graphe de dictionnaire :
+
+| $i$ | $A$ | $B$ | $C$ | $D$ | $E$ |
+| --- | --- | --- | --- | --- | --- |
+| $\Gamma^+(i)$ | $C, D, E$ | $A$ | $A, B$ | $B$ | $C, D$ |
+| $p_{ij}$ | $3, -5, -3$ | $2$ | $2, 1$ | $4$ | $2, -3$ |
+
+[[widget:graphe|g=td3-ii]]
+
+Applique l'algorithme de Bellman-Kalaba pour calculer les chemins $Ai$-minimaux. Dessine l'arborescence obtenue.
+
+:::astuce Indice
+Prédécesseurs : $\Gamma^-(A) = \{B, C\}$, $\Gamma^-(B) = \{C, D\}$, $\Gamma^-(C) = \{A, E\}$, $\Gamma^-(D) = \{A, E\}$, $\Gamma^-(E) = \{A\}$. N'oublie pas l'arc fictif $(A, A)$.
+:::","Il y a des poids négatifs et des circuits ($A \to C \to A$ par exemple) : seul Bellman-Kalaba s'applique.
+
+Prédécesseurs avec poids : $A$ : $B$ (2), $C$ (2), et l'arc fictif ; $B$ : $C$ (1), $D$ (4) ; $C$ : $A$ (3), $E$ (2) ; $D$ : $A$ ($-5$), $E$ ($-3$) ; $E$ : $A$ ($-3$).
+
+[[widget:table|g=td3-ii;type=bellman;depart=A]]
+
+Détail de la ligne $k = 2$ : $\lambda_2(B) = \min(\lambda_1(C) + 1, \lambda_1(D) + 4) = \min(4, -1) = -1$ ; $\lambda_2(C) = \min(0 + 3, -3 + 2) = -1$ ; $\lambda_2(D) = \min(0 - 5, -3 - 3) = -6$. Ligne 3 : $\lambda_3(B) = \min(-1 + 1, -6 + 4) = -2$. Ligne 4 identique à la ligne 3 : **STOP**.
+
+Résultat : $\lambda(B) = -2$, $\lambda(C) = -1$, $\lambda(D) = -6$, $\lambda(E) = -3$. Les pères donnent l'arborescence $A \to E$, $E \to C$, $E \to D$, $D \to B$ :
+
+[[widget:graphe|g=td3-ii;vue=arbo;depart=A;methode=bellman]]
+
+[[widget:algo|g=td3-ii;algo=bellman;depart=A]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, II.a : le parcours en profondeur ne suffit pas","Sur le même graphe, applique l'algorithme de recherche en profondeur des descendants de $A$ (successeurs par ordre alphabétique). Soit $H$ l'arborescence de racine $A$ obtenue. Vérifie que $H$ n'est pas une arborescence de chemins $Ai$-minimaux.
+
+[[widget:graphe|g=td3-ii]]","Profondeur depuis $A$ : $A$, puis $C$ (premier successeur), puis $B$ (successeur de $C$ ; $A$ est déjà vu), retour à $A$, puis $D$ ($B$ déjà vu), puis $E$ ($C$ et $D$ déjà vus).
+
+[[widget:graphe|g=td3-ii;vue=foret;depart=A]]
+
+$H$ contient les arcs $(A, C)$, $(C, B)$, $(A, D)$, $(A, E)$. Dans $H$, le chemin vers $D$ est l'arc $A \to D$ de poids $-5$, alors que $A \to E \to D$ pèse $-3 - 3 = -6 < -5$. Donc $H$ n'est **pas** une arborescence de chemins minimaux. Même constat pour $C$ (3 dans $H$, contre $-3 + 2 = -1$ par $A \to E \to C$) et pour $B$ ($3 + 1 = 4$ dans $H$, contre $-2$ par $A \to E \to D \to B$).
+
+Un parcours ne regarde pas les poids : il donne **une** arborescence, pas la bonne.",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, II.b : ACPM avec des poids négatifs","Dessine un arbre couvrant de poids minimum (ACPM) de $G$ (on oublie l'orientation des arcs). Quel est son poids ? Est-ce une arborescence ?
+
+:::astuce Indice
+Kruskal fonctionne avec des poids négatifs : on trie, et on garde chaque arête qui ne ferme pas de cycle. Il y a deux arêtes entre $A$ et $C$ (poids 3 et 2).
+:::","On oublie l'orientation (un arbre est une notion non orientée) ; entre $A$ et $C$ il y a deux arêtes, de poids 3 et 2.
+
+[[widget:graphe|g=td3-ii-nd]]
+
+Kruskal croissant :
+
+[[widget:table|g=td3-ii-nd;type=kruskal]]
+
+$A - D$ ($-5$), $A - E$ ($-3$) gardées ; $E - D$ ($-3$) rejetée (cycle $A, D, E$) ; $C - B$ (1) gardée ; à poids 2, on garde une arête qui relie $\{A, D, E\}$ à $\{B, C\}$ : ici $C - A$, et on a $n - 1 = 4$ arêtes.
+
+**Poids** : $-5 - 3 + 1 + 2 = -5$.
+
+**Arborescence ?** On remet l'orientation d'origine des arcs choisis : $C \to A$, $A \to D$, $A \to E$, $C \to B$. Depuis $C$, il y a un unique chemin vers chaque sommet : **oui, c'est une arborescence de racine $C$**. Attention, l'ACPM n'est pas unique (trois arêtes de poids 2 sont possibles) : avec l'arête $E - C$ (arc $E \to C$) on obtiendrait une arborescence de racine $A$, avec $B - A$ (arc $B \to A$) une arborescence de racine $C$. Dans tous les cas, ce n'est pas l'arborescence des chemins minimaux de la question c.",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, III.1 : tous les chemins minimaux ?","On considère le graphe suivant. Calcule tous les chemins de poids **minimal** entre deux sommets quelconques, avec l'algorithme de ton choix.
+
+[[widget:graphe|g=td3-iii]]
+
+:::astuce Indice
+Regarde le circuit $A \to C \to D \to A$ avant de te lancer dans les calculs.
+:::","**Choix de l'algorithme** : il y a des poids négatifs (Dijkstra exclu) et des circuits (Bellman sans circuit exclu) : Bellman-Kalaba.
+
+Le graphe est fortement connexe ($A \to C \to B \to E \to D \to A$ passe par tous les sommets), et il contient des circuits **négatifs** : $A \to C \to D \to A$ pèse $8 - 7 - 2 = -1$, $A \to C \to E \to D \to A$ pèse $8 + 4 - 15 - 2 = -5$.
+
+Bellman-Kalaba depuis $C$ ne se stabilise pas : les valeurs changent encore à $k = n = 5$.
+
+[[widget:algo|g=td3-iii;algo=bellman;depart=C]]
+
+**Conclusion** : depuis n'importe quel sommet on peut atteindre un circuit absorbant et y tourner indéfiniment : **aucun chemin minimal n'existe**, entre aucun couple de sommets. C'est la réponse attendue, justifiée par le circuit et son poids.",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","Poids négatifs sans circuit absorbant","[[widget:graphe|g=bk-ex]]
+
+1. Peut-on utiliser Dijkstra ? Bellman sans circuit ?
+2. Applique Bellman-Kalaba depuis $S$. À quelle étape s'arrête-t-on ?
+3. Donne le plus court chemin de $S$ à $T$ et son poids.","1. **Dijkstra** : non, il y a des poids négatifs. **Bellman sans circuit** : non, $C \to D \to C$ est un circuit (de poids $-4 + 6 = 2 > 0$, donc pas absorbant). Il reste Bellman-Kalaba.
+
+2. [[widget:table|g=bk-ex;type=bellman;depart=S]]
+
+Les valeurs changent jusqu'à $k = 5$ ; $\lambda_6 = \lambda_5$ : STOP à $k = 6 = n$ (pas de circuit absorbant).
+
+3. On remonte les pères depuis $T$ : $T \leftarrow D \leftarrow C \leftarrow A \leftarrow B \leftarrow S$. Chemin $S \to B \to A \to C \to D \to T$, de poids $2 - 1 + 3 - 4 + 1 = 1$. Il a 5 arcs : c'est pour ça qu'il a fallu aller jusqu'à $\lambda_5$.
+
+[[widget:algo|g=bk-ex;algo=bellman;depart=S]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","Le cours, exemple 12 : depuis 2 (bonus)","Applique Bellman-Kalaba au graphe de l'exemple 12 depuis le sommet 2. Quels sommets ne sont pas atteignables ?
+
+[[widget:graphe|g=bk-cours]]","[[widget:table|g=bk-cours;type=bellman;depart=2]]
+
+Le sommet 1 n'a aucun prédécesseur : il garde $\lambda = \infty$, il n'est pas descendant de 2. Les autres : $3 \to 1$, $6 \to -1$ (par 3), $4 \to 3$, $5 \to 1$ (par 4), $7 \to 0$ (par 6).
+
+[[widget:algo|g=bk-cours;algo=bellman;depart=2]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, III.2 : chemins Ci-maximaux","Sur le graphe du TD 3 (exercice III), utilise Bellman-Kalaba pour trouver les chemins $Ci$-maximaux.
+
+[[widget:graphe|g=td3-iii]]
+
+:::astuce Indice
+Avant de calculer, vérifie qu'aucun circuit n'est de poids **positif** : sinon il n'y aurait pas de chemin maximal.
+:::","**Existence** : les circuits du graphe passent tous par $D \to A \to C$ : $A \to C \to D \to A$ ($-1$), $A \to C \to E \to D \to A$ ($-5$), $A \to C \to B \to E \to D \to A$ ($-4$). Aucun n'est positif : les chemins maximaux existent.
+
+Bellman-Kalaba en version max, depuis $C$ (initialisation à $-\infty$, arc fictif $(C, C)$ de poids 0) :
+
+[[widget:table|g=td3-iii;type=bellman;depart=C;mode=max]]
+
+$\lambda_3 = \lambda_2$ : STOP. Chemins maximaux depuis $C$ : $B = 2$ ($C \to B$), $E = 5$ ($C \to B \to E$, mieux que l'arc direct de poids 4), $D = -7$ ($C \to D$, mieux que $C \to B \to E \to D$ qui pèse $-10$), $A = -9$ ($C \to D \to A$).
+
+[[widget:graphe|g=td3-iii;vue=arbo;depart=C;methode=bellman;mode=max]]
+
+[[widget:algo|g=td3-iii;algo=bellman;depart=C;mode=max]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","TD 3, III.3 : on inverse l'arc (A, C)","Si on inverse l'arc $(A, C)$ du graphe précédent, quel algorithme plus efficace peut-on utiliser pour calculer les chemins $Ci$-maximaux ? Applique-le.
+
+[[widget:graphe|g=td3-iii-inv]]","Avec l'arc $C \to A$, $A$ n'a plus de successeur, et tous les circuits passaient par $A \to C$ : le graphe est **sans circuit**. La preuve, c'est la mise en niveaux : $N_0 = \{C\}$, $N_1 = \{B\}$, $N_2 = \{E\}$, $N_3 = \{D\}$, $N_4 = \{A\}$.
+
+[[widget:graphe|g=td3-iii-inv;vue=niveaux]]
+
+On utilise donc **Bellman pour les graphes sans circuit**, en version max, en $O(m)$ au lieu de $O(nm)$ :
+
+- $\lambda(C) = 0$
+- $\lambda(B) = \lambda(C) + 2 = 2$
+- $\lambda(E) = \max(\lambda(B) + 3, \lambda(C) + 4) = \max(5, 4) = 5$
+- $\lambda(D) = \max(\lambda(C) - 7, \lambda(E) - 15) = \max(-7, -10) = -7$
+- $\lambda(A) = \max(\lambda(C) + 8, \lambda(D) - 2) = \max(8, -9) = 8$
+
+[[widget:algo|g=td3-iii-inv;algo=bellman-sc;depart=C;mode=max]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","Plus courts et plus longs chemins sur un graphe sans circuit","[[widget:graphe|g=bsc-ex]]
+
+1. Justifie qu'on peut utiliser Bellman pour les graphes sans circuit.
+2. Calcule les chemins minimaux depuis $a$.
+3. Calcule les chemins maximaux depuis $a$.","1. Mise en niveaux : $N_0 = \{a\}$, $N_1 = \{b\}$, $N_2 = \{c\}$, $N_3 = \{d\}$, $N_4 = \{e\}$, $N_5 = \{f\}$, $N_6 = \{g\}$. Tous les sommets sont placés : le graphe est sans circuit (les poids négatifs ne gênent pas cet algorithme).
+
+[[widget:table|g=bsc-ex;type=niveaux]]
+
+2. Minimaux, dans l'ordre $a, b, c, d, e, f, g$ :
+- $\lambda(b) = 3$ ; $\lambda(c) = \min(0 + 5, 3 - 2) = 1$ ; $\lambda(d) = \min(3 + 4, 1 + 6) = 7$ (père $b$, premier dans l'ordre à égalité) ;
+- $\lambda(e) = \min(1 + 3, 7 - 1) = 4$ ; $\lambda(f) = \min(7 + 2, 4 + 4) = 8$ ; $\lambda(g) = \min(8 + 1, 4 + 7) = 9$.
+
+[[widget:algo|g=bsc-ex;algo=bellman-sc;depart=a]]
+
+3. Maximaux : $\lambda(b) = 3$ ; $\lambda(c) = \max(5, 1) = 5$ ; $\lambda(d) = \max(7, 11) = 11$ ; $\lambda(e) = \max(5 + 3, 11 - 1) = 10$ ; $\lambda(f) = \max(13, 14) = 14$ ; $\lambda(g) = \max(15, 17) = 17$. Le plus long chemin vers $g$ est $a \to c \to d \to e \to g$.
+
+[[widget:algo|g=bsc-ex;algo=bellman-sc;depart=a;mode=max]]",10
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","Comparer les deux Bellman","Sur le graphe de l'exercice 15 du cours (sans circuit), on applique Bellman-Kalaba depuis 1.
+
+[[widget:graphe|g=bsc-cours]]
+
+1. Combien d'étapes faut-il avant le STOP ?
+2. Combien de calculs de $\lambda$ fait Bellman sans circuit ? Conclus sur l'intérêt des niveaux.","1. [[widget:table|g=bsc-cours;type=bellman;depart=1]]
+
+Il faut aller jusqu'à $\lambda_5$ (identique à $\lambda_4$) : 5 lignes de 7 sommets, chaque case demandant de parcourir tous les prédécesseurs.
+
+2. Bellman sans circuit calcule chaque $\lambda(j)$ **une seule fois** (6 calculs après $\lambda(1) = 0$), en regardant chaque arc une fois : $O(m)$ au lieu de $O(nm)$. Les mêmes valeurs, beaucoup moins de calculs : dès que le graphe se met en niveaux, c'est l'algorithme à choisir.",5
+"Graphes partie 2","Bellman : poids négatifs et plus longs chemins","Un circuit positif (bonus)","Sur le graphe de l'exemple 12 du cours (qui a le circuit $2 \to 6 \to 7 \to 2$), peut-on calculer les chemins **maximaux** depuis 1 ? Justifie avec Bellman-Kalaba.
+
+[[widget:graphe|g=bk-cours]]","Le circuit $2 \to 6 \to 7 \to 2$ pèse $2 + 1 + 1 = 4 > 0$. En version max, c'est l'équivalent d'un circuit absorbant : on peut le parcourir sans fin pour allonger le chemin. Bellman-Kalaba en max ne se stabilise pas : les valeurs augmentent encore à l'étape $n = 7$.
+
+[[widget:algo|g=bk-cours;algo=bellman;depart=1;mode=max]]
+
+Conclusion : **pas de chemin maximal** vers les sommets atteignables depuis ce circuit.",10
+"Graphes partie 2","Ordonnancement","TD 3, IV.1 : dessiner le graphe potentiels-tâches","Une entreprise étudie un procédé de construction d'un produit nouveau, fait des opérations suivantes. On veut un ordonnancement qui minimise la durée d'exécution.
+
+[[widget:table|g=ordo-td3;type=taches]]
+
+Dessine le graphe potentiels-tâches.","Un sommet par opération, plus $\alpha$ et $\omega$. Les arcs et leurs poids (durée de l'**origine**) :
+
+- $\alpha \to A$ (0) : $A$ n'a pas de prédécesseur ;
+- $A \to B$ et $A \to C$ (4) ; $B \to D$ et $B \to E$ (6) ; $C \to E$ et $C \to F$ (7) ; $D \to F$ (2) ;
+- $E \to \omega$ (6) et $F \to \omega$ (7) : $E$ et $F$ n'ont pas de successeur.
+
+[[widget:graphe|g=ordo-td3]]",5
+"Graphes partie 2","Ordonnancement","TD 3, IV.2 : dates au plus tôt et au plus tard","Sur le graphe de l'exercice précédent, calcule les dates de début au plus tôt $t_v$, puis au plus tard $t^*_v$. Quelle est la durée minimale du procédé ?
+
+[[widget:graphe|g=ordo-td3]]
+
+:::astuce Indice
+Ordre des niveaux : $\alpha$, $A$, puis $B$ et $C$, puis $D$ et $E$, puis $F$, puis $\omega$. Pour $E$ : $\max(t_B + 6, t_C + 7)$.
+:::","**Au plus tôt** (ordre des niveaux, max) :
+- $t_\alpha = 0$, $t_A = 0$, $t_B = t_A + 4 = 4$, $t_C = 4$, $t_D = t_B + 6 = 10$ ;
+- $t_E = \max(t_B + 6, t_C + 7) = \max(10, 11) = 11$ ;
+- $t_F = \max(t_C + 7, t_D + 2) = \max(11, 12) = 12$ ;
+- $t_\omega = \max(t_E + 6, t_F + 7) = \max(17, 19) = 19$.
+
+**Durée minimale : 19.**
+
+**Au plus tard** (ordre inverse, min) :
+- $t^*_\omega = 19$, $t^*_F = 19 - 7 = 12$, $t^*_E = 19 - 6 = 13$, $t^*_D = t^*_F - 2 = 10$ ;
+- $t^*_C = \min(t^*_E, t^*_F) - 7 = \min(13, 12) - 7 = 5$ ;
+- $t^*_B = \min(t^*_D, t^*_E) - 6 = \min(10, 13) - 6 = 4$ ;
+- $t^*_A = \min(t^*_B, t^*_C) - 4 = 0$, $t^*_\alpha = 0$.
+
+[[widget:algo|g=ordo-td3;algo=ordo]]",10
+"Graphes partie 2","Ordonnancement","Exemple 13 du cours, à la main","Refais sans regarder le cours le calcul des dates de l'exemple 13 : dessine le graphe, puis calcule $t_v$ et $t^*_v$ pour chaque tâche.
+
+[[widget:table|g=ordo-cours;type=taches]]","[[widget:graphe|g=ordo-cours;calque=ordo]]
+
+Les notes donnent « $t_v$ | $t^*_v$ ». Les calculs clés :
+- $t_E = \max(t_B + 5, t_C + 12) = \max(35, 42) = 42$ ; $t_G = \max(t_E + 4, t_F + 3) = \max(46, 45) = 46$ ;
+- $t_\omega = \max(t_G + 14, t_H + 8) = \max(60, 55) = 60$ : **durée 60** ;
+- $t^*_D = t^*_H - 17 = 52 - 17 = 35$ ; $t^*_C = \min(t^*_E, t^*_F) - 12 = \min(42, 43) - 12 = 30$ ; $t^*_B = t^*_E - 5 = 37$.
+
+[[widget:table|g=ordo-cours;type=ordo]]",10
+"Graphes partie 2","Ordonnancement","Rénovation d'un studio","Durées en jours.
+
+[[widget:table|g=ordo-ex;type=taches]]
+
+1. Dessine le graphe potentiels-tâches.
+2. Calcule la durée minimale des travaux et les dates au plus tôt et au plus tard.
+3. La plomberie démarre avec 1 jour de retard. Les travaux sont-ils retardés ? Et pour l'électricité ?","1. [[widget:graphe|g=ordo-ex]]
+
+2. Au plus tôt : $t_A = t_B = 0$, $t_C = 3$, $t_D = \max(0 + 3, 0 + 2) = 3$, $t_E = 3 + 4 = 7$, $t_F = \max(3 + 4, 3 + 5) = 8$, $t_G = \max(7 + 2, 8 + 3) = 11$, $t_\omega = 12$. **Durée minimale : 12 jours.**
+
+Au plus tard : $t^*_G = 11$, $t^*_E = 11 - 2 = 9$, $t^*_F = 11 - 3 = 8$, $t^*_D = 8 - 5 = 3$, $t^*_C = \min(9, 8) - 4 = 4$, $t^*_B = 3 - 2 = 1$, $t^*_A = \min(4, 3) - 3 = 0$.
+
+[[widget:table|g=ordo-ex;type=ordo]]
+
+3. **Plomberie** ($D$) : $t^*_D = t_D = 3$, aucune marge. Un jour de retard repousse la fin à 13 jours. **Électricité** ($C$) : $t^*_C - t_C = 1$, elle peut démarrer au jour 4 sans retarder les travaux.",10
+"Graphes partie 2","Ordonnancement","TD 3, IV.2 et IV.3 : tableau complet et tâches critiques","Pour le procédé du TD 3 (exercice IV), donne le tableau récapitulatif des $t_v$, $t^*_v$, $MT_v$ et $ml_v$. Quelles sont les tâches critiques ? Y a-t-il des tâches dont la marge libre diffère de la marge totale ? Pourquoi ?
+
+[[widget:table|g=ordo-td3;type=taches]]","Avec les dates de l'exercice précédent et $f_v = t_v + d_v$ :
+
+[[widget:table|g=ordo-td3;type=ordo]]
+
+Par exemple $ml_C = \min(t_E, t_F) - f_C = \min(11, 12) - 11 = 0$, et $ml_E = t_\omega - f_E = 19 - 17 = 2$.
+
+**Tâches critiques** ($t_v = t^*_v$) : $A$, $B$, $D$, $F$. Chemin critique $\alpha, A, B, D, F, \omega$, de longueur $4 + 6 + 2 + 7 = 19$.
+
+[[widget:graphe|g=ordo-td3;calque=ordo]]
+
+**$C$ a $ml_C = 0 < MT_C = 1$** : $C$ finit au plus tôt à 11, exactement quand $E$ peut commencer au plus tôt ($t_E = 11$). Un retard de $C$ ne retarde pas le projet (marge totale 1), mais il repousse le début de $E$ et réduit la marge de $E$. Pour $E$, $ml_E = MT_E = 2$ : sa marge ne gêne personne.",10
+"Graphes partie 2","Ordonnancement","Exemple 13 : les marges du cours","Avec le tableau des dates de l'exemple 13 (sous-chapitre précédent), calcule les marges totales et libres de $B$, $D$, $F$ et $H$, et explique la différence pour $D$.","- $B$ : $MT_B = 37 - 30 = 7$ ; $f_B = 35$, successeur $E$ avec $t_E = 42$ : $ml_B = 42 - 35 = 7$.
+- $D$ : $MT_D = 35 - 30 = 5$ ; $f_D = 47$, successeur $H$ avec $t_H = 47$ : $ml_D = 0$.
+- $F$ : $MT_F = 43 - 42 = 1$ ; $f_F = 45$, $t_G = 46$ : $ml_F = 1$.
+- $H$ : $MT_H = 52 - 47 = 5$ ; $f_H = 55$, $t_\omega = 60$ : $ml_H = 5$.
+
+$D$ et $H$ sont sur la même branche $\alpha, A, D, H, \omega$ qui a 5 unités d'avance sur le chemin critique. Cette marge de 5 est partagée : si $D$ l'utilise, $H$ ne l'a plus. D'où $ml_D = 0$ : tout retard de $D$ décale $H$.",10
+"Graphes partie 2","Ordonnancement","Retards sur le chantier","On reprend la rénovation du studio (durée minimale 12 jours).
+
+[[widget:table|g=ordo-ex;type=ordo]]
+
+1. Quelles sont les tâches critiques ?
+2. La peinture ($E$) prend 3 jours de plus que prévu. Conséquence ?
+3. La commande des meubles ($B$) prend 2 jours de plus. Conséquence ?","1. $MT = 0$ pour $A$, $D$, $F$, $G$ : chemin critique $\alpha, A, D, F, G, \omega$ ($3 + 5 + 3 + 1 = 12$).
+
+[[widget:graphe|g=ordo-ex;calque=ordo]]
+
+2. $MT_E = 2$ : on peut absorber 2 jours, pas 3. Le projet est retardé de $3 - 2 = 1$ jour (13 jours).
+3. $MT_B = 1$ : 2 jours de retard dépassent la marge de 1, le projet est retardé de 1 jour. (Et comme $ml_B = 1$, le premier jour de retard ne gênait personne.)",10
+"Graphes partie 2","Ordonnancement","TD 3, V : les vacances de Monsieur H. (bonus)","Avant de partir en vacances, Monsieur H. doit : (A) choisir le lieu, avant toute autre tâche ; (B) aller à l'office du tourisme ; (C) se faire vacciner ; (D) obtenir un visa, après être passé à l'office du tourisme ; (E) acheter les billets ; (F) préparer les valises ; (G) mettre billets, passeport et certificats de vaccination dans son portefeuille ; (H) aller à l'aéroport.
+
+| Opération | A | B | C | D | E | F | G | H |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Durée maximale | 35 | 7 | 25 | 15 | 5 | 20 | 2 | 1 |
+| Durée minimale | 25 | 3 | 10 | 5 | 3 | 16 | 0 | 0 |
+| Coût unitaire | 3 | 1 | 2 | 2 | 1 | 3 | 1 | 3 |
+
+Détermine un ordonnancement de coût minimum pour une durée minimale du projet : calcule d'abord l'ordonnancement à coût 0 (durées maximales), puis diminue progressivement la durée en réduisant les tâches les moins coûteuses.
+
+:::astuce Indice
+L'énoncé ne donne pas toutes les précédences : on prend celles du bon sens. $G$ après $C$, $D$ et $E$ (il faut le certificat, le visa et les billets) ; $H$ après $F$ et $G$ ; $B$, $C$, $E$, $F$ après $A$.
+:::","**Hypothèses** (l'énoncé du TD ne les écrit pas toutes ; si ton enseignant a donné d'autres précédences en séance, garde la méthode) : $B$, $C$, $E$, $F$ après $A$ ; $D$ après $B$ ; $G$ après $C$, $D$, $E$ ; $H$ après $F$ et $G$.
+
+**1. Coût 0 (durées maximales).**
+
+[[widget:graphe|g=vacances;calque=ordo]]
+
+[[widget:table|g=vacances;type=ordo]]
+
+Durée 63, chemin critique $A, C, G, H$ ($35 + 25 + 2 + 1$). Les autres chemins : $A, B, D, G, H$ dure 60 ; $A, F, H$ dure 56 ; $A, E, G, H$ dure 43.
+
+**2. Durée minimale possible.** Avec toutes les durées minimales, le chemin $A, F, H$ dure $25 + 16 + 0 = 41$ et c'est le plus long. **La durée minimale du projet est 41** et elle impose $A = 25$, $F = 16$, $H = 0$.
+
+**3. Coût minimum pour 41.**
+- Imposé : $A$ réduite de 10 ($10 \times 3 = 30$), $F$ de 4 ($4 \times 3 = 12$), $H$ de 1 ($3$). Sous-total 45.
+- Chemin $A, C, G, H$ : il faut $C + G \le 16$ (au lieu de 27). On réduit d'abord $G$, la moins chère (1 par unité) et commune à deux chemins : $G = 0$ (coût 2). Puis $C$ de 9 ($C = 16$, coût 18).
+- Chemin $A, B, D, G, H$ : il faut $B + D \le 16$ (au lieu de 22) : $B$ d'abord (coût 1) jusqu'à 3 (coût 4), puis $D$ de 2 ($D = 13$, coût 4).
+- $A, E, G, H$ : $25 + 5 + 0 + 0 = 30 \le 41$, rien à faire sur $E$.
+
+**Ordonnancement retenu** : $A = 25$, $B = 3$, $C = 16$, $D = 13$, $E = 5$, $F = 16$, $G = 0$, $H = 0$. Durée 41, surcoût minimum $45 + 2 + 18 + 4 + 4 = 73$. Les chemins $A, F, H$, $A, C, G, H$ et $A, B, D, G, H$ sont alors tous critiques.",20
+"Graphes partie 2","Flots et réseaux de transport","TD 4, I.1 : les châteaux d'eau","Deux châteaux d'eau $A$ et $B$ alimentent trois villages $C$, $D$ et $E$. Capacités des canalisations (l/s) : $AC = 40$, $AD = 20$, $BD = 50$, $BE = 20$. $A$ peut être alimenté avec 50 l/s, $B$ avec 80 l/s. Les besoins maximum sont $C$ : 70 l/s, $D$ : 30 l/s, $E$ : 30 l/s.
+
+Exprime le problème « répartir l'eau pour satisfaire au mieux ces contraintes » en termes de flot dans un réseau à dessiner.","Il y a deux sources et trois destinations : on ajoute une **super-source** $s$ et un **super-puits** $t$.
+
+- Arcs $s \to A$ (capacité 50) et $s \to B$ (80) : ce que chaque château peut recevoir.
+- Les canalisations : $A \to C$ (40), $A \to D$ (20), $B \to D$ (50), $B \to E$ (20).
+- Arcs $C \to t$ (70), $D \to t$ (30), $E \to t$ (30) : les besoins maximum.
+- L'arc de retour $(t, s)$ de capacité infinie.
+
+[[widget:graphe|g=td4-eau;flot=non]]
+
+« Satisfaire au mieux » = faire passer le plus d'eau possible de $s$ à $t$ : c'est un **problème de flot maximum**.",10
+"Graphes partie 2","Flots et réseaux de transport","TD 4, I.2 : un flot compatible ?","Le vecteur $\varphi$ suivant est-il un flot compatible ? Quelle est sa valeur ?
+
+| arc | $sA$ | $sB$ | $AC$ | $AD$ | $BD$ | $BE$ | $Ct$ | $Dt$ | $Et$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| $\varphi$ | 50 | 30 | 30 | 20 | 10 | 20 | 30 | 30 | 20 |","**Capacités** : chaque flux est entre 0 et la capacité ($sA$ : 50 sur 50, $AD$ : 20 sur 20, $Dt$ : 30 sur 30 et $BE$ : 20 sur 20 sont saturés).
+
+**Kirchhoff** :
+- $A$ : entrant $50$ = sortant $30 + 20$ ;
+- $B$ : entrant $30$ = sortant $10 + 20$ ;
+- $C$ : $30 = 30$ ; $D$ : entrant $20 + 10 = 30$ = sortant 30 ; $E$ : $20 = 20$.
+
+Avec l'arc de retour portant $50 + 30 = 80$, la loi est vraie aussi en $s$ et $t$. **$\varphi$ est un flot compatible, de valeur 80** (sortant de $s$ : $50 + 30$ ; entrant en $t$ : $30 + 30 + 20$).
+
+[[widget:graphe|g=td4-eau]]",5
+"Graphes partie 2","Flots et réseaux de transport","TD 4, II.1 : réseau de transmission","Le réseau suivant achemine des informations de $s$ vers $t$ ; entre parenthèses, le nombre maximum d'informations par arc. Le vecteur $\varphi$ porte les valeurs suivantes :
+
+| $(s,A)$ | $(s,D)$ | $(A,D)$ | $(A,B)$ | $(B,C)$ | $(C,A)$ | $(C,t)$ | $(D,E)$ | $(D,t)$ | $(E,C)$ | $(E,t)$ | $(t,s)$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2 | 3 | 2 | 2 | 2 | 2 | 1 | 3 | 2 | 1 | 2 | 5 |
+
+[[widget:graphe|g=td4-res;flot=non]]
+
+Pourquoi ce vecteur est-il un flot compatible ? Quelle est sa valeur ?","**Capacités** respectées sur tous les arcs (l'arc de retour a une capacité infinie).
+
+**Kirchhoff** :
+- $s$ : entrant $\varphi(t, s) = 5$, sortant $2 + 3 = 5$ ;
+- $A$ : entrant $\varphi(s, A) + \varphi(C, A) = 2 + 2 = 4$, sortant $\varphi(A, D) + \varphi(A, B) = 2 + 2 = 4$ ;
+- $B$ : $2 = 2$ ; $C$ : entrant $2 + 1 = 3$, sortant $2 + 1 = 3$ ;
+- $D$ : entrant $3 + 2 = 5$, sortant $3 + 2 = 5$ ; $E$ : entrant 3, sortant $1 + 2 = 3$ ;
+- $t$ : entrant $1 + 2 + 2 = 5$, sortant 5.
+
+C'est un **flot compatible de valeur 5** (le flux de l'arc de retour).
+
+[[widget:graphe|g=td4-res]]",5
+"Graphes partie 2","Flots et réseaux de transport","TD 4, II.2 : la liaison (E, t) tombe en panne","La liaison $(E, t)$ est défaillante. Comment modifier $\varphi$ en un flot $\varphi'$ de **même valeur** avec un flux nul sur $(E, t)$ ?
+
+[[widget:graphe|g=td4-res]]
+
+:::astuce Indice
+Il faut faire passer autrement les 2 unités qui empruntaient $(E, t)$. Ajouter un vecteur cycle à un flot donne encore un flot : cherche des cycles qui contiennent $(E, t)$ parcouru à contre-sens.
+:::","On retire 2 unités de $(E, t)$ en ajoutant à $\varphi$ deux vecteurs cycles (un flot plus des cycles reste un flot, propriété 1) :
+
+- **Cycle 1** $D \to t$, puis $(E, t)$ et $(D, E)$ à contre-sens : $+1$ sur $(D, t)$, $-1$ sur $(E, t)$, $-1$ sur $(D, E)$. Une unité passe directement par $D \to t$ au lieu de $D \to E \to t$. $(D, t)$ devient saturé (3).
+- **Cycle 2** $C \to t$, puis $(E, t)$, $(D, E)$, $(A, D)$, $(C, A)$ à contre-sens : $+1$ sur $(C, t)$, $-1$ sur les quatre autres. L'unité qui faisait $C \to A \to D \to E \to t$ va directement $C \to t$.
+
+$$\varphi' : (s,A) = 2,\ (s,D) = 3,\ (A,D) = 1,\ (A,B) = 2,\ (B,C) = 2,\ (C,A) = 1,\ (C,t) = 2,\ (D,E) = 1,\ (D,t) = 3,\ (E,C) = 1,\ (E,t) = 0$$
+
+Vérification de Kirchhoff : $A$ : $2 + 1 = 1 + 2$ ; $C$ : $2 + 1 = 1 + 2$ ; $D$ : $3 + 1 = 1 + 3$ ; $E$ : $1 = 1 + 0$. Les capacités sont respectées et la valeur reste $2 + 3 = 5$.
+
+[[widget:graphe|g=td4-res-panne]]",10
+"Graphes partie 2","Flots et réseaux de transport","Exemple 15 du cours : combinaisons de flots (bonus)","Sur un graphe à 6 arcs $u_1, \dots, u_6$, on donne les flots $\varphi_2 = (1, 0, 1, 0, 0, 0)$ et $\varphi_3 = (3, 1, 4, 1, -1, 2)$.
+
+1. Calcule $-\varphi_2 + 5\varphi_3$.
+2. Explique, sans vérifier sommet par sommet, pourquoi c'est un flot.
+3. Le vecteur $(1, 1, 1, 1, 1, 1)$ est-il forcément un flot ?","1. $-\varphi_2 + 5\varphi_3 = (-1 + 15,\ 5,\ -1 + 20,\ 5,\ -5,\ 10) = (14, 5, 19, 5, -5, 10)$.
+2. La loi de Kirchhoff est **linéaire** : si $\varphi_2$ et $\varphi_3$ la vérifient en chaque sommet, toute combinaison $a\varphi_2 + b\varphi_3$ la vérifie aussi (propriété 1).
+3. Non : il faut que, en chaque sommet, le nombre d'arcs entrants égale le nombre d'arcs sortants. Ça dépend du graphe (c'est vrai par exemple si le graphe est un circuit).",10
+"Graphes partie 2","Flots et réseaux de transport","TD 4, I.3 et I.4 : flot maximum des châteaux d'eau","En partant du flot compatible de valeur 80 (exercice I.2), détermine un flot maximum grâce à Ford-Fulkerson. Tous les villages pourront-ils satisfaire leurs besoins ?
+
+[[widget:graphe|g=td4-eau]]
+
+:::astuce Indice
+$s \to A$ est saturé, mais $s \to B$ ne l'est pas. Depuis $D$, l'arc $D \to t$ est saturé : regarde les arcs qui **arrivent** en $D$ avec un flux non nul.
+:::","**Itération 1.** On marque $s$ ; $B$ : $+s$ ($30 < 80$) ; $D$ : $+B$ ($10 < 50$) ; $E$ ne se marque pas depuis $B$ ($BE$ saturé) ; $D \to t$ est saturé, mais l'arc $(A, D)$ porte 20 : $A$ : $-D$ ; puis $C$ : $+A$ ($30 < 40$) ; $t$ : $+C$ ($30 < 70$).
+
+Chaîne augmentante $s \to B \to D \leftarrow A \to C \to t$ :
+$$\varepsilon = \min(80 - 30,\ 50 - 10,\ \varphi(A, D) = 20,\ 40 - 30,\ 70 - 30) = 10$$
+Nouveau flot : $sB = 40$, $BD = 20$, $AD = 10$, $AC = 40$, $Ct = 40$. **Valeur 90.**
+
+**Itération 2.** $s$ ; $B$ : $+s$ ; $D$ : $+B$ ; $A$ : $-D$ ($\varphi(A, D) = 10 > 0$). Depuis $A$ : $AC$ est saturé (40/40). Depuis $B$ : $BE$ saturé. Depuis $D$ : $Dt$ saturé. On ne peut plus marquer : **le flot est maximum, de valeur 90**.
+
+[[widget:algo|g=td4-eau;algo=ford]]
+
+[[widget:graphe|g=td4-eau;calque=flotmax]]
+
+**Besoins** : $C$ reçoit 40 l/s sur 70, $D$ 30 sur 30, $E$ 20 sur 30. Les besoins totaux sont $70 + 30 + 30 = 130 > 90$ : **non, tous les villages ne seront pas satisfaits** ($C$ et $E$ manquent d'eau). Les canalisations $AC$, $BE$ et l'arc $Dt$ forment le goulot (voir la coupe minimum).",10
+"Graphes partie 2","Flots et réseaux de transport","TD 4, II.3 : flot maximum du réseau de transmission","Calcule un flot maximum dans le réseau $R$ en partant du flot $\varphi$ de valeur 5, et donne sa valeur.
+
+[[widget:graphe|g=td4-res]]","**Itération 1.** $s$ ; $A$ : $+s$ ($2 < 6$) ; $D$ : $+s$ ($3 < 4$). Depuis $A$ : $AB$ saturé, $D$ déjà marqué ; en indirect, $(C, A)$ porte 2 : $C$ : $-A$. Depuis $D$ : $E$ : $+D$ ($3 < 4$), $t$ : $+D$ ($2 < 3$).
+
+Chaîne $s \to D \to t$, $\varepsilon = \min(4 - 3, 3 - 2) = 1$. Valeur **6**.
+
+**Itération 2.** $s$ ; $A$ : $+s$ ($sD$ est maintenant saturé). Depuis $A$ : $D$ : $+A$ ($2 < 3$), $C$ : $-A$. Depuis $D$ : $E$ : $+D$ ($Dt$ saturé). Depuis $C$ : $t$ : $+C$ ($1 < 4$).
+
+Chaîne $s \to A \leftarrow C \to t$ : $\varepsilon = \min(6 - 2,\ \varphi(C, A) = 2,\ 4 - 1) = 2$. On augmente $sA$ et $Ct$ de 2, on **diminue** $CA$ de 2. Valeur **8**.
+
+**Itération 3.** $s$ ; $A$ : $+s$ ; $D$ : $+A$ ; $E$ : $+D$. $C$ n'est plus marquable : l'arc $(C, A)$ a maintenant un flux nul, $(E, C)$ est saturé et $B$ n'est pas marqué ($AB$ saturé). $t$ n'est pas marquable ($Dt$, $Et$ saturés). **Flot maximum de valeur 8.**
+
+[[widget:algo|g=td4-res;algo=ford]]
+
+[[widget:graphe|g=td4-res;calque=flotmax]]",10
+"Graphes partie 2","Flots et réseaux de transport","Exemple 18 du cours, à la main","Trouve un flot maximum de $s$ à $t$ en partant du flot initial (flux suivis des capacités entre parenthèses). Détaille chaque marquage.
+
+[[widget:graphe|g=ff-cours]]","**Itération 1** : $s$ ; $1$ : $+s$ ($4 < 5$) ; $2$ : $+s$ ($1 < 8$) ; depuis 1 : $3$ : $+1$ ($2 < 4$) ; depuis 3 : $t$ : $+3$ ($4 < 7$). Chaîne $s \to 1 \to 3 \to t$, $\varepsilon = \min(1, 2, 3) = 1$. Valeur 6.
+
+**Itération 2** : $s \to 1$ est saturé. $2$ : $+s$ ; $4$ : $+2$ ($1 < 6$) ; $1$ : $-2$ (l'arc $(1, 2)$ porte 2) ; $3$ : $+4$ ($0 < 5$) ; $t$ : $+4$ ($1 < 9$). Chaîne $s \to 2 \to 4 \to t$, $\varepsilon = \min(7, 5, 8) = 5$. Valeur 11.
+
+**Itération 3** : $2$ : $+s$ ($6 < 8$) ; $2 \to 4$ saturé, $2 \to 3$ saturé ; $1$ : $-2$ ; $3$ : $+1$ ($3 < 4$) ; $t$ : $+3$ ($5 < 7$). Chaîne $s \to 2 \leftarrow 1 \to 3 \to t$ :
+$$\varepsilon = \min(8 - 6,\ \varphi(1, 2) = 2,\ 4 - 3,\ 7 - 5) = 1$$
+Valeur **12**.
+
+**Itération 4** : $2$ : $+s$ ; $1$ : $-2$ ($\varphi(1, 2) = 1$). Tous les arcs qui sortent de $\{s, 1, 2\}$ sont saturés : $1 \to 3$ (4/4), $2 \to 3$ (2/2), $2 \to 4$ (6/6). STOP, **flot maximum 12**.
+
+[[widget:algo|g=ff-cours;algo=ford]]",10
+"Graphes partie 2","Flots et réseaux de transport","Partir du flot nul","[[widget:graphe|g=ff-ex;flot=non]]
+
+Calcule un flot maximum en partant du flot nul.","Avec un marquage « en largeur » (on traite les sommets dans l'ordre où on les marque) :
+
+1. $s \to a \to c \to t$ : $\varepsilon = \min(10, 6, 10) = 6$. Valeur 6.
+2. $s \to b \to d \to t$ : $\varepsilon = \min(8, 9, 5) = 5$. Valeur 11 ; $d \to t$ est saturé.
+3. $s \to b \to d \to c \to t$ : $\varepsilon = \min(8 - 5, 9 - 5, 2, 10 - 6) = 2$. Valeur 13.
+4. On marque $s$, $a$ ($+s$), $b$ ($+s$), $d$ ($+b$) ; $a \to c$ (6/6), $d \to c$ (2/2), $d \to t$ (5/5) sont saturés, et aucun arc n'arrive en $s$, $a$, $b$ ou $d$ avec un flux à diminuer depuis $c$ ou $t$. STOP.
+
+**Flot maximum : 13.**
+
+[[widget:algo|g=ff-ex;algo=ford]]
+
+[[widget:graphe|g=ff-ex;calque=flotmax]]",10
+"Graphes partie 2","Flots et réseaux de transport","Capacités de coupes","Sur le réseau des châteaux d'eau, calcule la capacité des coupes définies par $A_1 = \{s\}$, $A_2 = \{s, A, B\}$, $A_3 = \{s, A, B, D\}$ et $A_4 = \{s, A, B, C, D, E\}$. Laquelle est la plus petite ?
+
+[[widget:graphe|g=td4-eau;flot=non]]","- $A_1 = \{s\}$ : $(s, A)$, $(s, B)$ : $50 + 80 = 130$.
+- $A_2 = \{s, A, B\}$ : $(A, C)$, $(A, D)$, $(B, D)$, $(B, E)$ : $40 + 20 + 50 + 20 = 130$.
+- $A_3 = \{s, A, B, D\}$ : $(A, C)$, $(B, E)$, $(D, t)$ : $40 + 20 + 30 = 90$.
+- $A_4$ : $(C, t)$, $(D, t)$, $(E, t)$ : $70 + 30 + 30 = 130$.
+
+La plus petite est $A_3$, de capacité 90 : c'est la coupe minimum, égale au flot maximum trouvé par Ford-Fulkerson.
+
+[[widget:graphe|g=td4-eau;calque=coupe;ensemble=s,A,B,D;flot=non]]",5
+"Graphes partie 2","Flots et réseaux de transport","Certifier un flot maximum","Un camarade affirme que le flot maximum du réseau suivant vaut 13 et te montre son flot. Comment te convaincre, sans refaire Ford-Fulkerson, qu'on ne peut pas faire mieux ?
+
+[[widget:graphe|g=ff-ex;calque=flotmax]]","Il suffit d'exhiber une **coupe de capacité 13**. Avec $A = \{s, a, b, d\}$ (les sommets encore marquables à la fin) : $\omega^+(A) = \{(a, c), (d, c), (d, t)\}$, de capacité $6 + 2 + 5 = 13$.
+
+Par le théorème de la coupe, tout flot compatible vaut au plus 13. Le flot proposé vaut 13 : il est maximum. (Les arcs de la coupe sont saturés, et l'arc $(c, b)$, qui entre dans $A$, a bien un flux nul.)",10
+"Graphes partie 2","Flots et réseaux de transport","TD 4, II.4 : augmenter le flot maximum","Dans le réseau de transmission (flot maximum 8), de quels arcs, au minimum, doit-on augmenter les capacités pour obtenir un flot de valeur supérieure ?
+
+[[widget:graphe|g=td4-res;flot=non]]
+
+:::astuce Indice
+Cherche **toutes** les coupes de capacité 8. Il y en a deux.
+:::","Le dernier marquage de Ford-Fulkerson donne $A = \{s, A, D, E\}$ : $\omega^+(A) = \{(A, B), (D, t), (E, C), (E, t)\}$, capacité $2 + 3 + 1 + 2 = 8$.
+
+[[widget:graphe|g=td4-res;calque=coupe;ensemble=s,A,D,E;flot=non]]
+
+Mais ce n'est pas la seule coupe minimum : avec $A' = \{s, A, B, D, E\}$, $\omega^+(A') = \{(B, C), (D, t), (E, C), (E, t)\}$, capacité $2 + 3 + 1 + 2 = 8$ aussi (l'arc $(C, A)$ entre dans $A'$ et ne compte pas).
+
+[[widget:graphe|g=td4-res;calque=coupe;ensemble=s,A,B,D,E;flot=non]]
+
+Toutes les autres coupes ont une capacité d'au moins 9. Pour dépasser 8, il faut augmenter la capacité des **deux** coupes minimum. Un seul arc suffit s'il est **commun** aux deux : $(D, t)$, $(E, C)$ ou $(E, t)$. Augmenter seulement $(A, B)$ ou seulement $(B, C)$ ne sert à rien.
+
+Par exemple avec $c(D, t) = 4$, les deux coupes passent à 9 et le flot maximum aussi (la coupe $\{s, A\}$ vaut $4 + 2 + 3 = 9$ et bloque à son tour).",10
+"Graphes partie 2","Flots et réseaux de transport","Vrai ou faux sur les coupes","Justifie.
+
+1. Si un arc est saturé par un flot maximum, il appartient à une coupe minimum.
+2. La coupe minimum est unique.
+3. Si on double toutes les capacités, la valeur du flot maximum double.","1. **Faux** : sur le réseau du cours, avec le flot maximum, l'arc $(s, 1)$ est saturé (5/5) mais la seule coupe minimum est $\{s, 1, 2\}$, qui ne le contient pas.
+2. **Faux** : le réseau du TD 4 (exercice II) en a deux, de capacité 8.
+3. **Vrai** : toutes les capacités de coupe doublent, donc la coupe minimum aussi, et flot maximum = coupe minimum.",5
+"Graphes partie 2","Flots et réseaux de transport","Exemple 17 : toutes les coupes (bonus)","Sur le réseau du cours (6 sommets), combien y a-t-il de coupes séparant $s$ et $t$ ? Trouve la capacité minimum sans Ford-Fulkerson.","Une coupe est déterminée par le choix, pour chacun des 4 sommets intermédiaires, du côté où il se trouve : $2^4 = 16$ coupes.
+
+En les passant en revue (ou plus vite en cherchant le goulot autour des arcs $(1, 3)$ et $(2, 3)$, de petite capacité), la plus petite est $\{s, 1, 2\}$ avec $4 + 2 + 6 = 12$. C'est bien la valeur du flot maximum trouvée par Ford-Fulkerson. Sur un gros réseau, l'énumération est impossible : c'est tout l'intérêt de l'algorithme.",10
+"Graphes partie 2","Contrôles blancs","Exercice I : plus courts chemins (7 points)","Les poids sont des temps de trajet en minutes.
+
+[[widget:graphe|g=cb1-dij]]
+
+1. **(1 pt)** Quel algorithme utiliser pour calculer les plus courts chemins depuis $S$ ? Justifie.
+2. **(3 pts)** Applique-le. Donne le tableau, les distances et l'arborescence.
+3. **(2 pts)** Déduis-en tous les termes possibles des matrices $\Lambda$ et $M$.
+4. **(1 pt)** On remplace le poids de l'arc $(E, A)$ par $-8$. Ton algorithme s'applique-t-il encore ? Lequel utiliser ?","1. **(1 pt)** Tous les poids sont positifs : **Dijkstra**, en $O(n^2)$. (Le graphe a un circuit $A \to C \to E \to A$, donc Bellman sans circuit serait exclu de toute façon.)
+
+2. **(3 pts)** [[widget:table|g=cb1-dij;type=dijkstra;depart=S]]
+
+Distances : $A = 5$ (par $B$), $B = 2$, $C = 9$ (par $A$), $D = 10$ (par $B$ : la valeur 10 trouvée depuis $C$ est égale, pas meilleure), $E = 12$ (par $D$).
+
+[[widget:graphe|g=cb1-dij;vue=arbo;depart=S]]
+
+3. **(2 pts)** Branches : $S - B - A - C$ et $S - B - D - E$. Le graphe est orienté : on ne remplit que $\lambda_{xy}$ pour $x$ avant $y$ sur une branche.
+
+[[widget:table|g=cb1-dij;type=lambda;racines=S]]
+
+[[widget:table|g=cb1-dij;type=routage;racines=S]]
+
+Par exemple $\lambda_{BE} = 12 - 2 = 10$ et $m_{BE} = D$.
+
+4. **(1 pt)** Non : avec un poids négatif, Dijkstra n'est plus valable. Le graphe a un circuit : il faut **Bellman-Kalaba**. Et le circuit $A \to C \to E \to A$ pèserait $4 + 6 - 8 = 2 > 0$ : pas de circuit absorbant, les chemins minimaux existent.
+
+[[widget:algo|g=cb1-dij;algo=dijkstra;depart=S]]",20
+"Graphes partie 2","Contrôles blancs","Exercice II : ordonnancement (6 points)","Un projet comporte les tâches suivantes (durées en jours).
+
+[[widget:table|g=cb1-ordo;type=taches]]
+
+1. **(1,5 pt)** Dessine le graphe potentiels-tâches.
+2. **(2,5 pts)** Calcule les dates de début au plus tôt et au plus tard. Quelle est la durée minimale du projet ?
+3. **(1,5 pt)** Calcule les marges totales et libres. Quelles sont les tâches critiques ?
+4. **(0,5 pt)** La tâche $D$ prend 3 jours de retard. Le projet est-il retardé ?","1. **(1,5 pt)** Arcs : $\alpha \to A$, $\alpha \to B$ (0) ; $A \to C$, $A \to D$ (2) ; $B \to E$ (4) ; $C \to E$ (3) ; $D \to F$, $D \to G$ (5) ; $E \to G$ (4) ; $F \to H$ (2) ; $G \to H$ (3) ; $H \to \omega$ (1).
+
+[[widget:graphe|g=cb1-ordo]]
+
+2. **(2,5 pts)** Au plus tôt : $t_A = t_B = 0$, $t_C = t_D = 2$, $t_E = \max(0 + 4, 2 + 3) = 5$, $t_F = 2 + 5 = 7$, $t_G = \max(2 + 5, 5 + 4) = 9$, $t_H = \max(7 + 2, 9 + 3) = 12$, $t_\omega = 13$. **Durée minimale : 13 jours.**
+
+Au plus tard : $t^*_H = 12$, $t^*_G = 12 - 3 = 9$, $t^*_F = 12 - 2 = 10$, $t^*_E = 9 - 4 = 5$, $t^*_D = \min(10, 9) - 5 = 4$, $t^*_C = 5 - 3 = 2$, $t^*_B = 5 - 4 = 1$, $t^*_A = \min(2, 4) - 2 = 0$.
+
+3. **(1,5 pt)** [[widget:table|g=cb1-ordo;type=ordo]]
+
+Tâches critiques : $A$, $C$, $E$, $G$, $H$ (chemin $2 + 3 + 4 + 3 + 1 = 13$). $D$ a $MT_D = 2$ mais $ml_D = 0$ : elle finit au plus tôt à 7, exactement quand $F$ peut commencer.
+
+[[widget:graphe|g=cb1-ordo;calque=ordo]]
+
+4. **(0,5 pt)** $MT_D = 2 < 3$ : le projet est retardé de $3 - 2 = 1$ jour.
+
+[[widget:algo|g=cb1-ordo;algo=ordo]]",20
+"Graphes partie 2","Contrôles blancs","Exercice III : flot maximum (7 points)","Sur chaque arc : flux(capacité).
+
+[[widget:graphe|g=cb1-flot]]
+
+1. **(1,5 pt)** Montre que le flot donné est compatible et donne sa valeur.
+2. **(3,5 pts)** Applique Ford-Fulkerson à partir de ce flot. Détaille les marquages.
+3. **(1,5 pt)** Donne une coupe de capacité minimum et justifie que le flot obtenu est maximum.
+4. **(0,5 pt)** On veut faire passer 15 unités. Quel arc proposes-tu d'agrandir ?","1. **(1,5 pt)** Capacités respectées. Kirchhoff : $a$ : $5 + 3 = 5 + 3$ ; $b$ : $6 = 3 + 3$ ; $c$ : $5 + 0 = 5$ ; $d$ : $3 + 3 = 0 + 6$. Compatible, **valeur $5 + 6 = 11$** (et $5 + 6 = 11$ en entrée de $t$).
+
+2. **(3,5 pts)**
+- **Itération 1** : $s$ ; $a$ : $+s$ ($5 < 7$) ; $b$ : $+s$ ($6 < 9$) ; $d$ : $+a$ ($3 < 4$) ; $c$ : $+d$ ($0 < 2$) ; $t$ : $+d$ ($6 < 7$). Chaîne $s \to a \to d \to t$, $\varepsilon = \min(2, 1, 1) = 1$. Valeur 12.
+- **Itération 2** : $a$ : $+s$ ; $b$ : $+s$ ; $a \to d$ est saturé, mais $d$ : $+b$ ($3 < 6$) ; $c$ : $+d$ ; $t$ : $+c$ ($5 < 8$) ($d \to t$ est saturé). Chaîne $s \to b \to d \to c \to t$, $\varepsilon = \min(3, 3, 2, 3) = 2$. Valeur **14**.
+- **Itération 3** : $a$ : $+s$, $b$ : $+s$, $d$ : $+b$. $a \to c$ (5/5), $d \to c$ (2/2), $d \to t$ (7/7) saturés : on ne marque ni $c$ ni $t$. STOP.
+
+[[widget:algo|g=cb1-flot;algo=ford]]
+
+3. **(1,5 pt)** Sommets marqués $A = \{s, a, b, d\}$ : $\omega^+(A) = \{(a, c), (d, c), (d, t)\}$, capacité $5 + 2 + 7 = 14$ = valeur du flot. Par le théorème de la coupe, **le flot est maximum (14)**.
+
+[[widget:graphe|g=cb1-flot;calque=flotmax]]
+
+4. **(0,5 pt)** Il faut agrandir un arc de cette coupe (c'est la seule coupe minimum), par exemple $(d, c)$ de 2 à 3 : toutes les coupes valent alors au moins 15 ($\{t\}$ côté sortie : $8 + 7 = 15$).",20
+"Graphes partie 2","Contrôles blancs","Exercice I : chemins minimaux et maximaux (9 points)","[[widget:graphe|g=cb2-bk]]
+
+1. **(1 pt)** Peut-on appliquer Dijkstra ? Bellman pour les graphes sans circuit ? Justifie.
+2. **(3,5 pts)** Calcule les chemins minimaux depuis 1 avec Bellman-Kalaba (tableau valeur/père). Dessine l'arborescence.
+3. **(1,5 pt)** Peut-on calculer les chemins **maximaux** depuis 1 ? Justifie.
+4. **(3 pts)** On supprime l'arc $(4, 3)$. Montre que le graphe devient sans circuit, puis calcule les chemins maximaux depuis 1 avec l'algorithme le plus efficace.","1. **(1 pt)** Dijkstra : **non**, il y a des poids négatifs ($3 \to 2$, $5 \to 4$, $5 \to 6$). Bellman sans circuit : **non**, le graphe a des circuits, par exemple $2 \to 4 \to 3 \to 2$ (la mise en niveaux bloque).
+
+2. **(3,5 pts)** Prédécesseurs : $2$ : $1$ (4), $3$ ($-1$) ; $3$ : $1$ (2), $4$ (1) ; $4$ : $2$ (2), $5$ ($-3$) ; $5$ : $3$ (5) ; $6$ : $4$ (3), $5$ ($-2$).
+
+[[widget:table|g=cb2-bk;type=bellman;depart=1]]
+
+$\lambda_4 = \lambda_3$ : STOP. Distances : $2 \to 1$ (par 3), $3 \to 2$, $4 \to 3$ (par 2), $5 \to 7$, $6 \to 5$ (par 5).
+
+[[widget:graphe|g=cb2-bk;vue=arbo;depart=1;methode=bellman]]
+
+3. **(1,5 pt)** Non : le circuit $3 \to 5 \to 4 \to 3$ pèse $5 - 3 + 1 = 3 > 0$ (et $2 \to 4 \to 3 \to 2$ pèse $2 + 1 - 1 = 2 > 0$). En le parcourant indéfiniment on allonge le chemin sans limite : Bellman-Kalaba en max ne se stabilise pas après $n = 6$ étapes. Pas de chemin maximal.
+
+4. **(3 pts)** Sans $(4, 3)$, la mise en niveaux aboutit : $N_0 = \{1\}$, $N_1 = \{3\}$, $N_2 = \{2, 5\}$, $N_3 = \{4\}$, $N_4 = \{6\}$. Le graphe est sans circuit : **Bellman sans circuit**, version max, en une passe.
+
+- $\lambda(3) = 2$ ; $\lambda(2) = \max(0 + 4, 2 - 1) = 4$ ; $\lambda(5) = 2 + 5 = 7$ ;
+- $\lambda(4) = \max(4 + 2, 7 - 3) = 6$ ; $\lambda(6) = \max(6 + 3, 7 - 2) = 9$.
+
+[[widget:algo|g=cb2-bk-sc;algo=bellman-sc;depart=1;mode=max]]",20
+"Graphes partie 2","Contrôles blancs","Exercice II : approvisionnement de magasins (7 points)","Deux entrepôts $E1$ et $E2$ disposent de 14 et 12 tonnes. Trois magasins demandent au plus $M1$ : 8 t, $M2$ : 9 t, $M3$ : 7 t. Les liaisons possibles et leurs capacités (en tonnes) : $E1 \to M1$ : 6, $E1 \to M2$ : 7, $E2 \to M2$ : 4, $E2 \to M3$ : 8, et une navette $E1 \to E2$ de capacité 3.
+
+1. **(2 pts)** Modélise le problème « livrer le plus possible » par un réseau de transport.
+2. **(3 pts)** Calcule un flot maximum en partant du flot nul.
+3. **(2 pts)** Donne une coupe minimum. Quel magasin n'est pas complètement servi, et pourquoi ?","1. **(2 pts)** Super-source $s$ reliée à $E1$ (14) et $E2$ (12) ; les liaisons avec leurs capacités ; chaque magasin relié au super-puits $t$ avec sa demande : $M1 \to t$ (8), $M2 \to t$ (9), $M3 \to t$ (7). On cherche le flot maximum de $s$ à $t$.
+
+[[widget:graphe|g=cb2-flot;flot=non]]
+
+2. **(3 pts)** Chaînes augmentantes successives (marquage en largeur) :
+- $s \to E1 \to M1 \to t$ : $\varepsilon = \min(14, 6, 8) = 6$ ;
+- $s \to E1 \to M2 \to t$ : $\varepsilon = \min(8, 7, 9) = 7$ ;
+- $s \to E2 \to M2 \to t$ : $\varepsilon = \min(12, 4, 2) = 2$ ;
+- $s \to E2 \to M3 \to t$ : $\varepsilon = \min(10, 8, 7) = 7$.
+
+Valeur **22**. Plus aucune chaîne : $E1 \to M1$, $M2 \to t$ et $M3 \to t$ sont saturés.
+
+[[widget:algo|g=cb2-flot;algo=ford]]
+
+3. **(2 pts)** Sommets marqués à la fin : $A = \{s, E1, E2, M2, M3\}$, $\omega^+(A) = \{(E1, M1), (M2, t), (M3, t)\}$, capacité $6 + 9 + 7 = 22$ : le flot est maximum.
+
+[[widget:graphe|g=cb2-flot;calque=flotmax]]
+
+**$M1$ ne reçoit que 6 t sur 8** : la seule liaison vers $M1$ est $E1 \to M1$, de capacité 6. Les entrepôts ont pourtant du stock en trop (26 t disponibles, 22 livrées) : c'est le réseau qui limite, pas le stock.",20
+"Graphes partie 2","Contrôles blancs","Exercice III : questions de cours (4 points)","Vrai ou faux ? Justifie chaque réponse en une ou deux phrases.
+
+1. **(1 pt)** Dans Dijkstra, un sommet sélectionné peut voir sa valeur diminuer plus tard.
+2. **(1 pt)** Dans un graphe potentiels-tâches, la durée minimale du projet est la longueur d'un plus court chemin de $\alpha$ à $\omega$.
+3. **(1 pt)** Une tâche de marge libre nulle est critique.
+4. **(1 pt)** Dans Ford-Fulkerson, on peut marquer $y$ depuis $x$ si l'arc $(x, y)$ a un flux non nul.","1. **Faux** : avec des poids positifs, le sommet sélectionné a le plus petit $\lambda$ hors de $S$ et tout détour ne peut que l'allonger : sa valeur est définitive (algorithme glouton).
+2. **Faux** : c'est la longueur d'un **plus long** chemin (le chemin critique) : une tâche attend la fin de **toutes** les tâches qui la précèdent.
+3. **Faux** : critique veut dire marge **totale** nulle. Exemple : $D$ dans l'exercice II du contrôle blanc 1, avec $ml_D = 0$ mais $MT_D = 2$.
+4. **Faux** : le marquage direct demande $(x, y)$ **non saturé** ($\varphi < c$) ; le marquage indirect utilise un arc $(y, x)$ **arrivant** en $x$ avec un flux non nul.",10
