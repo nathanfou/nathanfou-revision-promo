@@ -1,0 +1,25 @@
+matiere,chapitre,recto,verso
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 5 fonctions de base d'Unix ?,"Multi-tâches, multi-utilisateurs, portabilité, applications communes, temps partagé"
+Quizz Linux,Introduction aux systèmes GNU/Linux,La cryptographie : fonction de base d'Unix ?,Non (outils ajoutés)
+Quizz Linux,Introduction aux systèmes GNU/Linux,Système multi-tâches ?,"Tâches entrelacées, ressources partagées"
+Quizz Linux,Introduction aux systèmes GNU/Linux,Système mono-tâche ?,"Une tâche à la fois, toutes les ressources"
+Quizz Linux,Introduction aux systèmes GNU/Linux,Multi-utilisateurs : qui sont les utilisateurs ?,Individus ou applications
+Quizz Linux,Introduction aux systèmes GNU/Linux,Portabilité ?,Porter une application sur un autre matériel
+Quizz Linux,Introduction aux systèmes GNU/Linux,Temps partagé ?,Accès au matériel partagé entre processus
+Quizz Linux,Introduction aux systèmes GNU/Linux,"Les 3 cercles d'un OS, du centre vers l'extérieur ?","Kernel, Shell, Application"
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle du noyau ?,Piloter le matériel (drivers)
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle du shell ?,Interface de commande vers le noyau
+Quizz Linux,Introduction aux systèmes GNU/Linux,Quelle couche pilote les interfaces réseau ?,Le noyau
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle de l'ordonnanceur ?,Répartir le temps processeur
+Quizz Linux,Introduction aux systèmes GNU/Linux,Qui alloue la mémoire aux processus ?,Le gestionnaire de mémoire
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 4 domaines de l'ordonnanceur Linux ?,"Temps réel, E/S, calcul, meilleur effort"
+Quizz Linux,Introduction aux systèmes GNU/Linux,Concept de gestion avancée de la mémoire du noyau ?,Mémoire virtuelle
+Quizz Linux,Introduction aux systèmes GNU/Linux,"Pagination, mode protégé i386 : concept ou mécanisme ?",Mécanismes (de la mémoire virtuelle)
+Quizz Linux,Introduction aux systèmes GNU/Linux,Préemption ?,Interruption par un processus plus prioritaire
+Quizz Linux,Introduction aux systèmes GNU/Linux,Ordonnancement des tâches ?,Séquencement entre processus
+Quizz Linux,Introduction aux systèmes GNU/Linux,Gestion des périphériques et flux = ?,Les entrées/sorties
+Quizz Linux,Introduction aux systèmes GNU/Linux,Accès aux firmwares : fonction de base d'Unix ?,"Non, rôle des pilotes"
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 2 branches historiques d'Unix ?,System V (AT&T) et BSD (Berkeley)
+Quizz Linux,Introduction aux systèmes GNU/Linux,BSD ?,Berkeley Software Distribution
+Quizz Linux,Introduction aux systèmes GNU/Linux,Branche où TCP/IP apparaît en premier ?,BSD
+Quizz Linux,Introduction aux systèmes GNU/Linux,ARPANET ?,"Réseau de la DARPA, ancêtre d'Internet"

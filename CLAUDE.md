@@ -97,6 +97,9 @@ toute fonctionnalité. Réponds à Nathan en français.
   chaîne : machine, ascenseurs, deux-etats, tampon, gsi-exemple, naissance-mort, mm1, mm11, mminf, mm1k),
   `[[widget:markov|modele=deux-etats;a=0.4;b=0.2]]` (π(t) pas à pas), `[[widget:mm1|lambda=6;mu=10]]`. Contenu : `content/markov/`.
 - Découpage en chantiers parallèles : `docs/chantiers.md`.
+- Style des flashcards : recto = question précise finie par « ? » (une seule notion), verso = réponse
+  de quelques mots ou une formule, sans phrase ni explication, pour répondre de tête. Rectos uniques
+  (l'import identifie une carte par son recto).
 
 ## Plan de construction (spec, section "Plan de construction")
 

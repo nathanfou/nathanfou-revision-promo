@@ -1,0 +1,116 @@
+matiere,chapitre,recto,verso
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,PAN : portée et exemple ?,Quelques mètres ; Bluetooth
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,LAN : étendue et exemple ?,"Bâtiment ou site ; Ethernet, Wi-Fi"
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,MAN : étendue ?,Une ville
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,WAN : étendue ?,"Pays, monde"
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Topologie à diffusion : ce qu'il faut en plus ?,Adresse et méthode d'accès
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Intérêt n° 1 de la normalisation ?,Interopérabilité entre constructeurs
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Auteur du modèle OSI ?,L'ISO (ISO 7498)
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,UIT (ex-CCITT) : quelle série de normes ?,"Série X (X.25, X.200)"
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,"IEEE : quel comité, quels réseaux ?","802 ; PAN, LAN, MAN"
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,IETF : standards et format ?,TCP/IP ; RFC
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Organisme français de normalisation ?,AFNOR
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,ANSI ?,Normalisation aux États-Unis
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,Auteur de RS-232-C ?,EIA
+Réseaux d'entreprise,Introduction aux réseaux et normalisation,NCS ?,Consortium d'agences fédérales US
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Les 7 couches OSI de 1 à 7 ?,"Physique, Liaison, Réseau, Transport, Session, Présentation, Application"
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Couches basses OSI ? hautes ?,1 à 4 ; 5 à 7
+Réseaux d'entreprise,Modèle OSI : couches et architectures,OSI : modèle de quoi ?,Référence d'architecture de communication
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Objectifs d'OSI ?,"Décomposer, structurer, indépendance matérielle"
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Quand un système réel devient-il ouvert ?,S'il respecte les normes OSI
+Réseaux d'entreprise,Modèle OSI : couches et architectures,"Nombre de couches : OSI, TCP/IP, IEEE ?","7, 4, 3"
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Couche Internet TCP/IP = quelle couche OSI ?,3 (Réseau)
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Communication horizontale ?,Entre entités homologues (protocole)
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Communication verticale ?,Entre couches adjacentes (primitives)
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Où les données circulent-elles réellement ?,Couche 1
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Première couche avec une adresse ?,2 (MAC)
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Unité de la couche Physique ?,Le bit
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Unité et adresse de la couche Liaison ?,Trame ; MAC
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Réseau ?,Adressage IP et routage
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Transport ?,"Bout en bout (ports, TCP/UDP)"
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Session ?,Dialogue et points de reprise
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Rôle de la couche Présentation ?,"Codage, chiffrement, compression"
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Exemple de protocole de couche Application ?,HTTP
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Pourquoi deux systèmes OSI peuvent ne pas communiquer ?,Protocoles différents dans une couche
+Réseaux d'entreprise,Modèle OSI : couches et architectures,Pilote (driver) ?,Gère la carte réseau dans l'OS
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Avec qui interagit un sous-système (N) ?,Niveaux N+1 et N−1 seulement
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Couche (N) ?,Ensemble des sous-systèmes de rang N
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Entité (N) ?,Élément actif de la couche N
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",À qui est offert le service (N) ?,Aux entités (N+1)
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Protocole (N) ?,Règles entre entités homologues
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",(N)-SAP ?,Point d'accès au service (ex. port)
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Qui établit une connexion (N) ?,La couche N
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",(N)-CEP ?,Extrémité de connexion
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",(N)-PDU = ?,PCI + SDU
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Segmentation ?,1 SDU → plusieurs PDU
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Groupage ?,Plusieurs SDU → 1 PDU
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Concaténation ?,Plusieurs (N)-PDU → 1 (N−1)-SDU
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Multiplexage ?,Plusieurs connexions N sur 1 connexion N−1
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Éclatement ?,1 connexion N sur plusieurs N−1
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Mode connecté : 3 phases ?,"Établissement, transfert, libération"
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Mode sans connexion : exemples ?,"IP, UDP"
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Les 4 primitives de service ?,"Requête, Indication, Réponse, Confirmation"
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Connexion réussie : ordre des primitives ?,request → indication → response → confirm
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Refus par l'appelé : primitive envoyée ?,T_DISCONNECT.request
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Refus par le fournisseur : que reçoit l'appelé ?,Rien
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Déconnexion : y a-t-il une confirmation ?,Non
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU","Simplex, semi-duplex, duplex ?",1 sens ; chacun son tour ; simultané
+Réseaux d'entreprise,"Concepts OSI : service, protocole, PDU",Relais (N) ?,Retransmettre entre entités homologues
+Réseaux d'entreprise,Services de transport,But du multiplexage ?,"Partager un support, réduire les coûts"
+Réseaux d'entreprise,Services de transport,Multiplexage fréquentiel ?,Une bande de fréquences par voie
+Réseaux d'entreprise,Services de transport,Temporel synchrone : défaut ?,Gaspillage (intervalles fixes)
+Réseaux d'entreprise,Services de transport,Temporel asynchrone : avantage ?,Meilleur rendement (à la demande)
+Réseaux d'entreprise,Services de transport,Les 3 types d'adresses ?,"MAC, IP, port"
+Réseaux d'entreprise,Services de transport,Routage vs commutation ?,Choisir le chemin ; passer d'un port à l'autre
+Réseaux d'entreprise,Services de transport,Commutation de circuits : réservation ?,"Oui, toute la communication"
+Réseaux d'entreprise,Services de transport,Commutation de paquets : routage ?,"À chaque paquet, sans réservation"
+Réseaux d'entreprise,Services de transport,Contrôle local vs bout en bout ?,Liaison ; transport (TCP)
+Réseaux d'entreprise,Services de transport,Détecter une erreur : comment ?,"Redondance (CRC, parité)"
+Réseaux d'entreprise,Services de transport,Contrôle de flux : 2 protocoles ?,"Stop and Wait, fenêtre glissante"
+Réseaux d'entreprise,Services de transport,Go-Back-N : que renvoie-t-on ?,La trame perdue et toutes les suivantes
+Réseaux d'entreprise,Services de transport,Selective Repeat : que renvoie-t-on ?,Seulement la trame perdue
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Adresse MAC : taille et structure ?,48 bits : 3 octets OUI + 3 octets série
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","Ethernet : détection, reprise d'erreurs ?","Détection oui (FCS), reprise non"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Taille de l'en-tête Ethernet ? du FCS ?,14 octets ; 4 octets
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",EtherType ?,Protocole encapsulé (16 bits)
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","EtherType IPv4, ARP, 802.1Q ?","0x0800, 0x0806, 0x8100"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","Protocol IP : ICMP, TCP, UDP ?","1, 6, 17"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Comment IP distingue UDP de TCP ?,Champ Protocol (17 / 6)
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Numéro de protocole vs port ?,Protocole dans IP ; application dans TCP/UDP
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Les 3 SAP d'une requête HTTP ?,"EtherType 0x0800, Protocol 6, port 80"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Qui attribue ports et numéros de protocole ?,L'IANA
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","Tailles d'en-tête IPv4, TCP, UDP ?","20, 20, 8 octets"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Charge utile minimale Ethernet ?,46 octets (sinon bourrage)
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",ARP : résout quoi ?,IP → MAC
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Protocoles portés directement par IP ?,ICMP et OSPF
+Réseaux d'entreprise,"Ethernet, IP et encapsulation",Protocole (Wireshark) ?,Format des messages + séquence des échanges
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","Codes HTTP 200, 204, 404 ?","OK, No Content, Not Found"
+Réseaux d'entreprise,"Ethernet, IP et encapsulation","Ports HTTP, HTTPS, DNS, SSH ?","80, 443, 53, 22"
+Réseaux d'entreprise,Commutation et VLAN,Cut-through : avantage et défaut ?,Rapide ; propage les trames erronées
+Réseaux d'entreprise,Commutation et VLAN,Store and forward : avantage ?,Vérifie le FCS (fiable)
+Réseaux d'entreprise,Commutation et VLAN,Table MAC : apprise avec quelle adresse ?,L'adresse source
+Réseaux d'entreprise,Commutation et VLAN,Destination inconnue : que fait le commutateur ?,Inonde le VLAN (sauf port d'arrivée)
+Réseaux d'entreprise,Commutation et VLAN,"Niveau du hub, du commutateur, du routeur ?","1, 2, 3"
+Réseaux d'entreprise,Commutation et VLAN,Qui sépare les domaines de diffusion ?,Routeur et VLAN
+Réseaux d'entreprise,Commutation et VLAN,VLAN ?,Segmentation logique indépendante du câblage
+Réseaux d'entreprise,Commutation et VLAN,Les 4 types de VLAN ?,"Par port, MAC, IP, protocole"
+Réseaux d'entreprise,Commutation et VLAN,Faire communiquer deux VLAN ?,Un routeur
+Réseaux d'entreprise,Commutation et VLAN,802.1Q : taille du TAG et du VLAN ID ?,4 octets ; 12 bits
+Réseaux d'entreprise,Commutation et VLAN,Port access ?,"Un seul VLAN, trames non étiquetées"
+Réseaux d'entreprise,Commutation et VLAN,Port trunk ?,"Plusieurs VLAN, trames étiquetées"
+Réseaux d'entreprise,Commutation et VLAN,2 VLAN entre 2 commutateurs sans 802.1Q ?,Un lien access par VLAN
+Réseaux d'entreprise,Commutation et VLAN,2 VLAN entre 2 commutateurs avec 802.1Q ?,Un seul lien trunk
+Réseaux d'entreprise,STP et redondance,Intérêts de la redondance ?,"Continuité de service, équilibrage"
+Réseaux d'entreprise,STP et redondance,3 problèmes d'une boucle de niveau 2 ?,"Tempête de diffusion, trames dupliquées, table MAC instable"
+Réseaux d'entreprise,STP et redondance,Pourquoi une tempête de diffusion ne s'arrête pas ?,Ethernet n'a pas de TTL
+Réseaux d'entreprise,STP et redondance,Boucle de commutation : cause ?,Liens redondants sans STP
+Réseaux d'entreprise,STP et redondance,Rôle de STP ?,Bloquer des ports pour former un arbre
+Réseaux d'entreprise,STP et redondance,Norme STP ? RSTP ?,802.1D ; 802.1w
+Réseaux d'entreprise,STP et redondance,BPDU ?,Message STP entre ponts
+Réseaux d'entreprise,STP et redondance,Les 4 étapes de STP ?,"Racine, ports racine, ports désignés, blocage"
+Réseaux d'entreprise,STP et redondance,BID ?,Priorité + MAC (plus petit = racine)
+Réseaux d'entreprise,STP et redondance,Élection du pont racine : critères ?,"Plus petite priorité, puis plus petite MAC"
+Réseaux d'entreprise,STP et redondance,Port racine ?,Plus petit coût vers la racine
+Réseaux d'entreprise,STP et redondance,Ports de la racine : quel rôle ?,Tous désignés
+Réseaux d'entreprise,STP et redondance,Port bloqué : écoute-t-il les BPDU ?,Oui
+Réseaux d'entreprise,STP et redondance,"Coût STP 10 Mb/s, 100 Mb/s, 1 Gb/s, 10 Gb/s ?","100, 19, 4, 2"
