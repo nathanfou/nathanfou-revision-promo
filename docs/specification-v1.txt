@@ -392,6 +392,10 @@ série du jour (ordre des passages), puis le retour les jours suivants
     acquise, plafond +15). Erreur : -25 (plancher 0), la série retombe
     à 0.
 
+-   Bien fait revenir la carte dans 3 jours au moins, sauf si elle a été
+    ratée le jour même (elle revient alors le lendemain). Difficile n'a
+    pas ce plancher.
+
 -   Seule la première réponse du jour fait monter le score : les
     répétitions dans la série servent à apprendre. Les erreurs comptent
     toutes, avec 2 pénalités par jour au plus.
