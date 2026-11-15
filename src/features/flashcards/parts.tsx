@@ -97,7 +97,7 @@ export function RateButtons({ card, onRate, disabled, compact = false, shortcuts
             disabled={disabled}
             onClick={() => onRate(note)}
             aria-label={`${s.label}, ${when}`}
-            aria-keyshortcuts={shortcuts ? String(i + 1) : undefined}
+            aria-keyshortcuts={shortcuts ? (note === 'bien' ? `Enter ${i + 1}` : String(i + 1)) : undefined}
             style={{
               minHeight: compact ? 64 : undefined,
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2,

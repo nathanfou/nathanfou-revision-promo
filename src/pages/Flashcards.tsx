@@ -68,7 +68,7 @@ export default function Flashcards() {
                         <Icon name="flip" size={18} strokeWidth={2} />
                         Retourner la carte
                       </Button>
-                      <span style={{ fontSize: 13, color: 'var(--faint)' }}>Espace pour retourner, puis 1, 2 ou 3 pour noter</span>
+                      <span style={{ fontSize: 13, color: 'var(--faint)' }}>Espace pour retourner, puis Entrée pour Bien (1 À revoir, 3 Difficile)</span>
                     </div>
                   ) : (
                     <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>

@@ -5,8 +5,8 @@ import { supabase } from '../../lib/supabase'
 
 export type Note = 'a_revoir' | 'difficile' | 'bien'
 
-/** Ordre des boutons (touches 1, 2, 3). */
-export const NOTES: Note[] = ['a_revoir', 'difficile', 'bien']
+/** Ordre des boutons (touches 1, 2, 3) : À revoir à gauche, Bien au milieu (choix par défaut, Entrée), Difficile à droite. */
+export const NOTES: Note[] = ['a_revoir', 'bien', 'difficile']
 
 export type QueueCard = {
   id: string

@@ -362,8 +362,10 @@ Les flashcards suivent une logique inspirée d'Anki, en deux temps : la
 série du jour (ordre des passages), puis le retour les jours suivants
 (score de maîtrise).
 
--   Après avoir retourné une carte, l'étudiant choisit À revoir (faux),
-    Difficile (juste) ou Bien (juste).
+-   Après avoir retourné une carte, l'étudiant choisit À revoir (faux,
+    à gauche), Bien (juste, au milieu, choix par défaut avec Entrée) ou
+    Difficile (juste mais laborieuse, à droite : gain plus faible, la
+    carte revient plus vite).
 
 -   Série, phase de découverte : les cartes passent dans l'ordre du
     programme. Une carte ratée revient de plus en plus tôt : 5, puis 3,
