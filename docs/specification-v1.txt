@@ -358,30 +358,52 @@ définir.
 
 Flashcards et révision espacée
 
-Les flashcards suivent une logique inspirée d'Anki : une carte vue un
-jour revient les jours suivants, à des intervalles de plus en plus longs
-tant que l'étudiant la connaît.
+Les flashcards suivent une logique inspirée d'Anki, en deux temps : la
+série du jour (ordre des passages), puis le retour les jours suivants
+(score de maîtrise).
 
--   Après avoir retourné une carte, l'étudiant choisit À revoir, Bien ou
-    Facile.
+-   Après avoir retourné une carte, l'étudiant choisit À revoir (faux),
+    Difficile (juste) ou Bien (juste).
 
--   Chaque carte a un palier : 1, 3, 7 puis 14 jours. Une carte vue pour
-    la première fois revient le lendemain, ce qui reproduit "refaire le
-    lendemain ce qu'on a vu la veille". Une première réponse Facile
-    l'envoie directement au palier de 3 jours.
+-   Série, phase de découverte : les cartes passent dans l'ordre du
+    programme. Une carte ratée revient de plus en plus tôt : 5, puis 3,
+    puis 2 cartes plus loin. Une carte réussie part dans la file rouge.
 
--   Ensuite, À revoir ramène la carte au palier de 1 jour, Bien monte
-    d'un palier et Facile en saute un. Le palier maximum est de 14
-    jours.
+-   File rouge : quand toutes les cartes ont été réussies une fois,
+    elles repassent dans un ordre mélangé. Une erreur la fait revenir
+    selon la même règle.
+
+-   Plus une carte est ratée, plus elle revient. Réussites demandées
+    avant qu'elle sorte de la série : 0 ou 1 erreur, 1 en découverte et
+    1 en rouge ; 2 erreurs, 2 en découverte et 1 en rouge ; 3 erreurs et
+    plus, 2 en découverte et 2 en rouge. Une réussite qui ne suffit pas
+    encore fait revenir la carte 8 cartes plus loin.
+
+-   Score de maîtrise de 0 à 100, par étudiant et par carte. Il fixe le
+    retour après la série : 0-9 demain, 10-29 dans 3 jours, 30-49 dans
+    5 jours, 50-69 dans 9 jours, 70-89 dans 15 jours, 90-100 dans
+    30 jours.
+
+-   Réussite : Bien +15, Difficile +8, multiplié par l'ancienneté de la
+    carte (x1 la première fois, +0,25 par jour passé où elle est revenue,
+    plafond x2), plus un bonus de série (+3 par réussite consécutive déjà
+    acquise, plafond +15). Erreur : -25 (plancher 0), la série retombe
+    à 0.
+
+-   Seule la première réponse du jour fait monter le score : les
+    répétitions dans la série servent à apprendre. Les erreurs comptent
+    toutes, avec 2 pénalités par jour au plus.
 
 -   Chaque jour, l'étudiant trouve la file des cartes à revoir,
     c'est-à-dire celles dont l'échéance est arrivée, en plus des
-    nouvelles cartes qu'il choisit de travailler. Le nombre de cartes à
-    revoir s'affiche sur la page Révision.
+    nouvelles cartes qu'il choisit de travailler (par 20). Le nombre de
+    cartes à revoir s'affiche sur la page Révision.
 
--   Le serveur garde pour chaque étudiant et chaque carte son palier et
-    sa prochaine date, dans la table card_states. Les points d'une
-    révision suivent le barème de la section Points.
+-   Le serveur garde pour chaque étudiant et chaque carte son score, sa
+    série de réussites, son intervalle et sa prochaine date, dans la
+    table card_states. Les points d'une révision suivent le barème de la
+    section Points (3 points par carte et par jour, quelle que soit la
+    réponse ; les repassages dans la série ne rapportent rien).
 
 Gamification et social
 

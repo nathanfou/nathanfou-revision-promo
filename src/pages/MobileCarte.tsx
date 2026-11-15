@@ -6,10 +6,10 @@ import { Icon } from '../components/Icons'
 import { LeafToggle } from '../components/Leaves'
 import { InlineLoader } from '../components/Loader'
 import { Button, ButtonLink, Card, EmptyState, roundButtonStyle } from '../components/ui'
-import { nextReturn } from '../features/flashcards/labels'
+import { nextReturn, runCounter } from '../features/flashcards/labels'
 import { CardStack, CardTags, Dashes, DoneLcd, GainBubble, QueueMeter, RateButtons } from '../features/flashcards/parts'
 import { useFlashcardRun } from '../features/flashcards/useFlashcardRun'
-import { fmtInt } from '../lib/format'
+import { fmtInt, plural } from '../lib/format'
 import { routes } from '../lib/routes'
 import { MobileLayout } from '../layouts/MobileLayout'
 
@@ -17,9 +17,9 @@ export default function MobileCarte() {
   const [params] = useSearchParams()
   const chapterId = params.get('chapitre')
   const run = useFlashcardRun(chapterId)
-  const { card, total, idx } = run
+  const { card, total } = run
   const title = chapterId ? (run.label?.chapter ?? 'Flashcards') : 'File du jour'
-  const counter = total === 0 ? '' : run.done ? `${total} sur ${total}` : `Carte ${idx + 1} sur ${total}`
+  const counter = runCounter(run, true)
 
   const header = (
     <header style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -52,7 +52,7 @@ export default function MobileCarte() {
         ) : (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <QueueMeter value={Math.min(idx, total) / total} compact />
+              <QueueMeter value={run.progress} compact />
               <span className="lcd" aria-live="polite" style={{ padding: '4px 10px', borderRadius: 999, backgroundColor: 'var(--ink)', color: 'var(--caramel)', fontSize: 14, whiteSpace: 'nowrap' }}>
                 +{fmtInt(run.points)} pts
               </span>
@@ -70,7 +70,7 @@ export default function MobileCarte() {
                     onClick={run.revealed ? undefined : run.reveal}
                     style={{ position: 'relative', flex: 1, minHeight: 300, overflowY: 'auto', padding: '22px 20px', display: 'flex', flexDirection: 'column', gap: 16, backgroundColor: 'var(--card)', border: '1px solid var(--border)', borderRadius: 22, boxShadow: '0 22px 40px -28px rgba(120,60,20,0.5)', cursor: run.revealed ? undefined : 'pointer' }}
                   >
-                    <CardTags card={card} compact />
+                    <CardTags card={card} phase={run.phase} track={run.track} compact />
                     <h1 id="t-front" style={{ margin: 0, fontSize: 24, lineHeight: 1.3, fontWeight: 600, letterSpacing: '-0.015em', whiteSpace: 'pre-line' }}>{card.recto}</h1>
                     {run.revealed ? (
                       <div className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -100,9 +100,9 @@ export default function MobileCarte() {
 
             {run.done && (
               <Card as="section" className="popin" aria-labelledby="t-done" padding="28px 22px" radius={22} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, textAlign: 'center' }}>
-                <DoneLcd value={`${run.rated}/${total}`} compact />
+                <DoneLcd value={`${total}/${total}`} compact />
                 <h1 id="t-done" style={{ margin: 0, fontSize: 24, fontWeight: 600 }}>{chapterId ? 'Série terminée' : 'File du jour terminée'}</h1>
-                <p style={{ margin: 0, fontSize: 15, color: 'var(--muted)' }}>+{fmtInt(run.points)} pts. {nextReturn(run.nextDays)}</p>
+                <p style={{ margin: 0, fontSize: 15, color: 'var(--muted)' }}>+{fmtInt(run.points)} pts en {plural(run.answers, 'passage')}. {nextReturn(run.nextDays)}</p>
                 <ButtonLink to={routes.home} size="lg" style={{ marginTop: 6 }}>Retour à l’accueil</ButtonLink>
                 {chapterId && <Button variant="ghost" onClick={run.restart}>D’autres cartes du chapitre</Button>}
               </Card>
