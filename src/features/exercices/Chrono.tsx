@@ -1,11 +1,12 @@
 // Minuteur indicatif : temps écoulé depuis l'ouverture de l'exercice, avec pause.
 // Rien n'est envoyé au serveur : c'est un repère pour l'étudiant.
+// `initial` : valeurs reprises après un rechargement de la page.
 import { useEffect, useState } from 'react'
 import { pad2 } from '../../lib/format'
 
-export function useChrono() {
-  const [elapsed, setElapsed] = useState(0)
-  const [running, setRunning] = useState(true)
+export function useChrono(initial?: { elapsed: number; running: boolean }) {
+  const [elapsed, setElapsed] = useState(initial?.elapsed ?? 0)
+  const [running, setRunning] = useState(initial?.running ?? true)
   useEffect(() => {
     if (!running) return
     const t = window.setInterval(() => setElapsed((s) => s + 1), 1000)

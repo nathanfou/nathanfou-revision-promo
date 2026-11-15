@@ -4,8 +4,12 @@
 //
 // Une session "exo" est ouverte au premier "Valider" (pas de session vide si on ne fait
 // que regarder l'énoncé) et close en quittant l'écran.
+//
+// Un rechargement de la page reprend l'écran tel quel (src/lib/resume.ts) : minuteur,
+// correction affichée, choix et déclaration déjà faite, même session si elle est encore ouverte.
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { useNavigate } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
+import { useAuth } from '../../auth/AuthProvider'
 import { Button, ButtonLink, Card, Chip, EmptyState } from '../../components/ui'
 import { ErrorBanner } from '../../components/Form'
 import { Icon } from '../../components/Icons'
@@ -14,6 +18,7 @@ import { lcdScreenStyle, LcdLabel } from '../../components/Lcd'
 import { SessionLayout } from '../../layouts/SessionLayout'
 import { fmtInt } from '../../lib/format'
 import { refreshMyPoints } from '../../lib/points'
+import { isSessionOpen, loadResume, resumeScope, saveResume } from '../../lib/resume'
 import { routes } from '../../lib/routes'
 import { POINTS } from '../../lib/scoring'
 import {
@@ -44,6 +49,19 @@ type Loaded = {
   last: LastResult | null
 }
 
+/** Copie de l'écran gardée pour la reprise après rechargement. */
+type Saved = {
+  sessionId: string | null
+  revealed: boolean
+  choice: ExoResult | null
+  validated: boolean
+  result: SubmitResult | null
+  elapsed: number
+  running: boolean
+  /** Date.now() de la copie, pour compter le temps du rechargement si le minuteur tournait */
+  at: number
+}
+
 const OPTIONS: { id: ExoResult; label: string; hint: string; pts: (d: number) => number }[] = [
   { id: 'reussi', label: 'Réussi', hint: 'Tout est juste, ou presque.', pts: POINTS.exercise },
   { id: 'partiel', label: 'Partiel', hint: 'Une partie juste, des oublis.', pts: POINTS.exercisePartial },
@@ -64,19 +82,27 @@ function resultText(r: SubmitResult): string {
 
 export function ExerciceScreen({ exerciseId }: { exerciseId: string }) {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { session: auth } = useAuth()
+  const scope = resumeScope(auth?.user.id, 'exercice', exerciseId, location.key)
+  const [{ saved, chronoInit }] = useState(() => {
+    const s = loadResume<Saved>('exercice', scope)
+    const lost = s?.running ? Math.max(0, Math.round((Date.now() - s.at) / 1000)) : 0
+    return { saved: s, chronoInit: s ? { elapsed: s.elapsed + lost, running: s.running } : undefined }
+  })
   const [data, setData] = useState<Loaded | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
   const [notFound, setNotFound] = useState(false)
 
-  const [revealed, setRevealed] = useState(false)
+  const [revealed, setRevealed] = useState(saved?.revealed ?? false)
   const [correction, setCorrection] = useState<string | null>(null)
-  const [corrLoading, setCorrLoading] = useState(false)
-  const [choice, setChoice] = useState<ExoResult | null>(null)
-  const [result, setResult] = useState<SubmitResult | null>(null)
-  const [validated, setValidated] = useState(false)
+  const [corrLoading, setCorrLoading] = useState(saved?.revealed ?? false)
+  const [choice, setChoice] = useState<ExoResult | null>(saved?.choice ?? null)
+  const [result, setResult] = useState<SubmitResult | null>(saved?.result ?? null)
+  const [validated, setValidated] = useState(saved?.validated ?? false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const chrono = useChrono()
+  const chrono = useChrono(chronoInit)
 
   const sessionRef = useRef<string | null>(null)
   const sessionStart = useRef<Promise<string> | null>(null)
@@ -110,6 +136,54 @@ export function ExerciceScreen({ exerciseId }: { exerciseId: string }) {
       alive = false
     }
   }, [exerciseId])
+
+  // Reprise : la correction était affichée avant le rechargement, on la relit.
+  useEffect(() => {
+    if (!data || !saved?.revealed) return
+    let alive = true
+    loadCorrection(data.exercise.id)
+      .then((c) => {
+        if (alive) setCorrection(c)
+      })
+      .catch(() => {
+        if (alive) setRevealed(false)
+      })
+      .finally(() => {
+        if (alive) setCorrLoading(false)
+      })
+    return () => {
+      alive = false
+    }
+  }, [data, saved])
+
+  // Reprise : on garde la session d'avant le rechargement si elle est encore ouverte.
+  useEffect(() => {
+    const id = saved?.sessionId
+    if (!id) return
+    let alive = true
+    isSessionOpen(id)
+      .then((open) => {
+        if (alive && open && !sessionRef.current) sessionRef.current = id
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [saved])
+
+  // Copie de l'écran à chaque changement (minuteur compris).
+  useEffect(() => {
+    saveResume<Saved>('exercice', scope, {
+      sessionId: sessionRef.current ?? saved?.sessionId ?? null,
+      revealed,
+      choice,
+      validated,
+      result,
+      elapsed: chrono.elapsed,
+      running: chrono.running,
+      at: Date.now(),
+    })
+  }, [scope, saved, revealed, choice, validated, result, chrono.elapsed, chrono.running])
 
   // Clôture de la session en quittant l'écran (Quitter, exercice suivant, navigation).
   useEffect(

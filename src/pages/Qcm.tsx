@@ -1,8 +1,11 @@
 // QCM. Maquette : docs/maquettes/Qcm.dc.html. Chantier "QCM".
 // Entraînement : correction et explication après chaque question.
 // Examen : réponses enregistrées sans correction, tout est révélé au bilan.
+// Un rechargement de la page reprend la série en cours (src/lib/resume.ts) : même session,
+// mêmes questions, même position, réponses et corrections déjà reçues.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router'
+import { useAuth } from '../auth/AuthProvider'
 import { ErrorBanner } from '../components/Form'
 import { Icon } from '../components/Icons'
 import { InlineLoader } from '../components/Loader'
@@ -25,6 +28,7 @@ import {
 import { ChoiceButton, type ChoiceState } from '../features/qcm/ChoiceButton'
 import { SessionLayout } from '../layouts/SessionLayout'
 import { refreshMyPoints } from '../lib/points'
+import { clearResume, isSessionOpen, loadResume, resumeScope, saveResume } from '../lib/resume'
 import { routes } from '../lib/routes'
 
 type Load =
@@ -33,6 +37,19 @@ type Load =
   | { status: 'empty'; reprise: boolean }
   | { status: 'ready'; sessionId: string; questions: QcmQuestion[] }
 
+/** Copie de la série gardée pour la reprise après rechargement. */
+type Saved = {
+  sessionId: string
+  questions: QcmQuestion[]
+  index: number
+  selected: string[]
+  correction: QcmCorrection | null
+  points: number
+  answered: number
+}
+
+const isAlreadyAnswered = (e: unknown) => !!e && typeof e === 'object' && (e as { code?: unknown }).code === '23505'
+
 export default function Qcm() {
   const { chapterId = '' } = useParams()
   const [params] = useSearchParams()
@@ -40,6 +57,8 @@ export default function Qcm() {
   const reprise = params.get('reprise')
   const location = useLocation()
   const navigate = useNavigate()
+  const { session: auth } = useAuth()
+  const scope = resumeScope(auth?.user.id, 'qcm', chapterId, variante, reprise, location.key)
 
   const [chapter, setChapter] = useState<{ nom: string; matiere: string } | null>(null)
   const [load, setLoad] = useState<Load>({ status: 'loading' })
@@ -56,9 +75,8 @@ export default function Qcm() {
   const startedFor = useRef<string | null>(null)
 
   useEffect(() => {
-    const key = `${location.key}|${chapterId}|${variante}|${reprise ?? ''}`
-    if (startedFor.current === key) return
-    startedFor.current = key
+    if (startedFor.current === scope) return
+    startedFor.current = scope
     sessionRef.current = null
     finishedRef.current = false
     setLoad({ status: 'loading' })
@@ -76,6 +94,19 @@ export default function Qcm() {
           return
         }
         setChapter(ch)
+        // Rechargement en pleine série : on reprend la même session si elle est encore ouverte.
+        const saved = loadResume<Saved>('qcm', scope)
+        if (saved && saved.questions?.length && saved.index < saved.questions.length && (await isSessionOpen(saved.sessionId))) {
+          sessionRef.current = saved.sessionId
+          setIndex(saved.index)
+          setSelected(saved.selected)
+          setCorrection(saved.correction)
+          setPoints(saved.points)
+          setAnswered(saved.answered)
+          setLoad({ status: 'ready', sessionId: saved.sessionId, questions: saved.questions })
+          return
+        }
+        clearResume('qcm')
         let ids: string[] | undefined
         if (reprise) {
           const review = await fetchReview(reprise)
@@ -97,9 +128,16 @@ export default function Qcm() {
         setLoad({ status: 'error', message: errorMessage(e, 'Impossible de charger les questions.') })
       }
     })()
-  }, [chapterId, variante, reprise, location.key])
+  }, [chapterId, variante, reprise, scope])
+
+  // Copie de la série à chaque changement (effacée au bilan ou en quittant).
+  useEffect(() => {
+    if (load.status !== 'ready' || finishedRef.current) return
+    saveResume<Saved>('qcm', scope, { sessionId: load.sessionId, questions: load.questions, index, selected, correction, points, answered })
+  }, [scope, load, index, selected, correction, points, answered])
 
   const quit = useCallback(() => {
+    clearResume('qcm')
     const id = sessionRef.current
     if (id && !finishedRef.current) {
       finishedRef.current = true
@@ -122,6 +160,7 @@ export default function Qcm() {
         await endSession(id)
         finishedRef.current = true
       }
+      clearResume('qcm')
       void refreshMyPoints()
       navigate(routes.qcmResult(id), { replace: true })
     } catch (e) {
@@ -164,6 +203,16 @@ export default function Qcm() {
           next()
         }
       } catch (e) {
+        if (isAlreadyAnswered(e)) {
+          // Réponse déjà enregistrée (page rechargée pendant l'envoi) : on passe à la suite.
+          setAnswered((n) => n + 1)
+          if (isLast) await finish()
+          else {
+            setBusy(false)
+            next()
+          }
+          return
+        }
         setError(errorMessage(e, 'Ta réponse n’a pas pu être envoyée. Réessaie.'))
         setBusy(false)
       }
