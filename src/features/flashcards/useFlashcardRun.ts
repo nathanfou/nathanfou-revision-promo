@@ -174,7 +174,7 @@ export function useFlashcardRun(chapterId: string | null) {
   }
 }
 
-/** Raccourcis clavier (ordinateur) : Espace / Entrée pour retourner, 1-2-3 (À revoir, Difficile, Bien) pour noter. */
+/** Raccourcis clavier (ordinateur) : Espace / Entrée pour retourner, puis Entrée pour Bien, ou 1-2-3 (À revoir, Bien, Difficile). */
 export function useRunKeys(run: Run, enabled = true) {
   useEffect(() => {
     if (!enabled) return
@@ -187,6 +187,10 @@ export function useRunKeys(run: Run, enabled = true) {
         if (t?.tagName === 'BUTTON' || t?.tagName === 'A') return
         e.preventDefault()
         run.reveal()
+      } else if (run.revealed && e.key === 'Enter') {
+        if (t?.tagName === 'BUTTON' || t?.tagName === 'A') return
+        e.preventDefault()
+        void run.rate('bien')
       } else if (run.revealed && ['1', '2', '3'].includes(e.key)) {
         e.preventDefault()
         void run.rate(NOTES[Number(e.key) - 1])
