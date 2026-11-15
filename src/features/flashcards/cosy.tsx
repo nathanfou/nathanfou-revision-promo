@@ -2,7 +2,8 @@
 // Habillage seulement : rien ici ne touche à la série. Le bouton CosyToggle, posé en haut à gauche
 // de la carte, rebascule sur le fond pêche ; le choix est mémorisé (localStorage
 // "leafnotes.fond-flashcards" = "on" | "off", activé par défaut). Fondu doux, instantané si
-// prefers-reduced-motion (classe .cosy-fade de index.css).
+// prefers-reduced-motion (classe .cosy-fade de index.css). Cadrage : scène entière (contain) sur un
+// fond flouté ; en portrait, plein écran cadré sur les chats (.cosy-img de index.css).
 import { useCallback, useState, useSyncExternalStore, type CSSProperties } from 'react'
 
 const KEY = 'leafnotes.fond-flashcards'
@@ -37,7 +38,7 @@ export const useCosyBackground = () =>
   )
 
 const SRC = '/fonds/cosy-1600.webp'
-const SRCSET = '/fonds/cosy-960.webp 960w, /fonds/cosy-1600.webp 1600w, /fonds/cosy-2400.webp 2400w'
+const SRCSET = '/fonds/cosy-960.webp 960w, /fonds/cosy-1600.webp 1600w, /fonds/cosy-2400.webp 2400w, /fonds/cosy-2752.webp 2752w'
 
 /**
  * Calque fixe plein écran : l'image et un voile sombre léger. À placer au-dessus du décor de
@@ -57,6 +58,8 @@ export function CosyBackdrop() {
   const visible = on && loaded
   return (
     <div aria-hidden="true" className="cosy-fade" style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', backgroundColor: '#2b2238', opacity: visible ? 1 : 0 }}>
+      {/* Fond flouté (même image) : remplit les bandes quand la scène nette ne couvre pas tout l'écran. */}
+      <div className="cosy-fill" style={{ position: 'absolute', inset: -40, backgroundImage: 'url(/fonds/cosy-960.webp)', backgroundSize: 'cover', backgroundPosition: 'center' }} />
       <img
         ref={imgRef}
         src={SRC}
@@ -66,7 +69,7 @@ export function CosyBackdrop() {
         decoding="async"
         onLoad={() => setLoaded(true)}
         className="cosy-img"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+
       />
       {/* Voile : assombrit un peu le haut (en-tête, compteur) et le bas, garde la scène lisible. */}
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(34,22,40,0.38) 0%, rgba(34,22,40,0.14) 32%, rgba(34,22,40,0.18) 68%, rgba(34,22,40,0.46) 100%)' }} />
