@@ -31,7 +31,7 @@ export function AuthLayout({ children, compact }: { children: ReactNode; compact
           ))}
         </div>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 10 }}>
-          <LogoMark size={32} center="var(--ink)" />
+          <LogoMark size={32} />
           <span style={{ fontSize: 20, fontWeight: 600 }}>{APP_NAME}</span>
         </div>
         <div className="rise" style={{ position: 'relative', marginTop: compact ? 0 : 40, maxWidth: 460 }}>
