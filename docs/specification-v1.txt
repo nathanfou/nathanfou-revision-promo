@@ -382,7 +382,7 @@ série du jour (ordre des passages), puis le retour les jours suivants
     encore fait revenir la carte 8 cartes plus loin.
 
 -   Score de maîtrise de 0 à 100, par étudiant et par carte. Il fixe le
-    retour après la série : 0-9 demain, 10-29 dans 3 jours, 30-49 dans
+    retour après la série : 0-15 demain, 16-29 dans 3 jours, 30-49 dans
     5 jours, 50-69 dans 9 jours, 70-89 dans 15 jours, 90-100 dans
     30 jours.
 
