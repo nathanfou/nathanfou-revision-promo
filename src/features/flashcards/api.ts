@@ -1,8 +1,12 @@
 // Accès base des flashcards (migration 20261108221135_flashcards).
-// Le calendrier (paliers 1/3/7/14 j) et les points sont calculés côté serveur.
+// Le score de maîtrise, le retour les jours suivants et les points sont calculés côté serveur
+// (migration 20261115220958_flashcards_score) ; l'ordre dans la série est géré par scheduler.ts.
 import { supabase } from '../../lib/supabase'
 
-export type Note = 'a_revoir' | 'bien' | 'facile'
+export type Note = 'a_revoir' | 'difficile' | 'bien'
+
+/** Ordre des boutons (touches 1, 2, 3). */
+export const NOTES: Note[] = ['a_revoir', 'difficile', 'bien']
 
 export type QueueCard = {
   id: string
@@ -12,13 +16,15 @@ export type QueueCard = {
   recto: string
   verso: string
   isNew: boolean
-  /** palier actuel (null pour une carte jamais vue) */
+  /** intervalle actuel en jours (null pour une carte jamais vue) */
   palier: number | null
+  /** score de maîtrise, 0 à 100 */
+  score: number
   /** prochain intervalle (jours) selon la note choisie */
   next: Record<Note, number>
 }
 
-export type ReviewResult = { palier: number; due_date: string; points: number; nouvelle: boolean }
+export type ReviewResult = { palier: number; due_date: string; points: number; nouvelle: boolean; score: number; next: Record<Note, number> }
 
 export type ChapterOverview = {
   chapterId: string
@@ -46,7 +52,8 @@ export async function fetchQueue(chapterId: string | null, newLimit: number): Pr
     verso: r.verso,
     isNew: r.is_new,
     palier: (r.palier as number | null) ?? null,
-    next: { a_revoir: r.next_a_revoir, bien: r.next_bien, facile: r.next_facile },
+    score: r.score,
+    next: { a_revoir: r.next_a_revoir, difficile: r.next_difficile, bien: r.next_bien },
   }))
 }
 

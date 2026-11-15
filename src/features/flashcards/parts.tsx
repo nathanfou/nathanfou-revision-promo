@@ -1,6 +1,7 @@
 // Briques visuelles des flashcards (maquettes Flashcards, MobileCarte).
 import type { CSSProperties, ReactNode } from 'react'
-import type { Note, QueueCard } from './api'
+import { NOTES, type Note, type QueueCard } from './api'
+import type { Phase, Track } from './scheduler'
 import { tierLabel, whenLong, whenShort } from './labels'
 
 /** Barre de progression pixel de la file (20 cases). */
@@ -44,7 +45,15 @@ export function CardStack({ children, compact = false, style }: { children: Reac
   )
 }
 
-export function CardTags({ card, compact = false }: { card: QueueCard; compact?: boolean }) {
+/** Où en est la carte dans la série : file rouge, ou nombre d'erreurs. */
+function stepLabel(phase: Phase, track: Track | null) {
+  if (phase === 'rouge') return 'File rouge'
+  if (track && track.errors > 0) return track.errors === 1 ? 'Ratée 1 fois' : `Ratée ${track.errors} fois`
+  return null
+}
+
+export function CardTags({ card, phase = 'decouverte', track = null, compact = false }: { card: QueueCard; phase?: Phase; track?: Track | null; compact?: boolean }) {
+  const step = stepLabel(phase, track)
   const fs = compact ? 12 : 13
   const pad = compact ? '3px 10px' : '4px 11px'
   return (
@@ -53,8 +62,13 @@ export function CardTags({ card, compact = false }: { card: QueueCard; compact?:
         {card.subjectNom}, {card.chapterNom}
       </span>
       <span style={{ padding: pad, borderRadius: 999, backgroundColor: 'var(--ink)', color: 'var(--caramel)', fontSize: fs }}>
-        {card.palier == null ? 'Nouvelle carte' : `Palier : ${tierLabel(card.palier)}`}
+        {card.palier == null ? 'Nouvelle carte' : `Retour : ${tierLabel(card.palier)}`}
       </span>
+      {step && (
+        <span style={{ padding: pad, borderRadius: 999, fontSize: fs, ...(phase === 'rouge' ? { backgroundColor: 'var(--ko)', color: 'var(--accent-text)' } : { backgroundColor: 'var(--ko-bg)', color: 'var(--ko)' }) }}>
+          {step}
+        </span>
+      )}
     </div>
   )
 }
@@ -64,15 +78,15 @@ export const Dashes = () => <div aria-hidden="true" style={{ height: 3, backgrou
 
 const RATE_STYLES: Record<Note, { label: string; style: CSSProperties; sub: string; cls: string }> = {
   a_revoir: { label: 'À revoir', style: { border: '1.5px solid var(--ko)', backgroundColor: 'var(--ko-bg)', color: 'var(--ko)' }, sub: 'var(--ko)', cls: 'btn' },
-  bien: { label: 'Bien', style: { border: '1.5px solid var(--ink)', backgroundColor: 'var(--ink)', color: 'var(--chip)' }, sub: 'var(--ink-muted)', cls: 'btn' },
-  facile: { label: 'Facile', style: { border: '1.5px solid var(--accent)', backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }, sub: 'var(--accent-text)', cls: 'btn btn-primary' },
+  difficile: { label: 'Difficile', style: { border: '1.5px solid var(--ink)', backgroundColor: 'var(--ink)', color: 'var(--chip)' }, sub: 'var(--ink-muted)', cls: 'btn' },
+  bien: { label: 'Bien', style: { border: '1.5px solid var(--accent)', backgroundColor: 'var(--accent)', color: 'var(--accent-text)' }, sub: 'var(--accent-text)', cls: 'btn btn-primary' },
 }
 
-/** Les trois boutons de note, avec l'échéance que chacun donnerait. */
+/** Les trois boutons de note, avec l'échéance que chacun donnerait (la carte peut aussi revenir dans la série). */
 export function RateButtons({ card, onRate, disabled, compact = false, shortcuts = false }: { card: QueueCard; onRate: (n: Note) => void; disabled?: boolean; compact?: boolean; shortcuts?: boolean }) {
   return (
     <div role="group" aria-label="Tu la connaissais ?" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: compact ? 8 : 10 }}>
-      {(Object.keys(RATE_STYLES) as Note[]).map((note, i) => {
+      {NOTES.map((note, i) => {
         const s = RATE_STYLES[note]
         const when = compact ? whenShort(card.next[note]) : whenLong(card.next[note])
         return (

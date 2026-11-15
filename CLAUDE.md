@@ -108,6 +108,8 @@ toute fonctionnalité. Réponds à Nathan en français.
 3. ✅ Script d'import CSV (`npm run content:import`) + page Révision.
 4. ✅ QCM corrigés côté serveur (`submit_qcm_answer`, `qcm_session_review`, table `qcm_answers`).
 5. ✅ Flashcards (`review_flashcard`, `flashcard_queue`), vue téléphone, exercices (`submit_exercise`).
+   Ordre dans la série (découverte, retours après erreur, file rouge) : `src/features/flashcards/scheduler.ts` ;
+   score de maîtrise et retour les jours suivants : `private.flashcard_apply` (migration `flashcards_score`).
 6. ✅ Classements et progression ; mise en ligne (Vercel déploie `main`).
 7. ✅ Feed (posts, réponses, réactions, événements auto, notifications, temps réel).
 8. Images finales (remplacer `public/avatars/pp_XX.webp` en gardant les noms).

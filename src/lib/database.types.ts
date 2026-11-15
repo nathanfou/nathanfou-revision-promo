@@ -69,24 +69,39 @@ export type Database = {
       }
       card_states: {
         Row: {
+          dernier_jour: string | null
           due_date: string
           flashcard_id: string
+          jours_vus: number
           last_reviewed: string
           palier: number
+          penalites_jour: number
+          score: number
+          serie: number
           user_id: string
         }
         Insert: {
+          dernier_jour?: string | null
           due_date: string
           flashcard_id: string
+          jours_vus?: number
           last_reviewed?: string
           palier: number
+          penalites_jour?: number
+          score?: number
+          serie?: number
           user_id: string
         }
         Update: {
+          dernier_jour?: string | null
           due_date?: string
           flashcard_id?: string
+          jours_vus?: number
           last_reviewed?: string
           palier?: number
+          penalites_jour?: number
+          score?: number
+          serie?: number
           user_id?: string
         }
         Relationships: [
@@ -731,9 +746,10 @@ export type Database = {
           is_new: boolean
           next_a_revoir: number
           next_bien: number
-          next_facile: number
+          next_difficile: number
           palier: number
           recto: string
+          score: number
           subject_nom: string
           verso: string
         }[]
@@ -818,7 +834,7 @@ export type Database = {
       review_flashcard: {
         Args: {
           p_flashcard_id: string
-          p_note: Database["public"]["Enums"]["activity_result"]
+          p_note: string
           p_session_id: string
         }
         Returns: Json
