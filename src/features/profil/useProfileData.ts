@@ -24,7 +24,8 @@ function useQuery<T>(fn: () => Promise<T>, deps: unknown[]): Async<T> {
 
 export type Subject = { id: string; nom: string; ordre: number }
 export type Chapter = { id: string; nom: string; ordre: number; subject_id: string }
-export type ChapterProgress = { chapter_id: string; total: number; reussies: number }
+/** total : QCM + cartes publiés ; reussies : QCM réussis + somme des scores des cartes / 100. */
+export type ChapterProgress = { chapter_id: string; total: number; reussies: number; nbQcm: number; nbCartes: number }
 export type ExamDay = { jour: string; nom: string }
 
 export type ProfileContent = {
@@ -40,13 +41,22 @@ export function useProfileContent(): Async<ProfileContent> {
     const [s, c, p, e] = await Promise.all([
       supabase.from('subjects').select('id, nom, ordre').order('ordre').order('nom'),
       supabase.from('chapters').select('id, nom, ordre, subject_id').order('ordre').order('nom'),
-      supabase.from('chapter_progress').select('chapter_id, total_questions, questions_reussies'),
+      supabase.from('chapter_progress').select('chapter_id, total_questions, questions_reussies, total_cartes, cartes_maitrise'),
       supabase.from('exams').select('date, nom, subjects(nom)').order('date'),
     ])
     if (s.error || c.error || p.error || e.error) throw new Error('profil')
     const progress = new Map<string, ChapterProgress>()
     for (const r of p.data) {
-      if (r.chapter_id) progress.set(r.chapter_id, { chapter_id: r.chapter_id, total: r.total_questions ?? 0, reussies: r.questions_reussies ?? 0 })
+      if (!r.chapter_id) continue
+      const nbQcm = r.total_questions ?? 0
+      const nbCartes = r.total_cartes ?? 0
+      progress.set(r.chapter_id, {
+        chapter_id: r.chapter_id,
+        total: nbQcm + nbCartes,
+        reussies: (r.questions_reussies ?? 0) + Number(r.cartes_maitrise ?? 0),
+        nbQcm,
+        nbCartes,
+      })
     }
     return {
       subjects: s.data,
