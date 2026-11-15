@@ -1,0 +1,25 @@
+matiere,chapitre,recto,verso
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 5 fonctions de base des systèmes Unix,"Multi-tâches, multi-utilisateurs, portabilité, applications communes exécutables dans n'importe quel contexte système, temps partagé pour l'accès au matériel."
+Quizz Linux,Introduction aux systèmes GNU/Linux,La cryptographie fait-elle partie des fonctions de base d'Unix ?,"Non. Elle passe par des outils ou bibliothèques ajoutés au système (OpenSSL, GnuPG…)."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Système multi-tâches,"Il entrelace l'exécution de plusieurs tâches qui se partagent les ressources, notamment le temps processeur."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Système mono-tâche,"Il traite les tâches une par une, en séquence : chaque tâche dispose de toutes les ressources matérielles pendant son exécution."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Système multi-utilisateurs,"Un système partagé entre plusieurs utilisateurs, qui peuvent être des individus ou des applications."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Portabilité (fonction de base d'Unix),Des chaînes de développement permettent de porter une application d'une cible matérielle à une autre.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Temps partagé,"Pour accéder aux ressources matérielles de la machine, le temps est partagé entre tous les processus en cours d'exécution."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 3 cercles de la représentation historique d'un OS,"Kernel (au centre), Shell (autour), Application (cercle extérieur)."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle du noyau (kernel),"Il est au centre du système et pilote le matériel, physique ou virtuel (y compris les interfaces réseau), grâce à ses pilotes (drivers)."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle du shell,Il entoure le noyau et sert d'interface de commande entre l'utilisateur ou les applications et le noyau.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Quelle couche pilote les interfaces réseau d'un système ?,"La couche noyau (kernel), via ses pilotes."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Rôle de l'ordonnanceur (scheduler),"Allouer les tranches de temps processeur aux applications qui le demandent, en répartissant équitablement entre les domaines : temps réel, entrées/sorties, calcul, meilleur effort."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Qui alloue la mémoire aux processus : l'ordonnanceur ?,"Non, c'est le gestionnaire de mémoire. L'ordonnanceur gère le temps processeur."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les 4 domaines de requêtes de l'ordonnanceur Linux,"Temps réel, entrées/sorties, calcul, meilleur effort."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Mémoire virtuelle,Le concept de gestion avancée de la mémoire du noyau Linux.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Pagination et mode protégé i386,"Des mécanismes qui permettent la mémoire virtuelle, pas le concept lui-même."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Préemption,Interruption d'un processus par un autre de priorité plus élevée.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Ordonnancement des tâches (fonction du noyau),Le séquencement entre processus.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Gestion des périphériques et des flux de données (fonction du noyau),Les entrées/sorties.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Accès aux micrologiciels (firmwares) des composants,"Il relève des pilotes du noyau, ce n'est pas une fonction de base d'Unix."
+Quizz Linux,Introduction aux systèmes GNU/Linux,Les deux grandes branches historiques d'Unix (jusqu'au début des années 90),"System V, piloté par AT&T, et BSD, piloté par l'université de Berkeley."
+Quizz Linux,Introduction aux systèmes GNU/Linux,BSD,Berkeley Software Distribution : la branche d'Unix de l'université de Berkeley.
+Quizz Linux,Introduction aux systèmes GNU/Linux,Dans quelle branche d'Unix le réseau (TCP/IP) est-il apparu en premier ?,"BSD (notamment 4.2BSD, début des années 80), financé par la DARPA. Les sockets de Berkeley en sont issues."
+Quizz Linux,Introduction aux systèmes GNU/Linux,ARPANET,"Le réseau de la DARPA, ancêtre d'Internet, dont les fonctions réseau ont d'abord été intégrées à Unix dans BSD."
