@@ -1,9 +1,15 @@
 // Déroulé d'une file de cartes, commun à l'ordinateur et au téléphone.
 // La session (start_session) n'est créée qu'à la première note, pour ne pas laisser
 // de sessions vides quand on ouvre la page sans réviser ; end_session à la fin ou en quittant.
+// Un rechargement de la page reprend la file là où elle en était (src/lib/resume.ts) : mêmes
+// cartes, même position, points de la série. La session close au rechargement (pagehide),
+// une nouvelle est ouverte à la note suivante.
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router'
+import { useAuth } from '../../auth/AuthProvider'
 import { daysUntil } from '../../lib/format'
 import { refreshMyPoints } from '../../lib/points'
+import { clearResume, loadResume, resumeScope, saveResume } from '../../lib/resume'
 import { endFlashcardSession, fetchChapterLabel, fetchQueue, reviewFlashcard, startFlashcardSession, type Note, type QueueCard } from './api'
 
 /** Nouvelles cartes proposées dans une file de chapitre (la file du jour ne contient que les cartes dues). */
@@ -11,7 +17,22 @@ export const NEW_PER_CHAPTER = 20
 
 export type Run = ReturnType<typeof useFlashcardRun>
 
+/** Copie de la file gardée pour la reprise après rechargement. */
+type Saved = {
+  cards: QueueCard[]
+  label: { chapter: string; subject: string } | null
+  idx: number
+  revealed: boolean
+  points: number
+  rated: number
+  nextDays: number | null
+}
+
 export function useFlashcardRun(chapterId: string | null) {
+  const { session: auth } = useAuth()
+  const location = useLocation()
+  const scope = resumeScope(auth?.user.id, location.pathname, chapterId, location.key)
+
   const [cards, setCards] = useState<QueueCard[] | null>(null)
   const [label, setLabel] = useState<{ chapter: string; subject: string } | null>(null)
   const [idx, setIdx] = useState(0)
@@ -25,8 +46,19 @@ export function useFlashcardRun(chapterId: string | null) {
   const session = useRef<{ id: string | null; pending: Promise<string> | null }>({ id: null, pending: null })
 
   const load = useCallback(async () => {
-    setCards(null)
     setError(null)
+    const saved = loadResume<Saved>('flashcards', scope)
+    if (saved && Array.isArray(saved.cards) && saved.idx >= 0 && saved.idx < saved.cards.length) {
+      setCards(saved.cards)
+      setLabel(saved.label)
+      setIdx(saved.idx)
+      setRevealed(saved.revealed)
+      setPoints(saved.points)
+      setRated(saved.rated)
+      setNextDays(saved.nextDays)
+      return
+    }
+    setCards(null)
     setIdx(0)
     setRevealed(false)
     try {
@@ -40,11 +72,18 @@ export function useFlashcardRun(chapterId: string | null) {
       setError('Impossible de charger les cartes. Vérifie ta connexion et réessaie.')
       setCards([])
     }
-  }, [chapterId])
+  }, [chapterId, scope])
 
   useEffect(() => {
     void load()
   }, [load])
+
+  // Copie de la file à chaque changement, effacée quand la file est finie.
+  useEffect(() => {
+    if (!cards || cards.length === 0) return
+    if (idx >= cards.length) clearResume('flashcards')
+    else saveResume<Saved>('flashcards', scope, { cards, label, idx, revealed, points, rated, nextDays })
+  }, [scope, cards, label, idx, revealed, points, rated, nextDays])
 
   const closeSession = useCallback(() => {
     const id = session.current.id
@@ -102,6 +141,7 @@ export function useFlashcardRun(chapterId: string | null) {
 
   /** Recharge une file (ex. d'autres nouvelles cartes du chapitre) ; nouvelle session au prochain vote. */
   const restart = useCallback(() => {
+    clearResume('flashcards')
     closeSession()
     setPoints(0)
     setRated(0)
@@ -110,7 +150,13 @@ export function useFlashcardRun(chapterId: string | null) {
     void load()
   }, [closeSession, load])
 
-  return { cards, label, card, idx, total, done, revealed, points, rated, lastGain, nextDays, busy, error, reveal, rate, restart, quit: closeSession }
+  /** Quitter volontairement : la file ne sera pas reprise. */
+  const quit = useCallback(() => {
+    clearResume('flashcards')
+    closeSession()
+  }, [closeSession])
+
+  return { cards, label, card, idx, total, done, revealed, points, rated, lastGain, nextDays, busy, error, reveal, rate, restart, quit }
 }
 
 /** Raccourcis clavier (ordinateur) : Espace / Entrée pour retourner, 1-2-3 pour noter. */
