@@ -1,0 +1,84 @@
+matiere,chapitre,recto,verso
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Émulation sans accélération : qui simule le matériel ?,QEMU (TCG)
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Intérêt de l'émulation ?,Lancer une autre architecture
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Extensions processeur de la virtualisation assistée ?,VT-x / AMD-V
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Module noyau de virtualisation de Linux ?,KVM
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Pilotes de paravirtualisation des E/S ?,virtio
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Hyperviseur qui tourne directement sur le matériel ?,Type 1
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Hyperviseur lancé comme application d'un hôte ?,Type 2
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",2 exemples d'hyperviseurs de type 2 ?,"VirtualBox, VMware Workstation"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",4 exemples d'hyperviseurs de type 1 ?,"ESXi, Xen, Hyper-V, KVM"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Type d'hyperviseur de KVM ?,Type 1
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Ce qui manque à un conteneur système par rapport à une VM ?,Son propre noyau
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Outil de conteneurs système du cours ?,Incus
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",2 outils de conteneurs applicatifs ?,"Podman, Docker"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Règle d'un conteneur applicatif OCI ?,Une application par conteneur
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Où vivent les données d'un conteneur applicatif ?,"Dans des volumes, en dehors"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",3 types d'instances Incus ?,"Conteneurs LXC, conteneurs OCI, VM QEMU/KVM"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence d'Incus ?,Apache 2.0
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Les 3 libertés FSF du cours ?,"Exécuter, étudier/modifier, redistribuer"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Qui définit l'open source en 10 critères ?,L'OSI
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Priorité de la FSF : liberté ou efficacité ?,Liberté des utilisateurs
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Langages du noyau Linux ?,C et Rust
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Ce qu'on perd en décompilant ?,Noms et commentaires
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",3 licences permissives ?,"MIT, BSD, Apache"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence permissive avec clause sur les brevets ?,Apache 2.0
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence copyleft de référence ?,GNU GPL
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Copyleft : obligation pour les dérivés ?,Même licence
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",2 licences copyleft faible ?,"LGPL, MPL"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Copyleft faible : limité à quoi ?,La bibliothèque ou le fichier
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence copyleft qui couvre l'usage réseau ?,AGPL-3.0
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence libre de l'Union européenne ?,EUPL-1.2
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence du noyau Linux ?,GPL-2.0-only
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Identifiant normalisé de licence en tête de fichier ?,SPDX
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Le copyleft repose sur quel droit ?,Le droit d'auteur
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",But des licences SSPL / BSL ?,Bloquer la revente en cloud
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fork libre de Terraform ?,OpenTofu
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fork libre de Redis ?,Valkey
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence du retour d'Elastic et Redis 8 ?,AGPL-3.0
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",3 composants d'un modèle d'IA ?,"Code, poids, données"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Poids ouverts = open source ?,Non
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Ce qu'exige l'OSI pour une IA open source ?,"Code, poids, infos sur les données"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Licence des poids de gpt-oss ?,Apache 2.0
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Llama est-il open source selon l'OSI ?,Non
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Code généré par l'IA seule : protégé ?,Non (pas d'auteur humain)
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Qui peut signer Signed-off-by dans le noyau ?,Un humain
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Qui est responsable du code proposé avec l'IA ?,Le signataire humain
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Quelle attaque exploite les paquets inventés par l'IA ?,Le slopsquatting
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Projet qui a arrêté son bug bounty en 2026 ?,curl
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Texte européen sur les vulnérabilités ?,Cyber Resilience Act (CRA)
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Texte européen sur les modèles d'IA ?,AI Act
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Comment circulent les correctifs du noyau ?,Par courriel
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Qui envoie des pull requests à Linus ?,Les mainteneurs
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Durée d'un cycle du noyau ?,9 à 10 semaines
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Durée de la fenêtre de fusion ?,2 semaines
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Versions candidates après la fusion ?,rc1 à rc7 ou rc8
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fonctionnalité pas prête : la version attend ?,"Non, cycle suivant"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Arbre d'intégration en parallèle ?,linux-next
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian","Fondation du noyau, de la CNCF, de l'OpenSSF ?",Linux Foundation
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fondation de MCP et AGENTS.md ?,Agentic AI Foundation
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian","En CI, que déclenche chaque modification ?",Construction + tests
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Livraison continue : quand part-on en prod ?,Sur décision
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Déploiement continu : quand part-on en prod ?,Automatiquement
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Que contient une SBOM ?,L'inventaire des composants
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",2 formats de SBOM ?,"SPDX, CycloneDX"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Que garantit une construction reproductible ?,Même source → même binaire
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Signature des dépôts APT ?,OpenPGP
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",3 éléments d'une distribution ?,"Noyau, shell(s), applications"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",3 contenus d'un paquet ?,"Binaire, configuration type, métadonnées"
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Pierre angulaire d'une distribution ?,Le gestionnaire de paquets
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Principes du libre selon Debian ?,DFSG
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Procédure qualité de Debian ?,Debian Policy
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Gestionnaire de paquets de Debian ?,APT
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Debian stable en novembre 2026 ?,13 trixie
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Nom de code de Debian 12 ?,bookworm
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Version de Debian en testing ?,14 forky
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian","Durée du support Debian, complet puis LTS ?",3 ans + 2 ans
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Support au-delà de la LTS ?,ELTS commercial (Freexian)
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Noyau de trixie ?,6.12 LTS
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fichier des sources APT en deb822 ?,/etc/apt/sources.list.d/debian.sources
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Commande pour passer les sources en deb822 ?,apt modernize-sources
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Mises à jour auto sous Debian ?,unattended-upgrades
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Sigles des annonces de sécurité Debian ?,DSA et DLA
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",Fichier de licence d'un paquet Debian ?,/usr/share/doc/<paquet>/copyright
+Quizz Linux,"Virtualisation, logiciel libre, DevOps et Debian",2 outils pour analyser les licences d'un arbre ?,"licensecheck, reuse lint"
