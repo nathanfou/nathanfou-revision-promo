@@ -1,10 +1,13 @@
-// Progression par matière et chapitre : part des QCM publiés réussis au moins une fois (vue chapter_progress).
+// Progression par matière et chapitre (vue chapter_progress) : QCM réussis au moins une fois
+// et score de maîtrise des flashcards, chaque élément publié comptant pour 1.
 import { useState } from 'react'
 import { Icon } from '../../components/Icons'
 import { MiniMeter } from '../../components/Meter'
 import type { ProfileContent } from './useProfileData'
 
 const pct = (reussies: number, total: number) => (total > 0 ? Math.round((reussies / total) * 100) : 0)
+const detail = (c: { nbQcm: number; nbCartes: number }) =>
+  [c.nbQcm ? `${c.nbQcm} QCM` : '', c.nbCartes ? `${c.nbCartes} carte${c.nbCartes > 1 ? 's' : ''}` : ''].filter(Boolean).join(' et ')
 
 export function ProgressSection({ content }: { content: ProfileContent }) {
   const subjects = content.subjects
@@ -13,7 +16,7 @@ export function ProgressSection({ content }: { content: ProfileContent }) {
         .filter((c) => c.subject_id === s.id)
         .map((c) => {
           const p = content.progress.get(c.id)
-          return { id: c.id, nom: c.nom, total: p?.total ?? 0, reussies: p?.reussies ?? 0 }
+          return { id: c.id, nom: c.nom, total: p?.total ?? 0, reussies: p?.reussies ?? 0, nbQcm: p?.nbQcm ?? 0, nbCartes: p?.nbCartes ?? 0 }
         })
       const total = chapters.reduce((a, c) => a + c.total, 0)
       const reussies = chapters.reduce((a, c) => a + c.reussies, 0)
@@ -28,7 +31,7 @@ export function ProgressSection({ content }: { content: ProfileContent }) {
         <h2 id="t-prog" style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>
           Progression
         </h2>
-        <span style={{ fontSize: 13, color: 'var(--muted)' }}>Questions réussies au moins une fois</span>
+        <span style={{ fontSize: 13, color: 'var(--muted)' }}>QCM réussis et cartes maîtrisées</span>
       </div>
       {subjects.length === 0 ? (
         <p style={{ margin: '0 12px 8px', fontSize: 14, color: 'var(--muted)' }}>Aucune matière publiée pour l’instant.</p>
@@ -66,7 +69,7 @@ export function ProgressSection({ content }: { content: ProfileContent }) {
                         <li key={c.id} style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 160px 44px', alignItems: 'center', gap: 12 }}>
                           <span style={{ fontSize: 14, color: 'var(--text-2)' }}>{c.nom}</span>
                           <MiniMeter value={p / 100} height={5} />
-                          <span className="mono" style={{ textAlign: 'right', fontSize: 13, color: 'var(--text-2)' }} title={c.total ? `${c.reussies} sur ${c.total} QCM` : 'Pas encore de QCM'}>
+                          <span className="mono" style={{ textAlign: 'right', fontSize: 13, color: 'var(--text-2)' }} title={c.total ? detail(c) : 'Pas encore de QCM ni de cartes'}>
                             {c.total ? `${p}%` : '–'}
                           </span>
                         </li>

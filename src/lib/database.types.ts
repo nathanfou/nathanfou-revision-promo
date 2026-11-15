@@ -671,10 +671,12 @@ export type Database = {
     Views: {
       chapter_progress: {
         Row: {
+          cartes_maitrise: number | null
           chapter_id: string | null
           progression: number | null
           questions_reussies: number | null
           subject_id: string | null
+          total_cartes: number | null
           total_questions: number | null
         }
         Relationships: [

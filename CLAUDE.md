@@ -110,6 +110,8 @@ toute fonctionnalité. Réponds à Nathan en français.
 5. ✅ Flashcards (`review_flashcard`, `flashcard_queue`), vue téléphone, exercices (`submit_exercise`).
    Ordre dans la série (découverte, retours après erreur, file rouge) : `src/features/flashcards/scheduler.ts` ;
    score de maîtrise et retour les jours suivants : `private.flashcard_apply` (migration `flashcards_score`).
+   Progression d'un chapitre (vue `chapter_progress`) : (QCM réussis au moins une fois + somme des scores
+   des cartes / 100) / (QCM + cartes publiés).
 6. ✅ Classements et progression ; mise en ligne (Vercel déploie `main`).
 7. ✅ Feed (posts, réponses, réactions, événements auto, notifications, temps réel).
 8. Images finales (remplacer `public/avatars/pp_XX.webp` en gardant les noms).

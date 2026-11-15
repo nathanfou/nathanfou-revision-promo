@@ -12,9 +12,11 @@ export type ChapterInfo = {
   id: string
   subjectId: string
   nom: string
-  /** Part des QCM publiés réussis au moins une fois (0 à 1). */
+  /** Part du chapitre acquise (0 à 1) : QCM réussis au moins une fois + score de maîtrise des cartes. */
   progression: number
-  questionsReussies: number
+  /** Éléments acquis (QCM réussis + somme des scores des cartes / 100) et éléments publiés. */
+  acquis: number
+  nbElements: number
   nbQcm: number
   nbCartes: number
   cartesDues: number
@@ -81,7 +83,7 @@ async function load(): Promise<RevisionData> {
     supabase.from('subjects').select('id, nom, ordre').order('ordre').order('nom'),
     supabase.from('chapters').select('id, subject_id, nom, ordre').order('ordre').order('nom'),
     supabase.from('exams').select('id, subject_id, nom, date').gte('date', nowIso).order('date'),
-    supabase.from('chapter_progress').select('chapter_id, progression, questions_reussies'),
+    supabase.from('chapter_progress').select('chapter_id, progression, total_questions, questions_reussies, total_cartes, cartes_maitrise'),
     supabase.rpc('revision_overview'),
     supabase.from('sessions').select('id, chapter_id, mode, variante, started_at, ended_at, score, points').order('started_at', { ascending: false }).limit(10),
     supabase.from('exercise_todo').select('exercise_id, added_at, exercises(id, titre, duree_min, chapter_id)').order('added_at', { ascending: false }),
@@ -109,7 +111,8 @@ async function load(): Promise<RevisionData> {
       subjectId: c.subject_id,
       nom: c.nom,
       progression: Number(p?.progression ?? 0),
-      questionsReussies: Number(p?.questions_reussies ?? 0),
+      acquis: Number(p?.questions_reussies ?? 0) + Number(p?.cartes_maitrise ?? 0),
+      nbElements: Number(p?.total_questions ?? 0) + Number(p?.total_cartes ?? 0),
       nbQcm: o?.nb_qcm ?? 0,
       nbCartes: o?.nb_cartes ?? 0,
       cartesDues: o?.cartes_dues ?? 0,
@@ -123,8 +126,8 @@ async function load(): Promise<RevisionData> {
 
   const subjects: SubjectInfo[] = subjectsRows.map((s) => {
     const list = chapters.filter((c) => c.subjectId === s.id)
-    const total = list.reduce((n, c) => n + c.nbQcm, 0)
-    const done = list.reduce((n, c) => n + Math.min(c.questionsReussies, c.nbQcm), 0)
+    const total = list.reduce((n, c) => n + c.nbElements, 0)
+    const done = list.reduce((n, c) => n + Math.min(c.acquis, c.nbElements), 0)
     return {
       id: s.id,
       nom: s.nom,
