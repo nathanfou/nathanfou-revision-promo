@@ -8,6 +8,7 @@ import { InlineLoader } from '../components/Loader'
 import { Button, ButtonLink, Card, EmptyState, roundButtonStyle } from '../components/ui'
 import { nextReturn, runCounter } from '../features/flashcards/labels'
 import { CardStack, CardTags, Dashes, DoneLcd, GainBubble, QueueMeter, RateButtons } from '../features/flashcards/parts'
+import { CosyBackdrop, CosyToggle, cosyGlass, useCosyBackground } from '../features/flashcards/cosy'
 import { useFlashcardRun } from '../features/flashcards/useFlashcardRun'
 import { fmtInt, plural } from '../lib/format'
 import { routes } from '../lib/routes'
@@ -20,13 +21,14 @@ export default function MobileCarte() {
   const { card, total } = run
   const title = chapterId ? (run.label?.chapter ?? 'Flashcards') : 'File du jour'
   const counter = runCounter(run, true)
+  const cosy = useCosyBackground()
 
   const header = (
     <header style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
       <Link to={routes.home} onClick={run.quit} className="btn btn-ghost" aria-label="Quitter la file" style={roundButtonStyle}>
         <Icon name="close" size={18} strokeWidth={2} />
       </Link>
-      <div style={{ flex: 1, minWidth: 0, textAlign: 'center' }}>
+      <div className="cosy-fade" style={{ flex: 1, minWidth: 0, textAlign: 'center', ...cosyGlass(cosy, [4, 10], 14), margin: '0 4px' }}>
         <p style={{ margin: 0, fontSize: 15, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</p>
         <p className="mono" style={{ margin: 0, fontSize: 12, color: 'var(--muted)', minHeight: 16 }}>{counter}</p>
       </div>
@@ -35,7 +37,7 @@ export default function MobileCarte() {
   )
 
   return (
-    <MobileLayout header={header}>
+    <MobileLayout header={header} backdrop={<CosyBackdrop />}>
       <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
         {run.cards === null ? (
           <InlineLoader label="Chargement des cartes…" />
@@ -82,6 +84,7 @@ export default function MobileCarte() {
                     )}
                   </section>
                   <GainBubble gain={run.revealed ? null : run.lastGain} compact />
+                  <CosyToggle compact />
                 </CardStack>
 
                 {!run.revealed ? (
@@ -91,7 +94,7 @@ export default function MobileCarte() {
                   </Button>
                 ) : (
                   <div>
-                    <p style={{ margin: '0 0 8px', fontSize: 13, fontWeight: 500, color: 'var(--muted)', textAlign: 'center' }}>Tu la connaissais ?</p>
+                    <p className="cosy-fade" style={{ ...cosyGlass(cosy, [3, 12], 999), width: 'fit-content', margin: '0 auto 8px', fontSize: 13, fontWeight: 500, color: 'var(--muted)', textAlign: 'center' }}>Tu la connaissais ?</p>
                     <RateButtons card={card} onRate={(n) => void run.rate(n)} disabled={run.busy} compact />
                   </div>
                 )}

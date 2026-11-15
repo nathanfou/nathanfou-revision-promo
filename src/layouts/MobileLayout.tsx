@@ -42,10 +42,11 @@ export function MobileHeader() {
   )
 }
 
-export function MobileLayout({ children, header = <MobileHeader /> }: { children: ReactNode; header?: ReactNode }) {
+export function MobileLayout({ children, header = <MobileHeader />, backdrop }: { children: ReactNode; header?: ReactNode; backdrop?: ReactNode }) {
   return (
     <div style={{ position: 'relative', minHeight: '100dvh', overflow: 'hidden', background: 'var(--bg-gradient)', color: 'var(--text)' }}>
       <LeafDecor leaves={MOBILE_DECOR} />
+      {backdrop}
       <FallingLeaves count={4} />
       <div style={{ position: 'relative', zIndex: 1, minHeight: '100dvh', padding: '14px 18px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         {header}

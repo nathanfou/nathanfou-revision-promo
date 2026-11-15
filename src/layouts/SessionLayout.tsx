@@ -19,12 +19,15 @@ type Props = {
   onQuit?: () => void
   /** largeur max du contenu (défaut 1280) */
   maxWidth?: number
+  /** calque de fond plein écran, posé sur le décor de feuilles (ex. fond cosy des flashcards) */
+  backdrop?: ReactNode
   children: ReactNode
 }
 
-export function SessionLayout({ title, subtitle, pillLabel = 'Série', points, quitTo = '/', onQuit, maxWidth = 1280, children }: Props) {
+export function SessionLayout({ title, subtitle, pillLabel = 'Série', points, quitTo = '/', onQuit, maxWidth = 1280, backdrop, children }: Props) {
   return (
     <PageBackground decor={LIGHT_DECOR}>
+      {backdrop}
       <header style={headerShellStyle}>
         <div style={{ ...headerInnerStyle, gap: '12px 24px' }}>
           <Link to={quitTo} onClick={onQuit} className="btn btn-ghost" style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '9px 16px', borderRadius: 999, border: '1px solid var(--border)', backgroundColor: 'var(--card)', color: 'var(--text)', fontSize: 14, fontWeight: 500, textDecoration: 'none' }}>

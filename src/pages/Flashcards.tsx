@@ -11,6 +11,7 @@ import { routes } from '../lib/routes'
 import { POINTS } from '../lib/scoring'
 import { nextReturn, runCounter } from '../features/flashcards/labels'
 import { CardStack, CardTags, Dashes, DoneLcd, GainBubble, QueueMeter, RateButtons } from '../features/flashcards/parts'
+import { CosyBackdrop, CosyToggle, cosyGlass, useCosyBackground } from '../features/flashcards/cosy'
 import { useFlashcardRun, useRunKeys } from '../features/flashcards/useFlashcardRun'
 import { SessionLayout } from '../layouts/SessionLayout'
 
@@ -19,13 +20,14 @@ export default function Flashcards() {
   const chapterId = params.get('chapitre')
   const run = useFlashcardRun(chapterId)
   useRunKeys(run)
+  const cosy = useCosyBackground()
 
   const title = chapterId ? (run.label?.chapter ?? 'Flashcards') : 'File du jour'
   const subtitle = chapterId ? (run.label ? `Flashcards, ${run.label.subject}` : 'Flashcards') : 'Flashcards, toutes matières'
   const { card, total } = run
 
   return (
-    <SessionLayout title={title} subtitle={subtitle} pillLabel="File" points={run.points} onQuit={run.quit} maxWidth={780}>
+    <SessionLayout title={title} subtitle={subtitle} pillLabel="File" points={run.points} onQuit={run.quit} maxWidth={780} backdrop={<CosyBackdrop />}>
       {run.cards === null ? (
         <InlineLoader label="Chargement des cartes…" />
       ) : total === 0 ? (
@@ -42,7 +44,7 @@ export default function Flashcards() {
         </Card>
       ) : (
         <>
-          <div className="rise" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 18px' }}>
+          <div className="rise cosy-fade" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px 18px', ...cosyGlass(cosy) }}>
             <QueueMeter value={run.progress} />
             <span className="mono" style={{ fontSize: 15, fontWeight: 500 }}>
               {runCounter(run)}
@@ -82,8 +84,9 @@ export default function Flashcards() {
                   )}
                 </section>
                 <GainBubble gain={run.revealed ? null : run.lastGain} />
+                <CosyToggle />
               </CardStack>
-              <p className="rise" style={{ animationDelay: '160ms', margin: 0, fontSize: 14, color: 'var(--muted)', textAlign: 'center' }}>
+              <p className="rise cosy-fade" style={{ animationDelay: '160ms', fontSize: 14, color: 'var(--muted)', textAlign: 'center', ...cosyGlass(cosy) }}>
                 {POINTS.flashcard} pts par carte et par jour, quelle que soit ta réponse. Une carte ratée revient dans la série ; quand toutes sont réussies, la file rouge les repasse dans le désordre.
               </p>
             </>
