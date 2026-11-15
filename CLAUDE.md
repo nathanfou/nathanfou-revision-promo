@@ -1,6 +1,6 @@
-# Révision promo : notes pour Claude
+# Leafnotes : notes pour Claude
 
-Plateforme web de révision pour une promo de 30 à 60 étudiants : QCM, flashcards
+Leafnotes, plateforme web de révision pour une promo de 30 à 60 étudiants : QCM, flashcards
 (révision espacée), exercices auto-évalués, points, classement hebdo et cumulé,
 feed (v2). La spec complète est dans `docs/specification-v1.txt` : la lire avant
 toute fonctionnalité. Réponds à Nathan en français.

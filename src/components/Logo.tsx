@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 
-export const APP_NAME = 'Bachotage'
+export const APP_NAME = 'Leafnotes'
 
 export function LogoMark({ size = 28, center = 'var(--card)' }: { size?: number; center?: string }) {
   return (

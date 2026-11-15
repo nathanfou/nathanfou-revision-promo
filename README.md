@@ -1,4 +1,4 @@
-# Révision promo
+# Leafnotes
 
 Plateforme de révision pour la promo : QCM, flashcards à révision espacée, exercices
 auto-évalués, points et classement de la semaine. Spec : `docs/specification-v1.txt`.
