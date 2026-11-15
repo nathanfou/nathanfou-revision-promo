@@ -132,7 +132,12 @@ input::placeholder, textarea::placeholder { color: var(--faint); opacity: 1; }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(5px); } 60% { transform: translateX(-3px); } 80% { transform: translateX(2px); } }
 @keyframes floatup { 0% { opacity: 0; transform: translateY(6px); } 20% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-18px); } }
 
+/* Fond cosy des flashcards (src/features/flashcards/cosy.tsx) : cadrage sur les chats au téléphone. */
+.cosy-img { object-position: 50% 50%; }
+@media (max-width: 767px) { .cosy-img { object-position: 76% 50%; } }
+
 @media (prefers-reduced-motion: no-preference) {
+  .cosy-fade { transition: opacity .9s ease, background-color .9s ease, box-shadow .9s ease; }
   .rise { animation: rise .8s var(--ease-out) both; }
   .sway { animation: sway 7s ease-in-out infinite; transform-origin: 30% 90%; }
   .fallA { animation: fallA 28s ease-in-out infinite; }
