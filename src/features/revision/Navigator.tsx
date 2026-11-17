@@ -8,7 +8,7 @@ import { routes } from '../../lib/routes'
 import { POINTS } from '../../lib/scoring'
 import type { ChapterInfo, SubjectInfo } from './useRevisionData'
 
-type Mode = 'qcm' | 'cards' | 'exos'
+type Mode = 'cours' | 'qcm' | 'cards' | 'exos'
 type Variante = 'entrainement' | 'examen'
 
 const pct = (v: number) => Math.round(v * 100)
@@ -106,7 +106,11 @@ function ModePanel({ chapter, mode, setMode, variante, setVariante }: PanelProps
   const nCards = chapter.cartesDues + chapter.cartesNouvelles
 
   const cta =
-    mode === 'qcm'
+    mode === 'cours'
+      ? chapter.aCours
+        ? { label: 'Lire le cours', to: routes.course(chapter.id) }
+        : { label: 'Pas encore de cours' }
+      : mode === 'qcm'
       ? chapter.nbQcm
         ? { label: variante === 'entrainement' ? 'Lancer le QCM, entraînement' : 'Lancer le QCM, examen', to: routes.qcm(chapter.id, variante) }
         : { label: 'Aucun QCM pour l’instant' }
@@ -125,6 +129,13 @@ function ModePanel({ chapter, mode, setMode, variante, setVariante }: PanelProps
         <p style={{ margin: '6px 0 0', fontSize: 22, lineHeight: 1.2, fontWeight: 600, letterSpacing: '-0.015em' }}>{chapter.nom}</p>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <ModeOption
+          icon="book"
+          title="Cours"
+          meta={chapter.aCours ? 'La fiche du chapitre, avec figures interactives' : 'Pas encore de cours pour ce chapitre'}
+          selected={mode === 'cours'}
+          onPick={() => setMode('cours')}
+        />
         <ModeOption
           icon="qcm"
           title="QCM"

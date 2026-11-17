@@ -22,6 +22,8 @@ export type ChapterInfo = {
   nbExercices: number
   exoDureeMin: number | null
   exoDureeMax: number | null
+  /** Le chapitre a un cours publié. */
+  aCours: boolean
 }
 
 export type SubjectInfo = {
@@ -77,7 +79,7 @@ const must = <T>(res: { data: T | null; error: { message: string } | null }, wha
 
 async function load(): Promise<RevisionData> {
   const nowIso = new Date().toISOString()
-  const [subjectsRes, chaptersRes, examsRes, progressRes, overviewRes, sessionsRes, todoRes] = await Promise.all([
+  const [subjectsRes, chaptersRes, examsRes, progressRes, overviewRes, sessionsRes, todoRes, coursesRes] = await Promise.all([
     supabase.from('subjects').select('id, nom, ordre').order('ordre').order('nom'),
     supabase.from('chapters').select('id, subject_id, nom, ordre').order('ordre').order('nom'),
     supabase.from('exams').select('id, subject_id, nom, date').gte('date', nowIso).order('date'),
@@ -85,6 +87,7 @@ async function load(): Promise<RevisionData> {
     supabase.rpc('revision_overview'),
     supabase.from('sessions').select('id, chapter_id, mode, variante, started_at, ended_at, score, points').order('started_at', { ascending: false }).limit(10),
     supabase.from('exercise_todo').select('exercise_id, added_at, exercises(id, titre, duree_min, chapter_id)').order('added_at', { ascending: false }),
+    supabase.from('courses').select('chapter_id').eq('statut', 'publie'),
   ])
 
   const subjectsRows = must(subjectsRes, 'matières')
@@ -94,6 +97,7 @@ async function load(): Promise<RevisionData> {
   const overviewRows = must(overviewRes, 'compteurs')
   const sessionsRows = must(sessionsRes, 'sessions')
   const todoRows = must(todoRes, 'exercices à refaire')
+  const withCourse = new Set(must(coursesRes, 'cours').map((c) => c.chapter_id))
 
   const subjectNom = new Map(subjectsRows.map((s) => [s.id, s.nom]))
   const progress = new Map(progressRows.map((p) => [p.chapter_id, p]))
@@ -117,6 +121,7 @@ async function load(): Promise<RevisionData> {
       nbExercices: o?.nb_exercices ?? 0,
       exoDureeMin: o?.exo_duree_min ?? null,
       exoDureeMax: o?.exo_duree_max ?? null,
+      aCours: withCourse.has(c.id),
     }
   })
   const chapterById = new Map(chapters.map((c) => [c.id, c]))

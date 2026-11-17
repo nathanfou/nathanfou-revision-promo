@@ -150,6 +150,45 @@ export type Database = {
           },
         ]
       }
+      courses: {
+        Row: {
+          chapter_id: string
+          contenu: string
+          source: string | null
+          statut: Database["public"]["Enums"]["content_status"]
+          updated_at: string
+        }
+        Insert: {
+          chapter_id: string
+          contenu: string
+          source?: string | null
+          statut?: Database["public"]["Enums"]["content_status"]
+          updated_at?: string
+        }
+        Update: {
+          chapter_id?: string
+          contenu?: string
+          source?: string | null
+          statut?: Database["public"]["Enums"]["content_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "courses_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: true
+            referencedRelation: "chapter_progress"
+            referencedColumns: ["chapter_id"]
+          },
+          {
+            foreignKeyName: "courses_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: true
+            referencedRelation: "chapters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exams: {
         Row: {
           date: string

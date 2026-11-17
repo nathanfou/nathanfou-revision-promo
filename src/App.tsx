@@ -20,6 +20,7 @@ const QcmBilan = lazy(() => import('./pages/QcmBilan'))
 const Flashcards = lazy(() => import('./pages/Flashcards'))
 const Exercices = lazy(() => import('./pages/Exercices'))
 const Exercice = lazy(() => import('./pages/Exercice'))
+const Cours = lazy(() => import('./pages/Cours'))
 const MobileCartes = lazy(() => import('./pages/MobileCartes'))
 const MobileCarte = lazy(() => import('./pages/MobileCarte'))
 
@@ -68,6 +69,7 @@ export default function App() {
             <Route path="/qcm/:chapterId" element={<Desk><Qcm /></Desk>} />
             <Route path="/flashcards" element={<RequireAuth><Responsive mobile={<MobileCarte />} desktop={<Flashcards />} /></RequireAuth>} />
             <Route path="/exercices/:chapterId" element={<Desk><Exercices /></Desk>} />
+            <Route path="/cours/:chapterId" element={<Desk><Cours /></Desk>} />
             <Route path="/exercice/:exerciseId" element={<Desk><Exercice /></Desk>} />
 
             <Route path="*" element={<Navigate to="/" replace />} />
