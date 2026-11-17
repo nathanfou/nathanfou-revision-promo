@@ -26,7 +26,7 @@ export function Remerciement({ source }: { source: string }) {
           <Kata>アリガトウ</Kata>
         </div>
         <p style={{ margin: '6px 0 0', fontSize: 15, lineHeight: 1.5, color: 'var(--ink-text)' }}>
-          Ce cours reprend le résumé PDF de <strong style={{ color: 'var(--caramel)' }}>{source}</strong>, relu et corrigé pour la plateforme. Merci pour le partage !
+          Ce cours reprend le résumé PDF de <strong style={{ color: 'var(--caramel)' }}>{source}</strong>, relu et adapté pour la plateforme. Merci pour le partage !
         </p>
       </div>
       <div aria-hidden="true" style={{ display: 'flex', alignItems: 'flex-end', gap: 4 }}>
