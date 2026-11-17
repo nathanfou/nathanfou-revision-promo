@@ -14,5 +14,7 @@ export const routes = {
   /** Flashcards : sans chapitre = file du jour (toutes matières) ; avec chapitre = cartes de ce chapitre */
   flashcards: (chapterId?: string) => (chapterId ? `/flashcards?chapitre=${chapterId}` : '/flashcards'),
   exercises: (chapterId: string) => `/exercices/${chapterId}`,
+  /** Cours du chapitre (fiche Markdown du Labo) */
+  course: (chapterId: string) => `/cours/${chapterId}`,
   exercise: (exerciseId: string) => `/exercice/${exerciseId}`,
 } as const

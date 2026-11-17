@@ -4,11 +4,12 @@
 //   npm run content:import -- <dossier> [--publier] [--sql] [--dry-run]
 //
 // Le dossier contient tout ou partie de : qcm.csv, flashcards.csv, exercices.csv, controles.csv
-// (format : content/templates/). Les noms de matière et de chapitre sont transformés en
+// (format : content/templates/), et un sous-dossier cours/ de fichiers Markdown (un cours par
+// chapitre, en-tête --- matiere / chapitre / source --- puis le texte au format du Labo). Les noms de matière et de chapitre sont transformés en
 // identifiants ; les matières et chapitres manquants sont créés, dans l'ordre des fichiers.
 //
 // Idempotent : un QCM est identifié par (matière, chapitre, question), une carte par son recto,
-// un exercice par son titre, un contrôle par (matière, nom). Relancer l'import met à jour.
+// un exercice par son titre, un contrôle par (matière, nom), un cours par son chapitre. Relancer l'import met à jour.
 //
 // Statut : les nouveaux éléments sont en "brouillon" ; un import sans --publier ne change pas
 // le statut des éléments existants. Avec --publier, tout ce qui est importé passe en "publié".
@@ -21,7 +22,7 @@
 // bonne_reponse : une ou plusieurs lettres, ex. "B" ou "A;C" (séparateurs acceptés : ; , espace).
 // Colonnes de choix : choix_a à choix_h, les vides sont ignorées (2 choix minimum).
 
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 
 const LETTERS = 'ABCDEFGH'
@@ -148,7 +149,8 @@ const qcmRows = readCsv('qcm.csv', ['matiere', 'chapitre', 'question', 'choix_a'
 const cardRows = readCsv('flashcards.csv', ['matiere', 'chapitre', 'recto', 'verso'])
 const exoRows = readCsv('exercices.csv', ['matiere', 'chapitre', 'titre', 'enonce', 'correction', 'duree_min'])
 const examRows = readCsv('controles.csv', ['matiere', 'nom', 'date'])
-if (!qcmRows && !cardRows && !exoRows && !examRows) fail(`aucun CSV trouvé dans ${DIR}`)
+const coursFiles = existsSync(join(DIR, 'cours')) ? readdirSync(join(DIR, 'cours')).filter((f) => f.endsWith('.md')).sort() : []
+if (!qcmRows && !cardRows && !exoRows && !examRows && !coursFiles.length) fail(`aucun CSV ni cours trouvé dans ${DIR}`)
 
 const questions = []
 for (const r of qcmRows ?? []) {
@@ -209,6 +211,30 @@ for (const r of examRows ?? []) {
   exams.push({ _file: r._file, _line: r._line, matiere: r.matiere, nom: r.nom, date: new Date(t).toISOString() })
 }
 
+const courses = []
+for (const f of coursFiles) {
+  const name = `cours/${f}`
+  const text = readFileSync(join(DIR, 'cours', f), 'utf8').replace(/^\uFEFF/, '').replace(/\r\n/g, '\n')
+  const m = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(text)
+  const r = { _file: name, _line: 1 }
+  if (!m) {
+    err(r, 'en-tête --- matiere / chapitre --- manquant')
+    continue
+  }
+  for (const line of m[1].split('\n')) {
+    const kv = /^\s*([a-z_]+)\s*:\s*(.*?)\s*$/.exec(line)
+    if (kv) r[kv[1]] = kv[2]
+  }
+  if (!need(r, 'matiere', 'chapitre')) continue
+  const contenu = m[2].trim()
+  if (!contenu) {
+    err(r, 'le cours est vide')
+    continue
+  }
+  touch(r.matiere, r.chapitre)
+  courses.push({ _file: name, _line: 1, matiere: r.matiere, chapitre: r.chapitre, source: r.source || null, contenu })
+}
+
 if (errors.length) {
   console.error(`${errors.length} erreur(s), rien n'a été importé :`)
   for (const e of errors) console.error(`  - ${e}`)
@@ -218,13 +244,14 @@ if (errors.length) {
 const Q = withOrder(dedupe(questions, (x) => `${x.matiere}\u0000${x.chapitre}\u0000${x.enonce}`, 'question'))
 const C = withOrder(dedupe(cards, (x) => `${x.matiere}\u0000${x.chapitre}\u0000${x.recto}`, 'recto'))
 const E = withOrder(dedupe(exos, (x) => `${x.matiere}\u0000${x.chapitre}\u0000${x.titre}`, 'titre'))
+const K = dedupe(courses, (x) => `${x.matiere}\u0000${x.chapitre}`, 'cours du chapitre')
 const X = dedupe(exams, (x) => `${x.matiere}\u0000${x.nom}`, 'contrôle')
 for (const w of warnings) console.warn(`Attention : ${w}`)
 
 const summary = () =>
   [
     `${subjects.length} matière(s), ${chapters.length} chapitre(s)`,
-    `${Q.length} QCM, ${C.length} carte(s), ${E.length} exercice(s), ${X.length} contrôle(s)`,
+    `${Q.length} QCM, ${C.length} carte(s), ${E.length} exercice(s), ${K.length} cours, ${X.length} contrôle(s)`,
     PUBLIER ? 'statut : publié' : 'statut : brouillon pour les nouveaux éléments (existants inchangés)',
   ].join('\n  ')
 
@@ -266,6 +293,11 @@ if (MODE === 'sql') {
   for (const e of E) {
     out.push(
       `insert into public.exercises (chapter_id, titre, enonce, correction, duree_min, ordre${statutCol}) values (${chap(e.matiere, e.chapitre)}, ${s(e.titre)}, ${s(e.enonce)}, ${s(e.correction)}, ${e.duree_min}, ${e.ordre}${statutVal}) on conflict (chapter_id, titre) do update set enonce = excluded.enonce, correction = excluded.correction, duree_min = excluded.duree_min, ordre = excluded.ordre${statutSet};`,
+    )
+  }
+  for (const k of K) {
+    out.push(
+      `insert into public.courses (chapter_id, contenu, source${statutCol}) values (${chap(k.matiere, k.chapitre)}, ${s(k.contenu)}, ${s(k.source)}${statutVal}) on conflict (chapter_id) do update set contenu = excluded.contenu, source = excluded.source, updated_at = now()${statutSet};`,
     )
   }
   for (const x of X) {
@@ -357,6 +389,14 @@ for (const part of chunks(E)) {
       { onConflict: 'chapter_id,titre' },
     ),
     'import des exercices',
+  )
+}
+if (K.length) {
+  ok(
+    await db
+      .from('courses')
+      .upsert(K.map((k) => ({ chapter_id: cid(k.matiere, k.chapitre), contenu: k.contenu, source: k.source, updated_at: new Date().toISOString(), ...statut })), { onConflict: 'chapter_id' }),
+    'import des cours',
   )
 }
 if (X.length) {
