@@ -2,8 +2,8 @@ matiere,chapitre,question,choix_a,choix_b,choix_c,choix_d,bonne_reponse,explicat
 Techniques de transmission,"Signaux, puissance et décibels",Que vaut 0 dBm ?,0 W,1 W,1 mW,1 µW,C,0 dBm signifie P = P_ref = 1 mW (10·log 1 = 0). Une puissance de 0 W vaudrait −∞ dBm.
 Techniques de transmission,"Signaux, puissance et décibels","Une puissance de −15 dBW vaut, en dBm :",−45 dBm,−15 dBm,15 dBm,−12 dBm,C,P_dBm = P_dBW + 30 = −15 + 30 = 15 dBm.
 Techniques de transmission,"Signaux, puissance et décibels","Une puissance de 9,4 mW vaut environ :","9,7 dBm","19,7 dBm","−20,3 dBm","9,4 dBm",A,"10 · log(9,4) ≈ 9,73 dBm (un peu moins que 10 dBm = 10 mW)."
-Techniques de transmission,"Signaux, puissance et décibels",Une puissance de −70 dBm vaut :,"0,1 nW",1 pW,10 pW,"0,1 pW",D,"10^(−70/10) = 10⁻⁷ mW = 10⁻¹⁰ W = 0,1 pW (1 pW = 10⁻¹² W)."
-Techniques de transmission,"Signaux, puissance et décibels",Une puissance de −80 dBm vaut :,1 fW,100 fW,10 fW,10 pW,C,10⁻⁸ mW = 10⁻¹¹ W = 10 × 10⁻¹⁵ W = 10 fW.
+Techniques de transmission,"Signaux, puissance et décibels",Une puissance de −70 dBm vaut :,"0,1 nW",1 pW,10 pW,"0,1 pW",A,"10^(−70/10) = 10⁻⁷ mW = 10⁻¹⁰ W = 0,1 nW = 100 pW (1 nW = 10⁻⁹ W, 1 pW = 10⁻¹² W)."
+Techniques de transmission,"Signaux, puissance et décibels",Une puissance de −80 dBm vaut :,1 fW,100 fW,10 fW,10 pW,D,"10⁻⁸ mW = 10⁻¹¹ W = 10 × 10⁻¹² W = 10 pW. (10 fW = 10⁻¹⁴ W, soit −110 dBm.)"
 Techniques de transmission,"Signaux, puissance et décibels","Un signal de valeur efficace 4,1 V est appliqué à 75 Ω. La puissance dissipée vaut environ :","17,4 dBm","−6,5 dBm","23,5 dBm","54,7 dBm",C,"P = 4,1² / 75 ≈ 0,224 W = 224 mW, soit 10·log(224) ≈ 23,5 dBm."
 Techniques de transmission,"Signaux, puissance et décibels",Un amplificateur de gain 20 dB reçoit −35 dBm. La puissance de sortie vaut :,−15 dBm,−700 dBm,−55 dBm,15 dBm,A,Ps[dBm] = Pe[dBm] + G[dB] = −35 + 20 = −15 dBm.
 Techniques de transmission,"Signaux, puissance et décibels",Deux signaux de 10 dBm chacun sont additionnés (puissances qui s'ajoutent). Le total vaut :,13 dBm,100 dBm,20 dBm,10 dBm,A,"10 mW + 10 mW = 20 mW, soit 10·log 20 ≈ 13 dBm. On n'additionne jamais des dBm entre eux."
