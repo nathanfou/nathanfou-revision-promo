@@ -14,12 +14,12 @@ Vérifie l'unité avant de prendre le log : $10 \log(0{,}224) = -6{,}5$ donne de
 :::",5
 Techniques de transmission,"Signaux, puissance et décibels","Conversions dBW, dBm, mW, pW, fW","1. À quelle puissance en dBm correspond $-15\ \text{dBW}$ ?
 2. À quelle puissance en dBm correspond $9{,}4\ \text{mW}$ ?
-3. Que valent $0\ \text{dBm}$ en mW, $-70\ \text{dBm}$ en pW et $-80\ \text{dBm}$ en fW ?","1. $P_{\text{dBm}} = P_{\text{dBW}} + 30 = -15 + 30 = \mathbf{15\ dBm}$ (car $1\ \text{W} = 10^3\ \text{mW}$ et $10\log 10^3 = 30$).
+3. Que valent $0\ \text{dBm}$ en mW, $-70\ \text{dBm}$ en nW puis en pW, et $-80\ \text{dBm}$ en pW ?","1. $P_{\text{dBm}} = P_{\text{dBW}} + 30 = -15 + 30 = \mathbf{15\ dBm}$ (car $1\ \text{W} = 10^3\ \text{mW}$ et $10\log 10^3 = 30$).
 2. $10 \log(9{,}4) \approx \mathbf{9{,}73\ dBm}$.
 3. On repasse par $P[\text{mW}] = 10^{P_{\text{dBm}}/10}$ :
    - $0\ \text{dBm} \to 10^0 = \mathbf{1\ mW}$ ;
-   - $-70\ \text{dBm} \to 10^{-7}\ \text{mW} = 10^{-10}\ \text{W} = \mathbf{0{,}1\ pW}$ ($1\ \text{pW} = 10^{-12}\ \text{W}$) ;
-   - $-80\ \text{dBm} \to 10^{-8}\ \text{mW} = 10^{-11}\ \text{W} = \mathbf{10\ fW}$ ($1\ \text{fW} = 10^{-15}\ \text{W}$).
+   - $-70\ \text{dBm} \to 10^{-7}\ \text{mW} = 10^{-10}\ \text{W} = \mathbf{0{,}1\ nW} = \mathbf{100\ pW}$ ($1\ \text{nW} = 10^{-9}\ \text{W}$, $1\ \text{pW} = 10^{-12}\ \text{W}$) ;
+   - $-80\ \text{dBm} \to 10^{-8}\ \text{mW} = 10^{-11}\ \text{W} = \mathbf{10\ pW}$ (et non 10 fW : $1\ \text{fW} = 10^{-15}\ \text{W}$, donc $10\ \text{fW} = 10^{-14}\ \text{W} = -110\ \text{dBm}$).
 
 :::methode Réflexe
 Chaque $-30\ \text{dB}$ fait descendre d'un préfixe : $0\ \text{dBm} = 1\ \text{mW}$, $-30\ \text{dBm} = 1\ \mu\text{W}$, $-60\ \text{dBm} = 1\ \text{nW}$, $-90\ \text{dBm} = 1\ \text{pW}$, $-120\ \text{dBm} = 1\ \text{fW}$.
