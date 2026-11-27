@@ -1,0 +1,28 @@
+matiere,chapitre,recto,verso
+Quizz Linux,Gestion de paquets Debian,Couche haut niveau de la gestion de paquets Debian ?,APT
+Quizz Linux,Gestion de paquets Debian,Couche bas niveau de la gestion de paquets Debian ?,dpkg
+Quizz Linux,Gestion de paquets Debian,Outil qui contacte les dépôts distants ?,APT
+Quizz Linux,Gestion de paquets Debian,Outil qui calcule le plan d'installation ?,APT
+Quizz Linux,Gestion de paquets Debian,Outil qui traite les archives déjà sur la machine ?,dpkg
+Quizz Linux,Gestion de paquets Debian,Trouver le paquet propriétaire d'un fichier ?,dpkg-query -S
+Quizz Linux,Gestion de paquets Debian,Lister les fichiers d'un paquet installé ?,dpkg-query -L
+Quizz Linux,Gestion de paquets Debian,Binaire sans paquet propriétaire : signal de quoi ?,"Code suspect, à investiguer"
+Quizz Linux,Gestion de paquets Debian,Dépendance strictement requise ?,Depends
+Quizz Linux,Gestion de paquets Debian,Dépendance installée par défaut mais facultative ?,Recommends
+Quizz Linux,Gestion de paquets Debian,Dépendance seulement informative ?,Suggests
+Quizz Linux,Gestion de paquets Debian,Champ qui signale une incompatibilité entre paquets ?,Conflicts
+Quizz Linux,Gestion de paquets Debian,2 intérêts des bibliothèques partagées ?,"Gain d'espace, faille corrigée une seule fois"
+Quizz Linux,Gestion de paquets Debian,Paquet introuvable : première commande à lancer ?,apt update
+Quizz Linux,Gestion de paquets Debian,Que reconstruit apt update ?,Le catalogue et le graphe de dépendances
+Quizz Linux,Gestion de paquets Debian,Upgrade qui accepte de supprimer des paquets ?,apt full-upgrade
+Quizz Linux,Gestion de paquets Debian,Que refuse l'upgrade prudent ?,Toute suppression de paquet
+Quizz Linux,Gestion de paquets Debian,Ordre du cycle de vie d'un paquet Debian ?,"unstable, testing, stable"
+Quizz Linux,Gestion de paquets Debian,Délai avant le passage en testing ?,~10 jours sans bug critique
+Quizz Linux,Gestion de paquets Debian,Zone des logiciels récents rétroportés vers stable ?,Les backports
+Quizz Linux,Gestion de paquets Debian,Que prouve une signature de dépôt valide ?,L'origine et l'intégrité du paquet
+Quizz Linux,Gestion de paquets Debian,Ce qu'une signature de dépôt ne garantit pas ?,L'absence de vulnérabilités
+Quizz Linux,Gestion de paquets Debian,3 maillons de la chaîne de confiance APT ?,"Clé du dépôt, release signé, condensats"
+Quizz Linux,Gestion de paquets Debian,Gestionnaire d'applis graphiques isolées en bac à sable ?,Flatpak
+Quizz Linux,Gestion de paquets Debian,Portes d'entrée et de sortie d'une appli Flatpak ?,Les portails
+Quizz Linux,Gestion de paquets Debian,Propriété clé d'un conteneur applicatif OCI ?,Immuable
+Quizz Linux,Gestion de paquets Debian,Changer un conteneur applicatif : que faire ?,Reconstruire l'image
